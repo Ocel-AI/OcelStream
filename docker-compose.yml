@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  deepstream_khalid:
+    build: .
+    container_name: deepstream_app
+    network_mode: host
+    privileged: true
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./:/opt/nvidia/deepstream/deepstream-7.1/sources/my_data
+    working_dir: /opt/nvidia/deepstream/deepstream-7.1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    stdin_open: true
+    tty: true
+    ports:
+      - "8554:8554"  # Example RTSP
+      - "5000:5000"  # Example HTTP inference API
+      - "8888:8888"  # Example Jupyter or UI
