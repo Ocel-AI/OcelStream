@@ -33,7 +33,7 @@ class DynamicRTSPPipeline:
         self.pipeline.add(self.streammux)
 
         self.pgie = Gst.ElementFactory.make("nvinfer", "pgie")
-        self.pgie.set_property("config-file-path", "./config/config_infer_primary_yolo11.txt")
+        self.pgie.set_property("config-file-path", "../config/config_infer_primary_yolo11.txt")
         self.pipeline.add(self.pgie)
 
         self.demux = Gst.ElementFactory.make("nvstreamdemux", "stream-demux")
@@ -223,7 +223,7 @@ class DynamicRTSPPipeline:
 # Stand‑alone test
 # ----------------------------------------------------------------------
 if __name__ == "__main__":
-    uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/best.mp4"
+    uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/best.mp4"
     app = DynamicRTSPPipeline(max_sources=4)
     threading.Thread(target=app.start, daemon=True).start()
 
