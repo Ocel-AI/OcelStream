@@ -8,6 +8,8 @@ gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
 from gi.repository import Gst, GstRtspServer, GLib
 from bus_call import bus_call
+from FPS import PERF_DATA
+import pyds
 
 Gst.init(None)
 
@@ -58,6 +60,7 @@ class DynamicRTSPPipeline:
 
 
         self.pad_to_index = {}
+        self.perf_data = PERF_DATA()
 
     # ------------------------------------------------------------------
     # Source bin helpers
@@ -160,6 +163,9 @@ class DynamicRTSPPipeline:
 
         # Link demux -> conv ... sink
         self.demux_src_pads[index].link(conv.get_static_pad("sink"))
+        conv.get_static_pad("sink").add_probe(
+            Gst.PadProbeType.BUFFER, self.conv_sink_pad_buffer_probe, 0
+        )
         conv.link(osd)
         conv.get_static_pad("sink").add_probe(
             Gst.PadProbeType.EVENT_DOWNSTREAM,
@@ -191,7 +197,6 @@ class DynamicRTSPPipeline:
                 self.remove_source(index)
         return Gst.PadProbeReturn.OK
 
-
     def bus_call(self, bus, message, loop):
         t = message.type
         if t == Gst.MessageType.EOS:
@@ -203,6 +208,40 @@ class DynamicRTSPPipeline:
             self.loop.quit()
         return True
 
+    def perf_print_callback(self):
+        self.perf_data.perf_print_callback()
+        return True
+
+    def conv_sink_pad_buffer_probe(self, pad, info, u_data):
+        gst_buffer = info.get_buffer()
+        if not gst_buffer:
+            print("Unable to get GstBuffer")
+            return Gst.PadProbeReturn.OK
+
+        batch_meta = pyds.gst_buffer_get_nvds_batch_meta(hash(gst_buffer))
+        l_frame = batch_meta.frame_meta_list
+
+        while l_frame is not None:
+            try:
+                frame_meta = pyds.NvDsFrameMeta.cast(l_frame.data)
+            except StopIteration:
+                break
+
+            stream_id = f"stream{frame_meta.pad_index}"
+
+            if stream_id not in self.perf_data.all_stream_fps:
+                from FPS import GETFPS
+                self.perf_data.all_stream_fps[stream_id] = GETFPS(stream_id)
+
+            self.perf_data.update_fps(stream_id)
+
+            try:
+                l_frame = l_frame.next
+            except StopIteration:
+                break
+
+        return Gst.PadProbeReturn.OK
+
     # ------------------------------------------------------------------
     # Pipeline lifecycle
     # ------------------------------------------------------------------
@@ -210,7 +249,9 @@ class DynamicRTSPPipeline:
         bus = self.pipeline.get_bus()
         bus.add_signal_watch()
         bus.connect("message", self.bus_call, self.loop)
+        GLib.timeout_add(5000, self.perf_data.perf_print_callback)
         self.pipeline.set_state(Gst.State.PLAYING)
+
         print("Pipeline started")
         try:
             self.loop.run()
