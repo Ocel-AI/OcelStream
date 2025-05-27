@@ -33,7 +33,7 @@ class DynamicRTSPPipeline:
         self.pipeline.add(self.streammux)
 
         self.pgie = Gst.ElementFactory.make("nvinfer", "pgie")
-        self.pgie.set_property("config-file-path", "./config_infer_primary_yolo11.txt")
+        self.pgie.set_property("config-file-path", "./config/config_infer_primary_yolo11.txt")
         self.pipeline.add(self.pgie)
 
         self.demux = Gst.ElementFactory.make("nvstreamdemux", "stream-demux")
