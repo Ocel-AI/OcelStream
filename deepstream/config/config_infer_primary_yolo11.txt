@@ -6,7 +6,7 @@ onnx-file=/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/model
 model-engine-file=/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/models/model_b16_gpu0_fp32.engine
 
 #int8-calib-file=calib.table
-labelfile-path=/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/labels.txt
+labelfile-path=/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/labels_det.txt
 batch-size=16
 #enable-batch-process=1
 network-mode=0

@@ -20,7 +20,7 @@ class DynamicRTSPPipeline:
     now exposes remove_source() in addition to add_source().
     """
 
-    def __init__(self, max_sources: int = 4):
+    def __init__(self, max_sources: int = 40000):
         # --- Pipeline‑wide parameters ---
         self.max_sources = max_sources
         self.codec = "H264"
@@ -29,13 +29,14 @@ class DynamicRTSPPipeline:
         self.pipeline = Gst.Pipeline()
         self.streammux = Gst.ElementFactory.make("nvstreammux", "stream-mux")
         self.streammux.set_property("batch-size", max_sources)
-        self.streammux.set_property("width", 1920)
-        self.streammux.set_property("height", 1080)
+        # self.streammux.set_property("width", 1920)
+        # self.streammux.set_property("height", 1080)
         self.streammux.set_property("batched-push-timeout", 40_000)
         self.pipeline.add(self.streammux)
 
         self.pgie = Gst.ElementFactory.make("nvinfer", "pgie")
-        self.pgie.set_property("config-file-path", "../config/config_infer_primary_yolo11.txt")
+        # self.pgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_infer_primary_yolo11.txt")
+        self.pgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_pgie_yolo_seg.txt")
         self.pipeline.add(self.pgie)
 
         self.demux = Gst.ElementFactory.make("nvstreamdemux", "stream-demux")
@@ -61,6 +62,7 @@ class DynamicRTSPPipeline:
 
         self.pad_to_index = {}
         self.perf_data = PERF_DATA()
+        self.index = 0
 
     # ------------------------------------------------------------------
     # Source bin helpers
@@ -75,41 +77,50 @@ class DynamicRTSPPipeline:
         uridecodebin.connect("pad-added", self._cb_decode_pad_added, bin_)
         bin_.add(uridecodebin)
 
+        # Create ghost pad with no target
         ghost = Gst.GhostPad.new_no_target("src", Gst.PadDirection.SRC)
         bin_.add_pad(ghost)
+
         return bin_
 
     @staticmethod
     def _cb_decode_pad_added(decodebin, pad, bin_):
         if pad.get_current_caps().to_string().startswith("video"):
             ghost = bin_.get_static_pad("src")
-            if not ghost.has_current_caps():
-                ghost.set_target(pad)
+            if ghost.get_target():
+                ghost.set_target(None)
+            ghost.set_target(pad)
 
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
     def add_source(self, uri: str) -> int:
         """Add a new stream. Returns its stream index."""
-        index = len(self.sources)
-        if index >= self.max_sources:
+        # index = len(self.sources)
+        if self.index >= self.max_sources:
             raise RuntimeError("Maximum sources reached")
 
         # 1. Create and link source bin
-        src_bin = self._create_source_bin(index, uri)
+        src_bin = self._create_source_bin(self.index, uri)
         self.pipeline.add(src_bin)
         src_pad = src_bin.get_static_pad("src")
-        mux_pad = self.streammux.get_request_pad(f"sink_{index}")
-        self.pad_to_index[src_pad] = index
+        mux_pad = self.streammux.get_request_pad(f"sink_{self.index}")
+        if not mux_pad:
+            raise RuntimeError(f"Failed to get request pad sink_{self.index} — maybe not released?")
+        self.pad_to_index[src_pad] = self.index
         src_pad.link(mux_pad)
         src_bin.sync_state_with_parent()
 
-        self.sources[index] = src_bin
+        self.sources[self.index] = src_bin
 
         # 2. Build per‑stream output branch and RTSP mount
-        self._setup_output_branch(index)
-        return index
+        self._setup_output_branch(self.index)
+        self.index += 0
+        return self.index - 0  # Return the index of the newly added source
 
+    # ============================================================================================================
+    # check later this function not remove all the resources (take as consideration the indexing logic not stable)
+    # ============================================================================================================
     def remove_source(self, index: int):
         """Remove an existing stream and clean up all associated resources."""
         if index not in self.sources:
@@ -129,18 +140,40 @@ class DynamicRTSPPipeline:
 
         # --- Unlink & remove source bin ---
         src_bin = self.sources.pop(index)
+        # src_bin.send_event(Gst.Event.new_eos())
+        time.sleep(0.5)  # Allow time for EOS to propagate
         src_bin.set_state(Gst.State.NULL)
+        # Gst.Bin.unlink(src_bin)
         self.pipeline.remove(src_bin)
 
         sink_pad = self.streammux.get_static_pad(f"sink_{index}")
+
         if sink_pad:
+            if sink_pad.is_linked():
+                peer_pad = sink_pad.get_peer()
+                if peer_pad:
+                    sink_pad.unlink(peer_pad)
+            print(f"\nUnlinking sink pad {sink_pad.name} from streammux\n")
+            print(f"***************************Source {index} removed")
             self.streammux.release_request_pad(sink_pad)
+            print(f"***************************Source {index} removed")
 
-        demux_pad = self.demux_src_pads[index]
-        if demux_pad.is_linked():
-            demux_pad.unlink(demux_pad.get_peer())
+        # demux_pad = self.demux_src_pads[index]
+        # print(f"index in remove_source: {index}")
+        # print(f"demux_pad in remove_source: {demux_pad.is_linked()}")
+        # if demux_pad.is_linked():
+        #     peer_pad = demux_pad.get_peer()
+        #     if peer_pad:
+        #         demux_pad.unlink(peer_pad)
+        #     print(f"\nUnlinking demux pad {demux_pad.name} from stream-demux\n")
 
-        print(f"Source {index} removed")
+        # ghost = self.demux_src_pads[index]
+        # if ghost.is_linked():
+        #     peer = ghost.get_peer()
+        #     if peer:
+        #         ghost.unlink(peer)
+
+
 
     # ------------------------------------------------------------------
     # Internal helpers
@@ -156,6 +189,8 @@ class DynamicRTSPPipeline:
         port = 5400 + index
         sink.set_property("host", "127.0.0.1")
         sink.set_property("port", port)
+        osd.set_property("display-bbox", 1)
+        osd.set_property("display-mask", 1)
 
         for elem in (conv, osd, enc, pay, sink):
             self.pipeline.add(elem)
@@ -163,6 +198,8 @@ class DynamicRTSPPipeline:
 
         # Link demux -> conv ... sink
         self.demux_src_pads[index].link(conv.get_static_pad("sink"))
+        print(f"index: {index}")
+        print(f"demux_src_pads[index] in add_source: {self.demux_src_pads[index].is_linked()}")
         conv.get_static_pad("sink").add_probe(
             Gst.PadProbeType.BUFFER, self.conv_sink_pad_buffer_probe, 0
         )
@@ -268,12 +305,17 @@ if __name__ == "__main__":
     app = DynamicRTSPPipeline(max_sources=4)
     threading.Thread(target=app.start, daemon=True).start()
 
-    time.sleep(3)
+    time.sleep(1)
     id0 = app.add_source(uri)
-    id1 = app.add_source(uri)
-    time.sleep(10)
-    # Remove first stream after 10 s
-    app.remove_source(id0)
-    # Keep running …
+    # time.sleep(10)
+    # #------------------------------------------------------
+    # print(f"Removing stream {id0}")
+    # app.remove_source(id0)
+    # print("sleep 15 s to allow pipeline to start")
+    # #------------------------------------------------------
+    # time.sleep(4)
+    # print("Adding stream again")
+    # id0 = app.add_source(uri)
+    #------------------------------------------------------
     while True:
         time.sleep(1)

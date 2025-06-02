@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   deepstream:
-    build: ./backend
+    build: ./docker_image
     image: deepstream_app:latest
     container_name: deepstream_app
     network_mode: host
