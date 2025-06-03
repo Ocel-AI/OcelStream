@@ -19,8 +19,7 @@
 
 import sys
 sys.path.append('/opt/nvidia/deepstream/deepstream-7.1/sources/deepstream_python_apps/apps/')
-import platform
-import configparser
+
 import math
 import gi
 gi.require_version('Gst', '1.0')
@@ -28,68 +27,19 @@ from gi.repository import GLib, Gst
 from common.platform_info import PlatformInfo
 from common.bus_call import bus_call
 import numpy as np
-
+from utils import transform_image_to_base64, resize_mask
+import cv2
 import pyds
 
-PGIE_CLASS_ID_VEHICLE = 0
-PGIE_CLASS_ID_BICYCLE = 1
-PGIE_CLASS_ID_PERSON = 2
-PGIE_CLASS_ID_ROADSIGN = 3
 MUXER_BATCH_TIMEOUT_USEC = 33000
+MEM_TYPE = int(pyds.NVBUF_MEM_CUDA_UNIFIED)
 
+OUTPUT_WIDTH = 1280
+OUTPUT_HEIGHT = 720
 
-
-def clip(val, low, high):
-    if val < low:
-        return low 
-    elif val > high:
-        return high 
-    else:
-        return val
-
-
-# Resize and binarize mask array for interpretable segmentation mask
-def resize_mask(maskparams, target_width, target_height):
-    src = maskparams.get_mask_array() # Retrieve mask array
-    if src.size == 0:
-        # print("Mask array is None, returning empty array")
-        return np.empty((target_height, target_width), dtype=np.uint8)
-
-    dst = np.empty((target_height, target_width), src.dtype) # Initialize array to store re-sized mask
-    original_width = maskparams.width
-    original_height = maskparams.height
-    ratio_h = float(original_height) / float(target_height)
-    ratio_w = float(original_width) / float(target_width)
-    threshold = maskparams.threshold
-    channel = 1
-
-    # Resize from original width/height to target width/height 
-    for y in range(target_height):
-        for x in range(target_width):
-            x0 = float(x) * ratio_w
-            y0 = float(y) * ratio_h
-            left = int(clip(math.floor(x0), 0.0, float(original_width - 1.0)))
-            top = int(clip(math.floor(y0), 0.0, float(original_height - 1.0)))
-            right = int(clip(math.ceil(x0), 0.0, float(original_width - 1.0)))
-            bottom = int(clip(math.ceil(y0), 0.0, float(original_height - 1.0)))
-
-            for c in range(channel):
-                # H, W, C ordering
-                # Note: lerp is shorthand for linear interpolation
-                left_top_val = float(src[top * (original_width * channel) + left * (channel) + c])
-                right_top_val = float(src[top * (original_width * channel) + right * (channel) + c])
-                left_bottom_val = float(src[bottom * (original_width * channel) + left * (channel) + c])
-                right_bottom_val = float(src[bottom * (original_width * channel) + right * (channel) + c])
-                top_lerp = left_top_val + (right_top_val - left_top_val) * (x0 - left)
-                bottom_lerp = left_bottom_val + (right_bottom_val - left_bottom_val) * (x0 - left)
-                lerp = top_lerp + (bottom_lerp - top_lerp) * (y0 - top)
-                if (lerp < threshold): # Binarize according to threshold
-                    dst[y,x] = 0
-                else:
-                    dst[y,x] = 255
-    return dst
 
 def osd_sink_pad_buffer_probe(pad, info, u_data):
+    output_object = {}
     frame_number = 0
     gst_buffer = info.get_buffer()
     if not gst_buffer:
@@ -106,61 +56,65 @@ def osd_sink_pad_buffer_probe(pad, info, u_data):
             break
 
         frame_number = frame_meta.frame_num
-        print(f"\n--- Frame {frame_number} ---")
+        frame_image = pyds.get_nvds_buf_surface(hash(gst_buffer), frame_meta.batch_id)
+        if frame_image is not None:
+            frame_image = np.frombuffer(frame_image, dtype=np.uint8)
+            #? reshape the frame image to the correct dimensions
+            _frame_image = frame_image.reshape((OUTPUT_HEIGHT, OUTPUT_WIDTH, 4))  # RGBA
+            #? convert to correct color format for saving
+            _frame_image = cv2.cvtColor(_frame_image, cv2.COLOR_RGBA2BGR)  # Convert RGBA to BGR for OpenCV
 
-        # 🔹 Print detection output from object metadata
         l_obj = frame_meta.obj_meta_list
         obj_count = 0
+        detection_data = []
+        segmentation_data = []
         while l_obj is not None:
             try:
                 obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
                 class_id = obj_meta.class_id
                 confidence = obj_meta.confidence
+                #* Detection metadata
                 rect = obj_meta.rect_params
-                # print(f"[Detection] Object {obj_count}: Class ID = {class_id}, Confidence = {confidence:.2f}, BBox = ({rect.left}, {rect.top}, {rect.width}, {rect.height})")
-                
-                #! Segment output
+                detection_data.append({
+                    "object_id": obj_meta.object_id,
+                    "class_id": class_id,
+                    "confidence": confidence,
+                    "bbox": {
+                        "left": rect.left,
+                        "top": rect.top,
+                        "width": rect.width,
+                        "height": rect.height
+                    }
+                })
+                #* Segment output
                 rectparams = obj_meta.rect_params # Retrieve rectparams for re-sizing mask to correct dims
                 maskparams = obj_meta.mask_params # Retrieve maskparams
                 class_id = obj_meta.class_id
                 if maskparams is not None:
                     mask_image = resize_mask(maskparams, math.floor(rectparams.width), math.floor(rectparams.height))
-                    # print(f"[Segmentation] Object {obj_count}: Class ID = {class_id}, Mask Shape = {mask_image.shape}, Mask Type = {mask_image.dtype}")
+                segmentation_data.append({
+                    "object_id": obj_meta.object_id,
+                    "class_id": class_id,
+                    "mask": mask_image,
+                })
+
+                #? SEND DATA TO WEBSOCKET SERVER
+                output_object["source_id"] = frame_meta.source_id
+                print(f"Source ID: {output_object['source_id']}")
+                output_object["segmentation_data"] = segmentation_data
+                output_object["detection_data"] = detection_data
+                output_object["frame_number"] = frame_number
+                output_object["frame_image"] = transform_image_to_base64(_frame_image) if frame_image is not None else None
 
                 l_obj = l_obj.next
                 obj_count += 1
             except StopIteration:
                 break
 
-        # 🔹 Print segmentation metadata (primary)
-        l_user = frame_meta.frame_user_meta_list
-        while l_user is not None:
-            try:
-                user_meta = pyds.NvDsUserMeta.cast(l_user.data)
-                if user_meta and user_meta.base_meta.meta_type == pyds.NvDsMetaType.NVDSINFER_SEGMENTATION_META:
-                    segmeta = pyds.NvDsInferSegmentationMeta.cast(user_meta.user_meta_data)
-                    print(f"[Segmentation] Found - Width: {segmeta.width}, Height: {segmeta.height}, Classes: {segmeta.num_classes}")
-
-                    # Extract mask array
-                    try:
-                        mask_array = pyds.get_segmentation_masks(segmeta)
-                        print(f"[Segmentation] Mask shape: {mask_array.shape}")
-
-                        # Save first class channel mask
-                        mask_img = (mask_array[0] * 255).astype(np.uint8)
-                        cv2.imwrite(f"segment_frame_{frame_number}.png", mask_img)
-                    except Exception as e:
-                        print("Failed to extract segmentation mask:", e)
-                l_user = l_user.next
-            except StopIteration:
-                break
-
-        # 🔹 Update performance metrics if needed
-        stream_index = f"stream{frame_meta.pad_index}"
-        # global perf_data
-        # perf_data.update_fps(stream_index)
 
         try:
+            #* Save detection and segmentation data to output_object
+            #* send output_object to websocket server
             l_frame = l_frame.next
         except StopIteration:
             break
@@ -210,15 +164,9 @@ def main(args):
     if not streammux:
         sys.stderr.write(" Unable to create NvStreamMux \n")
 
-    # Use nvinfer to run inferencing on decoder's output,
-    # behaviour of inferencing is set through config file
     pgie = Gst.ElementFactory.make("nvinfer", "primary-inference")
     if not pgie:
         sys.stderr.write(" Unable to create pgie \n")
-
-    # tracker = Gst.ElementFactory.make("nvtracker", "tracker")
-    # if not tracker:
-    #     sys.stderr.write(" Unable to create tracker \n")
 
 
 
@@ -229,6 +177,8 @@ def main(args):
     nvvidconv = Gst.ElementFactory.make("nvvideoconvert", "convertor")
     if not nvvidconv:
         sys.stderr.write(" Unable to create nvvidconv \n")
+    nvvidconv.set_property("nvbuf-memory-type", MEM_TYPE)
+    
 
     # Create OSD to draw on the converted RGBA buffer
     nvosd = Gst.ElementFactory.make("nvdsosd", "onscreendisplay")
@@ -255,15 +205,25 @@ def main(args):
 
     print("Playing file %s " %args[1])
     source.set_property('location', args[1])
-    streammux.set_property('width', 1920)
-    streammux.set_property('height', 1080)
+    streammux.set_property('width', OUTPUT_WIDTH)
+    streammux.set_property('height', OUTPUT_HEIGHT)
     streammux.set_property('batch-size', 1)
     streammux.set_property('batched-push-timeout', MUXER_BATCH_TIMEOUT_USEC)
+    streammux.set_property("nvbuf-memory-type", MEM_TYPE)
 
     #Set properties of pgie and sgie
     pgie.set_property('config-file-path', "../config/config_infer_primary_yolo11.txt")
     sgie.set_property('config-file-path', "../config/config_pgie_yolo_seg.txt")
 
+
+
+    #! update for dsaving images----------------------------------------
+    # Create a capsfilter to enforce RGBA format
+    capsfilter = Gst.ElementFactory.make("capsfilter", "capsfilter")
+    caps = Gst.Caps.from_string("video/x-raw(memory:NVMM), format=RGBA")
+    capsfilter.set_property("caps", caps)
+    
+    #!----------------------------------------------------------------
     print("Adding elements to Pipeline \n")
     pipeline.add(source)
     pipeline.add(h264parser)
@@ -272,8 +232,12 @@ def main(args):
     pipeline.add(pgie)
     pipeline.add(sgie)
     pipeline.add(nvvidconv)
+    pipeline.add(capsfilter)  #! Add the capsfilter to the pipeline
     pipeline.add(nvosd)
     pipeline.add(sink)
+
+
+
 
     # we link the elements together
     # file-source -> h264-parser -> nvh264-decoder ->
@@ -292,7 +256,8 @@ def main(args):
     streammux.link(pgie)
     pgie.link(sgie)
     sgie.link(nvvidconv)
-    nvvidconv.link(nvosd)
+    nvvidconv.link(capsfilter) # nvvidconv.link(nvosd)   #!
+    capsfilter.link(nvosd)  #! Link capsfilter to nvosd
     nvosd.link(sink)
 
 
