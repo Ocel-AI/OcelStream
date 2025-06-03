@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException, File, UploadFile
+from fastapi import FastAPI, HTTPException, File, UploadFile, WebSocket
+from typing import Set
 from pydantic import BaseModel
 import threading
 import time
@@ -6,6 +7,10 @@ import time
 from fastapi.responses import JSONResponse
 import shutil
 import os
+import queue
+import json
+from typing import Dict
+import asyncio
 
 import sys
 sys.path.append("../../deepstream/app")  # relative from backend/
@@ -19,17 +24,56 @@ upload_streams = {}
 # ==========================================================
 
 app = FastAPI()
-pipeline = DynamicRTSPPipeline(max_sources=4)
+connected_clients: Set[WebSocket] = set()
 
-# Start DeepStream pipeline in background
-threading.Thread(target=pipeline.start, daemon=True).start()
-time.sleep(3)  # Ensure pipeline is up
 
 # Keep track of stream IDs and URIs
 active_streams = {}
 
 class StreamRequest(BaseModel):
     uri: str
+
+
+#-----------------------------------------------------------------------
+# for real-time detection updates
+#-----------------------------------------------------------------------
+detection_queue = queue.Queue()
+
+async def broadcast_data(data: Dict):
+    """Broadcast data to all connected WebSocket clients"""
+    message = json.dumps(data)
+    for client in connected_clients.copy():
+        try:
+            await client.send_text(message)
+        except:
+            connected_clients.remove(client)
+
+async def process_detection_queue():
+    """Process detection queue and broadcast to WebSocket clients"""
+    while True:
+        try:
+            data = detection_queue.get_nowait()
+            await broadcast_data(data)
+        except queue.Empty:
+            await asyncio.sleep(0.1)
+        except Exception as e:
+            print(f"Error processing detection queue: {e}")
+            await asyncio.sleep(0.1)
+
+def queue_detection(data: Dict):
+    """Queue detection data for processing in the main event loop"""
+    detection_queue.put(data)
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Start the detection queue processor on startup"""
+    asyncio.create_task(process_detection_queue())
+
+pipeline = DynamicRTSPPipeline(max_sources=4, broadcast_callback=queue_detection)
+# Start DeepStream pipeline in background
+threading.Thread(target=pipeline.start, daemon=True).start()
+time.sleep(3)  # Ensure pipeline is up
 
 @app.post("/add")
 def add_stream(req: StreamRequest):
@@ -48,6 +92,19 @@ def remove_stream(index: int):
     pipeline.remove_source(index)
     uri = active_streams.pop(index)
     return {"message": "Stream removed", "index": index, "uri": uri}
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    """WebSocket endpoint for real-time updates"""
+    await websocket.accept()
+    connected_clients.add(websocket)
+    try:
+        while True:
+            # Keep the connection alive
+            await websocket.receive_text()
+    except:
+        connected_clients.remove(websocket)
 
 
 # ================== for testing purposes ==================

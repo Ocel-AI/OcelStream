@@ -10,6 +10,9 @@ from gi.repository import Gst, GstRtspServer, GLib
 from bus_call import bus_call
 from FPS import PERF_DATA
 import pyds
+from spotmanager import SpotManager
+from utils import transform_image_to_base64
+import asyncio
 
 Gst.init(None)
 
@@ -20,7 +23,7 @@ class DynamicRTSPPipeline:
     now exposes remove_source() in addition to add_source().
     """
 
-    def __init__(self, max_sources: int = 40000):
+    def __init__(self, max_sources: int = 40000, broadcast_callback=None):
         # --- Pipeline‑wide parameters ---
         self.max_sources = max_sources
         self.codec = "H264"
@@ -35,8 +38,8 @@ class DynamicRTSPPipeline:
         self.pipeline.add(self.streammux)
 
         self.pgie = Gst.ElementFactory.make("nvinfer", "pgie")
-        # self.pgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_infer_primary_yolo11.txt")
-        self.pgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_pgie_yolo_seg.txt")
+        self.pgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_infer_primary_yolo11.txt")
+        # self.pgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_pgie_yolo_seg.txt")
         self.pipeline.add(self.pgie)
 
         self.demux = Gst.ElementFactory.make("nvstreamdemux", "stream-demux")
@@ -59,11 +62,19 @@ class DynamicRTSPPipeline:
         self.rtsp_server.props.service = "8554"
         self.rtsp_server.attach(None)
 
-
+        # --- Performance data ---
         self.pad_to_index = {}
         self.perf_data = PERF_DATA()
-        self.index = 0
 
+        # --- Spot management for dynamic sources ---
+        self.spot_manager = SpotManager(max_sources)
+
+        # --- Pad probe for conv sink ---
+        self.MIN_CONFIDENCE = 0.3
+        self.MAX_CONFIDENCE = 0.4
+
+        # --- Callbacks for send data via WebSocket ---
+        self.broadcast_callback = broadcast_callback
     # ------------------------------------------------------------------
     # Source bin helpers
     # ------------------------------------------------------------------
@@ -97,26 +108,30 @@ class DynamicRTSPPipeline:
     def add_source(self, uri: str) -> int:
         """Add a new stream. Returns its stream index."""
         # index = len(self.sources)
-        if self.index >= self.max_sources:
-            raise RuntimeError("Maximum sources reached")
+        spot, is_fresh = self.spot_manager.acquire()
+        if spot is None:
+            raise RuntimeError("No available spots for new source")
 
         # 1. Create and link source bin
-        src_bin = self._create_source_bin(self.index, uri)
+        src_bin = self._create_source_bin(spot, uri)
         self.pipeline.add(src_bin)
         src_pad = src_bin.get_static_pad("src")
-        mux_pad = self.streammux.get_request_pad(f"sink_{self.index}")
+        if is_fresh:
+            mux_pad = self.streammux.get_request_pad(f"sink_{spot}")
+        else:
+            mux_pad = self.streammux.get_static_pad(f"sink_{spot}")
         if not mux_pad:
-            raise RuntimeError(f"Failed to get request pad sink_{self.index} — maybe not released?")
-        self.pad_to_index[src_pad] = self.index
-        src_pad.link(mux_pad)
-        src_bin.sync_state_with_parent()
+            raise RuntimeError(f"Failed to get request pad sink_{spot} — maybe not released?")
+        self.pad_to_index[src_pad] = spot
 
-        self.sources[self.index] = src_bin
+        src_pad.link(mux_pad)
+
+        self.sources[spot] = src_bin
 
         # 2. Build per‑stream output branch and RTSP mount
-        self._setup_output_branch(self.index)
-        self.index += 0
-        return self.index - 0  # Return the index of the newly added source
+        self._setup_output_branch(spot)
+        src_bin.sync_state_with_parent()
+        return spot
 
     # ============================================================================================================
     # check later this function not remove all the resources (take as consideration the indexing logic not stable)
@@ -140,23 +155,22 @@ class DynamicRTSPPipeline:
 
         # --- Unlink & remove source bin ---
         src_bin = self.sources.pop(index)
-        # src_bin.send_event(Gst.Event.new_eos())
-        time.sleep(0.5)  # Allow time for EOS to propagate
         src_bin.set_state(Gst.State.NULL)
-        # Gst.Bin.unlink(src_bin)
         self.pipeline.remove(src_bin)
+        self.spot_manager.release(index)
+        print(f"[✓] Removed source-bin-{index} and released spot {index}")
 
-        sink_pad = self.streammux.get_static_pad(f"sink_{index}")
+        # sink_pad = self.streammux.get_static_pad(f"sink_{index}")
 
-        if sink_pad:
-            if sink_pad.is_linked():
-                peer_pad = sink_pad.get_peer()
-                if peer_pad:
-                    sink_pad.unlink(peer_pad)
-            print(f"\nUnlinking sink pad {sink_pad.name} from streammux\n")
-            print(f"***************************Source {index} removed")
-            self.streammux.release_request_pad(sink_pad)
-            print(f"***************************Source {index} removed")
+        # if sink_pad:
+        #     if sink_pad.is_linked():
+        #         peer_pad = sink_pad.get_peer()
+        #         if peer_pad:
+        #             sink_pad.unlink(peer_pad)
+        #     print(f"\nUnlinking sink pad {sink_pad.name} from streammux\n")
+        #     print(f"***************************Source {index} removed")
+        #     self.streammux.release_request_pad(sink_pad)
+        #     print(f"***************************Source {index} removed")
 
         # demux_pad = self.demux_src_pads[index]
         # print(f"index in remove_source: {index}")
@@ -172,7 +186,6 @@ class DynamicRTSPPipeline:
         #     peer = ghost.get_peer()
         #     if peer:
         #         ghost.unlink(peer)
-
 
 
     # ------------------------------------------------------------------
@@ -239,6 +252,7 @@ class DynamicRTSPPipeline:
         if t == Gst.MessageType.EOS:
             print("End-of-stream")
             self.loop.quit()
+            # self.start()
         elif t == Gst.MessageType.ERROR:
             err, debug = message.parse_error()
             print("Error:", err, debug)
@@ -248,6 +262,61 @@ class DynamicRTSPPipeline:
     def perf_print_callback(self):
         self.perf_data.perf_print_callback()
         return True
+
+    def extract_send_data(self, image, obj_meta, confidence, frame_number):
+        original_image = image.copy()
+        confidence = '{0:.2f}'.format(confidence)
+        rect_params = obj_meta.rect_params
+        top = int(rect_params.top)
+        left = int(rect_params.left)
+        width = int(rect_params.width)
+        height = int(rect_params.height)
+        
+        if obj_meta.class_id >= len(self.pgie_classes_str):
+            return None
+            
+        obj_name = self.pgie_classes_str[obj_meta.class_id]
+        color = (0, 0, 255, 0)
+        w_percents = int(width * 0.05) if width > 100 else int(width * 0.1)
+        h_percents = int(height * 0.05) if height > 100 else int(height * 0.1)
+        
+        # Draw bounding box
+        linetop_c1 = (left + w_percents, top)
+        linetop_c2 = (left + width - w_percents, top)
+        image = cv2.line(image, linetop_c1, linetop_c2, color, 6)
+        linebot_c1 = (left + w_percents, top + height)
+        linebot_c2 = (left + width - w_percents, top + height)
+        image = cv2.line(image, linebot_c1, linebot_c2, color, 6)
+        lineleft_c1 = (left, top + h_percents)
+        lineleft_c2 = (left, top + height - h_percents)
+        image = cv2.line(image, lineleft_c1, lineleft_c2, color, 6)
+        lineright_c1 = (left + width, top + h_percents)
+        lineright_c2 = (left + width, top + height - h_percents)
+        image = cv2.line(image, lineright_c1, lineright_c2, color, 6)
+        
+        # Add text
+        image = cv2.putText(image, obj_name + ',C=' + str(confidence), 
+                           (left - 10, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                           (0, 0, 255, 0), 2)
+        
+        # Prepare data for WebSocket
+        data = {
+            "x1": left,
+            "y1": top,
+            "x2": left + width,
+            "y2": top + height,
+            "class_name": obj_name,
+            "confidence": float(confidence),
+            "frame_number": frame_number,
+            "frame_base64": self.transform_image_to_base64(original_image)
+        }
+        
+        
+        # Send data via WebSocket using the callback
+        if self.broadcast_callback:
+            asyncio.run_coroutine_threadsafe(self.broadcast_callback(data), asyncio.get_event_loop())
+        
+        return
 
     def conv_sink_pad_buffer_probe(self, pad, info, u_data):
         gst_buffer = info.get_buffer()
@@ -263,6 +332,38 @@ class DynamicRTSPPipeline:
                 frame_meta = pyds.NvDsFrameMeta.cast(l_frame.data)
             except StopIteration:
                 break
+            
+            # ----------------------------------------------------------------------
+            # get frames and detection or segmentation data send them to websocket
+            # ----------------------------------------------------------------------
+
+            # frame_number = frame_meta.frame_num
+            # l_obj = frame_meta.obj_meta_list
+            # num_rects = frame_meta.num_obj_meta
+            # is_first_frame = True
+            # while l_obj is not None:
+            #     try:
+            #         obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
+            #     except StopIteration:
+            #         break
+
+            #     if self.MIN_CONFIDENCE <= obj_meta.confidence <= self.MAX_CONFIDENCE:
+            #         if is_first_frame:
+            #             print(f"[pad-probe] Frame {frame_number} with {num_rects} objects")
+            #             is_first_frame = False
+            #             try:
+            #                 n_frame = pyds.get_nvds_buf_surface(hash(gst_buffer), frame_meta.batch_id)
+            #                 if n_frame is None:
+            #                     print("Unable to get frame surface")
+            #                     return Gst.PadProbeReturn.OK
+                            
+            #                 self.extract_send_data(n_frame, frame_meta, obj_meta.confidence, frame_number)
+            #             except Exception as e:
+            #                 print(f"Error extracting frame data: {e}")
+
+            #--------------------------------------------------------------------------
+            # end of importanted functionality
+            #--------------------------------------------------------------------------
 
             stream_id = f"stream{frame_meta.pad_index}"
 
@@ -271,6 +372,7 @@ class DynamicRTSPPipeline:
                 self.perf_data.all_stream_fps[stream_id] = GETFPS(stream_id)
 
             self.perf_data.update_fps(stream_id)
+            # print(f"[pad-probe] Stream {stream_id} FPS: {self.perf_data.all_stream_fps[stream_id].get_fps()}")
 
             try:
                 l_frame = l_frame.next
@@ -295,6 +397,7 @@ class DynamicRTSPPipeline:
         except KeyboardInterrupt:
             pass
         finally:
+            # self.start()
             self.pipeline.set_state(Gst.State.NULL)
 
 # ----------------------------------------------------------------------
@@ -302,20 +405,21 @@ class DynamicRTSPPipeline:
 # ----------------------------------------------------------------------
 if __name__ == "__main__":
     uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/best.mp4"
+    uri2 = "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.h264"
     app = DynamicRTSPPipeline(max_sources=4)
     threading.Thread(target=app.start, daemon=True).start()
 
     time.sleep(1)
     id0 = app.add_source(uri)
-    # time.sleep(10)
-    # #------------------------------------------------------
-    # print(f"Removing stream {id0}")
-    # app.remove_source(id0)
-    # print("sleep 15 s to allow pipeline to start")
-    # #------------------------------------------------------
-    # time.sleep(4)
-    # print("Adding stream again")
-    # id0 = app.add_source(uri)
+    time.sleep(10)
+    #------------------------------------------------------
+    print(f"Removing stream {id0}")
+    app.remove_source(id0)
+    print("sleep 15 s to allow pipeline to start")
+    #------------------------------------------------------
+    time.sleep(15)
+    print("Adding stream again")
+    id0 = app.add_source(uri2)
     #------------------------------------------------------
     while True:
         time.sleep(1)
