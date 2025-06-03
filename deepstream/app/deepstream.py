@@ -32,8 +32,8 @@ class DynamicRTSPPipeline:
         self.pipeline = Gst.Pipeline()
         self.streammux = Gst.ElementFactory.make("nvstreammux", "stream-mux")
         self.streammux.set_property("batch-size", max_sources)
-        # self.streammux.set_property("width", 1920)
-        # self.streammux.set_property("height", 1080)
+        self.streammux.set_property("width", 1920)
+        self.streammux.set_property("height", 1080)
         self.streammux.set_property("batched-push-timeout", 40_000)
         self.pipeline.add(self.streammux)
 
