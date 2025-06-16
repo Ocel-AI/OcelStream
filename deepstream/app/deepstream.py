@@ -4,8 +4,6 @@ import time
 import sys
 sys.path.append('/opt/nvidia/deepstream/deepstream-7.1/sources/deepstream_python_apps/apps/common')
 
-gi.require_version('Gst', '1.0')
-gi.require_version('GstRtspServer', '1.0')
 from gi.repository import Gst, GstRtspServer, GLib
 from bus_call import bus_call
 from FPS import PERF_DATA
@@ -13,8 +11,18 @@ import pyds
 from spotmanager import SpotManager
 from utils import transform_image_to_base64
 import asyncio
+import multiprocessing
+from concurrent.futures import ProcessPoolExecutor
+import cv2
+import numpy as np
+from utils import resize_mask, transform_image_to_base64, encode_mask_to_base64
+import math
+import ctypes
+import queue
 
-Gst.init(None)
+
+gi.require_version('Gst', '1.0')
+gi.require_version('GstRtspServer', '1.0')
 
 class DynamicRTSPPipeline:
     """DeepStream pipeline that supports runtime add & remove of sources.
@@ -23,7 +31,9 @@ class DynamicRTSPPipeline:
     now exposes remove_source() in addition to add_source().
     """
 
-    def __init__(self, max_sources: int = 40000, broadcast_callback=None):
+    def __init__(self, max_sources: int = 5, broadcast_callback=None):
+
+        Gst.init(None)
         # --- Pipeline‑wide parameters ---
         self.max_sources = max_sources
         self.codec = "H264"
@@ -38,9 +48,11 @@ class DynamicRTSPPipeline:
         self.pipeline.add(self.streammux)
 
         self.pgie = Gst.ElementFactory.make("nvinfer", "pgie")
+        self.sgie = Gst.ElementFactory.make("nvinfer", "spgie")
         self.pgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_infer_primary_yolo11.txt")
-        # self.pgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_pgie_yolo_seg.txt")
+        self.sgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_pgie_yolo_seg.txt")
         self.pipeline.add(self.pgie)
+        self.pipeline.add(self.sgie)
 
         self.demux = Gst.ElementFactory.make("nvstreamdemux", "stream-demux")
         self.pipeline.add(self.demux)
@@ -50,11 +62,15 @@ class DynamicRTSPPipeline:
 
         # Link static portion of pipeline
         self.streammux.link(self.pgie)
+        self.pgie.link(self.sgie)
+        self.sgie.link(self.demux)
         self.pgie.link(self.demux)
 
         # --- Runtime bookkeeping ---
         self.sources = {}          # index -> source bin
         self.branches = {}         # index -> list[Gst.Element] (conv/osd/enc/pay/sink)
+        self.urls_sources = []     # index -> uri
+        self._rtsp_mount_paths = set()
 
         # --- GLib/RTSP setup ---
         self.loop = GLib.MainLoop()
@@ -75,6 +91,12 @@ class DynamicRTSPPipeline:
 
         # --- Callbacks for send data via WebSocket ---
         self.broadcast_callback = broadcast_callback
+        self.loop_event = asyncio.get_event_loop()
+        # self.streammux.set_property('live-source', 1)  # Enable live source mode
+
+        self.process_queue = queue.Queue()
+        self.processor_thread = threading.Thread(target=self._processing_worker_loop, daemon=True)
+        self.processor_thread.start()
     # ------------------------------------------------------------------
     # Source bin helpers
     # ------------------------------------------------------------------
@@ -131,10 +153,13 @@ class DynamicRTSPPipeline:
         # 2. Build per‑stream output branch and RTSP mount
         self._setup_output_branch(spot)
         src_bin.sync_state_with_parent()
+        src_bin.set_state(Gst.State.PLAYING)
+        self.urls_sources.append(uri)
+
         return spot
 
     # ============================================================================================================
-    # check later this function not remove all the resources (take as consideration the indexing logic not stable)
+    # check later this function not remove all the resources
     # ============================================================================================================
     def remove_source(self, index: int):
         """Remove an existing stream and clean up all associated resources."""
@@ -157,78 +182,64 @@ class DynamicRTSPPipeline:
         src_bin = self.sources.pop(index)
         src_bin.set_state(Gst.State.NULL)
         self.pipeline.remove(src_bin)
-        self.spot_manager.release(index)
+        # self.spot_manager.release(index)
         print(f"[✓] Removed source-bin-{index} and released spot {index}")
-
-        # sink_pad = self.streammux.get_static_pad(f"sink_{index}")
-
-        # if sink_pad:
-        #     if sink_pad.is_linked():
-        #         peer_pad = sink_pad.get_peer()
-        #         if peer_pad:
-        #             sink_pad.unlink(peer_pad)
-        #     print(f"\nUnlinking sink pad {sink_pad.name} from streammux\n")
-        #     print(f"***************************Source {index} removed")
-        #     self.streammux.release_request_pad(sink_pad)
-        #     print(f"***************************Source {index} removed")
-
-        # demux_pad = self.demux_src_pads[index]
-        # print(f"index in remove_source: {index}")
-        # print(f"demux_pad in remove_source: {demux_pad.is_linked()}")
-        # if demux_pad.is_linked():
-        #     peer_pad = demux_pad.get_peer()
-        #     if peer_pad:
-        #         demux_pad.unlink(peer_pad)
-        #     print(f"\nUnlinking demux pad {demux_pad.name} from stream-demux\n")
-
-        # ghost = self.demux_src_pads[index]
-        # if ghost.is_linked():
-        #     peer = ghost.get_peer()
-        #     if peer:
-        #         ghost.unlink(peer)
 
 
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
     def _setup_output_branch(self, index: int):
-        """Create conv → osd → enc → pay → udpsink chain for stream index."""
-        conv = Gst.ElementFactory.make("nvvideoconvert", f"conv{index}")
+        conv1 = Gst.ElementFactory.make("nvvideoconvert", f"conv1_{index}")
+        capsfilter1 = Gst.ElementFactory.make("capsfilter", f"capsfilter1_{index}")
+        capsfilter1.set_property("caps", Gst.Caps.from_string("video/x-raw(memory:NVMM), format=RGBA"))
+        self.streammux.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
+        conv1.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
+
         osd = Gst.ElementFactory.make("nvdsosd", f"osd{index}")
-        enc = Gst.ElementFactory.make("nvv4l2h264enc", f"enc{index}")
-        enc.set_property("bitrate", self.bitrate)
-        pay = Gst.ElementFactory.make("rtph264pay", f"pay{index}")
-        sink = Gst.ElementFactory.make("udpsink", f"sink{index}")
-        port = 5400 + index
-        sink.set_property("host", "127.0.0.1")
-        sink.set_property("port", port)
         osd.set_property("display-bbox", 1)
         osd.set_property("display-mask", 1)
 
-        for elem in (conv, osd, enc, pay, sink):
+        conv2 = Gst.ElementFactory.make("nvvideoconvert", f"conv2_{index}")
+        conv2.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
+        capsfilter2 = Gst.ElementFactory.make("capsfilter", f"capsfilter2_{index}")
+        capsfilter2.set_property("caps", Gst.Caps.from_string("video/x-raw(memory:NVMM), format=NV12"))
+
+        enc = Gst.ElementFactory.make("nvv4l2h264enc", f"enc{index}")
+        enc.set_property("bitrate", self.bitrate)
+
+        pay = Gst.ElementFactory.make("rtph264pay", f"pay{index}")
+        sink = Gst.ElementFactory.make("udpsink", f"sink{index}")
+        sink.set_property("sync", 0)
+        port = 5400 + index
+        sink.set_property("host", "127.0.0.1")
+        sink.set_property("port", port)
+
+        for elem in (conv1, capsfilter1, osd, conv2, capsfilter2, enc, pay, sink):
             self.pipeline.add(elem)
             elem.sync_state_with_parent()
 
-        # Link demux -> conv ... sink
-        self.demux_src_pads[index].link(conv.get_static_pad("sink"))
-        print(f"index: {index}")
-        print(f"demux_src_pads[index] in add_source: {self.demux_src_pads[index].is_linked()}")
-        conv.get_static_pad("sink").add_probe(
-            Gst.PadProbeType.BUFFER, self.conv_sink_pad_buffer_probe, 0
-        )
-        conv.link(osd)
-        conv.get_static_pad("sink").add_probe(
-            Gst.PadProbeType.EVENT_DOWNSTREAM,
-            lambda pad, info: self.eos_probe_callback(pad, info, index)
-        )
-        osd.link(enc)
+        self.demux_src_pads[index].link(conv1.get_static_pad("sink"))
+        conv1.link(capsfilter1)
+        capsfilter1.link(osd)
+        osd.link(conv2)
+        conv2.link(capsfilter2)
+        capsfilter2.link(enc)
         enc.link(pay)
         pay.link(sink)
 
-        # Store branch for cleanup
-        self.branches[index] = [conv, osd, enc, pay, sink]
+        # Pad probes (optional but keep for eos/debug)
+        conv1.get_static_pad("sink").add_probe(
+            Gst.PadProbeType.EVENT_DOWNSTREAM,
+            lambda pad, info: self.eos_probe_callback(pad, info, index)
+        )
+        osd.get_static_pad("sink").add_probe(
+            Gst.PadProbeType.BUFFER, self.conv_pad_buffer_probe, 0
+        )
 
-        # Expose via RTSP
+        self.branches[index] = [conv1, capsfilter1, osd, conv2, capsfilter2, enc, pay, sink]
+
+        # RTSP setup
         factory = GstRtspServer.RTSPMediaFactory()
         launch = (
             f"( udpsrc name=pay0 port={port} buffer-size=524288 "
@@ -238,133 +249,73 @@ class DynamicRTSPPipeline:
         factory.set_shared(True)
         self.rtsp_server.get_mount_points().add_factory(f"/ds-test{index}", factory)
         print(f"Stream {index} at rtsp://localhost:8554/ds-test{index}")
+        self._rtsp_mount_paths.add(f"/ds-test{index}")
+
+
+    # ------------------------------------------------------------------
 
     def eos_probe_callback(self, pad, info, index):
         if info.type & Gst.PadProbeType.EVENT_DOWNSTREAM:
             event = info.get_event()
             if event.type == Gst.EventType.EOS:
                 print(f"[pad-probe] EOS detected on stream {index}")
-                self.remove_source(index)
+                # self.remove_source(index)
         return Gst.PadProbeReturn.OK
+
+    # def bus_call(self, bus, message, loop):
+    #     t = message.type
+    #     if t == Gst.MessageType.EOS:
+    #         print("End-of-stream")
+    #         # self.loop.quit()
+    #         # self.start()
+    #     elif t == Gst.MessageType.ERROR:
+    #         err, debug = message.parse_error()
+    #         print("Error:", err, debug)
+    #         self.loop.quit()
+    #     return True
 
     def bus_call(self, bus, message, loop):
         t = message.type
-        if t == Gst.MessageType.EOS:
-            print("End-of-stream")
-            self.loop.quit()
-            # self.start()
+        if t == Gst.MessageType.ELEMENT:
+            struct = message.get_structure()
+            if struct and struct.get_name() == "GstNvStreamEos":
+                stream_id = struct.get_uint("stream-id")[1]  # .get_uint returns (bool, val)
+                print(f"[bus] Stream EOS detected for stream {stream_id}")
+                self.remove_source(stream_id)
+        elif t == Gst.MessageType.EOS:
+            print("[bus] Global pipeline EOS (should not happen unless all sources ended)")
         elif t == Gst.MessageType.ERROR:
             err, debug = message.parse_error()
-            print("Error:", err, debug)
+            print("[bus] Error:", err, debug)
             self.loop.quit()
         return True
+
 
     def perf_print_callback(self):
         self.perf_data.perf_print_callback()
         return True
 
-    def extract_send_data(self, image, obj_meta, confidence, frame_number):
-        original_image = image.copy()
-        confidence = '{0:.2f}'.format(confidence)
-        rect_params = obj_meta.rect_params
-        top = int(rect_params.top)
-        left = int(rect_params.left)
-        width = int(rect_params.width)
-        height = int(rect_params.height)
-        
-        if obj_meta.class_id >= len(self.pgie_classes_str):
-            return None
-            
-        obj_name = self.pgie_classes_str[obj_meta.class_id]
-        color = (0, 0, 255, 0)
-        w_percents = int(width * 0.05) if width > 100 else int(width * 0.1)
-        h_percents = int(height * 0.05) if height > 100 else int(height * 0.1)
-        
-        # Draw bounding box
-        linetop_c1 = (left + w_percents, top)
-        linetop_c2 = (left + width - w_percents, top)
-        image = cv2.line(image, linetop_c1, linetop_c2, color, 6)
-        linebot_c1 = (left + w_percents, top + height)
-        linebot_c2 = (left + width - w_percents, top + height)
-        image = cv2.line(image, linebot_c1, linebot_c2, color, 6)
-        lineleft_c1 = (left, top + h_percents)
-        lineleft_c2 = (left, top + height - h_percents)
-        image = cv2.line(image, lineleft_c1, lineleft_c2, color, 6)
-        lineright_c1 = (left + width, top + h_percents)
-        lineright_c2 = (left + width, top + height - h_percents)
-        image = cv2.line(image, lineright_c1, lineright_c2, color, 6)
-        
-        # Add text
-        image = cv2.putText(image, obj_name + ',C=' + str(confidence), 
-                           (left - 10, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                           (0, 0, 255, 0), 2)
-        
-        # Prepare data for WebSocket
-        data = {
-            "x1": left,
-            "y1": top,
-            "x2": left + width,
-            "y2": top + height,
-            "class_name": obj_name,
-            "confidence": float(confidence),
-            "frame_number": frame_number,
-            "frame_base64": self.transform_image_to_base64(original_image)
-        }
-        
-        
-        # Send data via WebSocket using the callback
-        if self.broadcast_callback:
-            asyncio.run_coroutine_threadsafe(self.broadcast_callback(data), asyncio.get_event_loop())
-        
-        return
-
-    def conv_sink_pad_buffer_probe(self, pad, info, u_data):
+    
+    def conv_pad_buffer_probe(self, pad, info, u_data):
         gst_buffer = info.get_buffer()
         if not gst_buffer:
-            print("Unable to get GstBuffer")
             return Gst.PadProbeReturn.OK
 
         batch_meta = pyds.gst_buffer_get_nvds_batch_meta(hash(gst_buffer))
         l_frame = batch_meta.frame_meta_list
 
         while l_frame is not None:
-            try:
-                frame_meta = pyds.NvDsFrameMeta.cast(l_frame.data)
-            except StopIteration:
-                break
-            
+            frame_meta = pyds.NvDsFrameMeta.cast(l_frame.data)
+
+            # Enqueue work
+            self.process_queue.put({
+                "gst_buffer": gst_buffer,
+                "batch_id": frame_meta.batch_id,
+                "frame_meta": frame_meta
+            })
             # ----------------------------------------------------------------------
-            # get frames and detection or segmentation data send them to websocket
+            # CALCULATE FPS
             # ----------------------------------------------------------------------
-
-            # frame_number = frame_meta.frame_num
-            # l_obj = frame_meta.obj_meta_list
-            # num_rects = frame_meta.num_obj_meta
-            # is_first_frame = True
-            # while l_obj is not None:
-            #     try:
-            #         obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
-            #     except StopIteration:
-            #         break
-
-            #     if self.MIN_CONFIDENCE <= obj_meta.confidence <= self.MAX_CONFIDENCE:
-            #         if is_first_frame:
-            #             print(f"[pad-probe] Frame {frame_number} with {num_rects} objects")
-            #             is_first_frame = False
-            #             try:
-            #                 n_frame = pyds.get_nvds_buf_surface(hash(gst_buffer), frame_meta.batch_id)
-            #                 if n_frame is None:
-            #                     print("Unable to get frame surface")
-            #                     return Gst.PadProbeReturn.OK
-                            
-            #                 self.extract_send_data(n_frame, frame_meta, obj_meta.confidence, frame_number)
-            #             except Exception as e:
-            #                 print(f"Error extracting frame data: {e}")
-
-            #--------------------------------------------------------------------------
-            # end of importanted functionality
-            #--------------------------------------------------------------------------
-
             stream_id = f"stream{frame_meta.pad_index}"
 
             if stream_id not in self.perf_data.all_stream_fps:
@@ -372,14 +323,64 @@ class DynamicRTSPPipeline:
                 self.perf_data.all_stream_fps[stream_id] = GETFPS(stream_id)
 
             self.perf_data.update_fps(stream_id)
-            # print(f"[pad-probe] Stream {stream_id} FPS: {self.perf_data.all_stream_fps[stream_id].get_fps()}")
+            # ----------------------------------------------------------------------
 
-            try:
-                l_frame = l_frame.next
-            except StopIteration:
-                break
+            l_frame = l_frame.next
 
         return Gst.PadProbeReturn.OK
+
+    def _processing_worker_loop(self):
+        while True:
+            task = self.process_queue.get()
+            gst_buffer = task["gst_buffer"]
+            batch_id = task["batch_id"]
+            frame_meta = task["frame_meta"]
+
+            try:
+                n_frame = pyds.get_nvds_buf_surface(hash(gst_buffer), batch_id)
+                flat_frame = np.array(n_frame, copy=True)
+                frame_image = cv2.cvtColor(flat_frame, cv2.COLOR_RGBA2BGR)
+
+                objects = []
+                l_obj = frame_meta.obj_meta_list
+                while l_obj is not None:
+                    obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
+                    rect = obj_meta.rect_params
+                    maskparams = obj_meta.mask_params
+                    mask_b64 = None
+                    if maskparams is not None and maskparams.data:
+                        mask_img = resize_mask(maskparams, math.floor(rect.width), math.floor(rect.height))
+                        mask_b64 = encode_mask_to_base64(mask_img)
+                    objects.append({
+                        "object_id": obj_meta.object_id,
+                        "class_id": obj_meta.class_id,
+                        "confidence": obj_meta.confidence,
+                        "bbox": {
+                            "left": rect.left,
+                            "top": rect.top,
+                            "width": rect.width,
+                            "height": rect.height
+                        },
+                        "mask": mask_b64
+                    })
+                    l_obj = l_obj.next
+
+                metadata = {
+                    "source_id": frame_meta.source_id,
+                    "frame_number": frame_meta.frame_num,
+                    "objects": objects,
+                    "frame_base64": transform_image_to_base64(frame_image)
+                }
+
+                if self.broadcast_callback:
+                    asyncio.run_coroutine_threadsafe(
+                        self.broadcast_callback(metadata),
+                        self.loop_event
+                    )
+
+            except Exception as e:
+                print(f"[worker] Error processing frame: {e}")
+
 
     # ------------------------------------------------------------------
     # Pipeline lifecycle
@@ -388,38 +389,58 @@ class DynamicRTSPPipeline:
         bus = self.pipeline.get_bus()
         bus.add_signal_watch()
         bus.connect("message", self.bus_call, self.loop)
-        GLib.timeout_add(5000, self.perf_data.perf_print_callback)
+        GLib.timeout_add(1000, self.perf_data.perf_print_callback)
+        # time.sleep(1)
         self.pipeline.set_state(Gst.State.PLAYING)
-
-        print("Pipeline started")
         try:
             self.loop.run()
         except KeyboardInterrupt:
             pass
         finally:
-            # self.start()
             self.pipeline.set_state(Gst.State.NULL)
+
+
+
+
+
 
 # ----------------------------------------------------------------------
 # Stand‑alone test
 # ----------------------------------------------------------------------
-if __name__ == "__main__":
-    uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/best.mp4"
-    uri2 = "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.h264"
-    app = DynamicRTSPPipeline(max_sources=4)
-    threading.Thread(target=app.start, daemon=True).start()
 
-    time.sleep(1)
-    id0 = app.add_source(uri)
-    time.sleep(10)
-    #------------------------------------------------------
-    print(f"Removing stream {id0}")
-    app.remove_source(id0)
-    print("sleep 15 s to allow pipeline to start")
-    #------------------------------------------------------
-    time.sleep(15)
-    print("Adding stream again")
-    id0 = app.add_source(uri2)
-    #------------------------------------------------------
+if __name__ == "__main__":
+    uri_file = "file:///opt/nvidia/deepstream/deepstream-7.1/samples/streams/sample_1080p_h264.mp4"
+    file1_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/1.mp4"
+    file2_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/2.mp4"
+    file3_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/3.mp4"
+    file4_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/4.mp4"
+    file5_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/5.mp4"
+    file6_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/6.mp4"
+    file7_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/4.mp4"
+    file8_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/8.mp4"
+    live_uri = "rtsp://localhost:4000/looped"
+    app = DynamicRTSPPipeline(max_sources=7)
+    threading.Thread(target=app.start, daemon=True).start()
+    time.sleep(1)  # Ensure pipeline is up
+    id0 = app.add_source("rtsp://localhost:4000/looped")
+    # time.sleep(1)
+    # # # app.remove_source(id0)
+    # id00 = app.add_source("rtsp://localhost:4001/looped")
+    # time.sleep(1)
+
+    # id000 = app.add_source("rtsp://localhost:4002/looped")
+    # time.sleep(1)
+    # id000 = app.add_source(file7_uri)
+    # time.sleep(1)
+    # id000 = app.add_source(uri_file)
+    # time.sleep(1)
+    # id000 = app.add_source(file3_uri)
+    # time.sleep(1)
+    # id000 = app.add_source(file1_uri)
+    # # time.sleep(10)
+    # app.remove_source(id000)
+    # for i in range(30):
+    # app.add_source(uri_file)
     while True:
         time.sleep(1)
+

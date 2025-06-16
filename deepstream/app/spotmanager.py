@@ -28,6 +28,11 @@ class SpotManager:
 
     def get_available(self):
         return list(self.released_spots) + list(range(self.next_spot, self.max_spots))
+    
+    def release_all(self):
+        self.released_spots.update(self.used_spots)
+        self.used_spots.clear()
+        self.next_spot = 0
 
 
 if __name__ == "__main__":
