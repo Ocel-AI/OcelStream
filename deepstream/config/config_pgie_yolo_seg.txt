@@ -2,9 +2,9 @@
 gpu-id=0
 net-scale-factor=0.0039215697906911373
 model-color-format=0
-onnx-file=/deepstream_app/deepstream/models/yolo11n-seg-trt.onnx
-model-engine-file=/deepstream_app/deepstream/models/yolo11n-seg-trt.onnx_b1_gpu0_fp32.engine
-labelfile-path=/deepstream_app/deepstream/config/labels_seg.txt
+onnx-file=/deepstream_app/deepstream/models/yolo11m-seg-trt.onnx
+model-engine-file=/deepstream_app/deepstream/models/yolo11m-seg-trt.onnx_b1_gpu0_fp32.engine
+labelfile-path=/deepstream_app/deepstream/config/yolo11m-seg-trt.txt
 batch-size=1
 force-implicit-batch-dim=0
 infer-dims=3;640;640
