@@ -1,0 +1,57 @@
+$Id$
+
+= embedded =
+
+== index handling ==
+For avidemux I currently have a big patch doing memory optimized index handling.
+It basically thins out the index to save memory. Right now it only keeps index
+entries marked with the avi keyframe flag.
+
+In gstreamer core we have some indexing objects. They are currently used nowhere.
+The idea is to use them and to make the index strategy pluggable or configurable
+at run time.
+
+The challenge is then to rewrite muxers and demuxers to use them instead of the
+built in index logic.
+
+This way the different requirements of desktop and embedded platforms could be
+encapsulated in the indexer strategy.
+
+== ranking ==
+Autopluggers like playbin and decodebin use the element caps plus static ranks
+to create piplines.
+The rank of an element right now refers to the quality/maturity of the element.
+Elements with higher rank should be functionally more complete. If we have
+multiple elements that are feature complete there is a draw.
+
+There are more decision criteria thinkable:
+* target processor (CPU,DSP,GPU)
+* resource usage (CPU, memory)
+* license (proprietary, open source)
+* quality (in terms of the audio/image quality)
+
+One problem of taking criteria like quality and performance into account when
+autoplugging, is that elements might have objects-properties that influence
+them.
+
+Beside adding more ranking criteria, we might consider adding an overridable
+mechanism for picking elements (basically registry filters that not decide on
+the base of ranks). Applications might choose the filter mechanism based on the
+use-case (which gstreamer not know right now).
+
+== g_malloc vs. g_try_malloc ==
+g_malloc/g_new should not be used when allocating space of a size that is
+derived from a value found in the file. Instead one should use g_try_malloc or
+g_try_new and check the return value.
+
+$ find . -name "*.c" -exec grep "g_malloc" {} \; | wc -l
+190
+$ find . -name "*.c" -exec grep "g_try_malloc" {} \; | wc -l
+0
+$ find . -name "*.c" -exec grep "g_new" {} \; | wc -l
+398
+$ find . -name "*.c" -exec grep "g_try_new" {} \; | wc -l
+3
+
+This is not strickly related to embedded, but its easier to crash gstreamer on
+embedded this way.

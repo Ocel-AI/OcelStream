@@ -1,0 +1,140 @@
+$Id$
+
+= profiling =
+
+== what information is interesting? ==
+* pipeline throughput
+  if we know the cpu-load for a given datastream, we could extrapolate what the
+  system can handle
+  -> qos profiling
+* load distribution
+  which element causes which cpu load/memory usage
+
+
+= qos profiling =
+* what data is needed ?
+  * (streamtime,proportion) pairs from sinks
+    draw a graph with gnuplot or similar
+  * number of frames in total
+  * number of audio/video frames dropped from each element that support QOS
+  * could be expressed as percent in relation to total-frames
+
+* query data (e.g. via. gst-launch)
+  * add -r, --report option to gst-launch
+  * during playing we capture QOS-events to record 'streamtime,proportion' pairs
+    gst_pad_add_event_probe(video_sink->sink_pad,handler,data)
+  * during playback we like to know when an element drops frames
+    what about elements sending a qos_action message?
+  * after EOS, send qos-queries to each element in the pipeline
+    * qos-query will return:
+      number of frames rendered
+      number of frames dropped
+    * print a nice table with the results
+      * QOS stats first
+    * writes a gnuplot data file
+      * list of 'streamtime,proportion,<drop>' tuples
+
+
+= core profiling =
+* scheduler keeps a list of usecs the process function of each element was
+  running
+* process functions are: loop, chain, get, they are driven by gst_pad_push() and
+  gst_pad_pull_range()
+* scheduler keeps a sum of all times
+* each gst-element has a profile_percentage field
+
+* when going to play
+  * scheduler sets sum and all usecs in the list to 0
+* when handling an element
+  * remember old usecs t_old
+  * take time t1
+  * call elements processing function
+  * take time t2
+  * t_new=t2-t1
+  * sum+=(t_new-t_old)
+  * profile_percentage=t_new/sum;
+  * should the percentage be averaged?
+     * profile_percentage=(profile_percentage+(t_new/sum))/2.0;
+
+* the profile_percentage shows how much CPU time the element uses in relation
+  to the whole pipeline
+
+= rusage + pad-probes =
+* check get_rusage() based cpu usage detection in buzztard
+  this together with pad_probes could gives us decent application level profiles
+* different elements
+  * 1:1 elements are easy to handle
+  * 0:1 elements need a start timer
+  * 1:0 elements need a end timer
+  * n:1, 1:m and n:m type elements are tricky
+    adapter based elements might have a fluctuating usage in addition
+  
+  // result data
+  struct {
+    beg_min,beg_max;
+    end_min,end_max;
+  } profile_data;
+
+  // install probes
+  gst_bin_iterate_elements(pipeline)
+    gst_element_iterate_pads(element)
+      if (gst_pad_get_direction(pad)==GST_PAD_SRC)
+        gst_pad_add_buffer_probe(pad,end_timer,profile_data)
+      else
+        gst_pad_add_buffer_probe(pad,beg_timer,profile_data)
+
+  // listen to bus state-change messages to
+  // * reset counters on NULL_TO_READY
+  // * print results on READY_TO_NULL
+
+= PerformanceMonitor =
+Write a ld-preload lib that can gather data from gstreamer and logs it to files.
+The idea is not avoid adding API for performance measurement to gstreamer.
+
+== Services ==
+library provides some common services used by the sensor modules.
+* logging
+* timestamps
+
+== Sensors ==
+Sensors do measurements and deliver timestampe performance data.
+* bitrates and latency via gst_pad_push/pull per link
+* qos ratio via gst_event_new_qos(), gst_pad_send_event()
+* cpu/mem via get_rusage
+  * when (gst_clock_get_time) ?
+  * we want it per thread
+* queue fill levels
+* number of
+  * threads
+  * open files
+
+== Wanted Sensors ==
+* dropped buffers
+
+== Log Format ==
+* we have global data, data per {link,element,thread}
+
+<timestamp> [<sensor-data>] [<sensor-data>]
+
+* sample
+timestamp [qos-ratio] [cpu-load={sum,17284,17285}]
+00126437  [0.5]       [0.7,0.2,0.5]
+00126437  [0.8]       [0.9,0.2,0.7]
+
+* questions
+** should we have the log config in the header or in some separate config?
+   - if config, we just specify the config when capturing put that
+     in the first log line
+   - otherwise the analyzer ui has to parse it from the first line
+
+== Running ==
+LD_PRELOAD=libgstperfmon.so GST_PERFMON_DETAILS="qos-ratio,cpu-load=all" <application>
+LD_PRELOAD=libgstperfmon.so GST_PERFMON_DETAILS="qos-ratio,cpu-load=sum" <application>
+LD_PRELOAD=libgstperfmon.so GST_PERFMON_DETAILS="*" <application>
+
+== Exploration
+pygtk ui, mathplotlib
+
+== Ideas ==
+* can be used in media test suite as a monitor
+

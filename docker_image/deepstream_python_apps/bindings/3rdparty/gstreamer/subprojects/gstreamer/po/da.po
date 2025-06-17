@@ -1,0 +1,1433 @@
+# translation of gstreamer to Danish
+# Copyright (C) 2019 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gstreamer package.
+# Mogens Jaeger <mogensjaeger@gmail.com>, 2007, 2010, 2013, 2014.
+# Joe Hansen <joedalton2@yahoo.dk>, 2015, 2016, 2017, 2019.
+#
+# conductor -> dirigent (https://lists.freedesktop.org/archives/gstreamer-commits/2016-February/092542.html)
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gstreamer 1.15.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-25 01:01+0100\n"
+"PO-Revision-Date: 2019-02-14 13:26+0200\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+msgid "Print the GStreamer version"
+msgstr "Udskriv GStreamer-versionsnummer"
+
+msgid "Make all warnings fatal"
+msgstr "Gør alle advarsler fatale"
+
+msgid "Print available debug categories and exit"
+msgstr "Udskriv tilgængelige fejlsøgningskategorier og afslut"
+
+msgid ""
+"Default debug level from 1 (only error) to 9 (anything) or 0 for no output"
+msgstr ""
+"Standard fejlsøgningsniveau fra 1 (kun fejl) til 9 (alt) eller 0 for ingen "
+"uddata"
+
+msgid "LEVEL"
+msgstr "NIVEAU"
+
+msgid ""
+"Comma-separated list of category_name:level pairs to set specific levels for "
+"the individual categories. Example: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+msgstr ""
+"Kommasepareret liste med kategori_navn:niveaupar til at indstille specifikke "
+"niveauer for de individuelle kategorier. Eksempel: GST_AUTOPLUG:5,"
+"GST_ELEMENT_*:3"
+
+msgid "LIST"
+msgstr "LISTE"
+
+msgid "Disable colored debugging output"
+msgstr "Deaktiver brug af farver ved fejlsøgnings uddata"
+
+msgid ""
+"Changes coloring mode of the debug log. Possible modes: off, on, disable, "
+"auto, unix"
+msgstr ""
+"Ændrer farvelægningstilstand  af debug-log. Mulige tilstande: til fra, "
+"deaktiveret, auto, unix"
+
+msgid "Disable debugging"
+msgstr "Deaktiver fejlsøgning"
+
+msgid "Enable verbose plugin loading diagnostics"
+msgstr "Aktiver udførlig diagnostik ved indlæsning af moduler"
+
+msgid "Colon-separated paths containing plugins"
+msgstr "Kolon-separerede stier der indeholder moduler"
+
+msgid "PATHS"
+msgstr "SØGESTIER"
+
+msgid ""
+"Comma-separated list of plugins to preload in addition to the list stored in "
+"environment variable GST_PLUGIN_PATH"
+msgstr ""
+"Kommasepareret liste af moduler der skal indlæses på forhånd ud over dem der "
+"er gemt i listen med miljøvariabler GST_PLUGIN_PATH"
+
+msgid "PLUGINS"
+msgstr "MODULER"
+
+msgid "Disable trapping of segmentation faults during plugin loading"
+msgstr "Deaktiver indfangning af segmentfejl under indlæsning af moduler"
+
+msgid "Disable updating the registry"
+msgstr "Deaktiver opdatering af registratur"
+
+msgid "Disable spawning a helper process while scanning the registry"
+msgstr "Deaktiver forgrening af hjælpeproces under skanning af registratur"
+
+msgid "GStreamer Options"
+msgstr "GStreamer indstillinger"
+
+msgid "Show GStreamer Options"
+msgstr "Vis GStreamer-indstillinger"
+
+#, c-format
+msgid "Unknown option"
+msgstr "Ukendt indstilling"
+
+msgid "GStreamer encountered a general core library error."
+msgstr "GStreamer opdagede en generel fejl i kernebiblioteket."
+
+msgid ""
+"GStreamer developers were too lazy to assign an error code to this error."
+msgstr ""
+"GStreamer-udviklerne har endnu ikke nået at tildele denne fejl en fejlkode."
+
+msgid "Internal GStreamer error: code not implemented."
+msgstr "Intern GStreamer-fejl: kode ikke implementeret."
+
+msgid ""
+"GStreamer error: state change failed and some element failed to post a "
+"proper error message with the reason for the failure."
+msgstr ""
+"GStreamer fejl: tilstandsskift fejlede, og det mislykkedes nogle processer "
+"at sende en ordentlig fejlmeddelelse med begrundelse for fejlen."
+
+msgid "Internal GStreamer error: pad problem."
+msgstr "Intern GStreamer fejl: kontaktproblem."
+
+msgid "Internal GStreamer error: thread problem."
+msgstr "Intern GStreamer fejl: problem med tråd."
+
+msgid "GStreamer error: negotiation problem."
+msgstr "GStreamer fejl: forhandlingsproblem."
+
+msgid "Internal GStreamer error: event problem."
+msgstr "Intern GStreamer fejl: hændelsesproblem."
+
+msgid "Internal GStreamer error: seek problem."
+msgstr "Intern GStreamer fejl: søgeproblem."
+
+msgid "Internal GStreamer error: caps problem."
+msgstr "Intern GStreamer fejl: kapabilitetsproblem."
+
+msgid "Internal GStreamer error: tag problem."
+msgstr "Intern GStreamer fejl: mærkatproblem."
+
+msgid "Your GStreamer installation is missing a plug-in."
+msgstr "Din GStreamer-installation mangler et modul."
+
+msgid "GStreamer error: clock problem."
+msgstr "GStreamer fejl: tidsproblem."
+
+msgid ""
+"This application is trying to use GStreamer functionality that has been "
+"disabled."
+msgstr ""
+"Denne tilføjelse prøver at bruge GStreamer-funktionalitet, der er blevet "
+"fravalgt."
+
+msgid "GStreamer encountered a general supporting library error."
+msgstr "GStreamer opdagede en fejl i det generelle hjælpebibliotek."
+
+msgid "Could not initialize supporting library."
+msgstr "Kunne ikke initiere hjælpebiblioteket."
+
+msgid "Could not close supporting library."
+msgstr "Kunne ikke lukke hjælpebiblioteket."
+
+msgid "Could not configure supporting library."
+msgstr "Kunne ikke konfigurere hjælpebiblioteket."
+
+msgid "Encoding error."
+msgstr "Kodningsfejl."
+
+msgid "GStreamer encountered a general resource error."
+msgstr "GStreamer opdagede en generel ressourcefejl."
+
+msgid "Resource not found."
+msgstr "Ressource ikke fundet."
+
+msgid "Resource busy or not available."
+msgstr "Ressource optaget eller ikke til rådighed."
+
+msgid "Could not open resource for reading."
+msgstr "Kunne ikke åbne ressource for læsning."
+
+msgid "Could not open resource for writing."
+msgstr "Kunne ikke åbne ressource for skrivning."
+
+msgid "Could not open resource for reading and writing."
+msgstr "Kunne ikke åbne ressource for læsning og skrivning."
+
+msgid "Could not close resource."
+msgstr "Kunne ikke lukke ressource."
+
+msgid "Could not read from resource."
+msgstr "Kunne ikke læse fra ressource."
+
+msgid "Could not write to resource."
+msgstr "Kunne ikke skrive til ressource."
+
+msgid "Could not perform seek on resource."
+msgstr "Kunne ikke udføre søgning på ressource."
+
+msgid "Could not synchronize on resource."
+msgstr "Kunne ikke synkronisere på ressource."
+
+msgid "Could not get/set settings from/on resource."
+msgstr "Kunne ikke hente/sætte indstillinger fra/på ressource."
+
+msgid "No space left on the resource."
+msgstr "Der er ikke mere ledig plads på ressourcen."
+
+msgid "Not authorized to access resource."
+msgstr "Ikke autoriseret til at tilgå ressourcen."
+
+msgid "GStreamer encountered a general stream error."
+msgstr "GStreamer opdagede en generel fejl i mediestrømmen."
+
+msgid "Element doesn't implement handling of this stream. Please file a bug."
+msgstr ""
+"Elementet har ikke implementeret håndtering af denne mediestrøm. Send en "
+"fejlrapport."
+
+msgid "Could not determine type of stream."
+msgstr "Kunne ikke bestemme mediestrømtype."
+
+msgid "The stream is of a different type than handled by this element."
+msgstr "Mediestrømmen er en anden type end den, dette element kan håndtere."
+
+msgid "There is no codec present that can handle the stream's type."
+msgstr ""
+"Der er ikke noget kodeformat tilstede, der kan håndtere en mediestrøm af "
+"denne type."
+
+msgid "Could not decode stream."
+msgstr "Kunne ikke afkode mediestrømmen."
+
+msgid "Could not encode stream."
+msgstr "Kunne ikke indkode mediestrømmen."
+
+msgid "Could not demultiplex stream."
+msgstr "Kunne ikke afmultiplekse mediestrømmen."
+
+msgid "Could not multiplex stream."
+msgstr "Kunne ikke multiplekse mediestrømmen."
+
+msgid "The stream is in the wrong format."
+msgstr "Mediestrømmen er i et forkert format."
+
+msgid "The stream is encrypted and decryption is not supported."
+msgstr "Mediestrømmen er kodet og afkodning er ikke understøttet."
+
+msgid ""
+"The stream is encrypted and can't be decrypted because no suitable key has "
+"been supplied."
+msgstr ""
+"Mediestrømmen er kodet og kan ikke afkodes fordi der ikke er givet en "
+"passende nøgle."
+
+#, c-format
+msgid "No error message for domain %s."
+msgstr "Ingen fejlmeddelelse for domæne %s."
+
+#, c-format
+msgid "No standard error message for domain %s and code %d."
+msgstr "Ingen standard fejlmeddelelse for domæne %s og kode %d."
+
+msgid "Selected clock cannot be used in pipeline."
+msgstr "Valgt tid kan ikke bruges i rørledningen."
+
+#, c-format
+msgid "Error writing registry cache to %s: %s"
+msgstr "Kunne ikke skrive registraturcache til %s: %s"
+
+msgid "title"
+msgstr "titel"
+
+msgid "commonly used title"
+msgstr "almindeligt brugt titel"
+
+msgid "title sortname"
+msgstr "sorteringsstreng for titel"
+
+msgid "commonly used title for sorting purposes"
+msgstr "almindeligt brugt titel til sorteringsbrug"
+
+msgid "artist"
+msgstr "kunstner"
+
+msgid "person(s) responsible for the recording"
+msgstr "personer ansvarlige for optagelsen"
+
+msgid "artist sortname"
+msgstr "sorteringsstreng for kunstner"
+
+msgid "person(s) responsible for the recording for sorting purposes"
+msgstr "person, der er ansvarlig for optagelsen, til sorteringsbrug"
+
+msgid "album"
+msgstr "album"
+
+msgid "album containing this data"
+msgstr "album der indeholder disse data"
+
+msgid "album sortname"
+msgstr "sorteringsstreng for album"
+
+msgid "album containing this data for sorting purposes"
+msgstr "album der indeholder disse data, til sorteringsbrug"
+
+msgid "album artist"
+msgstr "albumkunstner"
+
+msgid "The artist of the entire album, as it should be displayed"
+msgstr "Kunstneren for hele albummet, som det skal vises"
+
+msgid "album artist sortname"
+msgstr "sorteringsstreng for albumkunstner"
+
+msgid "The artist of the entire album, as it should be sorted"
+msgstr "Kunstneren for hele albummet, til sorteringsbrug"
+
+msgid "date"
+msgstr "dato"
+
+msgid "date the data was created (as a GDate structure)"
+msgstr "dato for oprettelse af data (som i en Gregoriansk datostruktur)"
+
+msgid "datetime"
+msgstr "dato og tid"
+
+msgid "date and time the data was created (as a GstDateTime structure)"
+msgstr "dato og tid for oprettelse af data (som en GstDate Time-struktur)"
+
+msgid "genre"
+msgstr "genre"
+
+msgid "genre this data belongs to"
+msgstr "genre disse data tilhører"
+
+msgid "comment"
+msgstr "kommentar"
+
+msgid "free text commenting the data"
+msgstr "fri kommentartekst til dataene"
+
+msgid "extended comment"
+msgstr "udvidet kommentar"
+
+msgid "free text commenting the data in key=value or key[en]=comment form"
+msgstr ""
+"fri kommentartekst til dataene i taste=værdi eller taste[en]=kommentar form"
+
+msgid "track number"
+msgstr "spornummer"
+
+msgid "track number inside a collection"
+msgstr "spornummer inden for en samling"
+
+msgid "track count"
+msgstr "sportælling"
+
+msgid "count of tracks inside collection this track belongs to"
+msgstr "tælling af spor inden for den samling dette spor tilhører"
+
+msgid "disc number"
+msgstr "skivenummer"
+
+msgid "disc number inside a collection"
+msgstr "skivenummer inden for en samling"
+
+msgid "disc count"
+msgstr "skivetælling"
+
+msgid "count of discs inside collection this disc belongs to"
+msgstr "tælling af skiver indenfor den samling denne skive tilhører"
+
+msgid "location"
+msgstr "sted"
+
+msgid ""
+"Origin of media as a URI (location, where the original of the file or stream "
+"is hosted)"
+msgstr ""
+"Mediets oprindelse som en URI (adressen, hvor den originale fil eller strøm "
+"er)"
+
+msgid "homepage"
+msgstr "hjemmeside"
+
+msgid "Homepage for this media (i.e. artist or movie homepage)"
+msgstr "Mediets hjemmeside (dvs. hjemmeside for kunstner eller film)"
+
+msgid "description"
+msgstr "beskrivelse"
+
+msgid "short text describing the content of the data"
+msgstr "kort tekst der beskriver indholdet i dataene"
+
+msgid "version"
+msgstr "version"
+
+msgid "version of this data"
+msgstr "version af disse data"
+
+msgid "ISRC"
+msgstr "ISRC"
+
+msgid "International Standard Recording Code - see http://www.ifpi.org/isrc/"
+msgstr "International Standard Recording Code - se http://www.ifpi.org/isrc/"
+
+msgid "organization"
+msgstr "organisation"
+
+msgid "copyright"
+msgstr "ophavsret"
+
+msgid "copyright notice of the data"
+msgstr "ophavsretsnotits for dataene"
+
+msgid "copyright uri"
+msgstr "URI med ophavsret"
+
+msgid "URI to the copyright notice of the data"
+msgstr "URI til ophavsretsnotits for dataene"
+
+msgid "encoded by"
+msgstr "indkodet af"
+
+msgid "name of the encoding person or organization"
+msgstr "navn på indkodende person eller organisation"
+
+msgid "contact"
+msgstr "kontakt"
+
+msgid "contact information"
+msgstr "kontaktinformation"
+
+msgid "license"
+msgstr "licens"
+
+msgid "license of data"
+msgstr "licens for data"
+
+msgid "license uri"
+msgstr "URI med licens"
+
+msgid "URI to the license of the data"
+msgstr "URI til licens for data"
+
+msgid "performer"
+msgstr "optrædende"
+
+msgid "person(s) performing"
+msgstr "personer der optræder"
+
+msgid "composer"
+msgstr "komponist"
+
+msgid "person(s) who composed the recording"
+msgstr "person(er) der komponerede optagelsen"
+
+msgid "conductor"
+msgstr "dirigent"
+
+# Jeg tror "refinement" refererer til at de skelner bedre mellem hvem
+# der dirigerer og opfører.  F.eks. står der oftest navne på dirigent
+# samt solister i koncerter, og/eller de vigtigste sangere (opera osv.)
+# Måske man kan erstatte det med -angivelse eller noget andet indirekte.  Ideer?
+msgid "conductor/performer refinement"
+msgstr "dirigent/opfører-angivelse"
+
+msgid "duration"
+msgstr "varighed"
+
+msgid "length in GStreamer time units (nanoseconds)"
+msgstr "længde i GStreamer-tidsenheder (nanosekunder)"
+
+msgid "codec"
+msgstr "kodeformat"
+
+msgid "codec the data is stored in"
+msgstr "det kodeformat dataene er gemt i"
+
+msgid "video codec"
+msgstr "kodningsformat for billeder"
+
+msgid "codec the video data is stored in"
+msgstr "det kodeformat videodataene er gemt i"
+
+msgid "audio codec"
+msgstr "kodningsformat for lyd"
+
+msgid "codec the audio data is stored in"
+msgstr "det lydkodeformat dataene er gemt i"
+
+msgid "subtitle codec"
+msgstr "kodningsformat for undertekster"
+
+msgid "codec the subtitle data is stored in"
+msgstr "det kodeformat, underteksterne er gemt i"
+
+msgid "container format"
+msgstr "beholderformat"
+
+msgid "container format the data is stored in"
+msgstr "det beholderformat dataene er gemt i"
+
+msgid "bitrate"
+msgstr "bithastighed"
+
+msgid "exact or average bitrate in bits/s"
+msgstr "præcis eller gennemsnitlig bithastighed i bit/sekund"
+
+msgid "nominal bitrate"
+msgstr "faktisk bithastighed"
+
+msgid "nominal bitrate in bits/s"
+msgstr "faktisk bithastighed i bit/sekund"
+
+msgid "minimum bitrate"
+msgstr "minimal bithastighed"
+
+msgid "minimum bitrate in bits/s"
+msgstr "minimal bithastighed i bit/sekund"
+
+msgid "maximum bitrate"
+msgstr "maksimal bithastighed"
+
+msgid "maximum bitrate in bits/s"
+msgstr "maksimal bithastighed i bit/sekund"
+
+msgid "encoder"
+msgstr "indkoder"
+
+msgid "encoder used to encode this stream"
+msgstr "indkoder der bruges til denne mediestrøm"
+
+msgid "encoder version"
+msgstr "indkoder version"
+
+msgid "version of the encoder used to encode this stream"
+msgstr "koderversion brugt til indkodning af denne mediestrøm"
+
+msgid "serial"
+msgstr "serie"
+
+msgid "serial number of track"
+msgstr "serienummer på spor"
+
+msgid "replaygain track gain"
+msgstr "genspilningsforstærkning sporforstærkning"
+
+msgid "track gain in db"
+msgstr "sporforstærkning i dB"
+
+msgid "replaygain track peak"
+msgstr "genspilningsforstærkning spor maksimum"
+
+msgid "peak of the track"
+msgstr "sporets maksimum"
+
+msgid "replaygain album gain"
+msgstr "genspilningsforstærkning albumforstærkning"
+
+msgid "album gain in db"
+msgstr "albumforstærkning i dB"
+
+msgid "replaygain album peak"
+msgstr "genspilningsforstærkning album maksimum"
+
+msgid "peak of the album"
+msgstr "albummets maksimum"
+
+msgid "replaygain reference level"
+msgstr "genspilningsforstærkning referenceniveau"
+
+msgid "reference level of track and album gain values"
+msgstr "referenceniveau for spor og albums forstærkningsværdier"
+
+msgid "language code"
+msgstr "sprogkode"
+
+msgid "language code for this stream, conforming to ISO-639-1 or ISO-639-2"
+msgstr ""
+"sprogkode for denne mediestrøm, i overensstemmelse med ISO-639-1 eller "
+"ISO-639-2"
+
+msgid "language name"
+msgstr "sprognavn"
+
+msgid "freeform name of the language this stream is in"
+msgstr "friform navn på det sprog denne mediestrøm er i"
+
+msgid "image"
+msgstr "billede"
+
+msgid "image related to this stream"
+msgstr "billede relateret til denne mediestrøm"
+
+#. TRANSLATORS: 'preview image' = image that shows a preview of the full image
+msgid "preview image"
+msgstr "forhåndsvis billede"
+
+msgid "preview image related to this stream"
+msgstr "forhåndsvis billede relateret til denne mediestrøm"
+
+msgid "attachment"
+msgstr "vedhæftning"
+
+msgid "file attached to this stream"
+msgstr "fil vedhæftet denne mediestrøm"
+
+msgid "beats per minute"
+msgstr "slag pr. minut"
+
+msgid "number of beats per minute in audio"
+msgstr "antal slag pr. minut ved audio"
+
+msgid "keywords"
+msgstr "nøgleord"
+
+msgid "comma separated keywords describing the content"
+msgstr "kommaseparerede nøgleord der beskriver indholdet"
+
+msgid "geo location name"
+msgstr "geografisk stednavn"
+
+msgid ""
+"human readable descriptive location of where the media has been recorded or "
+"produced"
+msgstr ""
+"læsbar stedbeskrivelse af hvor mediet er blevet optaget eller produceret"
+
+msgid "geo location latitude"
+msgstr "geografisk breddegrad"
+
+msgid ""
+"geo latitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the equator, negative values for "
+"southern latitudes)"
+msgstr ""
+"geografisk breddegrad hvor mediet er blevet optaget eller produceret, i "
+"grader efter WGS84 (ækvator er nul, og sydlige breddegrader er negative)"
+
+msgid "geo location longitude"
+msgstr "geografisk længdegrad"
+
+msgid ""
+"geo longitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the prime meridian in Greenwich/UK,  "
+"negative values for western longitudes)"
+msgstr ""
+"geografisk længdegrad hvor mediet er blevet optaget eller produceret, i "
+"grader efter WGS84 (Greenwich/UK er nul, og vestlige længdegrader er "
+"negative)"
+
+msgid "geo location elevation"
+msgstr "geografisk højde"
+
+msgid ""
+"geo elevation of where the media has been recorded or produced in meters "
+"according to WGS84 (zero is average sea level)"
+msgstr ""
+"geografisk højde hvor mediet er blevet optaget eller produceret, i meter "
+"efter WGS84 (gennemsnitlig vandstand er nul)"
+
+msgid "geo location country"
+msgstr "geografisk placering land"
+
+msgid "country (english name) where the media has been recorded or produced"
+msgstr "land (dansk navn) hvor mediet er blevet optaget eller produceret"
+
+msgid "geo location city"
+msgstr "geografisk by"
+
+msgid "city (english name) where the media has been recorded or produced"
+msgstr "by (dansk navn) hvor mediet er blevet optaget eller produceret"
+
+msgid "geo location sublocation"
+msgstr "geografisk underinddeling"
+
+msgid ""
+"a location within a city where the media has been produced or created (e.g. "
+"the neighborhood)"
+msgstr ""
+"en stedangivelse indenfor en by hvor mediet er blevet optaget eller "
+"produceret (f.eks. nabolaget)"
+
+msgid "geo location horizontal error"
+msgstr "geografisk placering horisontalfejl"
+
+msgid "expected error of the horizontal positioning measures (in meters)"
+msgstr "forventet fejl i den horisontale positionsangivelse (i meter)"
+
+msgid "geo location movement speed"
+msgstr "geografisk bevægelseshastighed"
+
+msgid ""
+"movement speed of the capturing device while performing the capture in m/s"
+msgstr "bevægelseshastighed af det optagende udstyr under optagelsen i m/s"
+
+msgid "geo location movement direction"
+msgstr "geografisk bevægelsesretning"
+
+msgid ""
+"indicates the movement direction of the device performing the capture of a "
+"media. It is represented as degrees in floating point representation, 0 "
+"means the geographic north, and increases clockwise"
+msgstr ""
+"angiver optageretningen for udstyret der optog mediet. Det angives med "
+"kommatal, hvor 0 er geografisk nord, og kommatallet øges med urets retning"
+
+msgid "geo location capture direction"
+msgstr "geografisk optagelsesretning"
+
+msgid ""
+"indicates the direction the device is pointing to when capturing  a media. "
+"It is represented as degrees in floating point  representation, 0 means the "
+"geographic north, and increases clockwise"
+msgstr ""
+"angiver optageretningen for udstyret der optog mediet. Det angives med "
+"kommatal, hvor 0 er geografisk nord, og kommatallet øges med urets retning"
+
+#. TRANSLATORS: 'show name' = 'TV/radio/podcast show name' here
+msgid "show name"
+msgstr "udsendelsens navn"
+
+msgid "Name of the tv/podcast/series show the media is from"
+msgstr "Navnet på serien tv- eller podcastudsendelsen mediet stammer fra"
+
+#. TRANSLATORS: 'show sortname' = 'TV/radio/podcast show name as used for sorting purposes' here
+msgid "show sortname"
+msgstr "sorteringsstreng for udsendelsen"
+
+msgid ""
+"Name of the tv/podcast/series show the media is from, for sorting purposes"
+msgstr ""
+"Navnet på serien tv- eller podcastudsendelsen mediet stammer fra, til "
+"sorteringsbrug"
+
+msgid "episode number"
+msgstr "episodenummer"
+
+msgid "The episode number in the season the media is part of"
+msgstr "Episodenumme i den årgang mediet stammer fra"
+
+msgid "season number"
+msgstr "sæsonnummer"
+
+msgid "The season number of the show the media is part of"
+msgstr "Sæsonnummeret som udsendelsen i mediet stammer fra"
+
+msgid "lyrics"
+msgstr "sangtekst"
+
+msgid "The lyrics of the media, commonly used for songs"
+msgstr "Sangteksten i mediet, almindeligt brugt for sange"
+
+msgid "composer sortname"
+msgstr "sorteringsstreng for komponist"
+
+msgid "person(s) who composed the recording, for sorting purposes"
+msgstr "person(er) der komponerede optagelsen, til sorteringsbrug"
+
+msgid "grouping"
+msgstr "gruppering"
+
+msgid ""
+"Groups related media that spans multiple tracks, like the different pieces "
+"of a concerto. It is a higher level than a track, but lower than an album"
+msgstr ""
+"Grupperelateret medie der spænder over flere numre, som f.eks. de "
+"forskellige satser i en koncert. Det har højere niveau end et spor, og "
+"lavere end et album"
+
+msgid "user rating"
+msgstr "brugervurdering"
+
+msgid ""
+"Rating attributed by a user. The higher the rank, the more the user likes "
+"this media"
+msgstr ""
+"Vurdering tildelt af en bruger. Jo højere rangering, desto bedre kan "
+"brugeren lide mediet"
+
+msgid "device manufacturer"
+msgstr "fremstiller af udstyret"
+
+msgid "Manufacturer of the device used to create this media"
+msgstr "Fremstiller af udstyret der er brugt til at oprette dette medie"
+
+msgid "device model"
+msgstr "udstyrets model"
+
+msgid "Model of the device used to create this media"
+msgstr "Model af det udstyr der er brugt til at fremstille mediet"
+
+msgid "application name"
+msgstr "programnavn"
+
+msgid "Application used to create the media"
+msgstr "Program brugt til at oprette mediet"
+
+msgid "application data"
+msgstr "programdata"
+
+msgid "Arbitrary application data to be serialized into the media"
+msgstr "Vilkårlige programdata der skal gemmes i mediet"
+
+msgid "image orientation"
+msgstr "billedets orientering"
+
+msgid "How the image should be rotated or flipped before display"
+msgstr "Hvordan et billede skal roteres eller vendes før visning"
+
+msgid "publisher"
+msgstr "udgiver"
+
+msgid "Name of the label or publisher"
+msgstr "Mærke eller udgiver navn"
+
+msgid "interpreted-by"
+msgstr "fortolket-af"
+
+msgid "Information about the people behind a remix and similar interpretations"
+msgstr "Information om personerne bag et remix og lignende fortolkninger"
+
+msgid "midi-base-note"
+msgstr "midi-base-node"
+
+msgid "Midi note number of the audio track."
+msgstr "Midi-nodenummer på lydsporet."
+
+msgid "private-data"
+msgstr "private-data"
+
+msgid "Private data"
+msgstr "Private data"
+
+#. separator between two strings
+msgid ", "
+msgstr ", "
+
+#, c-format
+msgid "Invalid URI: %s"
+msgstr ""
+
+#, c-format
+msgid "No URI handler for the %s protocol found"
+msgstr "Ingen URI fortolker fundet til %s protokollen"
+
+#, c-format
+msgid "URI scheme '%s' not supported"
+msgstr "URI skemaet '%s' er ikke understøttet"
+
+#, c-format
+msgid "ERROR: from element %s: %s\n"
+msgstr "FEJL: fra element %s: %s\n"
+
+#, c-format
+msgid ""
+"Additional debug info:\n"
+"%s\n"
+msgstr ""
+"Yderligere fejlsøgningsinformation:\n"
+"%s\n"
+
+#. ******************************************************************************************
+#. *** helpers for pipeline-setup
+#. ******************************************************************************************
+#, c-format
+msgid "link has no source [sink=%s@%p]"
+msgstr "Henvisningen har ingen kilde [sink=%s@%p]"
+
+#, c-format
+msgid "link has no sink [source=%s@%p]"
+msgstr "Henvisningen har ingen destination [kilde=%s@%p]"
+
+#, c-format
+msgid "no property \"%s\" in element \"%s\""
+msgstr "ingen egenskab \"%s\" for element \"%s\""
+
+#, c-format
+msgid "could not set property \"%s\" in element \"%s\" to \"%s\""
+msgstr "kunne ikke sætte egenskab \"%s\" for element \"%s\" til \"%s\""
+
+#, fuzzy, c-format
+msgid "Element \"%s\" is not a GstPreset"
+msgstr "Filen \"%s\" er en sokkel."
+
+#, fuzzy, c-format
+msgid "could not set preset \"%s\" in element \"%s\""
+msgstr "kunne ikke sætte egenskab \"%s\" for element \"%s\" til \"%s\""
+
+msgid "Delayed linking failed."
+msgstr "Forsinket oprettelse af forbindelse mislykkedes."
+
+#, c-format
+msgid "could not link %s to %s, %s can't handle caps %s"
+msgstr "kunne ikke lænke %s til %s, %s kan ikke håndtere store bogstaver %s"
+
+#, c-format
+msgid "could not link %s to %s, neither element can handle caps %s"
+msgstr ""
+"kunne ikke lænke %s til %s, ingen af elementerne kan håndtere store "
+"bogstaver %s"
+
+#, c-format
+msgid "could not link %s to %s with caps %s"
+msgstr "kunne ikke lænke %s til %s med store bogstaver %s"
+
+#, c-format
+msgid "could not link %s to %s"
+msgstr "kunne ikke lænke %s til %s"
+
+#, c-format
+msgid "no element \"%s\""
+msgstr "intet element \"%s\""
+
+#, c-format
+msgid "unexpected reference \"%s\" - ignoring"
+msgstr "uventet reference \"%s\" - ignorerer"
+
+#, c-format
+msgid "unexpected pad-reference \"%s\" - ignoring"
+msgstr "uventet pad-reference \"%s\" - ignorerer"
+
+#, c-format
+msgid "could not parse caps \"%s\""
+msgstr "kunne ikke tolke kapabiliteten \"%s\""
+
+#, c-format
+msgid "no sink element for URI \"%s\""
+msgstr "intet udgangselement for URI \"%s\""
+
+#, c-format
+msgid "no source element for URI \"%s\""
+msgstr "intet kildeelement for URI \"%s\""
+
+msgid "syntax error"
+msgstr "syntaksfejl"
+
+#, c-format
+msgid "specified empty bin \"%s\", not allowed"
+msgstr "specificeret tomt lager \"%s\", er ikke tilladt"
+
+#, c-format
+msgid "no bin \"%s\", unpacking elements"
+msgstr "intet lager \"%s\", udpakker elementer"
+
+msgid "empty pipeline not allowed"
+msgstr "tom rørledning ikke tilladt"
+
+msgid "Pipeline construction is invalid, please add queues."
+msgstr "Datakanalkonstruktion er ugyldig, tilføj venligst køer."
+
+msgid "A lot of buffers are being dropped."
+msgstr "En masse af bufferens indhold smides væk."
+
+msgid "Internal data flow problem."
+msgstr "Intern datastrømsproblem."
+
+msgid "Internal data flow error."
+msgstr "Intern datastrømsfejl."
+
+msgid "Internal clock error."
+msgstr "Fejl i internt ur."
+
+# Ingen idé om hvad de mener med map her, men "behandling" eller
+# muligvis kortlægge kunne også dække.  Men det kan sagtens ske at
+# oversætte virker også...
+msgid "Failed to map buffer."
+msgstr "Fejlede ved behandling af buffer."
+
+msgid "Filter caps"
+msgstr "Filterkapabilitet"
+
+msgid ""
+"Restrict the possible allowed capabilities (NULL means ANY). Setting this "
+"property takes a reference to the supplied GstCaps object."
+msgstr ""
+"Begræns den mulige tilladte kapabilitet (NUL betyder ALT). Sættes denne "
+"egenskab gives en reference til det leverede GstCaps objekt."
+
+msgid "Caps Change Mode"
+msgstr "Caps-ændringstilstand"
+
+msgid "Filter caps change behaviour"
+msgstr "Filtrer caps-ændringsopførsel"
+
+msgid "No Temp directory specified."
+msgstr "Der er ikke angivet en mappe til midlertidige filer."
+
+#, c-format
+msgid "Could not create temp file \"%s\"."
+msgstr "Kunne ikke oprette den midlertidige fil \"%s\"."
+
+#, c-format
+msgid "Could not open file \"%s\" for reading."
+msgstr "Kunne ikke åbne filen \"%s\" for læsning."
+
+msgid "Error while writing to download file."
+msgstr "Fejl under skrivning til downloadfilen."
+
+msgid "No file name specified for writing."
+msgstr "Intet filnavn specificeret for skrivning."
+
+#, c-format
+msgid "Could not open file \"%s\" for writing."
+msgstr "Kunne ikke åbne filen \"%s\" for skrivning."
+
+#, c-format
+msgid "Error closing file \"%s\"."
+msgstr "Fejl ved lukning af filen \"%s\"."
+
+#, c-format
+msgid "Error while seeking in file \"%s\"."
+msgstr "Fejl under søgning i filen \"%s\"."
+
+#, c-format
+msgid "Error while writing to file \"%s\"."
+msgstr "Fejl under skrivning til filen \"%s\"."
+
+msgid "No file name specified for reading."
+msgstr "Intet filnavn specificeret for læsning."
+
+#, c-format
+msgid "Could not get info on \"%s\"."
+msgstr "Kunne ikke hente info til \"%s\"."
+
+#, c-format
+msgid "\"%s\" is a directory."
+msgstr "\"%s\" er et katalog."
+
+#, c-format
+msgid "File \"%s\" is a socket."
+msgstr "Filen \"%s\" er en sokkel."
+
+msgid "Failed after iterations as requested."
+msgstr "Fejlede efter iterationer som forespurgt."
+
+msgid "eos-after and error-after can't both be defined."
+msgstr "eos-after og error-after kan ikke begge være defineret."
+
+msgid "caps"
+msgstr "kapabiliteter"
+
+msgid "detected capabilities in stream"
+msgstr "konstateret kapabilitet i mediestrøm"
+
+msgid "minimum"
+msgstr "minimum"
+
+msgid "force caps"
+msgstr "gennemtving kapabiliteter"
+
+# typefind - oversættes med ?????
+msgid "force caps without doing a typefind"
+msgstr "gennemtving kapabiliteter uden at gennemføre en typefind"
+
+msgid "Stream doesn't contain enough data."
+msgstr "Strøm indeholder ikke nok data."
+
+msgid "Stream contains no data."
+msgstr "Mediestrøm indeholder ingen data."
+
+#, c-format
+msgid "%sImplemented Interfaces%s:\n"
+msgstr "%sImplementerede grænseflader%s:\n"
+
+msgid "readable"
+msgstr "læselig"
+
+msgid "writable"
+msgstr "som kan skrives"
+
+msgid "deprecated"
+msgstr "forældet"
+
+msgid "controllable"
+msgstr "kontrollerbar"
+
+#, fuzzy
+msgid "conditionally available"
+msgstr "kontrollerbar"
+
+msgid "changeable in NULL, READY, PAUSED or PLAYING state"
+msgstr "kan ændres i tilstandene NULL, READY, PAUSED eller PLAYING"
+
+msgid "changeable only in NULL, READY or PAUSED state"
+msgstr "kan kun ændres i tilstandene NULL, READY eller PAUSED"
+
+msgid "changeable only in NULL or READY state"
+msgstr "kan kun ændres i tilstandene NULL eller READY"
+
+msgid "Blacklisted files:"
+msgstr "Sortlistede filer:"
+
+#, c-format
+msgid "%sTotal count%s: %s"
+msgstr "%sSamlet antal%s: %s"
+
+#, c-format
+msgid "%d blacklisted file"
+msgid_plural "%d blacklisted files"
+msgstr[0] "%d sortlistet fil"
+msgstr[1] "%d sortlistede filer"
+
+#, c-format
+msgid "%d plugin"
+msgid_plural "%d plugins"
+msgstr[0] "%d plugin"
+msgstr[1] "%d plugin"
+
+#, c-format
+msgid "%d blacklist entry"
+msgid_plural "%d blacklist entries"
+msgstr[0] "%d sortlistet indgang"
+msgstr[1] "%d sortlistede indgange"
+
+#, c-format
+msgid "%d feature"
+msgid_plural "%d features"
+msgstr[0] "%d egenskab"
+msgstr[1] "%d egenskaber"
+
+msgid "Print all elements"
+msgstr "Udskriv alle elementer"
+
+msgid "Print list of blacklisted files"
+msgstr "Udskriv sortlistede filer"
+
+msgid ""
+"Print a machine-parsable list of features the specified plugin or all "
+"plugins provide.\n"
+"                                       Useful in connection with external "
+"automatic plugin installation mechanisms"
+msgstr ""
+"Udskriv en liste over egenskaber, som det angivne udvidelsemodul eller alle "
+"udvidelsesmoduler tilbyder, i et format der kan fortolkes af andre "
+"programmer.\n"
+"                                        Bruges i forbindelse med automatisk "
+"installation af udvidelsesmoduler."
+
+msgid "List the plugin contents"
+msgstr "Oplist udvidelsesmodulets indhold"
+
+msgid ""
+"A slashes ('/') separated list of types of elements (also known as klass) to "
+"list. (unordered)"
+msgstr ""
+"En skråstregsadskilt (»/«) liste af elementtyper (også kendt som klass) der "
+"skal vises. (usorteret)"
+
+msgid "Check if the specified element or plugin exists"
+msgstr "Kontroller om det angivne element eller plugin eksisterer"
+
+msgid ""
+"When checking if an element or plugin exists, also check that its version is "
+"at least the version specified"
+msgstr ""
+"Ved kontrol af om et element eller et plugin eksisterer, kontroller da også "
+"om versionen i det mindste er den specificerede version"
+
+msgid "Print supported URI schemes, with the elements that implement them"
+msgstr ""
+"Vis hvilke URI-skemaer der understøttes, sammen med de elementer, der "
+"implementerer dem."
+
+#, fuzzy
+msgid ""
+"Disable colors in output. You can also achieve the same by setting "
+"'GST_INSPECT_NO_COLORS' environment variable to any value."
+msgstr ""
+"Deaktiver farver i resultatet. Du kan også opnå det samme ved at give "
+"miljøvariablen GST_INSPECT_NO_COLORS en værdi."
+
+msgid "Color output, even when not sending to a tty."
+msgstr ""
+
+#, c-format
+msgid "Could not load plugin file: %s\n"
+msgstr "Kunne ikke indlæse pluginfilen: %s\n"
+
+#, c-format
+msgid "No such element or plugin '%s'\n"
+msgstr "Et sådant element eller plugin findes ikke '%s'\n"
+
+msgid "Index statistics"
+msgstr "Indeks statistikker"
+
+msgid "Setting pipeline to PLAYING ...\n"
+msgstr "Rørledning sættes til AFSPIL ...\n"
+
+msgid "ERROR: pipeline doesn't want to play.\n"
+msgstr "FEJL: rørledning ønsker ikke at spille.\n"
+
+#, c-format
+msgid "Got message #%u from element \"%s\" (%s): "
+msgstr "Modtog beskeden #%u fra elementet \"%s\" (%s): "
+
+#, c-format
+msgid "Got message #%u from pad \"%s:%s\" (%s): "
+msgstr "Modtog beskeden #%u fra enheden \"%s:%s\" (%s): "
+
+#, c-format
+msgid "Got message #%u from object \"%s\" (%s): "
+msgstr "Modtog beskeden #%u fra objektet \"%s\" (%s): "
+
+#, c-format
+msgid "Got message #%u (%s): "
+msgstr "Modtog beskeden #%u (%s): "
+
+#, c-format
+msgid "Got EOS from element \"%s\".\n"
+msgstr "Modtog medieslut fra element \"%s\".\n"
+
+msgid "EOS received - stopping pipeline...\n"
+msgstr "Medieslut modtaget - stopper rørledning...\n"
+
+#, c-format
+msgid "FOUND TAG      : found by element \"%s\".\n"
+msgstr "FUNDET MÆRKAT       : fundet af element \"%s\".\n"
+
+#, c-format
+msgid "FOUND TAG      : found by pad \"%s:%s\".\n"
+msgstr "FUNDET MÆRKAT       : fundet af enheden \"%s:%s\".\n"
+
+#, c-format
+msgid "FOUND TAG      : found by object \"%s\".\n"
+msgstr "FUNDET MÆRKAT       : fundet af objektet \"%s\".\n"
+
+msgid "FOUND TAG\n"
+msgstr "FUNDET MÆRKAT\n"
+
+#, c-format
+msgid "FOUND TOC      : found by element \"%s\".\n"
+msgstr "FUNDET TOC       : fundet af element \"%s\".\n"
+
+#, c-format
+msgid "FOUND TOC      : found by object \"%s\".\n"
+msgstr "FUNDET TOC       : fundet af objektet \"%s\".\n"
+
+msgid "FOUND TOC\n"
+msgstr "FUNDET TOC\n"
+
+#, c-format
+msgid ""
+"INFO:\n"
+"%s\n"
+msgstr ""
+"INFO:\n"
+"%s\n"
+
+#, c-format
+msgid "WARNING: from element %s: %s\n"
+msgstr "ADVARSEL: fra element %s: %s\n"
+
+msgid "Pipeline is PREROLLED ...\n"
+msgstr "Rørledningen er PREROLL'ed ...\n"
+
+# Ingen anelse
+msgid "Prerolled, waiting for buffering to finish...\n"
+msgstr "Prerolled, venter på at bufferingen slutter...\n"
+
+# Ingen anelse
+msgid "Prerolled, waiting for progress to finish...\n"
+msgstr "Prerolled, venter på at fremdrift afslutter...\n"
+
+msgid "buffering..."
+msgstr "indlæser i buffer..."
+
+msgid "Done buffering, setting pipeline to PLAYING ...\n"
+msgstr "Buffering færdig, sætter rørledning til PLAYING ...\n"
+
+#. we were not buffering but PLAYING, PAUSE  the pipeline.
+msgid "Buffering, setting pipeline to PAUSED ...\n"
+msgstr "Indlæser i buffer, sætter rørledning til PAUSED ...\n"
+
+msgid "Redistribute latency...\n"
+msgstr "Omlægger ventetid...\n"
+
+#, c-format
+msgid "Setting state to %s as requested by %s...\n"
+msgstr "Sætter tilstand til %s som krævet af %s...\n"
+
+#. this application message is posted when we caught an interrupt and
+#. * we need to stop the pipeline.
+msgid "Interrupt: Stopping pipeline ...\n"
+msgstr "Afbrydelse: Stopper rørledning...\n"
+
+msgid "Interrupt while waiting for EOS - stopping pipeline...\n"
+msgstr "Afbrydelse afventende EOS  - stopper rørledning...\n"
+
+msgid "EOS on shutdown enabled -- Forcing EOS on the pipeline\n"
+msgstr ""
+"Medieslut ved nedlukning aktiveret -- Gennemtving medieslut på rørledningen\n"
+
+msgid "Waiting for EOS...\n"
+msgstr "Venter på medieslut...\n"
+
+#, c-format
+msgid "Progress: (%s) %s\n"
+msgstr "Fremdrift: (%s) %s\n"
+
+#, c-format
+msgid "Missing element: %s\n"
+msgstr "Manglende element: %s\n"
+
+#, c-format
+msgid "Got context from element '%s': %s=%s\n"
+msgstr "Fik kontekst fra element '%s': %s=%s\n"
+
+msgid "ERROR: pipeline doesn't want to preroll.\n"
+msgstr "FEJL: rørledning ønsker ikke at preroll.\n"
+
+msgid "An error happened while waiting for EOS\n"
+msgstr "Der opstod en fejl mens der ventedes på medieslut\n"
+
+#, c-format
+msgid "Use Windows high-resolution clock, precision: %u ms\n"
+msgstr ""
+
+msgid "Output tags (also known as metadata)"
+msgstr "Uddatamærkater (også kendt som metadata)"
+
+msgid "Output TOC (chapters and editions)"
+msgstr "Uddata TOC (kapitler og versioner)"
+
+msgid "Output status information and property notifications"
+msgstr "Uddata statusinformation og egenskabsmeddelelser"
+
+msgid "Do not print any progress information"
+msgstr "Udskriv ikke information om fremskridt"
+
+msgid "Output messages"
+msgstr "Uddatameddelelser"
+
+msgid ""
+"Do not output status information for the specified property if verbose "
+"output is enabled (can be used multiple times)"
+msgstr ""
+"Vis ikke statusinformation for den specificerede egenskab hvis uddybende "
+"uddata er aktiveret (kan bruges flere gange)"
+
+msgid "PROPERTY-NAME"
+msgstr "EGENSKABSNAVN"
+
+msgid "Do not install a fault handler"
+msgstr "Installer ikke en fejlhåndterer"
+
+msgid "Force EOS on sources before shutting the pipeline down"
+msgstr "Gennemtving medieslut på kilder før nedlukning af rørledning"
+
+msgid "Gather and print index statistics"
+msgstr "Saml og udskriv indeks statistikker"
+
+msgid ""
+"Do not print current position of pipeline. If this option is unspecified, "
+"the position will be printed when stdout is a TTY. To enable printing "
+"position when stdout is not a TTY, use \"force-position\" option"
+msgstr ""
+
+msgid ""
+"Allow printing current position of pipeline even if stdout is not a TTY. "
+"This option has no effect if the \"no-position\" option is specified"
+msgstr ""
+
+#, c-format
+msgid "ERROR: pipeline could not be constructed: %s.\n"
+msgstr "FEJL: rørledningen kunne ikke dannes: %s.\n"
+
+msgid "ERROR: pipeline could not be constructed.\n"
+msgstr "FEJL: rørledningen kunne ikke dannes.\n"
+
+#, c-format
+msgid "WARNING: erroneous pipeline: %s\n"
+msgstr "ADVARSEL: forkert rørledning: %s\n"
+
+msgid "ERROR: the 'pipeline' element wasn't found.\n"
+msgstr "FEJL: elementet 'rørledning' blev ikke fundet.\n"
+
+msgid "Setting pipeline to PAUSED ...\n"
+msgstr "PAUSERER rørledning ...\n"
+
+#, fuzzy
+msgid "Failed to set pipeline to PAUSED.\n"
+msgstr "PAUSERER rørledning ...\n"
+
+msgid "Pipeline is live and does not need PREROLL ...\n"
+msgstr "Rørledningen kører, og behøver ikke at blive PREROLL'ed ...\n"
+
+msgid "Pipeline is PREROLLING ...\n"
+msgstr "Rørledningen PREROLL'er ...\n"
+
+msgid "Execution ended after %"
+msgstr "Udførsel afsluttet efter %"
+
+msgid "Setting pipeline to NULL ...\n"
+msgstr "Rørledning sættes til NUL ...\n"
+
+msgid "Freeing pipeline ...\n"
+msgstr "Rørledning frigøres ...\n"
+
+#, c-format
+#~ msgid "Error creating pipe: %s\n"
+#~ msgstr "Fejl ved oprettelse af datakanal: %s\n"
+
+#, c-format
+#~ msgid "Error forking: %s\n"
+#~ msgstr "Fejl ved forgrening: %s\n"
+
+#, c-format
+#~ msgid "Error reading from console: %s\n"
+#~ msgstr "Der opstod en fejl ved læsning fra konsollen: %s\n"
+
+#, c-format
+#~ msgid "Error writing to console: %s\n"
+#~ msgstr "Der opstod en fejl under skrivning til konsollen: %s\n"
+
+#~ msgid "ERROR: Pipeline doesn't want to pause.\n"
+#~ msgstr "FEJL: rørledning ønsker ikke at pausere.\n"
+
+#~ msgid "EOS on shutdown enabled -- waiting for EOS after Error\n"
+#~ msgstr "EOS ved nedlukning aktiveret -- venter på EOS efter Fejl\n"
+
+#~ msgid "Setting pipeline to READY ...\n"
+#~ msgstr "Rørledning sættes til KLAR ...\n"
+
+#~ msgid "bin"
+#~ msgstr "lager"
+
+#~ msgid "Internal data stream error."
+#~ msgstr "Intern datastrømsfejl."

@@ -1,0 +1,1534 @@
+# Finnish translations for gstreamer package.
+# Copyright (C) 2005, 2007-2008 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gstreamer package.
+# Tommi Vainikainen <Tommi.Vainikainen@iki.fi>, 2005, 2007-2010.
+#
+# Words:
+#
+# bin (a container element) = säiliö
+# sink = nielu
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gstreamer 0.10.30.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-25 01:01+0100\n"
+"PO-Revision-Date: 2010-11-17 23:10+0200\n"
+"Last-Translator: Tommi Vainikainen <Tommi.Vainikainen@iki.fi>\n"
+"Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Print the GStreamer version"
+msgstr "Näytä GStreamerin versio"
+
+msgid "Make all warnings fatal"
+msgstr "Tee kaikista varoituksista vakavia"
+
+msgid "Print available debug categories and exit"
+msgstr "Tulosta saatavilla olevat vianetsintäluokat ja poistu"
+
+#, fuzzy
+msgid ""
+"Default debug level from 1 (only error) to 9 (anything) or 0 for no output"
+msgstr ""
+"Oletusvianetsintätaso väliltä 1:stä (vain virheet) 5:een (kaikki) tai 0 ei "
+"tulostetta"
+
+msgid "LEVEL"
+msgstr "TASO"
+
+msgid ""
+"Comma-separated list of category_name:level pairs to set specific levels for "
+"the individual categories. Example: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+msgstr ""
+"Pilkuin eroteltu luettelo luokkanimi:taso-pareista, joilla asetetaan tietyt "
+"tasot yksittäisille luokille. Esimerkki: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+
+msgid "LIST"
+msgstr "LUETTELO"
+
+msgid "Disable colored debugging output"
+msgstr "Ei väritettyjä vianetsintätietoja"
+
+msgid ""
+"Changes coloring mode of the debug log. Possible modes: off, on, disable, "
+"auto, unix"
+msgstr ""
+
+msgid "Disable debugging"
+msgstr "Ei vianetsintää"
+
+msgid "Enable verbose plugin loading diagnostics"
+msgstr "Käytä monisanaista liitännäisten latausdiagnostiikka"
+
+msgid "Colon-separated paths containing plugins"
+msgstr "Kaksoispistein erotellut polut liitännäisiin"
+
+msgid "PATHS"
+msgstr "POLUT"
+
+msgid ""
+"Comma-separated list of plugins to preload in addition to the list stored in "
+"environment variable GST_PLUGIN_PATH"
+msgstr ""
+"Pilkuin eroteltu luettelo liitännäisistä, jotka esiladataan "
+"ympäristömuuttujassa GST_PLUGIN_PATH lueteltujen lisäksi"
+
+msgid "PLUGINS"
+msgstr "LIITÄNNÄISET"
+
+msgid "Disable trapping of segmentation faults during plugin loading"
+msgstr "Ei muistialueen ylityksen tarkkailua liitännäisten latauksen aikana"
+
+msgid "Disable updating the registry"
+msgstr "Älä päivitä rekisteriä"
+
+msgid "Disable spawning a helper process while scanning the registry"
+msgstr "Älä käynnistä apuprosessia rekisterin skannauksessa"
+
+msgid "GStreamer Options"
+msgstr "GStreamerin valitsimet"
+
+msgid "Show GStreamer Options"
+msgstr "Näytä GStreamerin valitsimet"
+
+#, c-format
+msgid "Unknown option"
+msgstr "Tuntematon valitsin"
+
+msgid "GStreamer encountered a general core library error."
+msgstr "GStreamer kohtasi virheen yleisessä ydinkirjastossa."
+
+msgid ""
+"GStreamer developers were too lazy to assign an error code to this error."
+msgstr ""
+"GStreamer-kehittäjät olivat liian laiskoja antaakseen tälle virheelle omaa "
+"virhekoodia."
+
+msgid "Internal GStreamer error: code not implemented."
+msgstr "Sisäinen GStreamer-virhe: koodia ei toteutettu."
+
+msgid ""
+"GStreamer error: state change failed and some element failed to post a "
+"proper error message with the reason for the failure."
+msgstr ""
+"Gstreamer-virhe: tilasiirtymä epäonnistui ja jokin elementti ei onnistunut "
+"ilmoittamaan kunnollista virheilmoitusta epäonnistumisen syyksi."
+
+msgid "Internal GStreamer error: pad problem."
+msgstr "Sisäinen GStreamer-virhe: täyteongelma."
+
+msgid "Internal GStreamer error: thread problem."
+msgstr "Sisäinen GStreamer-virhe: säieongelma."
+
+#, fuzzy
+msgid "GStreamer error: negotiation problem."
+msgstr "Sisäinen GStreamer-virhe: neuvotteluongelma."
+
+msgid "Internal GStreamer error: event problem."
+msgstr "Sisäinen GStreamer-virhe: tapahtumaongelma."
+
+msgid "Internal GStreamer error: seek problem."
+msgstr "Sisäinen GStreamer-virhe: kelausongelma."
+
+msgid "Internal GStreamer error: caps problem."
+msgstr "Sisäinen GStreamer-virhe: täyteongelma."
+
+msgid "Internal GStreamer error: tag problem."
+msgstr "Sisäinen GStreamer-virhe: merkintäongelma."
+
+msgid "Your GStreamer installation is missing a plug-in."
+msgstr "GStreamer-asennuksesta puuttuu liitännäinen."
+
+#, fuzzy
+msgid "GStreamer error: clock problem."
+msgstr "Sisäinen GStreamer-virhe: kello-ongelma."
+
+msgid ""
+"This application is trying to use GStreamer functionality that has been "
+"disabled."
+msgstr ""
+"Tämä sovellus yrittää käyttää sellaista GStreamerin toiminnallisuutta, joka "
+"on poissa käytöstä."
+
+msgid "GStreamer encountered a general supporting library error."
+msgstr "GStreamer kohtasi virheen yleisessä tukikirjastossa."
+
+msgid "Could not initialize supporting library."
+msgstr "Tukikirjastoa ei voitu alustaa."
+
+msgid "Could not close supporting library."
+msgstr "Tukikirjastoa ei voitu sulkea."
+
+msgid "Could not configure supporting library."
+msgstr "Tukikirjastoa ei voitu konfiguroida."
+
+msgid "Encoding error."
+msgstr "Koodausvirhe."
+
+msgid "GStreamer encountered a general resource error."
+msgstr "GStreamer kohtasi yleisen resurssivirheen."
+
+msgid "Resource not found."
+msgstr "Resurssia ei löytynyt."
+
+msgid "Resource busy or not available."
+msgstr "Resurssi on varattu tai ei saatavilla."
+
+msgid "Could not open resource for reading."
+msgstr "Resurssia ei voitu avata lukemista varten."
+
+msgid "Could not open resource for writing."
+msgstr "Resurssia ei voitu avata kirjoittamista varten."
+
+msgid "Could not open resource for reading and writing."
+msgstr "Resurssia ei voitu avata lukemista ja kirjoittamista varten."
+
+msgid "Could not close resource."
+msgstr "Resurssia ei voitu sulkea."
+
+msgid "Could not read from resource."
+msgstr "Resurssista ei voitu lukea."
+
+msgid "Could not write to resource."
+msgstr "Resurssiin ei voitu kirjoittaa."
+
+msgid "Could not perform seek on resource."
+msgstr "Resurssia ei voitu kelata."
+
+msgid "Could not synchronize on resource."
+msgstr "Resurssia ei voitu synkronisoida."
+
+msgid "Could not get/set settings from/on resource."
+msgstr "Resurssin asetuksia ei saatu/voitu asettaa."
+
+msgid "No space left on the resource."
+msgstr "Resurssilla ei ole tilaa jäljellä."
+
+#, fuzzy
+msgid "Not authorized to access resource."
+msgstr "Resurssilla ei ole tilaa jäljellä."
+
+msgid "GStreamer encountered a general stream error."
+msgstr "GStreamer kohtasi yleisen tietovirtavirheen."
+
+msgid "Element doesn't implement handling of this stream. Please file a bug."
+msgstr "Elementti ei toteuta tämän tietovirran käsittelyä. Tee vikailmoitus."
+
+msgid "Could not determine type of stream."
+msgstr "Tietovirran tyyppiä ei voitu määrittää."
+
+msgid "The stream is of a different type than handled by this element."
+msgstr "Tietovirta on eri tyyppiä kuin mitä tämä elementti käsittelee."
+
+msgid "There is no codec present that can handle the stream's type."
+msgstr ""
+"Saatavilla ei ole koodekkia, joka osaa käsitellä tämän tyyppistä tietovirtaa."
+
+msgid "Could not decode stream."
+msgstr "Tietovirtaa ei voitu purkaa."
+
+msgid "Could not encode stream."
+msgstr "Tietovirtaa ei voitu koodata."
+
+msgid "Could not demultiplex stream."
+msgstr "Tietovirran kanavointia ei voitu purkaa."
+
+msgid "Could not multiplex stream."
+msgstr "Tietovirtaa ei voitu kanavoida."
+
+msgid "The stream is in the wrong format."
+msgstr "Virta on väärässä muodossa."
+
+msgid "The stream is encrypted and decryption is not supported."
+msgstr "Virta on salattu ja salauksen purkua ei tueta."
+
+msgid ""
+"The stream is encrypted and can't be decrypted because no suitable key has "
+"been supplied."
+msgstr ""
+"Virta on salattu ja salausta ei voida purkaa, koska sopivaa avainta ei ole "
+"annettu."
+
+#, c-format
+msgid "No error message for domain %s."
+msgstr "Virheviestiä alueelle %s ei ole."
+
+#, c-format
+msgid "No standard error message for domain %s and code %d."
+msgstr "Standardia virheviestiä alueelle %s ja koodille %d ei ole."
+
+msgid "Selected clock cannot be used in pipeline."
+msgstr "Valittua kelloa ei voi käyttää liukuhihnassa."
+
+#, c-format
+msgid "Error writing registry cache to %s: %s"
+msgstr "Virhe kirjoitettaessa rekisterivälimuistia kohteeseen %s: %s"
+
+msgid "title"
+msgstr "nimi"
+
+msgid "commonly used title"
+msgstr "yleensä käytetty nimi"
+
+msgid "title sortname"
+msgstr "nimi lajitteluun"
+
+msgid "commonly used title for sorting purposes"
+msgstr "yleensä käytetty nimi lajittelua varten"
+
+msgid "artist"
+msgstr "esittäjä"
+
+msgid "person(s) responsible for the recording"
+msgstr "nauhoituksesta vastuussa oleva(t) henkilö(t)"
+
+msgid "artist sortname"
+msgstr "esittäjä lajitteluun"
+
+msgid "person(s) responsible for the recording for sorting purposes"
+msgstr "nauhoituksesta vastuussa oleva(t) henkilö(t) lajittelua varten"
+
+msgid "album"
+msgstr "levy"
+
+msgid "album containing this data"
+msgstr "levy, joka sisältää tämän datan"
+
+msgid "album sortname"
+msgstr "levy lajitteluun"
+
+msgid "album containing this data for sorting purposes"
+msgstr "levy, joka sisältää tämän datan, lajittelua varten"
+
+msgid "album artist"
+msgstr "levyn esittäjä"
+
+msgid "The artist of the entire album, as it should be displayed"
+msgstr "Koko levyn esittäjä sellaisena kuin se tulisi näyttää"
+
+msgid "album artist sortname"
+msgstr "levyn esittäjä lajitteluun"
+
+msgid "The artist of the entire album, as it should be sorted"
+msgstr "Koko levyn esittäjä sellaisena kuin sitä tulisi käyttää lajitteluun"
+
+msgid "date"
+msgstr "päiväys"
+
+msgid "date the data was created (as a GDate structure)"
+msgstr "päiväys, jolloin data luotiin (GDate-muodossa)"
+
+msgid "datetime"
+msgstr "päiväysaika"
+
+msgid "date and time the data was created (as a GstDateTime structure)"
+msgstr "päiväys ja aika, jolloin data luotiin (GstDateTime-muodossa)"
+
+msgid "genre"
+msgstr "laji"
+
+msgid "genre this data belongs to"
+msgstr "laji, johon tämä data kuuluu"
+
+msgid "comment"
+msgstr "kommentti"
+
+msgid "free text commenting the data"
+msgstr "vapaa kommenttiteksti datalle"
+
+msgid "extended comment"
+msgstr "laajennettu kommentti"
+
+msgid "free text commenting the data in key=value or key[en]=comment form"
+msgstr ""
+"vapaa kommenttiteksti datalle muodossa avain=arvo tai avain[fi]=kommentti"
+
+msgid "track number"
+msgstr "raidan numero"
+
+msgid "track number inside a collection"
+msgstr "raidan numero kokoelman sisällä"
+
+msgid "track count"
+msgstr "raitojen määrä"
+
+msgid "count of tracks inside collection this track belongs to"
+msgstr "tähän kokoelmaan kuuluvien raitojen lukumäärä"
+
+msgid "disc number"
+msgstr "levynumero"
+
+msgid "disc number inside a collection"
+msgstr "levynumero kokoelman sisällä"
+
+msgid "disc count"
+msgstr "levymäärä"
+
+msgid "count of discs inside collection this disc belongs to"
+msgstr "tämän levyn kokoelmaan kuuluvien levyjen lukumäärä"
+
+msgid "location"
+msgstr "sijainti"
+
+msgid ""
+"Origin of media as a URI (location, where the original of the file or stream "
+"is hosted)"
+msgstr ""
+"Median alkuperä URI-muodossa (sijainti, jossa alkuperäinen tiedosto tai "
+"virta on tarjolla)"
+
+msgid "homepage"
+msgstr "kotisivu"
+
+msgid "Homepage for this media (i.e. artist or movie homepage)"
+msgstr "Tämän median kotisivu (eism. artistin tai elokuvan kotisivu)"
+
+msgid "description"
+msgstr "kuvaus"
+
+msgid "short text describing the content of the data"
+msgstr "lyhyt teksti, joka kuvaa datan sisältöä"
+
+msgid "version"
+msgstr "versio"
+
+msgid "version of this data"
+msgstr "tämän datan versio"
+
+msgid "ISRC"
+msgstr "ISRC"
+
+msgid "International Standard Recording Code - see http://www.ifpi.org/isrc/"
+msgstr ""
+"Kansainvälinen standardoitu äänitekoodi ISRC - katso http://www.ifpi.org/"
+"isrc/"
+
+msgid "organization"
+msgstr "organisaatio"
+
+msgid "copyright"
+msgstr "tekijänoikeus"
+
+msgid "copyright notice of the data"
+msgstr "huomautus datan tekijänoikeuksista"
+
+msgid "copyright uri"
+msgstr "tekijänoikeus-uri"
+
+msgid "URI to the copyright notice of the data"
+msgstr "URI huomautukseen datan tekijänoikeuksista"
+
+#, fuzzy
+msgid "encoded by"
+msgstr "koodain"
+
+msgid "name of the encoding person or organization"
+msgstr ""
+
+msgid "contact"
+msgstr "yhteystiedot"
+
+msgid "contact information"
+msgstr "yhteystiedot"
+
+msgid "license"
+msgstr "lisenssi"
+
+msgid "license of data"
+msgstr "datan lisenssi"
+
+msgid "license uri"
+msgstr "lisenssin uri"
+
+msgid "URI to the license of the data"
+msgstr "URI datan lisenssiin"
+
+msgid "performer"
+msgstr "esittäjä"
+
+msgid "person(s) performing"
+msgstr "esittämässä oleva(t) henkilö(t)"
+
+msgid "composer"
+msgstr "säveltäjä"
+
+msgid "person(s) who composed the recording"
+msgstr "sävellyksestä vastuussa oleva(t) henkilö(t)"
+
+msgid "conductor"
+msgstr ""
+
+msgid "conductor/performer refinement"
+msgstr ""
+
+msgid "duration"
+msgstr "kesto"
+
+msgid "length in GStreamer time units (nanoseconds)"
+msgstr "pituus GStreamerin aikayksikköinä (nanosekuntia)"
+
+msgid "codec"
+msgstr "koodekki"
+
+msgid "codec the data is stored in"
+msgstr "koodekki, jolla data on tallennettu"
+
+msgid "video codec"
+msgstr "videokoodekki"
+
+msgid "codec the video data is stored in"
+msgstr "koodekki, jolla videodata on tallennettu"
+
+msgid "audio codec"
+msgstr "äänikoodekki"
+
+msgid "codec the audio data is stored in"
+msgstr "koodekki, jolla äänidata on tallennettu"
+
+msgid "subtitle codec"
+msgstr "tekstityskoodekki"
+
+msgid "codec the subtitle data is stored in"
+msgstr "koodekki, jolla tekstitystiedot on tallennettu"
+
+msgid "container format"
+msgstr "säilöntämuoto"
+
+msgid "container format the data is stored in"
+msgstr "säilöntämuoto, jolla data on tallennettu"
+
+msgid "bitrate"
+msgstr "bittinopeus"
+
+msgid "exact or average bitrate in bits/s"
+msgstr "tarkka tai keskimääräinen bittinopeus [bittiä/s]"
+
+msgid "nominal bitrate"
+msgstr "nimellinen bittinopeus"
+
+msgid "nominal bitrate in bits/s"
+msgstr "nimellinen bittinopeus [bittiä/s]"
+
+msgid "minimum bitrate"
+msgstr "vähimmäisbittinopeus"
+
+msgid "minimum bitrate in bits/s"
+msgstr "vähimmäisbittinopeus [bittiä/s]"
+
+msgid "maximum bitrate"
+msgstr "enimmäisbittinopeus"
+
+msgid "maximum bitrate in bits/s"
+msgstr "enimmäisbittinopeus [bittiä/s]"
+
+msgid "encoder"
+msgstr "koodain"
+
+msgid "encoder used to encode this stream"
+msgstr "koodain, joka koodaa tämän virran"
+
+msgid "encoder version"
+msgstr "koodaimen versio"
+
+msgid "version of the encoder used to encode this stream"
+msgstr "tämän virran koodaamiseen käytetyn koodaimen versio"
+
+msgid "serial"
+msgstr "sarjanumero"
+
+msgid "serial number of track"
+msgstr "raidan sarjanumero"
+
+msgid "replaygain track gain"
+msgstr "raidan replaygain-vahvistus"
+
+msgid "track gain in db"
+msgstr "raidan vahvistus desibeleissä"
+
+msgid "replaygain track peak"
+msgstr "raidan replaygain-huippu"
+
+msgid "peak of the track"
+msgstr "raidan huippu"
+
+msgid "replaygain album gain"
+msgstr "levyn replaygain-vahvistus"
+
+msgid "album gain in db"
+msgstr "levyn vahvistus desibeleissä"
+
+msgid "replaygain album peak"
+msgstr "levyn replaygain-huippu"
+
+msgid "peak of the album"
+msgstr "levyn huippu"
+
+msgid "replaygain reference level"
+msgstr "raidan replaygain-viitetaso"
+
+msgid "reference level of track and album gain values"
+msgstr "viitetaso raidan ja albumin gain-arvoille"
+
+msgid "language code"
+msgstr "kielikoodi"
+
+#, fuzzy
+msgid "language code for this stream, conforming to ISO-639-1 or ISO-639-2"
+msgstr "tämän virran kielikoodi ISO-639-1-standardin mukaisesti"
+
+#, fuzzy
+msgid "language name"
+msgstr "kielikoodi"
+
+msgid "freeform name of the language this stream is in"
+msgstr ""
+
+msgid "image"
+msgstr "kuva"
+
+msgid "image related to this stream"
+msgstr "kuva, joka liittyy tähän virtaan"
+
+#. TRANSLATORS: 'preview image' = image that shows a preview of the full image
+msgid "preview image"
+msgstr "esikatselukuva"
+
+msgid "preview image related to this stream"
+msgstr "esikatselukuva, joka liittyy tähän virtaan"
+
+msgid "attachment"
+msgstr "liite"
+
+msgid "file attached to this stream"
+msgstr "tiedosto, joka on liitetty tähän virtaan"
+
+msgid "beats per minute"
+msgstr "tahtia per minuutti"
+
+msgid "number of beats per minute in audio"
+msgstr "tahtien määrä per minuutti äänessä"
+
+msgid "keywords"
+msgstr "avainsanat"
+
+msgid "comma separated keywords describing the content"
+msgstr "pilkuilla erotellut avainsanat,jotka kuvaavat sisältöä"
+
+msgid "geo location name"
+msgstr "maantietellisen sijainnin nimi"
+
+msgid ""
+"human readable descriptive location of where the media has been recorded or "
+"produced"
+msgstr ""
+"ihmisluettava kuvaus sijainnista tai paikasta, jossa media on nauhoitettu "
+"tai tuotettu"
+
+msgid "geo location latitude"
+msgstr "maantieteellisen sijainnin leveyspiiri"
+
+msgid ""
+"geo latitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the equator, negative values for "
+"southern latitudes)"
+msgstr ""
+"maantieteellinen leveyspiiri, jossa media on nauhoitettu tai tuotettu "
+"asteina WGS84-koordinaatistossa (nolla on päiväntasaaja, negatiiviset arvot "
+"ovat eteläisiä leveyspiirejä)"
+
+msgid "geo location longitude"
+msgstr "maantieteellisen sijainnin pituuspiiri"
+
+msgid ""
+"geo longitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the prime meridian in Greenwich/UK,  "
+"negative values for western longitudes)"
+msgstr ""
+"maantieteellinen pituuspiiri, jossa media on nauhoitettu tai tuotettu "
+"asteina WGS84-koordinaatistossa (nolla on nollameridiaani Greenwichissä "
+"Yhdistyneessä kuningaskunnassa, negatiiviset arvot ovat läntisiä "
+"pituuspiirejä)"
+
+msgid "geo location elevation"
+msgstr "maantieteellisen sijainnin korkeustaso"
+
+msgid ""
+"geo elevation of where the media has been recorded or produced in meters "
+"according to WGS84 (zero is average sea level)"
+msgstr ""
+"maantietellinen korkeustaso, jossa media on nauhoitettu tai tuotettu "
+"metreinä WGS84-koordinaateista (nolla on keskimääräinen merenpinta)"
+
+msgid "geo location country"
+msgstr "maantieteellisen sijainnin maa"
+
+msgid "country (english name) where the media has been recorded or produced"
+msgstr "maa (englanninkielinen nimi), jossa media on nauhoitettu tai tuotettu"
+
+msgid "geo location city"
+msgstr "maantieteellisen sijainnin kaupunki"
+
+msgid "city (english name) where the media has been recorded or produced"
+msgstr ""
+"kaupunki (englanninkielinen nimi), jossa media on nauhoitettu tai tuotettu"
+
+msgid "geo location sublocation"
+msgstr "maantieteellisen sijainnin alisijainti"
+
+#, fuzzy
+msgid ""
+"a location within a city where the media has been produced or created (e.g. "
+"the neighborhood)"
+msgstr "sijainti kaupungin sisällä, jossa media on nauhoitettu tai tuotettu"
+
+msgid "geo location horizontal error"
+msgstr "maantietellisen sijainnin virhe vaakasuorassa"
+
+msgid "expected error of the horizontal positioning measures (in meters)"
+msgstr "odotettu virhe paikannuksen vaakasuorassa mittauksessa (metreinä)"
+
+msgid "geo location movement speed"
+msgstr "maantieteellisen sijainnin liikenopeus"
+
+msgid ""
+"movement speed of the capturing device while performing the capture in m/s"
+msgstr "nauhoittavan laitteen liikenopeus nauhoitettaessa yksikössä m/s"
+
+msgid "geo location movement direction"
+msgstr "maantieteellisen sijainnin liikesuunta"
+
+msgid ""
+"indicates the movement direction of the device performing the capture of a "
+"media. It is represented as degrees in floating point representation, 0 "
+"means the geographic north, and increases clockwise"
+msgstr ""
+"ilmoittaa mediaa nauhoittavan laitteen liikesuunnan. Esitetään asteina\n"
+"liukulukumuodossa, jossa 0 tarkoittaa maantieteellistä pohjoista ja\n"
+"asteet kasvavat myötäpäivään"
+
+msgid "geo location capture direction"
+msgstr "maantieteellisen sijainnin kuvaussuunta"
+
+msgid ""
+"indicates the direction the device is pointing to when capturing  a media. "
+"It is represented as degrees in floating point  representation, 0 means the "
+"geographic north, and increases clockwise"
+msgstr ""
+"ilmoittaa suunnan, johon mediaa nauhoittava laite osoittaa nauhoitettaessa. "
+"Esitetään asteina liukulukumuodossa, jossa 0 tarkoittaa maantieteellistä "
+"pohjoista ja asteet kasvavat myötäpäivään"
+
+#. TRANSLATORS: 'show name' = 'TV/radio/podcast show name' here
+msgid "show name"
+msgstr "ohjelman nimi"
+
+msgid "Name of the tv/podcast/series show the media is from"
+msgstr "TV/podcast/sarjan ohjelman nimi, josta tämä media on lähtöisin"
+
+#. TRANSLATORS: 'show sortname' = 'TV/radio/podcast show name as used for sorting purposes' here
+msgid "show sortname"
+msgstr "ohjelman lajittelunimi"
+
+msgid ""
+"Name of the tv/podcast/series show the media is from, for sorting purposes"
+msgstr ""
+"Lajitteluun käytettävä TV/podcast/sarjan ohjelman nimi, josta tämä media on "
+"lähtöisin"
+
+msgid "episode number"
+msgstr "episodin numero"
+
+msgid "The episode number in the season the media is part of"
+msgstr "Episodin numero kaudella, johon tämä media kuuluu"
+
+msgid "season number"
+msgstr "Kauden numero"
+
+msgid "The season number of the show the media is part of"
+msgstr "Kauden numero ohjelmalle, johon tämä media kuuluu"
+
+msgid "lyrics"
+msgstr "sanoitukset"
+
+msgid "The lyrics of the media, commonly used for songs"
+msgstr "Median sanoitukset, yleensä käytössä lauluille"
+
+msgid "composer sortname"
+msgstr "säveltäjän lajittelunimi"
+
+msgid "person(s) who composed the recording, for sorting purposes"
+msgstr "sävellyksestä vastuussa oleva(t) henkilö(t) lajittelua varten"
+
+msgid "grouping"
+msgstr "ryhmittely"
+
+msgid ""
+"Groups related media that spans multiple tracks, like the different pieces "
+"of a concerto. It is a higher level than a track, but lower than an album"
+msgstr ""
+"Ryhmittelee toisiinsa liittyvät media, jotka koostuvat useammasta raidasta, "
+"kuten konsertin eri osat. Tämä on korkeamman tason kuin raita, mutta "
+"matalamman tason kuin levy"
+
+msgid "user rating"
+msgstr "käyttäjän arvio"
+
+msgid ""
+"Rating attributed by a user. The higher the rank, the more the user likes "
+"this media"
+msgstr ""
+"Arvio käyttäjältä. Mitä suurempi sijoitus, sitä enemmän käyttäjä pitää tästä "
+"mediasta"
+
+msgid "device manufacturer"
+msgstr "laitevalmistaja"
+
+msgid "Manufacturer of the device used to create this media"
+msgstr "Tämän median luomiseen käytetyn laitteen valmistaja"
+
+msgid "device model"
+msgstr "laitemalli"
+
+msgid "Model of the device used to create this media"
+msgstr "Tämän median luomiseen käytetyn laitteen malli"
+
+msgid "application name"
+msgstr "sovelluksen nimi"
+
+msgid "Application used to create the media"
+msgstr "Tämän median luomiseen käytetty sovellus"
+
+msgid "application data"
+msgstr "sovellusdata"
+
+msgid "Arbitrary application data to be serialized into the media"
+msgstr "Mielivaltainen sovellusdata joka serialisoidaan mediaan"
+
+msgid "image orientation"
+msgstr "kuvasuunta"
+
+msgid "How the image should be rotated or flipped before display"
+msgstr "Kuinka kuva tulisi pyöräyttää tai kääntää ympäri ennen näyttämistä"
+
+msgid "publisher"
+msgstr ""
+
+msgid "Name of the label or publisher"
+msgstr ""
+
+msgid "interpreted-by"
+msgstr ""
+
+msgid "Information about the people behind a remix and similar interpretations"
+msgstr ""
+
+msgid "midi-base-note"
+msgstr ""
+
+msgid "Midi note number of the audio track."
+msgstr ""
+
+msgid "private-data"
+msgstr ""
+
+msgid "Private data"
+msgstr ""
+
+#. separator between two strings
+msgid ", "
+msgstr ", "
+
+#, c-format
+msgid "Invalid URI: %s"
+msgstr ""
+
+#, c-format
+msgid "No URI handler for the %s protocol found"
+msgstr ""
+
+#, c-format
+msgid "URI scheme '%s' not supported"
+msgstr ""
+
+#, c-format
+msgid "ERROR: from element %s: %s\n"
+msgstr "VIRHE: elementiltä %s: %s\n"
+
+#, c-format
+msgid ""
+"Additional debug info:\n"
+"%s\n"
+msgstr ""
+"Lisätietoja vianetsintään:\n"
+"%s\n"
+
+#. ******************************************************************************************
+#. *** helpers for pipeline-setup
+#. ******************************************************************************************
+#, c-format
+msgid "link has no source [sink=%s@%p]"
+msgstr ""
+
+#, c-format
+msgid "link has no sink [source=%s@%p]"
+msgstr ""
+
+#, c-format
+msgid "no property \"%s\" in element \"%s\""
+msgstr "ominaisuutta ”%s” ei ole elementissä ”%s”"
+
+#, c-format
+msgid "could not set property \"%s\" in element \"%s\" to \"%s\""
+msgstr "elementin ”%2$s” ominaisuutta ”%1$s” ei voitu asettaa arvoon ”%3$s”"
+
+#, fuzzy, c-format
+msgid "Element \"%s\" is not a GstPreset"
+msgstr "Tiedosto ”%s” on pistoke."
+
+#, fuzzy, c-format
+msgid "could not set preset \"%s\" in element \"%s\""
+msgstr "elementin ”%2$s” ominaisuutta ”%1$s” ei voitu asettaa arvoon ”%3$s”"
+
+msgid "Delayed linking failed."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "could not link %s to %s, %s can't handle caps %s"
+msgstr "elementtiä %s ei voitu linkittää elementtiin %s"
+
+#, fuzzy, c-format
+msgid "could not link %s to %s, neither element can handle caps %s"
+msgstr "nieluelementtiä ei voitu linkittää URIlle ”%s”"
+
+#, fuzzy, c-format
+msgid "could not link %s to %s with caps %s"
+msgstr "elementtiä %s ei voitu linkittää elementtiin %s"
+
+#, c-format
+msgid "could not link %s to %s"
+msgstr "elementtiä %s ei voitu linkittää elementtiin %s"
+
+#, c-format
+msgid "no element \"%s\""
+msgstr "ei elementtiä ”%s”"
+
+#, c-format
+msgid "unexpected reference \"%s\" - ignoring"
+msgstr ""
+
+#, c-format
+msgid "unexpected pad-reference \"%s\" - ignoring"
+msgstr ""
+
+#, c-format
+msgid "could not parse caps \"%s\""
+msgstr "kykyjä ”%s” ei voitu jäsentää"
+
+#, c-format
+msgid "no sink element for URI \"%s\""
+msgstr "ei nieluelementtiä URIlle ”%s”"
+
+#, c-format
+msgid "no source element for URI \"%s\""
+msgstr "ei lähde-elementtiä URI:lle ”%s”"
+
+msgid "syntax error"
+msgstr ""
+
+#, c-format
+msgid "specified empty bin \"%s\", not allowed"
+msgstr "määritetty tyhjä säiliö ”%s”, ei sallittu"
+
+#, fuzzy, c-format
+msgid "no bin \"%s\", unpacking elements"
+msgstr "ei säiliötä ”%s”, ohitetaan"
+
+msgid "empty pipeline not allowed"
+msgstr "tyhjää liukuhihnaa ei sallita"
+
+msgid "Pipeline construction is invalid, please add queues."
+msgstr ""
+
+msgid "A lot of buffers are being dropped."
+msgstr "Useita puskureita putoilee."
+
+msgid "Internal data flow problem."
+msgstr "Sisäinen tiedon virtausongelma."
+
+msgid "Internal data flow error."
+msgstr "Sisäinen tiedon virtausvirhe."
+
+msgid "Internal clock error."
+msgstr "Sisäinen kellovirhe."
+
+#, fuzzy
+msgid "Failed to map buffer."
+msgstr "Kuvan koodaus epäonnistui."
+
+msgid "Filter caps"
+msgstr "Kykysuodatus"
+
+msgid ""
+"Restrict the possible allowed capabilities (NULL means ANY). Setting this "
+"property takes a reference to the supplied GstCaps object."
+msgstr ""
+"Rajoita mahdollisia sallittuja kykyjä (NULL tarkoittaa mitä tahansa). Tämän "
+"ominaisuuden asettaminen ottaa kahvan annettuun GstCaps-olioon."
+
+msgid "Caps Change Mode"
+msgstr ""
+
+msgid "Filter caps change behaviour"
+msgstr ""
+
+msgid "No Temp directory specified."
+msgstr "Tilapäishakemistoa ei ole määritetty."
+
+#, c-format
+msgid "Could not create temp file \"%s\"."
+msgstr "Ei voitu luoda tilapäistiedostoa ”%s”."
+
+#, c-format
+msgid "Could not open file \"%s\" for reading."
+msgstr "Tiedostoa ”%s” ei voitu avata lukemista varten."
+
+msgid "Error while writing to download file."
+msgstr "Virhe kirjoitettaessa lataustiedostoon."
+
+msgid "No file name specified for writing."
+msgstr "Kirjoitusta varten ei määritetty tiedostonimeä."
+
+#, c-format
+msgid "Could not open file \"%s\" for writing."
+msgstr "Tiedostoa ”%s” ei voitu avata kirjoittamista varten."
+
+#, c-format
+msgid "Error closing file \"%s\"."
+msgstr "Virhe suljettaessa tiedostoa ”%s”."
+
+#, c-format
+msgid "Error while seeking in file \"%s\"."
+msgstr "Virhe kelattaessa tiedostoa ”%s”."
+
+#, c-format
+msgid "Error while writing to file \"%s\"."
+msgstr "Virhe kirjoitettaessa tiedostoon ”%s”."
+
+msgid "No file name specified for reading."
+msgstr "Lukemista varten ei ole määritetty tiedostonimeä."
+
+#, c-format
+msgid "Could not get info on \"%s\"."
+msgstr "Ei saatu tietoja kohteesta ”%s”."
+
+#, c-format
+msgid "\"%s\" is a directory."
+msgstr "”%s” on hakemisto."
+
+#, c-format
+msgid "File \"%s\" is a socket."
+msgstr "Tiedosto ”%s” on pistoke."
+
+msgid "Failed after iterations as requested."
+msgstr "Epäonnistui, kuten pyydettiin, yritysten jälkeen."
+
+msgid "eos-after and error-after can't both be defined."
+msgstr ""
+
+msgid "caps"
+msgstr "kyvyt"
+
+msgid "detected capabilities in stream"
+msgstr "tunnistettu kyvyt virrassa"
+
+msgid "minimum"
+msgstr "vähintään"
+
+msgid "force caps"
+msgstr "pakota kyvyt"
+
+msgid "force caps without doing a typefind"
+msgstr "pakota kyvyt ilman tyyppihakua"
+
+#, fuzzy
+msgid "Stream doesn't contain enough data."
+msgstr "Virta on tyhjä."
+
+msgid "Stream contains no data."
+msgstr "Virta on tyhjä."
+
+#, fuzzy, c-format
+msgid "%sImplemented Interfaces%s:\n"
+msgstr "Toteutetut rajapinnat:\n"
+
+msgid "readable"
+msgstr "luettavissa"
+
+msgid "writable"
+msgstr "kirjoitettavissa"
+
+msgid "deprecated"
+msgstr ""
+
+msgid "controllable"
+msgstr "ohjattavissa"
+
+#, fuzzy
+msgid "conditionally available"
+msgstr "ohjattavissa"
+
+msgid "changeable in NULL, READY, PAUSED or PLAYING state"
+msgstr "vaihdettavissa TYHJÄ-, VALMIS-, TAUOLLA- tai SOI-tiloissa"
+
+msgid "changeable only in NULL, READY or PAUSED state"
+msgstr "vaihdettavissa vain TYHJÄ-, VALMIS- tai TAUOLLA-tiloissa"
+
+msgid "changeable only in NULL or READY state"
+msgstr "vaihdettavissa vain TYHJÄ- tai VALMIS--tiloissa"
+
+msgid "Blacklisted files:"
+msgstr "Mustalistatut tiedostot:"
+
+#, fuzzy, c-format
+msgid "%sTotal count%s: %s"
+msgstr "Yhteismäärä: "
+
+#, c-format
+msgid "%d blacklisted file"
+msgid_plural "%d blacklisted files"
+msgstr[0] "%d mustalistattu tiedosto"
+msgstr[1] "%d mustalistattua tiedostoa"
+
+#, c-format
+msgid "%d plugin"
+msgid_plural "%d plugins"
+msgstr[0] "%d liitännäinen"
+msgstr[1] "%d liitännäistä"
+
+#, c-format
+msgid "%d blacklist entry"
+msgid_plural "%d blacklist entries"
+msgstr[0] "%d mustalistaustietue"
+msgstr[1] "%d mustalistaustietuetta"
+
+#, c-format
+msgid "%d feature"
+msgid_plural "%d features"
+msgstr[0] "%d ominaisuus"
+msgstr[1] "%d ominaisuutta"
+
+msgid "Print all elements"
+msgstr "Tulosta kaikki elementit"
+
+msgid "Print list of blacklisted files"
+msgstr "Tulista luettelo tiedostoista mustalla listalla"
+
+msgid ""
+"Print a machine-parsable list of features the specified plugin or all "
+"plugins provide.\n"
+"                                       Useful in connection with external "
+"automatic plugin installation mechanisms"
+msgstr ""
+"Tulosta koneluettava luettelo ominaisuuksista, jotka annettu liitännäinen "
+"tarjoaa.\n"
+"                                       Hyödyllinen ulkoisten automaattisten "
+"liitännäisten asennusmekanismien yhteydessä"
+
+msgid "List the plugin contents"
+msgstr "Luettele liitännäisen sisältö"
+
+msgid ""
+"A slashes ('/') separated list of types of elements (also known as klass) to "
+"list. (unordered)"
+msgstr ""
+
+msgid "Check if the specified element or plugin exists"
+msgstr ""
+
+msgid ""
+"When checking if an element or plugin exists, also check that its version is "
+"at least the version specified"
+msgstr ""
+
+msgid "Print supported URI schemes, with the elements that implement them"
+msgstr "Tulosta tuetut URI-skeemat sekä ne toteuttavat elementit"
+
+msgid ""
+"Disable colors in output. You can also achieve the same by setting "
+"'GST_INSPECT_NO_COLORS' environment variable to any value."
+msgstr ""
+
+msgid "Color output, even when not sending to a tty."
+msgstr ""
+
+#, c-format
+msgid "Could not load plugin file: %s\n"
+msgstr "Ei voitu ladata liitännäistiedostoa: %s\n"
+
+#, c-format
+msgid "No such element or plugin '%s'\n"
+msgstr "Ei tällaista elementtiä tai liitännäistä ”%s”\n"
+
+msgid "Index statistics"
+msgstr ""
+
+msgid "Setting pipeline to PLAYING ...\n"
+msgstr "Asetetaan liukuhihna tilaan SOI...\n"
+
+msgid "ERROR: pipeline doesn't want to play.\n"
+msgstr "VIRHE: Liukuhihna ei halua toistaa.\n"
+
+#, c-format
+msgid "Got message #%u from element \"%s\" (%s): "
+msgstr "Saatiin viesti #%u elementiltä ”%s” (%s): "
+
+#, c-format
+msgid "Got message #%u from pad \"%s:%s\" (%s): "
+msgstr "Saatiin viesti #%u täytteeltä ”%s:%s” (%s): "
+
+#, c-format
+msgid "Got message #%u from object \"%s\" (%s): "
+msgstr "Saatiin viesti #%u oliolta ”%s” (%s): "
+
+#, c-format
+msgid "Got message #%u (%s): "
+msgstr "Saatiin viesti #%u (%s): "
+
+#, c-format
+msgid "Got EOS from element \"%s\".\n"
+msgstr "Saatiin EOS (virran loppu) elementiltä ”%s”.\n"
+
+msgid "EOS received - stopping pipeline...\n"
+msgstr "Virran-loppu vastaanotettu - pysäytetään liukuhihna...\n"
+
+#, c-format
+msgid "FOUND TAG      : found by element \"%s\".\n"
+msgstr "LÖYTYI MERKINTÄ: sen löysi elementti ”%s”.\n"
+
+#, c-format
+msgid "FOUND TAG      : found by pad \"%s:%s\".\n"
+msgstr "LÖYTYI MERKINTÄ: sen löysi täyte ”%s:%s”.\n"
+
+#, c-format
+msgid "FOUND TAG      : found by object \"%s\".\n"
+msgstr "LÖYTYI MERKINTÄ: sen löysi olio ”%s”.\n"
+
+msgid "FOUND TAG\n"
+msgstr "LÖYTI MERKINTÄ\n"
+
+#, fuzzy, c-format
+msgid "FOUND TOC      : found by element \"%s\".\n"
+msgstr "LÖYTYI MERKINTÄ: sen löysi elementti ”%s”.\n"
+
+#, fuzzy, c-format
+msgid "FOUND TOC      : found by object \"%s\".\n"
+msgstr "LÖYTYI MERKINTÄ: sen löysi olio ”%s”.\n"
+
+#, fuzzy
+msgid "FOUND TOC\n"
+msgstr "LÖYTI MERKINTÄ\n"
+
+#, c-format
+msgid ""
+"INFO:\n"
+"%s\n"
+msgstr ""
+"INFO:\n"
+"%s\n"
+
+#, c-format
+msgid "WARNING: from element %s: %s\n"
+msgstr "VAROITUS: elementiltä %s: %s\n"
+
+msgid "Pipeline is PREROLLED ...\n"
+msgstr "Liukuhihna on ESIRULLATTU...\n"
+
+msgid "Prerolled, waiting for buffering to finish...\n"
+msgstr "Esipyöritetty, odotetaan puskuroinnin päättymistä...\n"
+
+#, fuzzy
+msgid "Prerolled, waiting for progress to finish...\n"
+msgstr "Esipyöritetty, odotetaan puskuroinnin päättymistä...\n"
+
+msgid "buffering..."
+msgstr "puskuroidaan..."
+
+msgid "Done buffering, setting pipeline to PLAYING ...\n"
+msgstr "Puskurointi tehty, asetetaan liukuhihna tilaan SOI...\n"
+
+#. we were not buffering but PLAYING, PAUSE  the pipeline.
+msgid "Buffering, setting pipeline to PAUSED ...\n"
+msgstr "Puskuroidaan, asetetaan liukuhihna tilaan TAUOLLA...\n"
+
+msgid "Redistribute latency...\n"
+msgstr "Uudelleenjaa latenssi...\n"
+
+#, c-format
+msgid "Setting state to %s as requested by %s...\n"
+msgstr "Asetetaan tilaan %s kuten %s pyysi...\n"
+
+#. this application message is posted when we caught an interrupt and
+#. * we need to stop the pipeline.
+msgid "Interrupt: Stopping pipeline ...\n"
+msgstr "Keskeytys: Pysäytetään liukuhihna ...\n"
+
+#, fuzzy
+msgid "Interrupt while waiting for EOS - stopping pipeline...\n"
+msgstr "Keskeytys: Pysäytetään liukuhihna ...\n"
+
+msgid "EOS on shutdown enabled -- Forcing EOS on the pipeline\n"
+msgstr ""
+"Virran-loppu sammutettaessa käytössä -- pakotetaan virran-loppu "
+"liukuhihnalle\n"
+
+msgid "Waiting for EOS...\n"
+msgstr "Odotetaan virran loppua...\n"
+
+#, c-format
+msgid "Progress: (%s) %s\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Missing element: %s\n"
+msgstr "ei elementtiä ”%s”"
+
+#, fuzzy, c-format
+msgid "Got context from element '%s': %s=%s\n"
+msgstr "VAROITUS: elementiltä %s: %s\n"
+
+msgid "ERROR: pipeline doesn't want to preroll.\n"
+msgstr "VIRHE: Liukuhihna ei halua esirullautua.\n"
+
+msgid "An error happened while waiting for EOS\n"
+msgstr "Tapahtui virhe odotettaessa virran-loppua\n"
+
+#, c-format
+msgid "Use Windows high-resolution clock, precision: %u ms\n"
+msgstr ""
+
+msgid "Output tags (also known as metadata)"
+msgstr "Tulostemerkinnät (tunnetaan myös metadatana)"
+
+msgid "Output TOC (chapters and editions)"
+msgstr ""
+
+msgid "Output status information and property notifications"
+msgstr "Tulostetilatiedot ja ominaisuushuomiot"
+
+msgid "Do not print any progress information"
+msgstr "Älä tulosta mitään edistymistietoa"
+
+msgid "Output messages"
+msgstr "Tulosteviestit"
+
+msgid ""
+"Do not output status information for the specified property if verbose "
+"output is enabled (can be used multiple times)"
+msgstr ""
+
+msgid "PROPERTY-NAME"
+msgstr ""
+
+msgid "Do not install a fault handler"
+msgstr "Älä asenna virheenkäsittelintä"
+
+msgid "Force EOS on sources before shutting the pipeline down"
+msgstr "Pakota virran-loppu lähteille ennen liukuhihan sammuttamista"
+
+msgid "Gather and print index statistics"
+msgstr ""
+
+msgid ""
+"Do not print current position of pipeline. If this option is unspecified, "
+"the position will be printed when stdout is a TTY. To enable printing "
+"position when stdout is not a TTY, use \"force-position\" option"
+msgstr ""
+
+msgid ""
+"Allow printing current position of pipeline even if stdout is not a TTY. "
+"This option has no effect if the \"no-position\" option is specified"
+msgstr ""
+
+#, c-format
+msgid "ERROR: pipeline could not be constructed: %s.\n"
+msgstr "VIRHE: liukuhihnaa ei voitu rakentaa: %s.\n"
+
+msgid "ERROR: pipeline could not be constructed.\n"
+msgstr "VIRHE: liukuhihnaa ei voitu rakentaa.\n"
+
+#, c-format
+msgid "WARNING: erroneous pipeline: %s\n"
+msgstr "VAROITUS: virheellinen liukuhihna: %s\n"
+
+msgid "ERROR: the 'pipeline' element wasn't found.\n"
+msgstr "VIRHE: ”liukuhihna”-elementtiä ei löytynyt.\n"
+
+msgid "Setting pipeline to PAUSED ...\n"
+msgstr "Asetetaan liukuhihna tilaan TAUOLLA...\n"
+
+#, fuzzy
+msgid "Failed to set pipeline to PAUSED.\n"
+msgstr "Asetetaan liukuhihna tilaan TAUOLLA...\n"
+
+msgid "Pipeline is live and does not need PREROLL ...\n"
+msgstr "Liukuhihna on käynnissä eikä sitä tarvitse ESIRULLATA...\n"
+
+msgid "Pipeline is PREROLLING ...\n"
+msgstr "Liukuhihna ESIRULLAUTUU...\n"
+
+msgid "Execution ended after %"
+msgstr "Suoritus päättyi jälkeen %"
+
+msgid "Setting pipeline to NULL ...\n"
+msgstr "Asetetaan liukuhihna tilaan TYHJÄ...\n"
+
+msgid "Freeing pipeline ...\n"
+msgstr "Vapautetaan liukuhihna...\n"
+
+#~ msgid "link without source element"
+#~ msgstr "linkki ilman lähde-elementtiä"
+
+#~ msgid "link without sink element"
+#~ msgstr "linkki ilman nieluelementtiä"
+
+#, c-format
+#~ msgid "no element to link URI \"%s\" to"
+#~ msgstr "ei elementtiä, jota linkittää URIin ”%s”"
+
+#~ msgid "Internal data stream error."
+#~ msgstr "Sisäinen tietovirtavirhe."
+
+#~ msgid "maximum"
+#~ msgstr "enintään"
+
+#~ msgid "Usage: gst-xmllaunch <file.xml> [ element.property=value ... ]\n"
+#~ msgstr ""
+#~ "Käyttö: gst-xmllaunch <tiedosto.xml> [ elementti.ominaisuus=arvo ... ]\n"
+
+#, c-format
+#~ msgid "ERROR: parse of xml file '%s' failed.\n"
+#~ msgstr "VIRHE: XML-tiedoston ”%s” jäsentäminen epäonnistui.\n"
+
+#, c-format
+#~ msgid "ERROR: no toplevel pipeline element in file '%s'.\n"
+#~ msgstr "VIRHE: päätason liukuhihnaelementtiä ei ole tiedostossa ”%s”.\n"
+
+#~ msgid "WARNING: only one toplevel element is supported at this time.\n"
+#~ msgstr "VAROITUS: vain yhtä päätason elementtiä tuetaan tällä kertaa.\n"
+
+#, c-format
+#~ msgid "ERROR: could not parse command line argument %d: %s.\n"
+#~ msgstr "VIRHE: ei voitu jäsentää komentoriviargumenttia %d: %s.\n"
+
+#, c-format
+#~ msgid "WARNING: element named '%s' not found.\n"
+#~ msgstr "VAROITUS: elementtiä nimeltä ”%s” ei löytynyt.\n"
+
+#~ msgid "Do not output status information of TYPE"
+#~ msgstr "Älä tulosta tilatietoa TYYPPI"
+
+#~ msgid "TYPE1,TYPE2,..."
+#~ msgstr "TYYPPI1,TYYPPI2,..."
+
+#~ msgid "Save xml representation of pipeline to FILE and exit"
+#~ msgstr "Tallenna liukuhihnan XML-esitys TIEDOSTOon ja poistu"
+
+#~ msgid "FILE"
+#~ msgstr "TIEDOSTO"
+
+#~ msgid "Do not install signal handlers for SIGUSR1 and SIGUSR2"
+#~ msgstr "Älä asenna SIGUSR1- ja SIGUSR2-signaalinkäsittelijöitä"
+
+#~ msgid "Print alloc trace (if enabled at compile time)"
+#~ msgstr "Tulosta varausjälki (jos valittu käännöksen yhteydessä)"
+
+#~ msgid "ERROR: Pipeline doesn't want to pause.\n"
+#~ msgstr "VIRHE: Liukuhihna ei halua mennä tauolle.\n"
+
+#~ msgid "Setting pipeline to READY ...\n"
+#~ msgstr "Asetetaan liukuhihna tilaan VALMIS...\n"
+
+#~ msgid "Error re-scanning registry %s: %s"
+#~ msgstr "Virhe uudelleenskannatessa rekisteriä %s: %s"
+
+#~ msgid "Error re-scanning registry %s"
+#~ msgstr "Virhe uudelleenskannatessa rekisteriä %s"
+
+#~ msgid "Internal GStreamer error: state change failed."
+#~ msgstr "Sisäinen GStreamer-virhe: tilasiirtymä epäonnistui."
+
+#~ msgid "FREEING pipeline ...\n"
+#~ msgstr "VAPAUTETAAN liukuhihna...\n"
+
+#~ msgid "original location of file as a URI"
+#~ msgstr "tiedoston alkuperäinen sijainti URI:na"
+
+#~ msgid "Disable accelerated CPU instructions"
+#~ msgstr "Ei kiihdytettyjä suoritinkäskyjä"
+
+#~ msgid "SCHEDULER"
+#~ msgstr "VUOROTIN"
+
+#~ msgid "Registry to use"
+#~ msgstr "Käytettävä rekisteri"
+
+#~ msgid "REGISTRY"
+#~ msgstr "REKISTERI"
+
+#~ msgid "Internal GStreamer error: scheduler problem.  File a bug."
+#~ msgstr "Sisäinen GStreamer-virhe: vuorotinongelma. Tee vikailmoitus."
+
+#~ msgid "Internal GStreamer error: capabilities problem.  File a bug."
+#~ msgstr "Sisäinen GStreamer-virhe: kykyongelma. Tee vikailmoitus."
+
+#~ msgid "There is no element present to handle the stream's mime type %s."
+#~ msgstr ""
+#~ "Käytettävissä ei ole elementtiä, joka käsittelisi tietovirran MIME-tyypin "
+#~ "%s."
+
+#~ msgid "stream type"
+#~ msgstr "tietovirran tyyppi"
+
+#~ msgid ""
+#~ "Execution ended after %s iterations (sum %s ns, average %s ns, min %s ns, "
+#~ "max %s ns).\n"
+#~ msgstr ""
+#~ "Suoritus päättyi %s läpikäynnin jälkeen (summa %s ns, keskiarvo %s ns, "
+#~ "alin %s ns, ylin %s ns).\n"
+
+#~ msgid "Number of times to iterate pipeline"
+#~ msgstr "Kuinka monta kertaa liukuhihna käydään läpi"
+
+#~ msgid "         Trying to run anyway.\n"
+#~ msgstr "         Yritetään suorittaa joka tapauksessa.\n"
+
+#~ msgid "Added plugin %s with %d feature.\n"
+#~ msgid_plural "Added plugin %s with %d features.\n"
+#~ msgstr[0] "Lisätty liitännäinen %s, jolla on %d ominaisuus.\n"
+#~ msgstr[1] "Lisätty liitännäinen %s, jolla on %d ominaisuutta.\n"
+
+#~ msgid "Added path   %s to %s \n"
+#~ msgstr "Lisätty polku  %s rekisteriin %s \n"
+
+#~ msgid "Rebuilding %s (%s) ...\n"
+#~ msgstr "Uudelleenrakennetaan %s (%s) ...\n"
+
+#~ msgid "Trying to load %s ...\n"
+#~ msgstr "Yritetään ladata %s ...\n"
+
+#~ msgid "Error loading %s\n"
+#~ msgstr "Virhe ladattaessa %s\n"
+
+#~ msgid "Loaded %d plugins with %d feature.\n"
+#~ msgid_plural "Loaded %d plugins with %d features.\n"
+#~ msgstr[0] "Ladattu %d liitännäistä, joilla on %d ominaisuus.\n"
+#~ msgstr[1] "Ladattu %d liitännäistä, joilla on %d ominaisuutta.\n"
+
+#~ msgid "print version information and exit"
+#~ msgstr "tulosta versiotiedot ja poistu"

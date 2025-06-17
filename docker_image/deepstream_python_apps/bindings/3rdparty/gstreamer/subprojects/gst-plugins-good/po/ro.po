@@ -1,0 +1,511 @@
+# Romanian translation for gst-plugins-good
+# This file is distributed under the same license as the gst-plugins-good package.
+#
+# Lucian Adrian Grijincu <lucian.grijincu@gmail.com>, 2010.
+# Florentina Mușat <florentina.musat.28@gmail.com>, 2020.
+# Actualizare a mesajelor, de la fișierul „gst-plugins-good-1.19.2.pot”.
+# Eliminare a mesajelor ce-au dispărut în ultima versiune.
+# Actualizări realizate de Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 15.01.2022.
+# Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gst-plugins-good 1.19.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-23 01:33+0100\n"
+"PO-Revision-Date: 2022-01-21 01:52+0100\n"
+"Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>\n"
+"Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);;\n"
+"X-Generator: Poedit 2.3.1\n"
+"X-Launchpad-Export-Date: 2010-08-16 00:08+0000\n"
+
+msgid "Jack server not found"
+msgstr "Nu s-a găsit serverul jack"
+
+msgid "Failed to decode JPEG image"
+msgstr "Nu s-a putut decoda imaginea JPEG"
+
+msgid "Failed to read memory"
+msgstr "Nu s-a putut citi memoria"
+
+msgid ""
+"Failed to configure LAME mp3 audio encoder. Check your encoding parameters."
+msgstr ""
+"Nu s-a putut configura codificatorul audio mp3 LAME. Verificați parametrii "
+"de codare."
+
+#. <php-emulation-mode>three underscores for ___rate is really really really
+#. * private as opposed to one underscore<php-emulation-mode>
+#. call this MACRO outside of the NULL state so that we have a higher chance
+#. * of actually having a pipeline and bus to get the message through
+#, c-format
+msgid ""
+"The requested bitrate %d kbit/s for property '%s' is not allowed. The "
+"bitrate was changed to %d kbit/s."
+msgstr ""
+"Rata de biți cerută %d kbit/s pentru proprietatea „%s” nu este permisă. Rata "
+"de biți a fost modificată la %d kbit/s."
+
+#. TRANSLATORS: 'song title' by 'artist name'
+#, c-format
+msgid "'%s' by '%s'"
+msgstr "„%s” de „%s”"
+
+msgid "Could not connect to server"
+msgstr "Nu se poate stabili o conexiune la server"
+
+msgid "No URL set."
+msgstr "Nu este stabilit niciun URL."
+
+msgid "Could not resolve server name."
+msgstr "Nu s-a putut rezolva numele serverului."
+
+msgid "Could not establish connection to server."
+msgstr "Nu s-a putut stabili conexiunea la server."
+
+msgid "Secure connection setup failed."
+msgstr "Configurarea de conexiune sigură a eșuat."
+
+msgid ""
+"A network error occurred, or the server closed the connection unexpectedly."
+msgstr ""
+"A apărut o eroare de rețea, sau serverul a închis conexiunea neașteptat."
+
+msgid "Server sent bad data."
+msgstr "Serverul a trimis date greșite."
+
+msgid "Server does not support seeking."
+msgstr "Serverul nu suportă căutarea."
+
+msgid "Failed to configure TwoLAME encoder. Check your encoding parameters."
+msgstr ""
+"Nu s-a putut configura codificatorul TwoLAME. Verificați parametrii de "
+"codare."
+
+msgid "No or invalid input audio, AVI stream will be corrupt."
+msgstr ""
+"Intrarea audio nu există sau este nevalidă, fluxul de date AVI va fi corupt."
+
+msgid "This file contains no playable streams."
+msgstr "Acest fișier nu conține fluxuri ce pot fi redate."
+
+msgid "This file is invalid and cannot be played."
+msgstr "Acest fișier nu este valid și nu poate fi redat."
+
+msgid "Cannot play stream because it is encrypted with PlayReady DRM."
+msgstr "Nu se poate reda fluxul pentru că este criptat cu DRM PlayReady."
+
+msgid "This file is corrupt and cannot be played."
+msgstr "Acest fișier este corupt și nu poate fi redat."
+
+msgid "Invalid atom size."
+msgstr "Dimensiune de atom nevalidă."
+
+msgid "This file is incomplete and cannot be played."
+msgstr "Acest fișier nu este complet și nu poate fi redat."
+
+# R-gC, scrie:
+# s-a modificat de la:
+# „Este posibil ca fișierul video să nu fie redat corect.”
+msgid "The video in this file might not play correctly."
+msgstr "Este posibil ca partea video a acestui fișier să nu fie redată corect."
+
+msgid ""
+"No supported stream was found. You might need to install a GStreamer RTSP "
+"extension plugin for Real media streams."
+msgstr ""
+"Nu s-a găsit nici un flux suportat. Pentru fluxuri Real media s-ar putea să "
+"fie nevoie să instalați extensia GStreamer RTSP."
+
+# R-GC, scrie:
+# s-a modificat de la:
+# „S-ar putea să necesite permiterea mai multor protocoale de transport sau de altfel s-ar putea să lipsească modulul corect de extensie GStreamer RTSP.”
+msgid ""
+"No supported stream was found. You might need to allow more transport "
+"protocols or may otherwise be missing the right GStreamer RTSP extension "
+"plugin."
+msgstr ""
+"Nu a fost găsit niciun flux suportat. S-ar putea să se necesite permiterea "
+"mai multor protocoale de transport sau, în caz contrar, s-ar putea să "
+"lipsească modulul corect de extensie GStreamer RTSP."
+
+msgid ""
+"Could not open audio device for playback. Device is being used by another "
+"application."
+msgstr ""
+"Nu s-a putut deschide dispozitivul audio pentru redare. Dispozitivul este "
+"folosit de o altă aplicație."
+
+msgid ""
+"Could not open audio device for playback. You don't have permission to open "
+"the device."
+msgstr ""
+"Nu s-a putut deschide dispozitivul audio pentru redare. Nu aveți permisiunea "
+"de a deschide dispozitivul."
+
+msgid "Could not open audio device for playback."
+msgstr "Nu s-a putut deschide dispozitivul audio pentru redare."
+
+msgid ""
+"Could not open audio device for playback. This version of the Open Sound "
+"System is not supported by this element."
+msgstr ""
+"Nu s-a putut deschide dispozitivul audio pentru redare. Versiunea aceasta a "
+"OSS (Open Sound System) nu este suportată de acest element."
+
+msgid "Playback is not supported by this audio device."
+msgstr "Redarea nu este suportată de acest dispozitiv audio."
+
+msgid "Audio playback error."
+msgstr "Eroare redare audio."
+
+msgid "Recording is not supported by this audio device."
+msgstr "Înregistrarea nu este suportată de acest dispozitiv audio."
+
+msgid "Error recording from audio device."
+msgstr "Eroare la înregistrarea de la dispozitivul audio."
+
+msgid ""
+"Could not open audio device for recording. You don't have permission to open "
+"the device."
+msgstr ""
+"Nu s-a putut deschide dispozitivul audio pentru înregistrare Nu aveți "
+"permisiunea de a deschide dispozitivul."
+
+msgid "Could not open audio device for recording."
+msgstr "Nu s-a putut deschide dispozitivul audio pentru înregistrare."
+
+msgid "CoreAudio device not found"
+msgstr "Nu s-a găsit dispozitivul CoreAudio"
+
+msgid "CoreAudio device could not be opened"
+msgstr "Nu s-a putut deschide dispozitivul CoreAudio"
+
+# R-GC, scrie:
+# aici, modificasem inițial traducerea făcută de M,
+# de la:
+# „Modulul de cameră Raspberry Pi”
+# la:
+# „Modulul pentru cameră Raspberry Pi”
+# în final. la sugestia făcută de DȘ:
+# „aici sunt sigur că este vorba despre partea
+# hardware, „modulul de cameră Raspberry Pi”,
+# cum era înainte înseamnă că este un modul care
+# se atașează camerei.”; voi folosi un „artificiu”
+# lingvistic ce înglobează ambele lucruri/sensuri
+# «Se împacă și capra, și varza», cred/sper
+msgid "Raspberry Pi Camera Module"
+msgstr "Modulul camerei Raspberry Pi"
+
+#, c-format
+msgid "Error reading %d bytes from device '%s'."
+msgstr "Eroare la citirea a %d octeți de la dispozitivul „%s”."
+
+#, c-format
+msgid "Failed to enumerate possible video formats device '%s' can work with"
+msgstr ""
+"Nu s-au putut enumera posibilele formate video cu care poate lucra "
+"dispozitivul „%s”"
+
+#, c-format
+msgid "Could not map buffers from device '%s'"
+msgstr "Nu s-a putut cartografia memoria tampon din dispozitivul „%s”"
+
+#, c-format
+msgid "The driver of device '%s' does not support the IO method %d"
+msgstr "Driverul dispozitivului „%s” nu suportă metoda IO %d"
+
+# R-Gc, scrie:
+# s-a modificat de la:
+# „Driverul dispozitivului „%s” nu suportă orice metodă IO cunoscută.”
+#, c-format
+msgid "The driver of device '%s' does not support any known IO method."
+msgstr "Driverul dispozitivului „%s” nu suportă nicio metodă IO cunoscută."
+
+# DȘ, spune:
+# „→ aici cred că „caps” vine de la „capitals” care
+# s-ar traduce cu „majuscule” (cred că este vorba de litere majuscule.”
+# R-GC, scrie:
+# am verificat TOATE celelalte traduceri, și marea
+# majoritate a echipelor, au acest mesaj marcat ca
+# incorect, mesajul anterior(cu aceași referință de
+# fișier). a fost:
+# #| msgid "Invalid atom size."
+# O singură echipă(din cele care au tradus noul
+# mesaj), la tradus ca Majuscule incorecte/nevalide;
+# celelalte echipe l-au tradus ca și mine, sau de-o
+# formă apropiată: capacități/abilități
+# Cînd am făcut traducerea, prima dată am fost
+# tentat, să traduc mesajul cu sensul de majuscule greșite(de fapt, am și făcut-o); la prima revizie
+# ce-am  făcut-o întregii traduceri, am marcat
+# mesajul ca incorect, și m-am pus să invetighez
+# ce altceva poate însemna «caps», și așa, am ajuns
+# la: «capabilities»
+msgid "Invalid caps"
+msgstr "Caracteristici incorecte"
+
+#, c-format
+msgid "Device '%s' has no supported format"
+msgstr "Dispozitivul „%s” nu are niciun format suportat"
+
+#, c-format
+msgid "Device '%s' failed during initialization"
+msgstr "Dispozitivul „%s” a eșuat în timpul inițializării"
+
+#, c-format
+msgid "Device '%s' is busy"
+msgstr "Dispozitivul „%s” este ocupat"
+
+#, c-format
+msgid "Device '%s' cannot capture at %dx%d"
+msgstr "Dispozitivul „%s” nu poate captura la %dx%d"
+
+#, c-format
+msgid "Device '%s' cannot capture in the specified format"
+msgstr "Dispozitivul „%s” nu poate captura în formatul specificat"
+
+#, c-format
+msgid "Device '%s' does support non-contiguous planes"
+msgstr "Dispozitivul „%s” nu suportă planele non-contigue"
+
+#, c-format
+msgid "Device '%s' does not support %s interlacing"
+msgstr "Dispozitivul „%s” nu suportă întrețeserea %s"
+
+#, c-format
+msgid "Device '%s' does not support %s colorimetry"
+msgstr "Dispozitivul „%s” nu suportă colorimetria %s"
+
+#, c-format
+msgid "Could not get parameters on device '%s'"
+msgstr "Nu s-au putut obține parametrii pentru dispozitivul „%s”"
+
+msgid "Video device did not accept new frame rate setting."
+msgstr "Dispozitivul video nu a acceptat o configurare de rată de cadru nouă."
+
+msgid "Video device did not provide output format."
+msgstr "Dispozitivul video nu a furnizat un format de ieșire."
+
+msgid "Video device returned invalid dimensions."
+msgstr "Dispozitivul video a returnat dimensiuni nevalide."
+
+msgid "Video device uses an unsupported interlacing method."
+msgstr "Dispozitivul video utilizează o metodă de întrețesere nesuportată."
+
+msgid "Video device uses an unsupported pixel format."
+msgstr "Dispozitivul video utilizează un format de pixel nesuportat."
+
+msgid "Failed to configure internal buffer pool."
+msgstr "Nu s-a putut configura rezerva internă de preîncărcare."
+
+msgid "Video device did not suggest any buffer size."
+msgstr "Dispozitivul video nu a sugerat nicio dimensiune de preîncărcare."
+
+msgid "No downstream pool to import from."
+msgstr "Nu există o rezervă în aval din care să se importe."
+
+# R-GC, scrie
+# tuner = acordor, numai cînd e vorba de instrumente muzicale pentru a fi „în acord” cu nota muzicală tocată
+# Pentru toate celelalte utilizări:
+# tuner = receptor, selector de semnal (sau de „guguștiuci” :)  )
+#, c-format
+msgid "Failed to get settings of tuner %d on device '%s'."
+msgstr ""
+"Nu s-au putut obține configurările a receptorului de semnal %d pe "
+"dispozitivul „%s”."
+
+# R-GC, scrie:
+# modificat de la:
+# „Eroare la obținerea capabilităților pentru dispozitivul „%s”.”
+#, c-format
+msgid "Error getting capabilities for device '%s'."
+msgstr "Eroare la obținerea caracteristicilor pentru dispozitivul „%s”."
+
+#, c-format
+msgid "Device '%s' is not a tuner."
+msgstr "Dispozitivul „%s” nu este un receptor de semnal."
+
+#, c-format
+msgid "Failed to get radio input on device '%s'. "
+msgstr "Nu s-a putut obține intrarea radio pe dispozitivul „%s”. "
+
+#, c-format
+msgid "Failed to set input %d on device %s."
+msgstr "Definirea valorii %d pentru dispozitivul „%s” a eșuat."
+
+#, c-format
+msgid "Failed to change mute state for device '%s'."
+msgstr "Nu s-a putut modifica starea ,fără sunet” pe dispozitivul „%s”."
+
+msgid "Failed to allocated required memory."
+msgstr "Nu s-a alocat memoria necesară."
+
+msgid "Failed to allocate required memory."
+msgstr "Nu s-a putut aloca memoria necesară."
+
+#, c-format
+msgid "Converter on device %s has no supported input format"
+msgstr ""
+"Convertizorul pe dispozitivul %s nu are niciun format de intrare suportat"
+
+#, c-format
+msgid "Converter on device %s has no supported output format"
+msgstr ""
+"Convertizorul pe dispozitivul %s nu are niciun format de ieșire suportat"
+
+#, c-format
+msgid "Decoder on device %s has no supported input format"
+msgstr ""
+"Decodificatorul pe dispozitivul %s nu are niciun format de intrare suportat"
+
+#, c-format
+msgid "Decoder on device %s has no supported output format"
+msgstr ""
+"Decodificatorul pe dispozitivul %s nu are niciun format de ieșire suportat"
+
+msgid "Failed to start decoding thread."
+msgstr "Nu s-a putut începe firul de decodare."
+
+msgid "Failed to process frame."
+msgstr "Nu s-a putut procesa cadrul."
+
+#, c-format
+msgid "Encoder on device %s has no supported output format"
+msgstr ""
+"Codificatorul pe dispozitivul %s nu are niciun format de ieșire suportat"
+
+#, c-format
+msgid "Encoder on device %s has no supported input format"
+msgstr ""
+"Codificatorul pe dispozitivul %s nu are niciun format de intrare suportat"
+
+msgid "Failed to start encoding thread."
+msgstr "Nu s-a putut începe firul de codare."
+
+#, c-format
+msgid ""
+"Error getting capabilities for device '%s': It isn't a v4l2 driver. Check if "
+"it is a v4l1 driver."
+msgstr ""
+"Eroare la obținerea caracteristicilor pentru dispozitivul „%s”: Nu este un "
+"driver v4l2. Verificați dacă este un driver v4l1."
+
+#, c-format
+msgid "Failed to query attributes of input %d in device %s"
+msgstr "Obținerea atributelor de intrare %d pentru dispozitivul %s a eșuat"
+
+#, c-format
+msgid "Failed to get setting of tuner %d on device '%s'."
+msgstr ""
+"A eșuat obținerea configurării receptorului de semnal %d pentru dispozitivul "
+"„%s”."
+
+#, c-format
+msgid "Failed to query norm on device '%s'."
+msgstr "Obținerea normei pentru dispozitivul „%s” a eșuat."
+
+#, c-format
+msgid "Failed getting controls attributes on device '%s'."
+msgstr "Obținerea atributelor de control pentru dispozitivul „%s” a eșuat."
+
+#, c-format
+msgid "Cannot identify device '%s'."
+msgstr "Dispozitivul „%s” nu poate fi identificat."
+
+#, c-format
+msgid "This isn't a device '%s'."
+msgstr "Acesta nu este un dispozitiv „%s”."
+
+#, c-format
+msgid "Could not open device '%s' for reading and writing."
+msgstr "Nu se poate deschide dispozitivul „%s” pentru citire și scriere."
+
+#, c-format
+msgid "Device '%s' is not a capture device."
+msgstr "Dispozitivul „%s” nu este un dispozitiv de captură."
+
+#, c-format
+msgid "Device '%s' is not a output device."
+msgstr "Dispozitivul „%s” nu este un dispozitiv de ieșire."
+
+#, c-format
+msgid "Device '%s' is not a M2M device."
+msgstr "Dispozitivul „%s” nu este un dispozitiv M2M."
+
+#, c-format
+msgid "Could not dup device '%s' for reading and writing."
+msgstr "Nu s-a putut duplica dispozitivul „%s” pentru citire și scriere."
+
+#, c-format
+msgid "Failed to set norm for device '%s'."
+msgstr "Definirea normei pentru dispozitivul „%s” a eșuat."
+
+#, c-format
+msgid "Failed to get current tuner frequency for device '%s'."
+msgstr ""
+"Nu s-a putut obține frecvența actuală a receptorului pentru dispozitivul "
+"„%s”."
+
+# R-GC, scrie:
+# s-a modificat de la:
+# „Definirea frecvenței curent a receptorului pentru dispozitivul „%s” la %lu Hz a eșuat.”
+#, c-format
+msgid "Failed to set current tuner frequency for device '%s' to %lu Hz."
+msgstr ""
+"Nu s-a putut stabili frecvența actuală a receptorului pentru dispozitivul "
+"„%s” la %lu Hz."
+
+#, c-format
+msgid "Failed to get signal strength for device '%s'."
+msgstr "Obținerea nivelului semnalului pentru dispozitivul „%s” a eșuat."
+
+#, c-format
+msgid "Failed to get value for control %d on device '%s'."
+msgstr "Obținerea valorii %d pentru dispozitivul „%s” a eșuat."
+
+# R-GC, scrie:
+# s-a modificat de la:
+# „Definirii valorii %d pentru controlul %d al dispozitivul „%s” a eșuat.”
+#, c-format
+msgid "Failed to set value %d for control %d on device '%s'."
+msgstr ""
+"Nu s-a putut stabili valoarea %d pentru controlul %d al dispozitivului „%s”."
+
+#, c-format
+msgid "Failed to set value %s for control %d on device '%s'."
+msgstr ""
+"Nu s-a putut stabili valoarea %s pentru controlul %d al dispozitivului „%s”."
+
+#, c-format
+msgid "Failed to get current input on device '%s'. May be it is a radio device"
+msgstr ""
+"Nu s-a putut obține intrarea curentă pe dispozitivul „%s”. Poate este un "
+"dispozitiv radio"
+
+#, c-format
+msgid "Failed to set input %u on device %s."
+msgstr "Nu s-a putut stabili intrarea %u pe dispozitivul %s."
+
+#, c-format
+msgid ""
+"Failed to get current output on device '%s'. May be it is a radio device"
+msgstr ""
+"Nu s-a putut obține ieșirea curentă pe dispozitivul „%s”. Poate că este un "
+"dispozitiv radio"
+
+#, c-format
+msgid "Failed to set output %u on device %s."
+msgstr "Nu s-a putut stabili ieșirea %u pe dispozitivul %s."
+
+msgid "Changing resolution at runtime is not yet supported."
+msgstr "Schimbarea rezoluției pe durata rulării nu este încă suportată."
+
+msgid "Cannot operate without a clock"
+msgstr "Nu se poate opera fără un ceas"

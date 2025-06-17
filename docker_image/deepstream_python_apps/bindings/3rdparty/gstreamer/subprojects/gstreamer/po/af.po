@@ -1,0 +1,1454 @@
+# Translation of gstreamer messages to Afrikaans.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# This file is put in the public domain.
+# Petri Jooste <rkwjpj@puk.ac.za>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gstreamer 0.9.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-25 01:01+0100\n"
+"PO-Revision-Date: 2005-12-05 11:45+0200\n"
+"Last-Translator: Petri Jooste <rkwjpj@puk.ac.za>\n"
+"Language-Team: Afrikaans <i18n@af.org.za>\n"
+"Language: af\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+
+msgid "Print the GStreamer version"
+msgstr "Vertoon die GStreamer weergawe"
+
+msgid "Make all warnings fatal"
+msgstr "Maak alle waarskuwings fataal"
+
+msgid "Print available debug categories and exit"
+msgstr "Vertoon beskikbare ontfoutkategorië en stop"
+
+#, fuzzy
+msgid ""
+"Default debug level from 1 (only error) to 9 (anything) or 0 for no output"
+msgstr ""
+"Verstek ontfoutvlak vanaf 1 (slegs fout) tot 5 (enigiets) of 0 vir geen "
+"afvoer"
+
+msgid "LEVEL"
+msgstr "VLAK"
+
+msgid ""
+"Comma-separated list of category_name:level pairs to set specific levels for "
+"the individual categories. Example: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+msgstr ""
+"Komma-geskeide lys van kategorie_naam:vlak pare om die individuele "
+"kategorieë op te stel. Byvoorbeeld: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+
+msgid "LIST"
+msgstr "LYS"
+
+msgid "Disable colored debugging output"
+msgstr "Skakel gekleurde ontfout-afvoer af"
+
+msgid ""
+"Changes coloring mode of the debug log. Possible modes: off, on, disable, "
+"auto, unix"
+msgstr ""
+
+msgid "Disable debugging"
+msgstr "Skakel ontfouting af"
+
+msgid "Enable verbose plugin loading diagnostics"
+msgstr "Aktiveer volledige diagnostiese boodskappe vir inproplaaiing"
+
+msgid "Colon-separated paths containing plugins"
+msgstr "Dubbelpunt-geskeide paaie wat inproppe bevat"
+
+msgid "PATHS"
+msgstr "PAAIE"
+
+msgid ""
+"Comma-separated list of plugins to preload in addition to the list stored in "
+"environment variable GST_PLUGIN_PATH"
+msgstr ""
+"Komma-geskeide lys van inproppe om vooraf te laai by die lys gestoor in die "
+"omgewingsveranderlike GST_PLUGIN_PATH"
+
+msgid "PLUGINS"
+msgstr "INPROPPE"
+
+msgid "Disable trapping of segmentation faults during plugin loading"
+msgstr "Moenie segmenteringsfoute tydens inproplaaiing ondervang nie"
+
+msgid "Disable updating the registry"
+msgstr ""
+
+msgid "Disable spawning a helper process while scanning the registry"
+msgstr ""
+
+msgid "GStreamer Options"
+msgstr "GStreamer Opsies"
+
+msgid "Show GStreamer Options"
+msgstr "Wys GStreamer opsies"
+
+#, c-format
+msgid "Unknown option"
+msgstr "Onbekende opsie"
+
+msgid "GStreamer encountered a general core library error."
+msgstr "GStreamer het 'n fout teëgekom in die algemene kernbiblioteek."
+
+msgid ""
+"GStreamer developers were too lazy to assign an error code to this error."
+msgstr ""
+"GStreamer ontwikkelaars was te lui om 'n foutkode vir hierdie fout toe te "
+"ken.  "
+
+msgid "Internal GStreamer error: code not implemented."
+msgstr "Interne GStreamer-fout: code not implemented."
+
+msgid ""
+"GStreamer error: state change failed and some element failed to post a "
+"proper error message with the reason for the failure."
+msgstr ""
+
+msgid "Internal GStreamer error: pad problem."
+msgstr "Interne GStreamer-fout: pad problem."
+
+msgid "Internal GStreamer error: thread problem."
+msgstr "Interne GStreamer-fout: thread problem."
+
+#, fuzzy
+msgid "GStreamer error: negotiation problem."
+msgstr "Interne GStreamer-fout: negotiation problem."
+
+msgid "Internal GStreamer error: event problem."
+msgstr "Interne GStreamer-fout: event problem."
+
+msgid "Internal GStreamer error: seek problem."
+msgstr "Interne GStreamer-fout: seek problem."
+
+msgid "Internal GStreamer error: caps problem."
+msgstr "Interne GStreamer-fout: caps problem."
+
+msgid "Internal GStreamer error: tag problem."
+msgstr "Interne GStreamer-fout: tag problem."
+
+msgid "Your GStreamer installation is missing a plug-in."
+msgstr "Jou GStreamer-installasie kort 'n inprop."
+
+#, fuzzy
+msgid "GStreamer error: clock problem."
+msgstr "Interne GStreamer-fout: seek problem."
+
+msgid ""
+"This application is trying to use GStreamer functionality that has been "
+"disabled."
+msgstr ""
+
+msgid "GStreamer encountered a general supporting library error."
+msgstr ""
+"GStreamer het 'n fout teëgekom in 'n algemene ondersteuningsbiblioteek."
+
+msgid "Could not initialize supporting library."
+msgstr "Ondersteuningsbiblioteek kon nie aan die gang gesit word nie."
+
+msgid "Could not close supporting library."
+msgstr "Kon nie ondersteunende biblioteek toemaak nie."
+
+#, fuzzy
+msgid "Could not configure supporting library."
+msgstr "Kon nie ondersteunende biblioteek toemaak nie."
+
+msgid "Encoding error."
+msgstr ""
+
+msgid "GStreamer encountered a general resource error."
+msgstr "GStreamer het 'n algemene hulpbronfout teëgekom."
+
+msgid "Resource not found."
+msgstr "Hulpbron nie gevind nie."
+
+msgid "Resource busy or not available."
+msgstr "Hulpbron is besig of nie beskikbaar nie."
+
+msgid "Could not open resource for reading."
+msgstr "Kon nie hulpbron oopmaak om te lees nie."
+
+msgid "Could not open resource for writing."
+msgstr "Kon nie hulpbron oopmaak om te skryf nie."
+
+msgid "Could not open resource for reading and writing."
+msgstr "Kon nie hulpbron oopmaak vir lees en skryf nie."
+
+msgid "Could not close resource."
+msgstr "Kon nie hulpbron toemaak nie."
+
+msgid "Could not read from resource."
+msgstr "Kon nie uit hulpbron lees nie."
+
+msgid "Could not write to resource."
+msgstr "Kon nie na hulpbron skryf nie."
+
+msgid "Could not perform seek on resource."
+msgstr "Kon nie soekopdrag uitvoer op hulpbron nie."
+
+msgid "Could not synchronize on resource."
+msgstr "Kon nie hulpbron sinkroniseer nie."
+
+msgid "Could not get/set settings from/on resource."
+msgstr "Kon nie hulpbronstellings verkry/verander nie."
+
+msgid "No space left on the resource."
+msgstr ""
+
+#, fuzzy
+msgid "Not authorized to access resource."
+msgstr "Kon nie na hulpbron skryf nie."
+
+msgid "GStreamer encountered a general stream error."
+msgstr "GStreamer het 'n algemene stroomfout teëgekom."
+
+msgid "Element doesn't implement handling of this stream. Please file a bug."
+msgstr ""
+"Element implementeer nie die hantering van hierdie stroom nie.  Meld asb. 'n "
+"fout aan."
+
+msgid "Could not determine type of stream."
+msgstr "Kon nie die stroomtipe bepaal nie."
+
+msgid "The stream is of a different type than handled by this element."
+msgstr ""
+"Die stroom is nie van dieselfde tipe as wat deur die element hanteer word "
+"nie."
+
+msgid "There is no codec present that can handle the stream's type."
+msgstr ""
+"Daar is nie 'n kodek beskikbaar om hierdie stroom se tipe te hanteer nie."
+
+msgid "Could not decode stream."
+msgstr "Kon nie stroom dekodeer nie."
+
+msgid "Could not encode stream."
+msgstr "Kon nie stroom enkodeer nie."
+
+msgid "Could not demultiplex stream."
+msgstr "Kon nie stroom demultiplekseer nie."
+
+msgid "Could not multiplex stream."
+msgstr "Kon nie stroom multiplekseer nie."
+
+msgid "The stream is in the wrong format."
+msgstr ""
+
+msgid "The stream is encrypted and decryption is not supported."
+msgstr ""
+
+msgid ""
+"The stream is encrypted and can't be decrypted because no suitable key has "
+"been supplied."
+msgstr ""
+
+#, c-format
+msgid "No error message for domain %s."
+msgstr "Geen foutboodskap vir domein %s."
+
+#, c-format
+msgid "No standard error message for domain %s and code %d."
+msgstr "Geen standaard foutboodskap vir domein %s en kode %d."
+
+msgid "Selected clock cannot be used in pipeline."
+msgstr ""
+
+#, c-format
+msgid "Error writing registry cache to %s: %s"
+msgstr ""
+
+msgid "title"
+msgstr "titel"
+
+msgid "commonly used title"
+msgstr "algemeenbekende titel"
+
+msgid "title sortname"
+msgstr ""
+
+#, fuzzy
+msgid "commonly used title for sorting purposes"
+msgstr "algemeenbekende titel"
+
+msgid "artist"
+msgstr "kunstenaar"
+
+msgid "person(s) responsible for the recording"
+msgstr "persoon(e) verantwoordelik vir die opname"
+
+msgid "artist sortname"
+msgstr ""
+
+#, fuzzy
+msgid "person(s) responsible for the recording for sorting purposes"
+msgstr "persoon(e) verantwoordelik vir die opname"
+
+msgid "album"
+msgstr "album"
+
+msgid "album containing this data"
+msgstr "album wat hierdie data bevat"
+
+msgid "album sortname"
+msgstr ""
+
+#, fuzzy
+msgid "album containing this data for sorting purposes"
+msgstr "album wat hierdie data bevat"
+
+#, fuzzy
+msgid "album artist"
+msgstr "kunstenaar"
+
+msgid "The artist of the entire album, as it should be displayed"
+msgstr ""
+
+msgid "album artist sortname"
+msgstr ""
+
+msgid "The artist of the entire album, as it should be sorted"
+msgstr ""
+
+msgid "date"
+msgstr "datum"
+
+msgid "date the data was created (as a GDate structure)"
+msgstr "die datum waarop die data geskep is (as 'n GDate-struktuur)"
+
+#, fuzzy
+msgid "datetime"
+msgstr "datum"
+
+#, fuzzy
+msgid "date and time the data was created (as a GstDateTime structure)"
+msgstr "die datum waarop die data geskep is (as 'n GDate-struktuur)"
+
+msgid "genre"
+msgstr "genre"
+
+msgid "genre this data belongs to"
+msgstr "genre waartoe hierdie data behoort"
+
+msgid "comment"
+msgstr "kommentaar"
+
+msgid "free text commenting the data"
+msgstr "vrye teks met kommentaar op die data"
+
+#, fuzzy
+msgid "extended comment"
+msgstr "kommentaar"
+
+#, fuzzy
+msgid "free text commenting the data in key=value or key[en]=comment form"
+msgstr "vrye teks met kommentaar op die data"
+
+msgid "track number"
+msgstr "snitnommer"
+
+msgid "track number inside a collection"
+msgstr "snitnommer binne die versameling"
+
+msgid "track count"
+msgstr "aantal snitte"
+
+msgid "count of tracks inside collection this track belongs to"
+msgstr "aantal snitte in die versameling waaruit hierdie snit kom"
+
+msgid "disc number"
+msgstr "skyfnommer"
+
+msgid "disc number inside a collection"
+msgstr "skyfnommer binne 'n versameling"
+
+msgid "disc count"
+msgstr "aantal skywe"
+
+msgid "count of discs inside collection this disc belongs to"
+msgstr "aantal skywe in die versameling waaruit hierdie skyf kom"
+
+msgid "location"
+msgstr "ligging"
+
+msgid ""
+"Origin of media as a URI (location, where the original of the file or stream "
+"is hosted)"
+msgstr ""
+
+msgid "homepage"
+msgstr ""
+
+msgid "Homepage for this media (i.e. artist or movie homepage)"
+msgstr ""
+
+msgid "description"
+msgstr "beskrywing"
+
+msgid "short text describing the content of the data"
+msgstr "kort teks wat die inhoud van die data beskryf"
+
+msgid "version"
+msgstr "weergawe"
+
+msgid "version of this data"
+msgstr "weergawe van hierdie data"
+
+msgid "ISRC"
+msgstr "ISRC"
+
+msgid "International Standard Recording Code - see http://www.ifpi.org/isrc/"
+msgstr "Internasionale Standaard Opnamekode - sien http://www.ifpi.org/isrc/"
+
+msgid "organization"
+msgstr "organization"
+
+msgid "copyright"
+msgstr "kopiereg"
+
+msgid "copyright notice of the data"
+msgstr "kopieregnota van die data"
+
+#, fuzzy
+msgid "copyright uri"
+msgstr "kopiereg"
+
+#, fuzzy
+msgid "URI to the copyright notice of the data"
+msgstr "kopieregnota van die data"
+
+#, fuzzy
+msgid "encoded by"
+msgstr "enkodeerder"
+
+msgid "name of the encoding person or organization"
+msgstr ""
+
+msgid "contact"
+msgstr "kontak"
+
+msgid "contact information"
+msgstr "kontakinformasie"
+
+msgid "license"
+msgstr "lisensie"
+
+msgid "license of data"
+msgstr "datalisensie"
+
+#, fuzzy
+msgid "license uri"
+msgstr "lisensie"
+
+#, fuzzy
+msgid "URI to the license of the data"
+msgstr "datalisensie"
+
+msgid "performer"
+msgstr "kunstenaar"
+
+msgid "person(s) performing"
+msgstr "kunstenaar(s)"
+
+msgid "composer"
+msgstr ""
+
+#, fuzzy
+msgid "person(s) who composed the recording"
+msgstr "persoon(e) verantwoordelik vir die opname"
+
+msgid "conductor"
+msgstr ""
+
+msgid "conductor/performer refinement"
+msgstr ""
+
+msgid "duration"
+msgstr "duur"
+
+msgid "length in GStreamer time units (nanoseconds)"
+msgstr "lengte in GStreamer tydeenhede (nanosekondes)"
+
+msgid "codec"
+msgstr "kodek"
+
+msgid "codec the data is stored in"
+msgstr "kodek waarmee die data gestoor is"
+
+msgid "video codec"
+msgstr "video-kodek"
+
+msgid "codec the video data is stored in"
+msgstr "kodek waarmee die videodata gestoor is"
+
+msgid "audio codec"
+msgstr "oudio-kodek"
+
+msgid "codec the audio data is stored in"
+msgstr "kodek waarmee die oudiodata gestoor is"
+
+#, fuzzy
+msgid "subtitle codec"
+msgstr "video-kodek"
+
+#, fuzzy
+msgid "codec the subtitle data is stored in"
+msgstr "kodek waarmee die videodata gestoor is"
+
+#, fuzzy
+msgid "container format"
+msgstr "kontakinformasie"
+
+#, fuzzy
+msgid "container format the data is stored in"
+msgstr "kodek waarmee die data gestoor is"
+
+msgid "bitrate"
+msgstr "bistempo"
+
+msgid "exact or average bitrate in bits/s"
+msgstr "presiese of gimiddelde bistempo in bisse/sekonde"
+
+msgid "nominal bitrate"
+msgstr "nominale bistempo"
+
+msgid "nominal bitrate in bits/s"
+msgstr "nomminale bistempo is bisse/sekonde"
+
+msgid "minimum bitrate"
+msgstr "minimum bistempo"
+
+msgid "minimum bitrate in bits/s"
+msgstr "minimum bistempo is bisse/s"
+
+msgid "maximum bitrate"
+msgstr "maksimum bistempo"
+
+msgid "maximum bitrate in bits/s"
+msgstr "maksimum bistempo in bisse/sekonde"
+
+msgid "encoder"
+msgstr "enkodeerder"
+
+msgid "encoder used to encode this stream"
+msgstr "enkodeerder wat hierdie stroom enkodeer"
+
+msgid "encoder version"
+msgstr "enkodeerderweergawe"
+
+msgid "version of the encoder used to encode this stream"
+msgstr "weergawe van die enkodeerder wat hierdie stroom enkodeer"
+
+msgid "serial"
+msgstr "reeks"
+
+msgid "serial number of track"
+msgstr "serienommer van snit"
+
+msgid "replaygain track gain"
+msgstr "terugspeelversterking snitversterking"
+
+msgid "track gain in db"
+msgstr "snitversterking (in db)"
+
+msgid "replaygain track peak"
+msgstr "terugspeelversterking snittoppunt"
+
+msgid "peak of the track"
+msgstr "toppunt van die snit"
+
+msgid "replaygain album gain"
+msgstr "terugspeelversterking albumversterking"
+
+msgid "album gain in db"
+msgstr "albumversterking (in db)"
+
+msgid "replaygain album peak"
+msgstr "terugspeelversterking albumtoppunt"
+
+msgid "peak of the album"
+msgstr "toppunt van die album"
+
+#, fuzzy
+msgid "replaygain reference level"
+msgstr "terugspeelversterking snittoppunt"
+
+msgid "reference level of track and album gain values"
+msgstr ""
+
+msgid "language code"
+msgstr "taalkode"
+
+#, fuzzy
+msgid "language code for this stream, conforming to ISO-639-1 or ISO-639-2"
+msgstr "taalkode vir hierdie stroom, wat voldoen aan ISO-639-1"
+
+#, fuzzy
+msgid "language name"
+msgstr "taalkode"
+
+msgid "freeform name of the language this stream is in"
+msgstr ""
+
+msgid "image"
+msgstr ""
+
+#, fuzzy
+msgid "image related to this stream"
+msgstr "enkodeerder wat hierdie stroom enkodeer"
+
+#. TRANSLATORS: 'preview image' = image that shows a preview of the full image
+msgid "preview image"
+msgstr ""
+
+msgid "preview image related to this stream"
+msgstr ""
+
+msgid "attachment"
+msgstr ""
+
+#, fuzzy
+msgid "file attached to this stream"
+msgstr "enkodeerder wat hierdie stroom enkodeer"
+
+msgid "beats per minute"
+msgstr ""
+
+msgid "number of beats per minute in audio"
+msgstr ""
+
+msgid "keywords"
+msgstr ""
+
+#, fuzzy
+msgid "comma separated keywords describing the content"
+msgstr "kort teks wat die inhoud van die data beskryf"
+
+#, fuzzy
+msgid "geo location name"
+msgstr "ligging"
+
+msgid ""
+"human readable descriptive location of where the media has been recorded or "
+"produced"
+msgstr ""
+
+msgid "geo location latitude"
+msgstr ""
+
+msgid ""
+"geo latitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the equator, negative values for "
+"southern latitudes)"
+msgstr ""
+
+msgid "geo location longitude"
+msgstr ""
+
+msgid ""
+"geo longitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the prime meridian in Greenwich/UK,  "
+"negative values for western longitudes)"
+msgstr ""
+
+msgid "geo location elevation"
+msgstr ""
+
+msgid ""
+"geo elevation of where the media has been recorded or produced in meters "
+"according to WGS84 (zero is average sea level)"
+msgstr ""
+
+msgid "geo location country"
+msgstr ""
+
+msgid "country (english name) where the media has been recorded or produced"
+msgstr ""
+
+#, fuzzy
+msgid "geo location city"
+msgstr "ligging"
+
+msgid "city (english name) where the media has been recorded or produced"
+msgstr ""
+
+msgid "geo location sublocation"
+msgstr ""
+
+msgid ""
+"a location within a city where the media has been produced or created (e.g. "
+"the neighborhood)"
+msgstr ""
+
+msgid "geo location horizontal error"
+msgstr ""
+
+msgid "expected error of the horizontal positioning measures (in meters)"
+msgstr ""
+
+msgid "geo location movement speed"
+msgstr ""
+
+msgid ""
+"movement speed of the capturing device while performing the capture in m/s"
+msgstr ""
+
+msgid "geo location movement direction"
+msgstr ""
+
+msgid ""
+"indicates the movement direction of the device performing the capture of a "
+"media. It is represented as degrees in floating point representation, 0 "
+"means the geographic north, and increases clockwise"
+msgstr ""
+
+msgid "geo location capture direction"
+msgstr ""
+
+msgid ""
+"indicates the direction the device is pointing to when capturing  a media. "
+"It is represented as degrees in floating point  representation, 0 means the "
+"geographic north, and increases clockwise"
+msgstr ""
+
+#. TRANSLATORS: 'show name' = 'TV/radio/podcast show name' here
+msgid "show name"
+msgstr ""
+
+msgid "Name of the tv/podcast/series show the media is from"
+msgstr ""
+
+#. TRANSLATORS: 'show sortname' = 'TV/radio/podcast show name as used for sorting purposes' here
+msgid "show sortname"
+msgstr ""
+
+msgid ""
+"Name of the tv/podcast/series show the media is from, for sorting purposes"
+msgstr ""
+
+#, fuzzy
+msgid "episode number"
+msgstr "skyfnommer"
+
+msgid "The episode number in the season the media is part of"
+msgstr ""
+
+#, fuzzy
+msgid "season number"
+msgstr "skyfnommer"
+
+msgid "The season number of the show the media is part of"
+msgstr ""
+
+msgid "lyrics"
+msgstr ""
+
+msgid "The lyrics of the media, commonly used for songs"
+msgstr ""
+
+msgid "composer sortname"
+msgstr ""
+
+msgid "person(s) who composed the recording, for sorting purposes"
+msgstr ""
+
+msgid "grouping"
+msgstr ""
+
+msgid ""
+"Groups related media that spans multiple tracks, like the different pieces "
+"of a concerto. It is a higher level than a track, but lower than an album"
+msgstr ""
+
+#, fuzzy
+msgid "user rating"
+msgstr "duur"
+
+msgid ""
+"Rating attributed by a user. The higher the rank, the more the user likes "
+"this media"
+msgstr ""
+
+msgid "device manufacturer"
+msgstr ""
+
+#, fuzzy
+msgid "Manufacturer of the device used to create this media"
+msgstr "weergawe van die enkodeerder wat hierdie stroom enkodeer"
+
+msgid "device model"
+msgstr ""
+
+#, fuzzy
+msgid "Model of the device used to create this media"
+msgstr "weergawe van die enkodeerder wat hierdie stroom enkodeer"
+
+msgid "application name"
+msgstr ""
+
+msgid "Application used to create the media"
+msgstr ""
+
+msgid "application data"
+msgstr ""
+
+msgid "Arbitrary application data to be serialized into the media"
+msgstr ""
+
+msgid "image orientation"
+msgstr ""
+
+msgid "How the image should be rotated or flipped before display"
+msgstr ""
+
+msgid "publisher"
+msgstr ""
+
+msgid "Name of the label or publisher"
+msgstr ""
+
+msgid "interpreted-by"
+msgstr ""
+
+msgid "Information about the people behind a remix and similar interpretations"
+msgstr ""
+
+msgid "midi-base-note"
+msgstr ""
+
+msgid "Midi note number of the audio track."
+msgstr ""
+
+msgid "private-data"
+msgstr ""
+
+msgid "Private data"
+msgstr ""
+
+#. separator between two strings
+msgid ", "
+msgstr ", "
+
+#, c-format
+msgid "Invalid URI: %s"
+msgstr ""
+
+#, c-format
+msgid "No URI handler for the %s protocol found"
+msgstr ""
+
+#, c-format
+msgid "URI scheme '%s' not supported"
+msgstr ""
+
+#, c-format
+msgid "ERROR: from element %s: %s\n"
+msgstr "FOUT: vanaf element %s: %s\n"
+
+#, c-format
+msgid ""
+"Additional debug info:\n"
+"%s\n"
+msgstr ""
+"Addisionele ontfout-inligting:\n"
+"%s\n"
+
+#. ******************************************************************************************
+#. *** helpers for pipeline-setup
+#. ******************************************************************************************
+#, c-format
+msgid "link has no source [sink=%s@%p]"
+msgstr ""
+
+#, c-format
+msgid "link has no sink [source=%s@%p]"
+msgstr ""
+
+#, c-format
+msgid "no property \"%s\" in element \"%s\""
+msgstr "Geen eienskap \"%s\" in element \"%s\""
+
+#, c-format
+msgid "could not set property \"%s\" in element \"%s\" to \"%s\""
+msgstr "kon nie eienskap \"%s\" in element \"%s\" stel na \"%s\" nie"
+
+#, fuzzy, c-format
+msgid "Element \"%s\" is not a GstPreset"
+msgstr "Lêer \"%s\" is 'n sok."
+
+#, fuzzy, c-format
+msgid "could not set preset \"%s\" in element \"%s\""
+msgstr "kon nie eienskap \"%s\" in element \"%s\" stel na \"%s\" nie"
+
+msgid "Delayed linking failed."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "could not link %s to %s, %s can't handle caps %s"
+msgstr "Kon nie %s aan %s verbind nie"
+
+#, fuzzy, c-format
+msgid "could not link %s to %s, neither element can handle caps %s"
+msgstr "kon nie aan bestemming-element vir  URI \"%s\" verbind nie"
+
+#, fuzzy, c-format
+msgid "could not link %s to %s with caps %s"
+msgstr "Kon nie %s aan %s verbind nie"
+
+#, c-format
+msgid "could not link %s to %s"
+msgstr "Kon nie %s aan %s verbind nie"
+
+#, c-format
+msgid "no element \"%s\""
+msgstr "geen element \"%s\""
+
+#, c-format
+msgid "unexpected reference \"%s\" - ignoring"
+msgstr ""
+
+#, c-format
+msgid "unexpected pad-reference \"%s\" - ignoring"
+msgstr ""
+
+#, c-format
+msgid "could not parse caps \"%s\""
+msgstr "kon nie caps \"%s\" ontleed nie"
+
+#, c-format
+msgid "no sink element for URI \"%s\""
+msgstr "geen bestemming-element vir URI \"%s\""
+
+#, c-format
+msgid "no source element for URI \"%s\""
+msgstr "geen bronelement vir URI \"%s\""
+
+msgid "syntax error"
+msgstr ""
+
+#, c-format
+msgid "specified empty bin \"%s\", not allowed"
+msgstr "gespesifiseerde leë houer \"%s\" is ontoelaatbaar"
+
+#, fuzzy, c-format
+msgid "no bin \"%s\", unpacking elements"
+msgstr "geen houer \"%s\", dit word oorgeslaan"
+
+msgid "empty pipeline not allowed"
+msgstr "leë pyplyn word nie toegelaat nie"
+
+msgid "Pipeline construction is invalid, please add queues."
+msgstr ""
+
+msgid "A lot of buffers are being dropped."
+msgstr ""
+
+msgid "Internal data flow problem."
+msgstr "Interne datavloeiprobleem."
+
+msgid "Internal data flow error."
+msgstr "Interne datavloeifout."
+
+#, fuzzy
+msgid "Internal clock error."
+msgstr "Interne datavloeifout."
+
+msgid "Failed to map buffer."
+msgstr ""
+
+msgid "Filter caps"
+msgstr ""
+
+msgid ""
+"Restrict the possible allowed capabilities (NULL means ANY). Setting this "
+"property takes a reference to the supplied GstCaps object."
+msgstr ""
+
+msgid "Caps Change Mode"
+msgstr ""
+
+msgid "Filter caps change behaviour"
+msgstr ""
+
+msgid "No Temp directory specified."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Could not create temp file \"%s\"."
+msgstr "kon nie inligting oor \"%s\" kry nie."
+
+#, fuzzy, c-format
+msgid "Could not open file \"%s\" for reading."
+msgstr "Kon nie lêer \"%s\" oopmaak om te lees nie. %s."
+
+#, fuzzy
+msgid "Error while writing to download file."
+msgstr "Fout tydens skryf na lêer \"%s\"."
+
+msgid "No file name specified for writing."
+msgstr "Geen lêernaam om heen te skryf nie."
+
+#, c-format
+msgid "Could not open file \"%s\" for writing."
+msgstr "Kon nie lêer \"%s\" oopmaak om in te skryf nie."
+
+#, c-format
+msgid "Error closing file \"%s\"."
+msgstr "Fout met toemaak van lêer \"%s\"."
+
+#, fuzzy, c-format
+msgid "Error while seeking in file \"%s\"."
+msgstr "Fout tydens skryf na lêer \"%s\"."
+
+#, c-format
+msgid "Error while writing to file \"%s\"."
+msgstr "Fout tydens skryf na lêer \"%s\"."
+
+msgid "No file name specified for reading."
+msgstr "Geen lêernaam om uit te lees nie."
+
+#, fuzzy, c-format
+msgid "Could not get info on \"%s\"."
+msgstr "kon nie inligting oor \"%s\" kry nie."
+
+#, c-format
+msgid "\"%s\" is a directory."
+msgstr "\"%s\" is 'n gids."
+
+#, c-format
+msgid "File \"%s\" is a socket."
+msgstr "Lêer \"%s\" is 'n sok."
+
+msgid "Failed after iterations as requested."
+msgstr "Mislukking na die vasgestelde aantal probeerslae."
+
+msgid "eos-after and error-after can't both be defined."
+msgstr ""
+
+msgid "caps"
+msgstr "caps"
+
+msgid "detected capabilities in stream"
+msgstr "vermoëns wat bespeur kon word in die stroom"
+
+msgid "minimum"
+msgstr "minimum"
+
+msgid "force caps"
+msgstr ""
+
+msgid "force caps without doing a typefind"
+msgstr ""
+
+msgid "Stream doesn't contain enough data."
+msgstr ""
+
+#, fuzzy
+msgid "Stream contains no data."
+msgstr "album wat hierdie data bevat"
+
+#, c-format
+msgid "%sImplemented Interfaces%s:\n"
+msgstr ""
+
+msgid "readable"
+msgstr ""
+
+msgid "writable"
+msgstr ""
+
+msgid "deprecated"
+msgstr ""
+
+msgid "controllable"
+msgstr ""
+
+msgid "conditionally available"
+msgstr ""
+
+msgid "changeable in NULL, READY, PAUSED or PLAYING state"
+msgstr ""
+
+msgid "changeable only in NULL, READY or PAUSED state"
+msgstr ""
+
+msgid "changeable only in NULL or READY state"
+msgstr ""
+
+msgid "Blacklisted files:"
+msgstr ""
+
+#, c-format
+msgid "%sTotal count%s: %s"
+msgstr ""
+
+#, c-format
+msgid "%d blacklisted file"
+msgid_plural "%d blacklisted files"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%d plugin"
+msgid_plural "%d plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%d blacklist entry"
+msgid_plural "%d blacklist entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%d feature"
+msgid_plural "%d features"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Print all elements"
+msgstr "Druk alle elemente"
+
+msgid "Print list of blacklisted files"
+msgstr ""
+
+msgid ""
+"Print a machine-parsable list of features the specified plugin or all "
+"plugins provide.\n"
+"                                       Useful in connection with external "
+"automatic plugin installation mechanisms"
+msgstr ""
+
+msgid "List the plugin contents"
+msgstr ""
+
+msgid ""
+"A slashes ('/') separated list of types of elements (also known as klass) to "
+"list. (unordered)"
+msgstr ""
+
+msgid "Check if the specified element or plugin exists"
+msgstr ""
+
+msgid ""
+"When checking if an element or plugin exists, also check that its version is "
+"at least the version specified"
+msgstr ""
+
+msgid "Print supported URI schemes, with the elements that implement them"
+msgstr ""
+
+msgid ""
+"Disable colors in output. You can also achieve the same by setting "
+"'GST_INSPECT_NO_COLORS' environment variable to any value."
+msgstr ""
+
+msgid "Color output, even when not sending to a tty."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Could not load plugin file: %s\n"
+msgstr "Kon nie lêer \"%s\" oopmaak om in te skryf nie."
+
+#, fuzzy, c-format
+msgid "No such element or plugin '%s'\n"
+msgstr "geen bronelement vir URI \"%s\""
+
+msgid "Index statistics"
+msgstr ""
+
+msgid "Setting pipeline to PLAYING ...\n"
+msgstr "Pyplyn word gestel na SPEEL ...\n"
+
+msgid "ERROR: pipeline doesn't want to play.\n"
+msgstr "FOUT: pyplyn wil nie speel nie.\n"
+
+#, fuzzy, c-format
+msgid "Got message #%u from element \"%s\" (%s): "
+msgstr "Boodskap vanaf element \"%s\" (%s):"
+
+#, fuzzy, c-format
+msgid "Got message #%u from pad \"%s:%s\" (%s): "
+msgstr "Boodskap vanaf element \"%s\" (%s):"
+
+#, fuzzy, c-format
+msgid "Got message #%u from object \"%s\" (%s): "
+msgstr "Boodskap vanaf element \"%s\" (%s):"
+
+#, fuzzy, c-format
+msgid "Got message #%u (%s): "
+msgstr "Boodskap vanaf element \"%s\" (%s):"
+
+#, c-format
+msgid "Got EOS from element \"%s\".\n"
+msgstr "EOS gekry vanaf element \"%s\".\n"
+
+msgid "EOS received - stopping pipeline...\n"
+msgstr ""
+
+#, c-format
+msgid "FOUND TAG      : found by element \"%s\".\n"
+msgstr "ETIKET GEVIND  : gevind by element \"%s\".\n"
+
+#, fuzzy, c-format
+msgid "FOUND TAG      : found by pad \"%s:%s\".\n"
+msgstr "ETIKET GEVIND  : gevind by element \"%s\".\n"
+
+#, fuzzy, c-format
+msgid "FOUND TAG      : found by object \"%s\".\n"
+msgstr "ETIKET GEVIND  : gevind by element \"%s\".\n"
+
+msgid "FOUND TAG\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "FOUND TOC      : found by element \"%s\".\n"
+msgstr "ETIKET GEVIND  : gevind by element \"%s\".\n"
+
+#, fuzzy, c-format
+msgid "FOUND TOC      : found by object \"%s\".\n"
+msgstr "ETIKET GEVIND  : gevind by element \"%s\".\n"
+
+msgid "FOUND TOC\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"INFO:\n"
+"%s\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: from element %s: %s\n"
+msgstr "FOUT: vanaf element %s: %s\n"
+
+msgid "Pipeline is PREROLLED ...\n"
+msgstr "Pyplyn is VOORGEROL ...\n"
+
+msgid "Prerolled, waiting for buffering to finish...\n"
+msgstr ""
+
+msgid "Prerolled, waiting for progress to finish...\n"
+msgstr ""
+
+msgid "buffering..."
+msgstr ""
+
+#, fuzzy
+msgid "Done buffering, setting pipeline to PLAYING ...\n"
+msgstr "Pyplyn word gestel na SPEEL ...\n"
+
+#. we were not buffering but PLAYING, PAUSE  the pipeline.
+#, fuzzy
+msgid "Buffering, setting pipeline to PAUSED ...\n"
+msgstr "Stel pyplyn na POUSEER ...\n"
+
+msgid "Redistribute latency...\n"
+msgstr ""
+
+#, c-format
+msgid "Setting state to %s as requested by %s...\n"
+msgstr ""
+
+#. this application message is posted when we caught an interrupt and
+#. * we need to stop the pipeline.
+#, fuzzy
+msgid "Interrupt: Stopping pipeline ...\n"
+msgstr "Pyplyn word gestel na NULL ...\n"
+
+msgid "Interrupt while waiting for EOS - stopping pipeline...\n"
+msgstr ""
+
+msgid "EOS on shutdown enabled -- Forcing EOS on the pipeline\n"
+msgstr ""
+
+msgid "Waiting for EOS...\n"
+msgstr ""
+
+#, c-format
+msgid "Progress: (%s) %s\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Missing element: %s\n"
+msgstr "geen element \"%s\""
+
+#, fuzzy, c-format
+msgid "Got context from element '%s': %s=%s\n"
+msgstr "Boodskap vanaf element \"%s\" (%s):"
+
+msgid "ERROR: pipeline doesn't want to preroll.\n"
+msgstr "FOUT: pyplyn wil nie voorrol nie.\n"
+
+msgid "An error happened while waiting for EOS\n"
+msgstr ""
+
+#, c-format
+msgid "Use Windows high-resolution clock, precision: %u ms\n"
+msgstr ""
+
+msgid "Output tags (also known as metadata)"
+msgstr "Wys etikette (ook bekend as metadata)"
+
+msgid "Output TOC (chapters and editions)"
+msgstr ""
+
+msgid "Output status information and property notifications"
+msgstr "Wys statusinligting en kennisgewings van eienskappe"
+
+#, fuzzy
+msgid "Do not print any progress information"
+msgstr "Moenie statusinligting van TIPE wys nie"
+
+msgid "Output messages"
+msgstr "Afvoerboodskappe"
+
+msgid ""
+"Do not output status information for the specified property if verbose "
+"output is enabled (can be used multiple times)"
+msgstr ""
+
+msgid "PROPERTY-NAME"
+msgstr ""
+
+msgid "Do not install a fault handler"
+msgstr "Moenie 'n fouthanteerder installeer nie"
+
+msgid "Force EOS on sources before shutting the pipeline down"
+msgstr ""
+
+msgid "Gather and print index statistics"
+msgstr ""
+
+msgid ""
+"Do not print current position of pipeline. If this option is unspecified, "
+"the position will be printed when stdout is a TTY. To enable printing "
+"position when stdout is not a TTY, use \"force-position\" option"
+msgstr ""
+
+msgid ""
+"Allow printing current position of pipeline even if stdout is not a TTY. "
+"This option has no effect if the \"no-position\" option is specified"
+msgstr ""
+
+#, c-format
+msgid "ERROR: pipeline could not be constructed: %s.\n"
+msgstr "FOUT: pyplyn kon nie opgestel word nie: %s.\n"
+
+msgid "ERROR: pipeline could not be constructed.\n"
+msgstr "FOUT: pyplyn kon nie opgestel word nie.\n"
+
+#, c-format
+msgid "WARNING: erroneous pipeline: %s\n"
+msgstr "WAARSKUWING: foutiewe pyplyn: %s\n"
+
+msgid "ERROR: the 'pipeline' element wasn't found.\n"
+msgstr "FOUT: die pyplynelement kon nie gevind word nie.\n"
+
+msgid "Setting pipeline to PAUSED ...\n"
+msgstr "Stel pyplyn na POUSEER ...\n"
+
+#, fuzzy
+msgid "Failed to set pipeline to PAUSED.\n"
+msgstr "Stel pyplyn na POUSEER ...\n"
+
+#, fuzzy
+msgid "Pipeline is live and does not need PREROLL ...\n"
+msgstr "Pyplyn is VOORGEROL ...\n"
+
+msgid "Pipeline is PREROLLING ...\n"
+msgstr "Pyplyn doen VOORROLLING ...\n"
+
+msgid "Execution ended after %"
+msgstr "Uitvoering het geëindig na %"
+
+msgid "Setting pipeline to NULL ...\n"
+msgstr "Pyplyn word gestel na NULL ...\n"
+
+#, fuzzy
+msgid "Freeing pipeline ...\n"
+msgstr "Pyplyn word gestel na NULL ...\n"
+
+#~ msgid "Internal GStreamer error: state change failed."
+#~ msgstr "Interne GStreamer-fout: state change failed."
+
+#~ msgid "original location of file as a URI"
+#~ msgstr "oorsprong van lêer gegee as 'n URI"
+
+#~ msgid "link without source element"
+#~ msgstr "verbinding sonder bron-element"
+
+#~ msgid "link without sink element"
+#~ msgstr "verbinding sonder bestemming-element"
+
+#, c-format
+#~ msgid "no element to link URI \"%s\" to"
+#~ msgstr "geen element vir URI \"%s\" om heen te skakel nie"
+
+#~ msgid "maximum"
+#~ msgstr "maksimum"
+
+#~ msgid "Usage: gst-xmllaunch <file.xml> [ element.property=value ... ]\n"
+#~ msgstr ""
+#~ "Gebruik so: gst-xmllaunch <lêer.xml> [ element.eienskap=waarde ... ]\n"
+
+#, c-format
+#~ msgid "ERROR: parse of xml file '%s' failed.\n"
+#~ msgstr "FOUT: ontleding van xml-lêer '%s' het misluk.\n"
+
+#, c-format
+#~ msgid "ERROR: no toplevel pipeline element in file '%s'.\n"
+#~ msgstr "FOUT: geen topvlak pyplynelement in lêer '%s' nie.\n"
+
+#, c-format
+#~ msgid "WARNING: only one toplevel element is supported at this time."
+#~ msgstr "WAARSKUWING: slegs een topvlak element word tans ondersteun."
+
+#, c-format
+#~ msgid "ERROR: could not parse command line argument %d: %s.\n"
+#~ msgstr "FOUT: onverstaanbare bevellynparameter %d: %s.\n"
+
+#, c-format
+#~ msgid "WARNING: element named '%s' not found.\n"
+#~ msgstr "WAARSKUWING: element genaamd '%s' nie gevind nie.\n"
+
+#, c-format
+#~ msgid "Element \"%s\" has gone from PLAYING to PAUSED, quitting.\n"
+#~ msgstr "Element \"%s\" het verander van SPEEL na POUSE, verlaat dus.\n"
+
+#~ msgid "TYPE1,TYPE2,..."
+#~ msgstr "TIPE1, TIPE2,..."
+
+#~ msgid "Save xml representation of pipeline to FILE and exit"
+#~ msgstr "Stoor xml-voorstelling van pyplyn na LÊER en stop"
+
+#~ msgid "FILE"
+#~ msgstr "LÊER"
+
+#~ msgid "Print alloc trace (if enabled at compile time)"
+#~ msgstr "Druk \"alloc trace\" (indien aangeskakel tydens kompilering)"
+
+#, c-format
+#~ msgid "ERROR: Pipeline doesn't want to pause.\n"
+#~ msgstr "FOUT: pyplyn wil nie pouseer nie.\n"
+
+#, c-format
+#~ msgid "ERROR: Pipeline can't PREROLL ...\n"
+#~ msgstr "FOUT: pyplyn kan nie VOORROL nie ...\n"
+
+#~ msgid " ns.\n"
+#~ msgstr " ns.\n"
+
+#, c-format
+#~ msgid "Setting pipeline to READY ...\n"
+#~ msgstr "Pyplyn word gestel na GEREED ...\n"
+
+#, c-format
+#~ msgid "FREEING pipeline ...\n"
+#~ msgstr "pyplyn word VRYGEMAAK ...\n"

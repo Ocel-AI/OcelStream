@@ -1,0 +1,1449 @@
+# translation of gstreamer-0.10.22.2.po to Asturian
+# asturian translation for gstreamer
+# This file is put in the public domain.
+#
+# Astur <malditoastur@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: gstreamer 0.10.28.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-25 01:01+0100\n"
+"PO-Revision-Date: 2010-06-07 22:01+0100\n"
+"Last-Translator: astur <maacub@gmail.com>\n"
+"Language-Team: Asturian <ubuntu-l10n-ast@lists.ubuntu.com>\n"
+"Language: ast\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2010-06-06 21:16+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+"X-Poedit-Language: asturian\n"
+
+msgid "Print the GStreamer version"
+msgstr "Amosar la versión de GStreamer"
+
+msgid "Make all warnings fatal"
+msgstr "Facer que toles alvertencies seyan fatales"
+
+msgid "Print available debug categories and exit"
+msgstr "Amosar les categoríes de depuración disponibles y colar"
+
+#, fuzzy
+msgid ""
+"Default debug level from 1 (only error) to 9 (anything) or 0 for no output"
+msgstr ""
+"Nivel de depuración por defeutu dende 1 (solo n'error) a 5 (cualesquiera) o "
+"0 pa ensin-salida"
+
+msgid "LEVEL"
+msgstr "NIVEL"
+
+msgid ""
+"Comma-separated list of category_name:level pairs to set specific levels for "
+"the individual categories. Example: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+msgstr ""
+"Llista de pares nome_de_categoría:nivel separtada por comes p'afitar los "
+"niveles específicos de les categoríes de mmou individual. Por exemplu: "
+"GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+
+msgid "LIST"
+msgstr "LISTA"
+
+msgid "Disable colored debugging output"
+msgstr "Desactivar la coloración de la salida depurada"
+
+msgid ""
+"Changes coloring mode of the debug log. Possible modes: off, on, disable, "
+"auto, unix"
+msgstr ""
+
+msgid "Disable debugging"
+msgstr "Desactivar depuración"
+
+msgid "Enable verbose plugin loading diagnostics"
+msgstr "Activar el diagnósticu detalláu de la carga de los complementos"
+
+msgid "Colon-separated paths containing plugins"
+msgstr "Rutas separtaes por dos puntos «:», que contengan complementos"
+
+msgid "PATHS"
+msgstr "RUTES"
+
+msgid ""
+"Comma-separated list of plugins to preload in addition to the list stored in "
+"environment variable GST_PLUGIN_PATH"
+msgstr ""
+"Llista de complementos (plugins) separtaos por comes a precargar n'adición a "
+"la llista atroxada na variable d'entornu GST_PLUGIN_PATH"
+
+msgid "PLUGINS"
+msgstr "COMPLEMENTOS"
+
+msgid "Disable trapping of segmentation faults during plugin loading"
+msgstr ""
+"Desactivar atrapáu de fallos de segmentación durante la carga del complementu"
+
+msgid "Disable updating the registry"
+msgstr "Desactivar l'anovamientu del rexistru"
+
+msgid "Disable spawning a helper process while scanning the registry"
+msgstr "Desactivar el llanzamientu d'un procesu d'aida al escanear el rexistru"
+
+msgid "GStreamer Options"
+msgstr "Opciones de GStreamer"
+
+msgid "Show GStreamer Options"
+msgstr "Amosar opciones de GStreamer"
+
+#, c-format
+msgid "Unknown option"
+msgstr "Opción desconocía"
+
+msgid "GStreamer encountered a general core library error."
+msgstr "GStreamer alcontró un error nuna biblioteca principal."
+
+msgid ""
+"GStreamer developers were too lazy to assign an error code to this error."
+msgstr ""
+"Los desendolcadores de GStreamer fueron enforma vagos p'asignar un códigu pa "
+"esti error."
+
+msgid "Internal GStreamer error: code not implemented."
+msgstr "Fallu internu de GStreamer: códigu non implementáu."
+
+msgid ""
+"GStreamer error: state change failed and some element failed to post a "
+"proper error message with the reason for the failure."
+msgstr ""
+"Fallu de GStreamer: falló'l cambéu d'estáu y dalgún elementu nun pudo unviar "
+"un mensaxe de fallu apropiáu col motivu del fallu."
+
+msgid "Internal GStreamer error: pad problem."
+msgstr "Fallu internu de GStreamer: problema col pad."
+
+msgid "Internal GStreamer error: thread problem."
+msgstr "Fallu internu de GStreamer: problema de filu."
+
+#, fuzzy
+msgid "GStreamer error: negotiation problem."
+msgstr "Fallu internu de GStreamer: problema de negociación."
+
+msgid "Internal GStreamer error: event problem."
+msgstr "Fallu internu de GStreamer: problema con un eventu."
+
+msgid "Internal GStreamer error: seek problem."
+msgstr "Fallu internu de GStreamer: problema de gueta."
+
+msgid "Internal GStreamer error: caps problem."
+msgstr "Fallu internu de GStreamer: problema de mayúscules."
+
+msgid "Internal GStreamer error: tag problem."
+msgstr "Fallu internu de GStreamer: problema con una etiqueta."
+
+msgid "Your GStreamer installation is missing a plug-in."
+msgstr "A la so instalación de GStreamer fálta-y un complementu."
+
+#, fuzzy
+msgid "GStreamer error: clock problem."
+msgstr "Fallu internu de GStreamer: problema col reló."
+
+msgid ""
+"This application is trying to use GStreamer functionality that has been "
+"disabled."
+msgstr ""
+"Esta aplicación ta intentando usar funcionalidaes de GStreamer que foron "
+"desactivaes."
+
+msgid "GStreamer encountered a general supporting library error."
+msgstr "GStreamer alcontró un fallu nuna llibrería de sofitu xeneral."
+
+msgid "Could not initialize supporting library."
+msgstr "Nun pudo anicializase la biblioteca de sofitu."
+
+msgid "Could not close supporting library."
+msgstr "Nun pudo zarrase la llibrería de sofitu."
+
+msgid "Could not configure supporting library."
+msgstr "Nun pudo configurase la biblioteca de sofitu"
+
+msgid "Encoding error."
+msgstr ""
+
+msgid "GStreamer encountered a general resource error."
+msgstr "GStreamer alcontró un fallu xeneral de recursu."
+
+msgid "Resource not found."
+msgstr "Recursu non alcontráu."
+
+msgid "Resource busy or not available."
+msgstr "Recursu ocupáu o non disponible"
+
+msgid "Could not open resource for reading."
+msgstr "Nun pudo abrise'l recursu pa llectura."
+
+msgid "Could not open resource for writing."
+msgstr "Nun pudo abrise'l recursu pa escritura."
+
+msgid "Could not open resource for reading and writing."
+msgstr "Nun pudo abrise'l recursu pa llectura y escritura."
+
+msgid "Could not close resource."
+msgstr "Nun pudo zarrase'l recursu."
+
+msgid "Could not read from resource."
+msgstr "Nun pudo lleese del recursu."
+
+msgid "Could not write to resource."
+msgstr "Nun pudo escribise nel recursu."
+
+msgid "Could not perform seek on resource."
+msgstr "Nun pudo facese una busca nel recursu."
+
+msgid "Could not synchronize on resource."
+msgstr "Nun pudo sincronizase col recursu."
+
+msgid "Could not get/set settings from/on resource."
+msgstr "Nun se pudieron obtenese/afitase les opciones de/nel preséu."
+
+msgid "No space left on the resource."
+msgstr "Nun queda espaciu llibre nel recursu."
+
+#, fuzzy
+msgid "Not authorized to access resource."
+msgstr "Nun queda espaciu llibre nel recursu."
+
+msgid "GStreamer encountered a general stream error."
+msgstr "GStreamer alcontró un fallu xeneral de fluxu."
+
+msgid "Element doesn't implement handling of this stream. Please file a bug."
+msgstr ""
+"L'elementu nun implementa el remanamientu d'esti stream. Por favor, "
+"notifique'l fallu."
+
+msgid "Could not determine type of stream."
+msgstr "Nun pudo determinase la triba de fluxu."
+
+msgid "The stream is of a different type than handled by this element."
+msgstr "El fluxu ye d'una triba distinta a la que puede remanar esti elementu."
+
+msgid "There is no codec present that can handle the stream's type."
+msgstr "Nun hai presente dengún codec que pueda remanar esta triba de streams."
+
+msgid "Could not decode stream."
+msgstr "Nun pudo decodificase'l fluxu."
+
+msgid "Could not encode stream."
+msgstr "Nun pudo codificase'l fluxu."
+
+msgid "Could not demultiplex stream."
+msgstr "Nun pudo demultiplexase'l fluxu."
+
+msgid "Could not multiplex stream."
+msgstr "Nun pudo multiplexase'l fluxu."
+
+msgid "The stream is in the wrong format."
+msgstr "El fluxu ta nún formatu fallíu"
+
+msgid "The stream is encrypted and decryption is not supported."
+msgstr "Esti fluxu ta cifráu, y el descifráu nun ta sofitáu."
+
+msgid ""
+"The stream is encrypted and can't be decrypted because no suitable key has "
+"been supplied."
+msgstr ""
+"El fluxu ta cifráu y nun puede descifrase porque nun se suministró una "
+"contraseña afayaíza."
+
+#, c-format
+msgid "No error message for domain %s."
+msgstr "Nun hai mensaxe de fallu pal dominiu %s."
+
+#, c-format
+msgid "No standard error message for domain %s and code %d."
+msgstr "Nun hai mensaxe de fallu standard pal dominiu %s y códigu %d."
+
+msgid "Selected clock cannot be used in pipeline."
+msgstr "El reló esbilláu nun puede usase nuna tubería."
+
+#, c-format
+msgid "Error writing registry cache to %s: %s"
+msgstr ""
+
+msgid "title"
+msgstr "títulu"
+
+msgid "commonly used title"
+msgstr "títulu usáu por vezu"
+
+msgid "title sortname"
+msgstr "nome curtiu de títulu"
+
+msgid "commonly used title for sorting purposes"
+msgstr "títulu usáu por vezu pa ordenación"
+
+msgid "artist"
+msgstr "artista"
+
+msgid "person(s) responsible for the recording"
+msgstr "persona(es) responsable(s) de la grabación"
+
+msgid "artist sortname"
+msgstr "nome curtiu del artista"
+
+msgid "person(s) responsible for the recording for sorting purposes"
+msgstr "persona(es) responsable(s) de la grabación pa ordenación"
+
+msgid "album"
+msgstr "álbum"
+
+msgid "album containing this data"
+msgstr "álbum que contién estos datos"
+
+msgid "album sortname"
+msgstr "nome curtiu d'álbum"
+
+msgid "album containing this data for sorting purposes"
+msgstr "l'álbum contién estos datos pa cuestiones de sofitu"
+
+msgid "album artist"
+msgstr "album artist"
+
+msgid "The artist of the entire album, as it should be displayed"
+msgstr "L'artista del álbum completu, talo y como tien d'amosase"
+
+msgid "album artist sortname"
+msgstr "nome curtiu de album artist"
+
+msgid "The artist of the entire album, as it should be sorted"
+msgstr "L'artista del álbum completu, talo y como tien d'axeitase"
+
+msgid "date"
+msgstr "data"
+
+msgid "date the data was created (as a GDate structure)"
+msgstr "data na que se crearon estos datos (como cadarma GDate)"
+
+#, fuzzy
+msgid "datetime"
+msgstr "data"
+
+#, fuzzy
+msgid "date and time the data was created (as a GstDateTime structure)"
+msgstr "data na que se crearon estos datos (como cadarma GDate)"
+
+msgid "genre"
+msgstr "xéneru"
+
+msgid "genre this data belongs to"
+msgstr "xéneru al que pertenecen estos datos"
+
+msgid "comment"
+msgstr "comentariu"
+
+msgid "free text commenting the data"
+msgstr "testu llibre que comenta los datos"
+
+msgid "extended comment"
+msgstr "comentariu estendíu"
+
+msgid "free text commenting the data in key=value or key[en]=comment form"
+msgstr ""
+"testu llibre comentando los datos de forma: llave=valor ó "
+"llave[en]=comentariu"
+
+msgid "track number"
+msgstr "númberu de pista"
+
+msgid "track number inside a collection"
+msgstr "númberu de pista dientro d'una colección"
+
+msgid "track count"
+msgstr "contador de pistes"
+
+msgid "count of tracks inside collection this track belongs to"
+msgstr "númberu de pistes dientro de la colección a la que pertenez ésta"
+
+msgid "disc number"
+msgstr "númberu de discu"
+
+msgid "disc number inside a collection"
+msgstr "númberu de discu dientro d'una colección"
+
+msgid "disc count"
+msgstr "candidá de discos"
+
+msgid "count of discs inside collection this disc belongs to"
+msgstr "númberu de discos de la colección a la que pertenez esti discu"
+
+msgid "location"
+msgstr "allugamientu"
+
+msgid ""
+"Origin of media as a URI (location, where the original of the file or stream "
+"is hosted)"
+msgstr ""
+"Orixe del mediu como un URI (ubicación, au ta allugáu'l ficheru o fluxu "
+"orixinal)"
+
+msgid "homepage"
+msgstr "páxina principal"
+
+msgid "Homepage for this media (i.e. artist or movie homepage)"
+msgstr ""
+"Páxina principal pa esti sofitu (ex. páxina principal del artista o película)"
+
+msgid "description"
+msgstr "descrición"
+
+msgid "short text describing the content of the data"
+msgstr "testu curtiu que describi'l conteníu de los datos"
+
+msgid "version"
+msgstr "versión"
+
+msgid "version of this data"
+msgstr "versión de los datos"
+
+msgid "ISRC"
+msgstr "ISRC"
+
+msgid "International Standard Recording Code - see http://www.ifpi.org/isrc/"
+msgstr "International Standard Recording Code - vea http://www.ifpi.org/isrc/"
+
+msgid "organization"
+msgstr "organización"
+
+msgid "copyright"
+msgstr "copyright"
+
+msgid "copyright notice of the data"
+msgstr "avisu de copyright de los datos"
+
+msgid "copyright uri"
+msgstr "uri del copyright"
+
+msgid "URI to the copyright notice of the data"
+msgstr "URI de los datos del copyright"
+
+#, fuzzy
+msgid "encoded by"
+msgstr "codificador"
+
+msgid "name of the encoding person or organization"
+msgstr ""
+
+msgid "contact"
+msgstr "contautu"
+
+msgid "contact information"
+msgstr "información de contautu"
+
+msgid "license"
+msgstr "llicencia"
+
+msgid "license of data"
+msgstr "llicencia de los datos"
+
+msgid "license uri"
+msgstr "uri de la llicencia"
+
+msgid "URI to the license of the data"
+msgstr "URI de los datos de la llicencia"
+
+msgid "performer"
+msgstr "intérprete"
+
+msgid "person(s) performing"
+msgstr "persona(es) executora(es)"
+
+msgid "composer"
+msgstr "compositor"
+
+msgid "person(s) who composed the recording"
+msgstr "persona(es) que compuso la grabación"
+
+msgid "conductor"
+msgstr ""
+
+msgid "conductor/performer refinement"
+msgstr ""
+
+msgid "duration"
+msgstr "duración"
+
+msgid "length in GStreamer time units (nanoseconds)"
+msgstr "llonxitú n'unidaes de tiempu de GStreamer (nanosegundos)"
+
+msgid "codec"
+msgstr "codec"
+
+msgid "codec the data is stored in"
+msgstr "codec col que s'atroxen los datos"
+
+msgid "video codec"
+msgstr "codec de vídeu"
+
+msgid "codec the video data is stored in"
+msgstr "codec nel que s'atroxen los datos del vídeo"
+
+msgid "audio codec"
+msgstr "codec del audio"
+
+msgid "codec the audio data is stored in"
+msgstr "codec nel que s'atroxen los datos del audio"
+
+msgid "subtitle codec"
+msgstr "códec del subtítulu"
+
+msgid "codec the subtitle data is stored in"
+msgstr "códec nel que tán atroxaos los datos del subtítulu"
+
+msgid "container format"
+msgstr "formatu del contenedor"
+
+msgid "container format the data is stored in"
+msgstr "formatu del contenedor nel que tán atroxaos los datos"
+
+msgid "bitrate"
+msgstr "tasa de bits"
+
+msgid "exact or average bitrate in bits/s"
+msgstr "tasa de bits media o exauta en bits/s"
+
+msgid "nominal bitrate"
+msgstr "tasa de bits nominal"
+
+msgid "nominal bitrate in bits/s"
+msgstr "tasa de bits nominal en bits/s"
+
+msgid "minimum bitrate"
+msgstr "tasa mínima de bits"
+
+msgid "minimum bitrate in bits/s"
+msgstr "tasa de bits mínima en bits/s"
+
+msgid "maximum bitrate"
+msgstr "tasa de bits máxima"
+
+msgid "maximum bitrate in bits/s"
+msgstr "tasa de bits máxima en bits/s"
+
+msgid "encoder"
+msgstr "codificador"
+
+msgid "encoder used to encode this stream"
+msgstr "codificador usáu pa codificar esti fluxu"
+
+msgid "encoder version"
+msgstr "versión del codificador"
+
+msgid "version of the encoder used to encode this stream"
+msgstr "versión del codificador usáu pa codificar esti fluxu"
+
+msgid "serial"
+msgstr "serie"
+
+msgid "serial number of track"
+msgstr "númberu de serie de la pista"
+
+msgid "replaygain track gain"
+msgstr "ganancia na reproducción de la pista"
+
+msgid "track gain in db"
+msgstr "ganancia de la pista en db"
+
+msgid "replaygain track peak"
+msgstr "picu de ganancia na reproducción de la pista"
+
+msgid "peak of the track"
+msgstr "peak de la pista"
+
+msgid "replaygain album gain"
+msgstr "ganancia na reproducción del álbum"
+
+msgid "album gain in db"
+msgstr "ganancia del álbum en db"
+
+msgid "replaygain album peak"
+msgstr "picu de ganancia na reproducción del álbum"
+
+msgid "peak of the album"
+msgstr "estremu del album"
+
+msgid "replaygain reference level"
+msgstr "nivel de referencia de replaygain"
+
+msgid "reference level of track and album gain values"
+msgstr "nivel de referencia de los valores de ganancia de la pista y del álbum"
+
+msgid "language code"
+msgstr "códigu del llinguax"
+
+#, fuzzy
+msgid "language code for this stream, conforming to ISO-639-1 or ISO-639-2"
+msgstr "códigu del llinguax pa esti fluxu, según la norma ISO-639-1"
+
+#, fuzzy
+msgid "language name"
+msgstr "códigu del llinguax"
+
+msgid "freeform name of the language this stream is in"
+msgstr ""
+
+msgid "image"
+msgstr "imaxe"
+
+msgid "image related to this stream"
+msgstr "imaxe rellacionada con esti fluxu"
+
+#. TRANSLATORS: 'preview image' = image that shows a preview of the full image
+msgid "preview image"
+msgstr "previsualizar imaxe"
+
+msgid "preview image related to this stream"
+msgstr "previsualizar la imaxe rellacionada con esti fluxu"
+
+msgid "attachment"
+msgstr "axuntu"
+
+msgid "file attached to this stream"
+msgstr "ficheru axuntu a esti fluxu"
+
+msgid "beats per minute"
+msgstr "pulsos per minutu"
+
+msgid "number of beats per minute in audio"
+msgstr "númberu de pulsos per minutu n'audio"
+
+msgid "keywords"
+msgstr "pallabres contraseña"
+
+msgid "comma separated keywords describing the content"
+msgstr "pallabres contraseña separtaes por comes describiendo'l conteníu"
+
+msgid "geo location name"
+msgstr "nome de la xeollocalización"
+
+msgid ""
+"human readable descriptive location of where the media has been recorded or "
+"produced"
+msgstr "llocalización descriptiva y lleíble d'aú se grabó o se fizo'l conteníu"
+
+msgid "geo location latitude"
+msgstr "llatitú de la xeollocalización"
+
+msgid ""
+"geo latitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the equator, negative values for "
+"southern latitudes)"
+msgstr ""
+"llatitú xeográfica au se grabó o fizo'l mediu, en graos d'acordies con WGS84 "
+"(cero ye l'ecuador, valores negativos pa llatitúes meridionales)"
+
+msgid "geo location longitude"
+msgstr "llonxitú de la xeollocalización"
+
+msgid ""
+"geo longitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the prime meridian in Greenwich/UK,  "
+"negative values for western longitudes)"
+msgstr ""
+"llonxitú xeográfica au se grabó o fizo'l mediu, en graos d'acordies con "
+"WGS84 (cero ye'l primer meridianu en Greenwich/GB, valores negativos pa "
+"llonxitúes occidentales)"
+
+msgid "geo location elevation"
+msgstr "elevación de la xeollocalización"
+
+msgid ""
+"geo elevation of where the media has been recorded or produced in meters "
+"according to WGS84 (zero is average sea level)"
+msgstr ""
+"elevación xeográfica au se grabó o fexo'l mediu, en metros d'acordies con "
+"WGS84 (cero ye'l nivel mediu del mar)"
+
+msgid "geo location country"
+msgstr "nome de la xeollocalización"
+
+msgid "country (english name) where the media has been recorded or produced"
+msgstr "país (nome n'inglés) au se fizo o grabó'l mediu"
+
+msgid "geo location city"
+msgstr "ciudá de la xeollocalización"
+
+msgid "city (english name) where the media has been recorded or produced"
+msgstr "ciudá (nome n'inglés) au se fizo o grabó'l mediu"
+
+msgid "geo location sublocation"
+msgstr "sub-allugamientu de la xeollocalización"
+
+#, fuzzy
+msgid ""
+"a location within a city where the media has been produced or created (e.g. "
+"the neighborhood)"
+msgstr "un allugamientu nuna ciudá au se fizo o creó'l mediu (ex. n'agüeria)"
+
+#, fuzzy
+msgid "geo location horizontal error"
+msgstr "nome de la xeollocalización"
+
+msgid "expected error of the horizontal positioning measures (in meters)"
+msgstr ""
+
+#, fuzzy
+msgid "geo location movement speed"
+msgstr "llonxitú de la xeollocalización"
+
+msgid ""
+"movement speed of the capturing device while performing the capture in m/s"
+msgstr ""
+
+#, fuzzy
+msgid "geo location movement direction"
+msgstr "elevación de la xeollocalización"
+
+msgid ""
+"indicates the movement direction of the device performing the capture of a "
+"media. It is represented as degrees in floating point representation, 0 "
+"means the geographic north, and increases clockwise"
+msgstr ""
+
+#, fuzzy
+msgid "geo location capture direction"
+msgstr "elevación de la xeollocalización"
+
+msgid ""
+"indicates the direction the device is pointing to when capturing  a media. "
+"It is represented as degrees in floating point  representation, 0 means the "
+"geographic north, and increases clockwise"
+msgstr ""
+
+#. TRANSLATORS: 'show name' = 'TV/radio/podcast show name' here
+msgid "show name"
+msgstr "amosar nome"
+
+msgid "Name of the tv/podcast/series show the media is from"
+msgstr "Nome del programa/podcast/serie"
+
+#. TRANSLATORS: 'show sortname' = 'TV/radio/podcast show name as used for sorting purposes' here
+msgid "show sortname"
+msgstr "amosar nome d'ordenación"
+
+msgid ""
+"Name of the tv/podcast/series show the media is from, for sorting purposes"
+msgstr "Nome del programa/podcast/serie, col envís d'ordenación"
+
+msgid "episode number"
+msgstr "númberu d'episodiu"
+
+msgid "The episode number in the season the media is part of"
+msgstr "El númberu d'episodiu na temporada"
+
+msgid "season number"
+msgstr "númberu de temporada"
+
+msgid "The season number of the show the media is part of"
+msgstr "El númberu de temporada del programa"
+
+msgid "lyrics"
+msgstr "lletres"
+
+msgid "The lyrics of the media, commonly used for songs"
+msgstr "Les lletres del ficheru multimedia, davezu usáu pa canciones"
+
+msgid "composer sortname"
+msgstr "nome ordenáu del compositor"
+
+msgid "person(s) who composed the recording, for sorting purposes"
+msgstr "persona(es) que compuso la grabación, col envís d'ordenación"
+
+msgid "grouping"
+msgstr "agrupación"
+
+msgid ""
+"Groups related media that spans multiple tracks, like the different pieces "
+"of a concerto. It is a higher level than a track, but lower than an album"
+msgstr ""
+"Agrupa temes rellacionaos que s'esparden varies pistes, como les diferentes "
+"partes d'un conciertu. Ye un nivel más altu que'l d'una pista, pero más baxu "
+"que'l d'un Álbum"
+
+msgid "user rating"
+msgstr "puntuación d'usuariu"
+
+msgid ""
+"Rating attributed by a user. The higher the rank, the more the user likes "
+"this media"
+msgstr ""
+"Puntuación atribuyía por un usuariu. Cuanto mayor seya la puntuación más-y "
+"va prestar al usuariu"
+
+msgid "device manufacturer"
+msgstr ""
+
+#, fuzzy
+msgid "Manufacturer of the device used to create this media"
+msgstr "versión del codificador usáu pa codificar esti fluxu"
+
+msgid "device model"
+msgstr ""
+
+#, fuzzy
+msgid "Model of the device used to create this media"
+msgstr "versión del codificador usáu pa codificar esti fluxu"
+
+#, fuzzy
+msgid "application name"
+msgstr "nome de la xeollocalización"
+
+msgid "Application used to create the media"
+msgstr ""
+
+msgid "application data"
+msgstr ""
+
+msgid "Arbitrary application data to be serialized into the media"
+msgstr ""
+
+msgid "image orientation"
+msgstr ""
+
+msgid "How the image should be rotated or flipped before display"
+msgstr ""
+
+msgid "publisher"
+msgstr ""
+
+msgid "Name of the label or publisher"
+msgstr ""
+
+msgid "interpreted-by"
+msgstr ""
+
+msgid "Information about the people behind a remix and similar interpretations"
+msgstr ""
+
+msgid "midi-base-note"
+msgstr ""
+
+msgid "Midi note number of the audio track."
+msgstr ""
+
+msgid "private-data"
+msgstr ""
+
+msgid "Private data"
+msgstr ""
+
+#. separator between two strings
+msgid ", "
+msgstr ", "
+
+#, c-format
+msgid "Invalid URI: %s"
+msgstr ""
+
+#, c-format
+msgid "No URI handler for the %s protocol found"
+msgstr ""
+
+#, c-format
+msgid "URI scheme '%s' not supported"
+msgstr ""
+
+#, c-format
+msgid "ERROR: from element %s: %s\n"
+msgstr "FALLU: dende l'elementu %s: %s\n"
+
+#, c-format
+msgid ""
+"Additional debug info:\n"
+"%s\n"
+msgstr ""
+"Información adicional de depuráu:\n"
+"%s\n"
+
+#. ******************************************************************************************
+#. *** helpers for pipeline-setup
+#. ******************************************************************************************
+#, c-format
+msgid "link has no source [sink=%s@%p]"
+msgstr ""
+
+#, c-format
+msgid "link has no sink [source=%s@%p]"
+msgstr ""
+
+#, c-format
+msgid "no property \"%s\" in element \"%s\""
+msgstr "nun esiste la propiedá «%s» nel elementu «%s»"
+
+#, c-format
+msgid "could not set property \"%s\" in element \"%s\" to \"%s\""
+msgstr "nun pudo afitase la propiedá \"%s\" nel elementu \"%s\" a \"%s\""
+
+#, fuzzy, c-format
+msgid "Element \"%s\" is not a GstPreset"
+msgstr "El ficheru \"%s\" ye un socket."
+
+#, fuzzy, c-format
+msgid "could not set preset \"%s\" in element \"%s\""
+msgstr "nun pudo afitase la propiedá \"%s\" nel elementu \"%s\" a \"%s\""
+
+msgid "Delayed linking failed."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "could not link %s to %s, %s can't handle caps %s"
+msgstr "nun pudo enllazase %s a %s"
+
+#, fuzzy, c-format
+msgid "could not link %s to %s, neither element can handle caps %s"
+msgstr "nun se puede enllazar con dengún elementu sink pal URI «%s»"
+
+#, fuzzy, c-format
+msgid "could not link %s to %s with caps %s"
+msgstr "nun pudo enllazase %s a %s"
+
+#, c-format
+msgid "could not link %s to %s"
+msgstr "nun pudo enllazase %s a %s"
+
+#, c-format
+msgid "no element \"%s\""
+msgstr "nun esiste l'elementu «%s»"
+
+#, c-format
+msgid "unexpected reference \"%s\" - ignoring"
+msgstr ""
+
+#, c-format
+msgid "unexpected pad-reference \"%s\" - ignoring"
+msgstr ""
+
+#, c-format
+msgid "could not parse caps \"%s\""
+msgstr "nun pudieron analizase les capacidaes «%s»"
+
+#, c-format
+msgid "no sink element for URI \"%s\""
+msgstr "nun hai dengún elementu sink pal URI «%s»"
+
+#, c-format
+msgid "no source element for URI \"%s\""
+msgstr "nun hai dengún elementu fonte pal URI \"%s\""
+
+msgid "syntax error"
+msgstr ""
+
+#, c-format
+msgid "specified empty bin \"%s\", not allowed"
+msgstr "binariu baleru especificáu \"%s\", non permitíu"
+
+#, fuzzy, c-format
+msgid "no bin \"%s\", unpacking elements"
+msgstr "nun esiste'l binariu «%s», saltando"
+
+msgid "empty pipeline not allowed"
+msgstr "nun se permiten tuberíes baleres"
+
+msgid "Pipeline construction is invalid, please add queues."
+msgstr ""
+
+msgid "A lot of buffers are being dropped."
+msgstr "Perdiéronse abondos búferes."
+
+msgid "Internal data flow problem."
+msgstr "Problema del fluxu internu de datos."
+
+msgid "Internal data flow error."
+msgstr "Fallu del fluxu internu de datos."
+
+msgid "Internal clock error."
+msgstr "Fallu del reló internu."
+
+msgid "Failed to map buffer."
+msgstr ""
+
+msgid "Filter caps"
+msgstr "Filtrar capacidaes"
+
+msgid ""
+"Restrict the possible allowed capabilities (NULL means ANY). Setting this "
+"property takes a reference to the supplied GstCaps object."
+msgstr ""
+"Restrinxir la posibilidá de capacidaes permitíes (NULL significa ANY). "
+"Definir esta propiedá toma una referencia del oxetu provistu GstCaps."
+
+msgid "Caps Change Mode"
+msgstr ""
+
+msgid "Filter caps change behaviour"
+msgstr ""
+
+msgid "No Temp directory specified."
+msgstr "Nun s'especificó un direutoriu Temporal"
+
+#, c-format
+msgid "Could not create temp file \"%s\"."
+msgstr "Nun pudo crease'l ficheru temporal \"%s\"."
+
+#, c-format
+msgid "Could not open file \"%s\" for reading."
+msgstr "Nun pudo abrise'l ficheru «%s» pa la so llectura."
+
+msgid "Error while writing to download file."
+msgstr "Fallu al escribir pa descargar el ficheru."
+
+msgid "No file name specified for writing."
+msgstr "Nun s'especificó un nome de ficheru pa escritura."
+
+#, c-format
+msgid "Could not open file \"%s\" for writing."
+msgstr "Nun pudo abrise'l ficheru \"%s\" pa escritura."
+
+#, c-format
+msgid "Error closing file \"%s\"."
+msgstr "Fallu al zarrar el ficheru \"%s\"."
+
+#, c-format
+msgid "Error while seeking in file \"%s\"."
+msgstr "Fallu durante'l posicionamientu nel ficheru «%s»."
+
+#, c-format
+msgid "Error while writing to file \"%s\"."
+msgstr "Fallu al escribir al ficheru \"%s\"."
+
+msgid "No file name specified for reading."
+msgstr "Nun s'especificó un nome de ficheru pa llectura."
+
+#, c-format
+msgid "Could not get info on \"%s\"."
+msgstr "Nun pudo obtenese información de «%s»."
+
+#, c-format
+msgid "\"%s\" is a directory."
+msgstr "\"%s\" ye un direutoriu."
+
+#, c-format
+msgid "File \"%s\" is a socket."
+msgstr "El ficheru \"%s\" ye un socket."
+
+msgid "Failed after iterations as requested."
+msgstr "Fallu dempués de les iteraciones requeríes."
+
+msgid "eos-after and error-after can't both be defined."
+msgstr ""
+
+msgid "caps"
+msgstr "mayúscules"
+
+msgid "detected capabilities in stream"
+msgstr "capacidaes deteutaes nel ficheru stream"
+
+msgid "minimum"
+msgstr "mínimu"
+
+msgid "force caps"
+msgstr "forciar mayúscules"
+
+msgid "force caps without doing a typefind"
+msgstr "forciar mayúscules ensin facer «typefind»"
+
+#, fuzzy
+msgid "Stream doesn't contain enough data."
+msgstr "El fluxu nun caltién datos"
+
+msgid "Stream contains no data."
+msgstr "El fluxu nun caltién datos"
+
+#, fuzzy, c-format
+msgid "%sImplemented Interfaces%s:\n"
+msgstr "Interfaces implementaes:\n"
+
+msgid "readable"
+msgstr "llexible"
+
+msgid "writable"
+msgstr "escribible"
+
+msgid "deprecated"
+msgstr ""
+
+msgid "controllable"
+msgstr "controlable"
+
+#, fuzzy
+msgid "conditionally available"
+msgstr "controlable"
+
+msgid "changeable in NULL, READY, PAUSED or PLAYING state"
+msgstr ""
+
+msgid "changeable only in NULL, READY or PAUSED state"
+msgstr ""
+
+msgid "changeable only in NULL or READY state"
+msgstr ""
+
+msgid "Blacklisted files:"
+msgstr "Ficheros na llista prieta:"
+
+#, fuzzy, c-format
+msgid "%sTotal count%s: %s"
+msgstr "Cuenta total: "
+
+#, c-format
+msgid "%d blacklisted file"
+msgid_plural "%d blacklisted files"
+msgstr[0] "%d ficheru na llista prieta"
+msgstr[1] "%d ficheros na llista prieta"
+
+#, c-format
+msgid "%d plugin"
+msgid_plural "%d plugins"
+msgstr[0] "%d complementu"
+msgstr[1] "%d complementos"
+
+#, c-format
+msgid "%d blacklist entry"
+msgid_plural "%d blacklist entries"
+msgstr[0] "%d entrada na llista prieta"
+msgstr[1] "%d entraes na llista prieta"
+
+#, c-format
+msgid "%d feature"
+msgid_plural "%d features"
+msgstr[0] "%d característica"
+msgstr[1] "%d carauterístiques"
+
+msgid "Print all elements"
+msgstr "Imprentar tolos elementos"
+
+msgid "Print list of blacklisted files"
+msgstr "Imprentar llista de los ficheros na llista prieta"
+
+msgid ""
+"Print a machine-parsable list of features the specified plugin or all "
+"plugins provide.\n"
+"                                       Useful in connection with external "
+"automatic plugin installation mechanisms"
+msgstr ""
+"Imprentar una llista de carauterístiques analizables por una máquina que "
+"proporciona'l complementu especificáu.\n"
+"                                       Útil xunto con mecanismos con "
+"complementos automáticos esternos d'instalación"
+
+msgid "List the plugin contents"
+msgstr "Llistar el conteníu del complementu"
+
+msgid ""
+"A slashes ('/') separated list of types of elements (also known as klass) to "
+"list. (unordered)"
+msgstr ""
+
+msgid "Check if the specified element or plugin exists"
+msgstr ""
+
+msgid ""
+"When checking if an element or plugin exists, also check that its version is "
+"at least the version specified"
+msgstr ""
+
+msgid "Print supported URI schemes, with the elements that implement them"
+msgstr ""
+"Imprentar los esquemes URI sofitaos, colos elementos que los implementen"
+
+msgid ""
+"Disable colors in output. You can also achieve the same by setting "
+"'GST_INSPECT_NO_COLORS' environment variable to any value."
+msgstr ""
+
+msgid "Color output, even when not sending to a tty."
+msgstr ""
+
+#, c-format
+msgid "Could not load plugin file: %s\n"
+msgstr "Nun pudo cargase'l ficheru del complementu: %s\n"
+
+#, c-format
+msgid "No such element or plugin '%s'\n"
+msgstr "Nun esiste l'elementu o complementu «%s»\n"
+
+msgid "Index statistics"
+msgstr ""
+
+msgid "Setting pipeline to PLAYING ...\n"
+msgstr "Afitando'l fluxu pa REPRODUCCIÓN ...\n"
+
+msgid "ERROR: pipeline doesn't want to play.\n"
+msgstr "FALLU: el fluxu nun quier reproducise.\n"
+
+#, c-format
+msgid "Got message #%u from element \"%s\" (%s): "
+msgstr "Obtúvose'l mensaxe #%u del elementu «%s» (%s): "
+
+#, c-format
+msgid "Got message #%u from pad \"%s:%s\" (%s): "
+msgstr "Obtúvose'l mensax #%u dende tabla \"%s:%s\" (%s): "
+
+#, c-format
+msgid "Got message #%u from object \"%s\" (%s): "
+msgstr "Obtúvose'l mensax #%u del oxetu «%s» (%s): "
+
+#, c-format
+msgid "Got message #%u (%s): "
+msgstr "Obtúvose'l mensax #%u (%s): "
+
+#, c-format
+msgid "Got EOS from element \"%s\".\n"
+msgstr "¿Obtuvo EOS dende l'elementu \"%s\".?\n"
+
+msgid "EOS received - stopping pipeline...\n"
+msgstr "EOS recibíu: parando'l conductu …\n"
+
+#, c-format
+msgid "FOUND TAG      : found by element \"%s\".\n"
+msgstr "ETIQUETA ALCONTRADA: alcontrada pol elementu \"%s\"\n"
+
+#, c-format
+msgid "FOUND TAG      : found by pad \"%s:%s\".\n"
+msgstr "ALCONTRADA ETIQUETA      : alcontrada por tabla \"%s:%s\".\n"
+
+#, c-format
+msgid "FOUND TAG      : found by object \"%s\".\n"
+msgstr "ALCONTRADA ETIQUETA      : alcontrada por oxetu \"%s\".\n"
+
+msgid "FOUND TAG\n"
+msgstr "ALCONTRADA ETIQUETA\n"
+
+#, fuzzy, c-format
+msgid "FOUND TOC      : found by element \"%s\".\n"
+msgstr "ETIQUETA ALCONTRADA: alcontrada pol elementu \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "FOUND TOC      : found by object \"%s\".\n"
+msgstr "ALCONTRADA ETIQUETA      : alcontrada por oxetu \"%s\".\n"
+
+#, fuzzy
+msgid "FOUND TOC\n"
+msgstr "ALCONTRADA ETIQUETA\n"
+
+#, c-format
+msgid ""
+"INFO:\n"
+"%s\n"
+msgstr ""
+"INFO:\n"
+"%s\n"
+
+#, c-format
+msgid "WARNING: from element %s: %s\n"
+msgstr "ATENCIÓN: dende l'elementu %s: %s\n"
+
+msgid "Pipeline is PREROLLED ...\n"
+msgstr "El fluxu ta precacheáu ...\n"
+
+msgid "Prerolled, waiting for buffering to finish...\n"
+msgstr "Pre-endolcáu, esperando al buffer a que fine...\n"
+
+#, fuzzy
+msgid "Prerolled, waiting for progress to finish...\n"
+msgstr "Pre-endolcáu, esperando al buffer a que fine...\n"
+
+msgid "buffering..."
+msgstr "atroxando nel búfer…"
+
+msgid "Done buffering, setting pipeline to PLAYING ...\n"
+msgstr "Atroxáu, afite la tubería a REPRODUCIENDO...\n"
+
+#. we were not buffering but PLAYING, PAUSE  the pipeline.
+msgid "Buffering, setting pipeline to PAUSED ...\n"
+msgstr "Atroxando, afite la tubería a PAUSA...\n"
+
+msgid "Redistribute latency...\n"
+msgstr "Redistribuyir llatencia…\n"
+
+#, c-format
+msgid "Setting state to %s as requested by %s...\n"
+msgstr "Afitando l'estáu a %s según lo solicitó %s…\n"
+
+#. this application message is posted when we caught an interrupt and
+#. * we need to stop the pipeline.
+msgid "Interrupt: Stopping pipeline ...\n"
+msgstr "Interrumpir: parando'l conductu …\n"
+
+#, fuzzy
+msgid "Interrupt while waiting for EOS - stopping pipeline...\n"
+msgstr "Interrumpir: parando'l conductu …\n"
+
+msgid "EOS on shutdown enabled -- Forcing EOS on the pipeline\n"
+msgstr "EOS al apagar activáu; Forciando EOS na tubería\n"
+
+msgid "Waiting for EOS...\n"
+msgstr "Esperando a EOS…\n"
+
+#, c-format
+msgid "Progress: (%s) %s\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Missing element: %s\n"
+msgstr "nun esiste l'elementu «%s»"
+
+#, fuzzy, c-format
+msgid "Got context from element '%s': %s=%s\n"
+msgstr "ATENCIÓN: dende l'elementu %s: %s\n"
+
+msgid "ERROR: pipeline doesn't want to preroll.\n"
+msgstr "FALLU: El fluxu nun quier precachease.\n"
+
+msgid "An error happened while waiting for EOS\n"
+msgstr "Asocedió un fallu al esperar a EOS\n"
+
+#, c-format
+msgid "Use Windows high-resolution clock, precision: %u ms\n"
+msgstr ""
+
+msgid "Output tags (also known as metadata)"
+msgstr "Etiquetes de salides (tamién conocíes como metadatos)"
+
+msgid "Output TOC (chapters and editions)"
+msgstr ""
+
+msgid "Output status information and property notifications"
+msgstr "Estáu de salida y notificaciones de propiedá"
+
+msgid "Do not print any progress information"
+msgstr "Nun amosar denguna información de progresu"
+
+msgid "Output messages"
+msgstr "Mensaxes de salida"
+
+msgid ""
+"Do not output status information for the specified property if verbose "
+"output is enabled (can be used multiple times)"
+msgstr ""
+
+msgid "PROPERTY-NAME"
+msgstr ""
+
+msgid "Do not install a fault handler"
+msgstr "Nun instalar un remanador de fallos"
+
+msgid "Force EOS on sources before shutting the pipeline down"
+msgstr "Forciar EOS nes fontes enantes de zarrar la tubería"
+
+msgid "Gather and print index statistics"
+msgstr ""
+
+msgid ""
+"Do not print current position of pipeline. If this option is unspecified, "
+"the position will be printed when stdout is a TTY. To enable printing "
+"position when stdout is not a TTY, use \"force-position\" option"
+msgstr ""
+
+msgid ""
+"Allow printing current position of pipeline even if stdout is not a TTY. "
+"This option has no effect if the \"no-position\" option is specified"
+msgstr ""
+
+#, c-format
+msgid "ERROR: pipeline could not be constructed: %s.\n"
+msgstr "FALLU: nun pudo criase la conexón: %s.\n"
+
+msgid "ERROR: pipeline could not be constructed.\n"
+msgstr "FALLU: nun pudo criase la conexón.\n"
+
+#, c-format
+msgid "WARNING: erroneous pipeline: %s\n"
+msgstr "ALVERTENCIA: Conexón errónea: %s\n"
+
+msgid "ERROR: the 'pipeline' element wasn't found.\n"
+msgstr "FALLU: Nun s'atopó l'elementu de «conexón».\n"
+
+msgid "Setting pipeline to PAUSED ...\n"
+msgstr "Afitando'l fluxu a POSÁU ...\n"
+
+#, fuzzy
+msgid "Failed to set pipeline to PAUSED.\n"
+msgstr "Afitando'l fluxu a POSÁU ...\n"
+
+msgid "Pipeline is live and does not need PREROLL ...\n"
+msgstr "El fluxu ye en vivo y nun necesita PRECACHEÁU ...\n"
+
+msgid "Pipeline is PREROLLING ...\n"
+msgstr "El fluxu ta PRECACHEÁNDOSE ...\n"
+
+msgid "Execution ended after %"
+msgstr "La execución finó tres de %"
+
+msgid "Setting pipeline to NULL ...\n"
+msgstr "Afitando pipeline a NULL...\n"
+
+msgid "Freeing pipeline ...\n"
+msgstr "Lliberando la tubería…\n"
+
+#~ msgid "link without source element"
+#~ msgstr "enllaz ensin elementos de fonte"
+
+#~ msgid "link without sink element"
+#~ msgstr "enllaz ensin elementu sink"
+
+#, c-format
+#~ msgid "no element to link URI \"%s\" to"
+#~ msgstr "nun hai dengún elementu au apunta'l URI \"%s\""
+
+#~ msgid "Internal data stream error."
+#~ msgstr "Fallu del stream internu de datos."
+
+#~ msgid "maximum"
+#~ msgstr "máximu"
+
+#~ msgid "Usage: gst-xmllaunch <file.xml> [ element.property=value ... ]\n"
+#~ msgstr "Usu: gst-xmllaunch <ficheru.xml> [ elementu.propiedá=valor ... ]\n"
+
+#, c-format
+#~ msgid "ERROR: parse of xml file '%s' failed.\n"
+#~ msgstr "ERROR: falló l'analís del ficheru xml «%s».\n"
+
+#, c-format
+#~ msgid "ERROR: no toplevel pipeline element in file '%s'.\n"
+#~ msgstr ""
+#~ "FALLU: nun hai elementos de fluxu de primer nivel nel ficheru «%s».\n"
+
+#~ msgid "WARNING: only one toplevel element is supported at this time.\n"
+#~ msgstr ""
+#~ "ALVERTENCIA: nesti intre namái se sofita un elementu de nivel superior.\n"
+
+#, c-format
+#~ msgid "ERROR: could not parse command line argument %d: %s.\n"
+#~ msgstr ""
+#~ "FALLU: nun pudo analizase l'argumentu %d de la llinia d'órdenes: %s.\n"
+
+#, c-format
+#~ msgid "WARNING: element named '%s' not found.\n"
+#~ msgstr "AVISU: elementu '%s' non alcontráu.\n"
+
+#~ msgid "Do not output status information of TYPE"
+#~ msgstr "Nun amosar la información del estáu de TRIBA"
+
+#~ msgid "TYPE1,TYPE2,..."
+#~ msgstr "TRIBA1,TRIBA2,…"
+
+#~ msgid "Save xml representation of pipeline to FILE and exit"
+#~ msgstr "Guardar una representación xml de la conexón al FICHERU y colar"
+
+#~ msgid "FILE"
+#~ msgstr "FICHERU"
+
+#~ msgid "Print alloc trace (if enabled at compile time)"
+#~ msgstr "Imprentar la traza d'asignaciones (si s'activó al compilar)"
+
+#~ msgid "ERROR: Pipeline doesn't want to pause.\n"
+#~ msgstr "FALLU: El fluxu nun quier ponese en posa.\n"
+
+#~ msgid "Setting pipeline to READY ...\n"
+#~ msgstr "Afitando pipeline a READY...\n"

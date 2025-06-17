@@ -1,0 +1,16 @@
+deepstream/models/
+deepstream/app/__pycache__/
+experiments/
+backend/app/__pycache__/
+backend/app/api/v1/__pycache__/
+backend/uploads/
+backend/core
+backend/app/core
+backend/app/README.md
+static/
+.gitignore
+deepstream/app/__pycache__/
+deepstream/app/core
+deepstream/app/debug.log
+deepstream/app/libnvinfer_plugin.so.10.3.0.x86_64
+deepstream/app/libnvinfer_plugin.so.10.3.0.x86_64.ori.bak

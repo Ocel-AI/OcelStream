@@ -1,0 +1,537 @@
+Element types
+-------------
+
+SOURCES
+-------
+
+* never chain-based
+* have no sinkpads
+
+1) get based src
+
+   (----------)
+   ! fakesrc  !
+   !         src-   (get based)
+   (----------)
+
+  * no sinkpads
+  * srcpad(s) that are get-based
+
+2) loop based src
+
+   (----------)
+   ! fakesrc  !
+   !         src-   (loop based)
+   (----------)
+
+  * no sinkpads
+  * element is loop-based
+  * data is pushed on the srcpad(s)
+
+FILTERS
+-------
+
+3) chain based filter
+
+   (----------)
+   ! identity !
+ -sink       src- 
+   (----------)
+
+  * sinkpad(s) have a chain function
+  * srcpad(s) push data
+
+4) loop-based filter
+
+   (----------)
+   ! identity !
+ -sink       src- 
+   (----------)
+
+  * element is loop-based
+  * data is pushed on the srcpads
+  * data is pulled from sinkpad(s)
+
+
+SINKS
+-----
+
+5) chain based sink
+
+   (----------)
+   ! fakesink !
+ -sink        !
+   (----------)
+
+  * sinkpad(s) have a chain function
+  * no srcpads
+
+6) loop-based sink
+
+   (----------)
+   ! fakesink !
+ -sink        !
+   (----------)
+
+  * element is loop-based
+  * data is pulled from sinkpad(s)
+
+
+DECOUPLED
+---------
+
+7) decoupled element
+
+
+   (----------)
+   ! queue    !
+ -sink       src- 
+   (----------)
+
+  * sinkpad(s) have chain function
+  * srcpad(s) have get function
+  * never loop-based
+  * always acts like a chain-based sink for upstream elements
+  * always acts like a get-based src for downstream elements
+  * are not added to a group, but marked as an entry point in 
+    case it acts as a src element
+
+
+Connection types
+----------------
+
+1) get based src
+2) loop based src
+3) chain based filter
+4) loop-based filter
+5) chain based sink
+6) loop-based sink
+7) decoupled element
+
+
+   !  1  !  2  !  3  !  4  !  5  !  6  !  7  !
+---+-----+-----+-----+-----+-----+-----+-----+
+ 1 !  X  !  X  !  A  !  C  !  A  !  C  !  A  !
+   !     !     !     !     !     !     !     !
+ 2 !  X  !  X  !  B  !  F  !  B  !  F  !  B  !
+   !     !     !     !     !     !     !     !
+ 3 !  X  !  X  !  D  !  E  !  D  !  E  !  D  !
+   !     !     !     !     !     !     !     !
+ 4 !  X  !  X  !  B  !  F  !  B  !  F  !  B  !
+   !     !     !     !     !     !     !     !
+ 5 !  X  !  X  !  X  !  X  !  X  !  X  !  X  !
+   !     !     !     !     !     !     !     !
+ 6 !  X  !  X  !  X  !  X  !  X  !  X  !  X  !
+   !     !     !     !     !     !     !     !
+ 7 !  X  !  X  !  A  !  C  !  A  !  C  !  X  !
+   !     !     !     !     !     !     !     !
+
+
+A)
+
+  src       -> sink
+  src       -> filter
+  src       -> decoupled
+  decoupled -> sink
+  decoupled -> filter
+
+ - get based source
+ - chain based sink
+
+  * one group
+  * src at start of group and entry point
+  * _get from src, push to sink
+
+  (-group1---------------)
+  !                      !
+  ! *fakesrc -> fakesink !
+  (----------------------)
+
+
+B)
+
+  src    -> sink
+  src    -> filter
+  src    -> decoupled
+  filter -> sink
+  filter -> filter
+  filter -> decoupled
+
+ - loop based source/filter
+ - chain based sink/filter/decoupled
+
+ * one group
+ * src/filter at start of group and entry point
+ * loop on src, chainhandler set to chain function
+
+  (-group1----------------)
+  !                       !
+  ! %*fakesrc -> fakesink !
+  (-----------------------)
+
+
+C) 
+
+  src       -> sink
+  src       -> filter
+  decoupled -> sink
+  decoupled -> filter
+
+ - get based source/decoupled
+ - loop based sink/filter
+
+ * one group
+ * loop based element is entry point
+ * loop on sink/filter, gethandler set to getfunction
+ 
+  (-group1----------------)
+  !                       !
+  ! fakesrc -> %*fakesink !
+  (-----------------------)
+
+D)
+
+  filter -> filter
+  filter -> sink
+  filter -> decoupled
+
+  - chain based filter
+  - chain based filter/sink/decoupled
+
+  * one group is created to hold the two elements
+  * no entry point
+  * chainhandler set to peer chainfunction
+  
+  (-group1----------------)
+  !                       !
+  ! identity -> identity  !
+  (-----------------------)
+
+E)
+
+  filter  -> filter
+  filter  -> sink
+
+  - chain based filter
+  - loop based filter/sink
+
+  * two groups
+  * group is created for src element if needed
+  * chainhandler of loop based element set to loop wrapper, control is
+    handed to the peer group
+  * gethandler of loop based element set to get wrapper
+
+  (-group1---)  (-group2------)
+  !          !  !             !
+  ! identity ---> %*identity  !
+  (----------)  (-------------)
+
+
+F)
+
+  src     -> filter
+  src     -> sink
+  filter  -> filter
+  filter  -> sink
+
+  - loop based filter/src
+  - loop based filter/sink
+
+  * two groups
+  * two entry points
+  * chainhandler set to loop wrapper
+  * gethandler set to get wrapper
+  
+  (-group1-----)  (-group2------)
+  !            !  !             !
+  ! %*identity ---> %*identity  !
+  (------------)  (-------------)
+
+
+Grouping
+--------
+
+ * a group has at most one loop based element
+ * elements in a group are sorted, src elements first (not mandatory)
+ * a group has one cothread
+ * a group is created immediately for loop based elements, all other elements
+   are added to a group when a pad connection is made
+ * get-based plugins are put in the same group as a peer loop based element
+ * chain based elements are put in the same group as sink peer elements
+ * entry point in the group is:
+   - loopbased element 
+   - first src element if no loopbased element exists in the group
+
+Result: you end up with a group of connected elements with either:
+    - a loop based plugin as the entry point
+    - a get based plugin as the entry point
+
+Scheduling the group is a matter of starting the cothread and calling
+the loop function or doing a _get/_push on a srcpad.
+
+
+other examples of groups:
+-------------------------
+
+ % = loop based
+ * = entry point of group
+   
+.
+  (-group1---------------)
+  !                      !
+  ! *fakesrc -> fakesink !
+  (----------------------)
+
+.
+  (-group1---------------------------------------)
+  !                                              !
+  ! *fakesrc -> identity -> identity -> fakesink !
+  (----------------------------------------------)
+
+.
+  (-group1-----------------------------------------)
+  !                                                !
+  ! fakesrc -> %*identity -> identity -> fakesink  !
+  (------------------------------------------------)
+
+.
+  (-group1---------------) (-group2-----------------)
+  !                      ! !                        !
+  ! *fakesrc -> identity --> *%identity -> fakesink !
+  (----------------------) (------------------------)
+
+.
+  (-group1------------------------------------)
+  !                                           ! 
+  ! *fakesrc -> tee  --> identity -> fakesink !
+  !                  --> identity -> fakesink !  
+  (-------------------------------------------)
+
+.
+  (-group1------------------------------------)
+  !                                           ! 
+  ! *fakesrc -> tee  --> identity -> fakesink !
+  (--------------!----------------------------)
+                 v
+              (-group2-----------------)
+              !                        !
+              ! *%identity -> fakesink !
+              (------------------------)
+
+.
+  (-group1----------) (-group2-----------------)
+  !                 ! !                        !
+  ! *fakesrc -> tee --> *%identity -> fakesink !
+  (--------------!--) (------------------------)
+                 v
+              (-group3-----------------)
+              !                        !
+              ! *%identity -> fakesink !
+              (------------------------)
+
+.
+  (-group1-----------------------) (-group2----------------------)
+  !                              ! !                             !
+  ! filesrc -> *%mpegdemux  --> queue* -> mpeg2dec -> xvideosink !
+  !                              ! (-----------------------------)
+  !                              ! (-group3----------------------)
+  !                              ! !                             !
+  !                         --> queue* -> mad -> osssink         !  
+  (------------------------------) (-----------------------------)
+
+
+Chaining
+--------
+
+ * groups that are connected end up in the same chain
+ * a group always belongs to a chain
+ * updating the chain is only needed when two groups are
+   connected with a connection of type E/F. for other
+   connection types, the group itself is updated.
+ * a chain is scheduled by scheduling a random group in the chain.
+
+
+Wrapper functions
+-----------------
+
+
+
+iterating without cothreads
+---------------------------
+
+A cothread for each group is the easiest way to schedule most of
+the pipelines. Some pipelines are however schedulable without
+any cothreads.
+
+Each group is schedulable without cothreads, one can call the
+group schedule function and be done with it. Problems arise
+one the group boundaries of connected elements, which are always 
+of type E and F (chain->loop, loop->loop)
+
+We always have a producer group and a provider group in this case.
+
+chain->loop
+-----------
+
+
+
+Scheduler algorithm
+-------------------
+
+1: select (random?) group in chain
+2: schedule group
+3: on E/F connections, the get/chain wrapper is called
+   - get wrapper puts the peer element on the runqueue and
+     recursively invokes the scheduler.
+   - chain wrapper puts the buffer in the bufpen and puts
+     the peer element in the runqueue
+4: when the group is scheduled, take group from the runqueue
+   and goto 2:
+5: no more groups on the runqueue, iteration ends
+
+
+NOTES:
+
+- We need a GList instead of a single bufpen to hold buffers
+  for multi-out elements.
+  
+- We probably need to set a limit on the maximum number of
+  recursions and size of the bufpen list.
+
+- elements run non-preemptively, a group is done scheduling when all
+  elements in that group complete their chain/loop function.
+
+- can we only have a stack overflow when there is a loop in the
+  pipeline? I think so.
+
+- putting groups twice on the runqueue is not a good idea, we
+  need to check a flag or something, maybe give the group a 
+  higher priority?
+
+- what about starvation? We'll probably have to put the group
+  at the end of the runqueue.
+
+- multi-out elements can introduce significant latency. consider:
+
+  (-group1----------) (-group2-----------------)
+  !                 ! !                        !
+  ! *filesrc -> mad --> *%identity -> osssink  !
+  (-----------------) (------------------------)
+
+  mad produces N output buffers, they are queued in the bufpen, when
+  group1 is done, group2 is scheduled to empty the bufpen queue.
+
+  The time it takes for the first buffer to arrive at osssink equals
+  the time needed to decode the N-1 other buffers.
+
+  Of course, given the right buffersize for filesrc, N can be reduced
+  to 1. mad can also suggest a buffersize to filesrc with the 
+  BUFFER_SIZE event.
+
+
+
+Ungrouping
+----------
+
+Ungrouping might be the hardest part. especially in the case where
+an element is still running (state changes and pipeline modifications
+in element callbacks).
+
+Ungrouping involves two tasks:
+
+ - breaking up groups. This can happen when a pad connection is broken
+   so that the group contains two clusters of unconnected elements.
+ - breaking up chains. This happens when a pad connection is broken
+   so that the chains contains two clusters of unconnected groups.
+
+
+case1
+-----
+
+The most simple case is where two elements are disconnected and one
+of the elements does not belong to a group. In this case, we don't need
+to do anything at all.
+
+case2
+-----
+
+if the elements are part of different groups, we need to check if the
+chain needs to be broken. A chain is broken if it contains two sets
+of unconnected groups.
+
+To test this case, we will create a new chain and recursively move
+one of the groups with all of its connected groups to it. If the
+origial chain is empty after this operation, there was still a connection
+and the new chain replaces the old one, else we end up with two chains.
+
+case3
+-----
+
+When the elements are part of the same group we check if both elements
+still have a connection to some other element in that group. The elements
+without connections are removed from the group. 
+
+It is possible that when an element still has a connection with some other
+element in the group, the group has to be split up anyway. This can happen
+in fakesrc ! identity ! identity ! fakesink when we break the connection
+between the two identity elements. We have to be careful here in the cothread
+case that we don't take away the running cothread from under the elements.
+In the non-cothread case we can just move the elements to another new group.
+
+
+Interrupt with cothreadless optimal scheduler
+---------------------------------------------
+
+Interrupts are usually performed when a blocking _get based source or
+decoupled element is unlocked for a state change. The idea of the 
+interrupt scheduler call is to return to the main execution stack frame
+ASAP so that the state change can take place. For cothread based
+implementations of the scheduler this is not a problem as one can jump
+to the main cothread context without problems. For non cothread based
+schedulers we need to follow this scheme:
+
+get <-> chain based connection.
+
+ - enter get group scheduler
+   - call _get function on source, this can block internally
+   - app performs state change, element is told to unlock itself
+   - lock inside the get based function unlocks and _get function
+     return GST_EVENT_INTERRUPT
+   - group scheduler notices the event, unrefs it and jumps out of the
+     get_group_scheduler function, a scheduler INTERRUPTED flag is set.
+
+get <-> loop based connection
+
+  - enter loop group scheduler
+    - loop based element does pull on sinkpad
+    - _get blocks
+    - app performs state change, _get is unlocked and returns 
+      GST_EVENT_INTERRUPT.
+    - loop based function receives INTERRUPT event and exits its loop
+      ASAP using gst_element_interrupt.
+
+loop/chain <-> loop based connection
+
+  - when returning from the recursive call to the scheduler, the state
+    of the scheduler is checked, if it was interrupted, a
+    GST_EVENT_INTERRUPTED event is returned to the loop based element.
+  - the loop based element exits its loop ASAP.
+      
+
+This technique will unwind the stack of scheduled groups ASAP and returns
+to the main execution stack frame where the iterate() function can return
+and the state change can take place.
+
+Another alternative could be implemented when the _push and _pull functions
+would return a result code...
+
+ 
+
+
+
+
+ 
+
+
+
+

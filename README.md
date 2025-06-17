@@ -26,4 +26,10 @@ DeepVisionStream/
 ├── socket_server/          # WebSocket server (Python)
 ├── configs/                # DeepStream pipeline configs
 └── README.md
+```
+
+## i use new mexur
+
+```shell
+export USE_NEW_NVSTREAMMUX=yes
 

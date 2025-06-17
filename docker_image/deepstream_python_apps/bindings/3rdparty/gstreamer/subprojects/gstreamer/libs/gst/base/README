@@ -1,0 +1,6 @@
+Base classes
+------------
+
+GstBaseSink
+  FIXME: not much point making it operate in pull mode as a generic
+  base class I guess...
