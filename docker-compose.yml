@@ -12,7 +12,7 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./:/deepstream_app
-    working_dir: /opt/nvidia/deepstream/deepstream-7.1
+    working_dir: /deepstream_app
     deploy:
       resources:
         reservations:
