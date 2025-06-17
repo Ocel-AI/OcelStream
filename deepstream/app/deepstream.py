@@ -133,7 +133,8 @@ class DynamicRTSPPipeline:
     # ------------------------------------------------------------------
     def add_source(self, uri: str) -> int:
         """Add a new stream. Returns its stream index."""
-        # index = len(self.sources)
+        if self.pipeline.get_state(0).state != Gst.State.PLAYING:
+            raise RuntimeError("Pipeline is not running. Start the pipeline before adding sources.")
         if self.check_rtsp_link(uri, timeout_sec=1) is False or not uri.startswith("rtsp://") or uri is None:
             raise RuntimeError(f"Invalid RTSP link: {uri}")
         spot, is_fresh = self.spot_manager.acquire()
@@ -470,7 +471,7 @@ if __name__ == "__main__":
     live_uri = "rtsp://localhost:4000/looped"
     app = DynamicRTSPPipeline(max_sources=7)
     threading.Thread(target=app.start, daemon=True).start()
-    time.sleep(1)  # Ensure pipeline is up
+    time.sleep(5)  # Ensure pipeline is up
     # Check RTSP links before adding
     id0 = app.add_source("rtsp://localhost:4000/looped")
     # time.sleep(1)
