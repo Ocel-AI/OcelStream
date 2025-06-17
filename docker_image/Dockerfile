@@ -5,6 +5,8 @@ FROM nvcr.io/nvidia/deepstream:7.1-gc-triton-devel
 # RUN apt-get update && apt-get install -y vim git
 # RUN ls bin/bash /opt/nvidia/deepstream/deepstream-7.1/sources/
 WORKDIR /
+COPY deepstream_python_apps/ /deepstream_python_apps/
+COPY DeepStream-Yolo/ /DeepStream-Yolo/
 COPY ./run.sh  /
 RUN  /bin/bash /run.sh
 COPY ./patch_libnvinfer.sh /

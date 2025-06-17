@@ -1,0 +1,209 @@
+################################################################################
+# SPDX-FileCopyrightText: Copyright (c) 2019-2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+################################################################################
+
+Prerequisites:
+- DeepStreamSDK 7.1
+- Python 3.10
+- Gst-python
+
+#Deepstream msgbroker supports sending messages to Azure(mqtt) IOThub, kafka, AMQP broker(rabbitmq), hiredis, and Eclipse mosquitto (mqtt)
+
+Dependencies
+------------
+ $ sudo apt-get update
+ $ sudo apt-get install libglib2.0 libglib2.0-dev libssl-dev
+
+ Azure Iot:
+ ----------
+    $ sudo apt-get install -y libcurl4-openssl-dev uuid-dev
+
+ Kafka:
+ ------
+    $ sudo apt-get install libjansson4  libjansson-dev
+    $ sudo apt-get install librdkafka1
+
+ AMQP (rabbitmq):
+ ----------------
+    Install rabbitmq-c library
+    --------------------------
+    $ sudo apt-get install librabbitmq-dev
+  
+ hiredis:
+ --------
+  Build dependencies with installation instructions:
+  --------------------------------------------------
+    Note that for using TLS/SSL security, make sure to build libhiredis with
+    SSL suport enabled by using the USE_SSL option as specified in the
+    README here: https://github.com/redis/hiredis
+
+    $ git clone https://github.com/redis/hiredis.git
+    $ cd hiredis
+    $ git checkout tags/v1.2.0
+    $ make USE_SSL=1
+    $ sudo cp libhiredis* /opt/nvidia/deepstream/deepstream/lib/
+    $ sudo ln -sf /opt/nvidia/deepstream/deepstream/lib/libhiredis.so /opt/nvidia/deepstream/deepstream/lib/libhiredis.so.1.1.0
+    $ sudo ldconfig
+
+ mosquitto:
+ ----------
+ $ sudo apt-get install libcjson-dev
+
+ $ wget https://mosquitto.org/files/source/mosquitto-2.0.15.tar.gz
+ $ tar -xvf mosquitto-2.0.15.tar.gz
+ $ cd mosquitto-2.0.15
+ $ make
+ $ make install
+
+SETUP:
+  1.Use --proto-lib or -p command line option to set the path of adaptor library.
+    Adaptor library can be found at /opt/nvidia/deepstream/deepstream-<version>/lib
+
+    kafka lib           - libnvds_kafka_proto.so
+    azure device client - libnvds_azure_proto.so
+    AMQP lib            - libnvds_amqp_proto.so
+    redis lib           - libnvds_redis_proto.so
+    mosquitto lib       - libnvds_mqtt_proto.so
+
+  2.Use --conn-str command line option as required to set connection to backend server.
+    For Azure           - Full Azure connection string
+    For Kafka           - Connection string of format:  host;port;topic
+    For Amqp            - Connection string of format:  host;port;username. Password to be provided in cfg_amqp.txt
+    For Redis           - Connection string of format:  host;port
+    For MQTT            - Connection string of format:  host;port
+
+    Provide connection string under quotes. e.g. --conn-str="host;port;topic"
+
+  3.Use --topic or -t command line option to provide message topic (optional).
+    Kafka message adaptor also has the topic param embedded within the connection string format
+    In that case, "topic" from command line should match the topic within connection string
+
+  4.Use --schema or -s command line option to select the message schema (optional).
+    Json payload to send to cloud can be generated using different message schemas.
+    schema = 0; Full message schema with separate payload per object (Default)
+    schema = 1; Minimal message with multiple objects in single payload.
+    Refer user guide to get more details about message schema.
+
+  5.Use --no-display to disable display.
+
+  6.Use --cfg-file or -c command line option to set adaptor configuration file.
+    This is optional if connection string has all relevent information.
+
+    Please see the README for each adapter inside DS_PACKAGE_DIR/sources/libs/*_protocol_adaptor for details on configuration options.
+
+    For kafka: use cfg_kafka.txt as a reference.
+    This file is used to define the parition key field to be used while sending messages to the
+    kafka broker. Refer Kafka Protocol Adaptor section in the DeepStream 4.0 Plugin Manual for
+    more details about using this config option. The partition-key setting within the cfg_kafka.txt
+    should be set based on the schema type selected using the --schema option. Set this to
+    "sensor.id" in case of Full message schema, and to "sensorId" in case of Minimal message schema
+
+
+    For Azure , use the cfg_azure.txt as a reference. It has the following section:
+        [message-broker]
+        #connection_str = HostName=<my-hub>.azure-devices.net;DeviceId=<device_id>;SharedAccessKey=<my-policy-key>
+        #shared_access_key = <my-policy-key>
+
+
+        Azure device connection string:
+        -------------------------------
+        You can provide the connection_str within cfg_azure.txt of format:
+        connection_str = HostName=<my-hub>.azure-devices.net;DeviceId=<device_id>;SharedAccessKey=<my-policy-key>
+
+        OR
+
+        optionally, you can pass in part of the required connection string with --conn-str option in format: "url;port;device-id"
+        AND provide the shared_access_key within cfg_azure.txt
+        shared_access_key = <my-policy-key>
+
+    For AMQP, use cfg_amqp.txt as reference. It has the following section:
+        [message-broker]
+        password = guest
+        #optional
+        hostname = localhost
+        username = guest
+        port = 5672
+        exchange = amq.topic
+        topic = topicname
+
+        AMQP connection string:
+        ----------------------
+        Provide hostname, username, password details in the cfg_amqp.txt
+
+        OR
+
+        optionally, you can pass in part of the required connection string with --conn-str option in format: "hostname;port;username"
+        AND provide  password within cfg_amqp.txt
+        password = <your_amqp_broker_password>
+
+    For redis, use cfg_redis.txt as a reference. See the README at DS_PACKAGE_DIR/sources/libs/redis_protocol_adaptor for details on each config option.
+
+    For MQTT, use cfg_mqtt.txt as a reference. See the README at DS_PACKAGE_DIR/sources/libs/mqtt_protocol_adaptor for details on config options
+    for the protocol adaptor as well as how to configure the mosquitto broker itself accordingly. For example, how to enable authentication and TLS. 
+
+  NOTE:
+    - DO NOT delete the line [message-broker] in cfg file. Its the section identifier used for parsing
+    - For Azure & AMQP:
+        If you use --conn-str commandline option as in step 2), make sure to provide password details in cfg file
+        OR
+        You can ignore --conn-str commandline option and provide full connection details within cfg file
+
+  1. Enable logging:
+       Go through the README to setup & enable logs for the messaging libraries(kafka, azure, amqp)
+         $ cat ../../../tools/nvds_logger/README
+
+To run:
+  $ python3 deepstream_test_4.py -i <H264 filename> -p <Proto adaptor library> --conn-str=<Connection string> -s <0/1>
+
+NOTE: More details about the message adapters and setup for each can be found at README inside DS_PACKAGE_DIR/sources/libs/*_protocol_adaptor
+
+This document shall describe about the sample deepstream-test4 application.
+
+This sample builds on top of the deepstream-test1 sample to demonstrate how to:
+
+* Use "nvmsgconv" and "nvmsgbroker" plugins in the pipeline.
+* Create NVDS_META_EVENT_MSG type of meta and attach to buffer.
+* Use NVDS_META_EVENT_MSG for different types of objects e.g. vehicle, person etc.
+* copy / free functions if meta data is extended through "extMsg" field have been moved out of the deepstream_test4 python app.
+These copy and free functions are available for using/extending inside bindschema.cpp as event_msg_meta_copy_func() and
+event_msg_meta_release_func() respectively.
+
+"nvmsgconv" plugin uses NVDS_META_EVENT_MSG type of metadata from the buffer
+and generates the "DeepStream Schema" payload in Json format. Static properties
+of schema are read from configuration file in the form of key-value pair.
+Check dstest4_msgconv_config.txt for reference. Generated payload is attached
+as NVDS_META_PAYLOAD type metadata to the buffer.
+
+"nvmsgbroker" plugin extracts NVDS_META_PAYLOAD type of metadata from the buffer
+and sends that payload to the server using protocol adaptor APIs.
+
+Generating custom metadata for different type of objects:
+In addition to common fields provided in NvDsEventMsgMeta structure, user can
+also create custom objects and attach to buffer as NVDS_META_EVENT_MSG metadata.
+To do that NvDsEventMsgMeta provides "extMsg" and "extMsgSize" fields. User can
+create custom structure, fill that structure and assign the pointer of that
+structure as "extMsg" and set the "extMsgSize" accordingly.
+If custom object contains fields that can't be simply mem copied then user should
+also provide/extend the functions to copy - event_msg_meta_copy_func() and free - event_msg_meta_release_func() those objects.
+
+Refer generate_event_msg_meta() to know how to use "extMsg" and "extMsgSize"
+fields for custom objects and refer to bindschema.cpp to know how to provide copy/free functions. The deepstream_test4 app shows
+how to attach that object to buffer as metadata.
+
+NOTE: This app by default sends message for first object of every 30th frame. To
+change the frequency of messages, modify the following line in source code accordingly.
+if(is_first_object and not (frame_number%30)) should be changed to:
+if (not (frame_number % 30))  #To get all objects of a single frame

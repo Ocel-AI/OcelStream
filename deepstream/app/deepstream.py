@@ -2,7 +2,7 @@ import threading
 import gi
 import time
 import sys
-sys.path.append('/opt/nvidia/deepstream/deepstream-7.1/sources/deepstream_python_apps/apps/common')
+sys.path.append('/deepstream_python_apps/apps/common')
 
 from gi.repository import Gst, GstRtspServer, GLib
 from bus_call import bus_call
@@ -19,6 +19,8 @@ from utils import resize_mask, transform_image_to_base64, encode_mask_to_base64
 import math
 import ctypes
 import queue
+import re
+
 
 
 gi.require_version('Gst', '1.0')
@@ -31,7 +33,7 @@ class DynamicRTSPPipeline:
     now exposes remove_source() in addition to add_source().
     """
 
-    def __init__(self, max_sources: int = 5, broadcast_callback=None):
+    def __init__(self, max_sources: int = 5, metadata_callback=None, notification_callback=None):
 
         Gst.init(None)
         # --- Pipeline‑wide parameters ---
@@ -49,8 +51,8 @@ class DynamicRTSPPipeline:
 
         self.pgie = Gst.ElementFactory.make("nvinfer", "pgie")
         self.sgie = Gst.ElementFactory.make("nvinfer", "spgie")
-        self.pgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_infer_primary_yolo11.txt")
-        self.sgie.set_property("config-file-path", "/opt/nvidia/deepstream/deepstream-7.1/sources/my_data/deepstream/config/config_pgie_yolo_seg.txt")
+        self.pgie.set_property("config-file-path", "/deepstream_app/deepstream/config/config_infer_primary_yolo11.txt")
+        self.sgie.set_property("config-file-path", "/deepstream_app/deepstream/config/config_pgie_yolo_seg.txt")
         self.pipeline.add(self.pgie)
         self.pipeline.add(self.sgie)
 
@@ -90,8 +92,10 @@ class DynamicRTSPPipeline:
         self.MAX_CONFIDENCE = 0.4
 
         # --- Callbacks for send data via WebSocket ---
-        self.broadcast_callback = broadcast_callback
+        self.metadata_callback = metadata_callback
+        self.notification_callback = notification_callback
         self.loop_event = asyncio.get_event_loop()
+
         # self.streammux.set_property('live-source', 1)  # Enable live source mode
 
         self.process_queue = queue.Queue()
@@ -130,6 +134,8 @@ class DynamicRTSPPipeline:
     def add_source(self, uri: str) -> int:
         """Add a new stream. Returns its stream index."""
         # index = len(self.sources)
+        if self.check_rtsp_link(uri, timeout_sec=1) is False or not uri.startswith("rtsp://") or uri is None:
+            raise RuntimeError(f"Invalid RTSP link: {uri}")
         spot, is_fresh = self.spot_manager.acquire()
         if spot is None:
             raise RuntimeError("No available spots for new source")
@@ -259,40 +265,53 @@ class DynamicRTSPPipeline:
             event = info.get_event()
             if event.type == Gst.EventType.EOS:
                 print(f"[pad-probe] EOS detected on stream {index}")
-                # self.remove_source(index)
+                self.remove_source(index)
         return Gst.PadProbeReturn.OK
 
-    # def bus_call(self, bus, message, loop):
-    #     t = message.type
-    #     if t == Gst.MessageType.EOS:
-    #         print("End-of-stream")
-    #         # self.loop.quit()
-    #         # self.start()
-    #     elif t == Gst.MessageType.ERROR:
-    #         err, debug = message.parse_error()
-    #         print("Error:", err, debug)
-    #         self.loop.quit()
-    #     return True
 
     def bus_call(self, bus, message, loop):
         t = message.type
         if t == Gst.MessageType.ELEMENT:
             struct = message.get_structure()
             if struct and struct.get_name() == "GstNvStreamEos":
-                stream_id = struct.get_uint("stream-id")[1]  # .get_uint returns (bool, val)
-                print(f"[bus] Stream EOS detected for stream {stream_id}")
+                stream_id = struct.get_uint("stream-id")[1]
                 self.remove_source(stream_id)
         elif t == Gst.MessageType.EOS:
             print("[bus] Global pipeline EOS (should not happen unless all sources ended)")
         elif t == Gst.MessageType.ERROR:
             err, debug = message.parse_error()
-            print("[bus] Error:", err, debug)
-            self.loop.quit()
+            struct = message.get_structure()
+            stream_id = struct.get_uint("stream-id")[1]
+            # Notify about error
+            if self.notification_callback:
+                asyncio.run_coroutine_threadsafe(
+                    self.notification_callback({
+                        "type": "error",
+                        "stream_id": stream_id,
+                        "message": f"Error on stream {stream_id}: {err.message}",
+                        "debug": debug
+                    }),
+                    self.loop_event
+                )
+            self.remove_source(stream_id)
         return True
 
 
     def perf_print_callback(self):
-        self.perf_data.perf_print_callback()
+        fps_report = {
+            stream_id: fps_obj.get_fps()
+            for stream_id, fps_obj in self.perf_data.all_stream_fps.items()
+        }
+        print(f"FPS data: {fps_report}")
+        # Notify about performance data
+        if self.notification_callback:
+            asyncio.run_coroutine_threadsafe(
+                self.notification_callback({
+                    "type": "performance",
+                    "FPS": fps_report
+                }),
+                self.loop_event
+            )
         return True
 
     
@@ -345,36 +364,50 @@ class DynamicRTSPPipeline:
                 l_obj = frame_meta.obj_meta_list
                 while l_obj is not None:
                     obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
-                    rect = obj_meta.rect_params
+                    rectparams = obj_meta.rect_params
                     maskparams = obj_meta.mask_params
                     mask_b64 = None
+                    left = None
+                    top = None
+                    width = None
+                    height = None
                     if maskparams is not None and maskparams.data:
-                        mask_img = resize_mask(maskparams, math.floor(rect.width), math.floor(rect.height))
+                        mask_img = resize_mask(maskparams, math.floor(rectparams.width), math.floor(rectparams.height))
                         mask_b64 = encode_mask_to_base64(mask_img)
-                    objects.append({
-                        "object_id": obj_meta.object_id,
-                        "class_id": obj_meta.class_id,
-                        "confidence": obj_meta.confidence,
-                        "bbox": {
-                            "left": rect.left,
-                            "top": rect.top,
-                            "width": rect.width,
-                            "height": rect.height
-                        },
-                        "mask": mask_b64
-                    })
+                    if rectparams is not None:
+                        left = rectparams.left
+                        top = rectparams.top
+                        width = rectparams.width
+                        height = rectparams.height
+                    if rectparams is not None or mask_b64 is not None:
+                        objects.append({
+                            "object_id": obj_meta.object_id,
+                            "class_id": obj_meta.class_id,
+                            "confidence": obj_meta.confidence,
+                            "bbox": {
+                                "left": left,
+                                "top": top,
+                                "width": width,
+                                "height": height
+                            },
+                            "mask": mask_b64
+                        })
                     l_obj = l_obj.next
+                
+                if objects.__len__() > 0:
+                    metadata = {
+                        "source_id": frame_meta.source_id,
+                        "frame_number": frame_meta.frame_num,
+                        "objects": objects,
+                        "frame_base64": transform_image_to_base64(frame_image)
+                    }
+                else:
+                    metadata = {}
 
-                metadata = {
-                    "source_id": frame_meta.source_id,
-                    "frame_number": frame_meta.frame_num,
-                    "objects": objects,
-                    "frame_base64": transform_image_to_base64(frame_image)
-                }
 
-                if self.broadcast_callback:
+                if self.metadata_callback:
                     asyncio.run_coroutine_threadsafe(
-                        self.broadcast_callback(metadata),
+                        self.metadata_callback(metadata),
                         self.loop_event
                     )
 
@@ -389,8 +422,8 @@ class DynamicRTSPPipeline:
         bus = self.pipeline.get_bus()
         bus.add_signal_watch()
         bus.connect("message", self.bus_call, self.loop)
-        GLib.timeout_add(1000, self.perf_data.perf_print_callback)
-        # time.sleep(1)
+        GLib.timeout_add(5000, self.perf_print_callback)
+        time.sleep(1)
         self.pipeline.set_state(Gst.State.PLAYING)
         try:
             self.loop.run()
@@ -398,6 +431,22 @@ class DynamicRTSPPipeline:
             pass
         finally:
             self.pipeline.set_state(Gst.State.NULL)
+
+    def check_rtsp_link(self, uri: str, timeout_sec=0.1) -> bool:
+        cap = cv2.VideoCapture(uri)
+        start = time.time()
+        while time.time() - start < timeout_sec:
+            if cap.isOpened():
+                ret, _ = cap.read()
+                if ret:
+                    cap.release()
+                    
+                    return True
+            time.sleep(0.1)
+        cap.release()
+        return False
+
+
 
 
 
@@ -422,6 +471,7 @@ if __name__ == "__main__":
     app = DynamicRTSPPipeline(max_sources=7)
     threading.Thread(target=app.start, daemon=True).start()
     time.sleep(1)  # Ensure pipeline is up
+    # Check RTSP links before adding
     id0 = app.add_source("rtsp://localhost:4000/looped")
     # time.sleep(1)
     # # # app.remove_source(id0)

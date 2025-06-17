@@ -1,0 +1,211 @@
+Moving around plug-ins between source modules
+---------------------------------------------
+
+Last updated: 2020-05-19
+
+Contents:
+  1. How to get your plug-in out of -bad and into -good or -ugly (ie. policies)
+  2. How to move plugins between modules with git (ie. technical howto)
+
+==============================================================
+1. How to get your plug-in out of -bad and into -good or -ugly
+==============================================================
+
+Since GStreamer 0.9.x, we have four plugin modules: -base, -good, -ugly,
+and -bad.  Plug-ins are by default added to -bad.  They can only move
+to -good or -ugly if a number of conditions are met:
+
+PEOPLE
+------
+- People involved:
+  - There should be a person who is actively going to maintain this element;
+    presumably this is the person writing the plug-in in the first place
+    and opening the move request
+  - There should be a GStreamer hacker who is willing to sponsor the element;
+    this would be someone who is going to help out getting all the conditions
+    met, act as a mentor if necessary,...
+  - There should be a core developer who verifies that the checklist is
+    met
+
+  The three roles can be filled by two people, but not just one.
+
+  In addition, an admin needs to perform the actual move, which involves
+  GIT surgery.
+
+PROCESS
+-------
+- Issue in gitlab gets filed by someone requesting a move from bad
+  to good/ugly
+  This is "requesting" the move.
+- a second person reviews the request and code, and verifies that the
+  plugin meets the checklist items below, by commenting on the bug
+  and giving a rundown of what still needs to be done
+  This is "sponsoring" the move.
+- when the checklist is met, a third person can approve the move.
+  This is "approving" the move.
+- an admin performs the move.
+  This is "performing" the move.  (Are you laughing yet ?)
+
+CHECKLIST
+---------
+- The plug-in's code:
+  - should descend from an applicable base class if possible
+  - make use of G_DEFINE_TYPE macros
+  - conform to the GStreamer coding style
+  - use a custom debug category
+  - use GST_(DEBUG/*)_OBJECT
+  - use dashes in object property names to separate words
+  - use correct value, name, nick for enums
+  - use underscores in macros/function names/structs
+    e.g.: GST_BASE_SINK, GstBaseSink, gst_base_sink_
+  - use g_assert(), g_return_if_fail(), g_return_val_if_fail() for pre/post
+    condition checks
+  - must not have any functional code within g_assert(), g_return_if_fail() or
+    g_return_val_if_fail() statements, since those would be turned into NO-OPS
+    if the code is compiled with -DG_DISABLE_CHECKS (as is often done on
+    embedded systems).
+
+- The plug-in's build:
+  - should be correctly integrated with Meson buildsystem
+  - files implementing elements should be named according to their class name,
+    e.g GstBaseSink -> gstbasesink.c
+
+- The compiled plug-in:
+  - should show up correct in gst-inspect output; no warnings, no unknown
+    types, ...
+
+- The plug-in should be put in the correct location inside the module:
+  sys/: plug-ins that include system headers/link to system libraries;
+    usually platform-dependent as well
+    name after whatever system "thing" they use (oss, v4l, ...)
+  gst/: plug-ins with no external dependencies, only GLib/GStreamer/liborc
+  ext/: plug-ins with external dependencies
+
+- The plug-in is documented:
+  - the compiled-in descriptions (element details) should be correct
+  - every element in the plug-in should have gtk-doc documentation:
+    - longer description of element
+    - why you would use this element
+    - example launch line OR example source code
+      (for example, see
+       http://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-base-plugins/html/gst-plugins-base-plugins-audiotestsrc.html
+       for the first and
+       http://gstreamer.freedesktop.org/data/doc/gstreamer/head/gst-plugins-good-plugins/html/gst-plugins-good-plugins-level.html
+       for the second)
+    - if the element has custom messages, they should be documented
+    - signals and properties should be documented
+
+- The plug-in should come with tests:
+  - preferably, a unit test should be written, testing things like:
+    - setup and teardown
+    - push in buffers in all supported formats and verify they are handled
+      properly
+    - push in buffers that trigger error cases, and verify errors are
+      correctly thrown
+
+    for example, see gst-plugins-base/check/elements/audioconvert
+
+    The unit test should be put in check/elements/(nameofelement)
+    and be added to check_PROGRAMS and Makefile.am
+
+  - if a unit test is not appropriate (for example, device elements),
+    a test application should be written that can be run manually
+
+- The tests should be leak-free, tested with valgrind
+  - the unit tests in check/ dirs are valgrinded by default
+  - the manual tests should have a valgrind target
+  - leaks in the supporting library (and verified to be in the supporting
+    library !) can be added to suppression files
+
+- The elements should not segfault under any circumstance.  This includes:
+  - wrong pipelines
+  - bad data
+
+- The element must not rely on a running GLib main loop, meaning it can't
+  use g_idle_add(), g_timeout_add(), g_io_add_watch(), etc.
+
+- The plugins need to be marked correctly for translations.
+- All error conditions should be correctly handled using GST_ELEMENT_ERROR
+  and following practice outlined in
+  http://gstreamer.freedesktop.org/data/doc/gstreamer/head/gstreamer/html/gstreamer-GstGError.html
+  - this includes:
+    - message strings need to be marked for translation
+    - should be short, well-written, clear
+    - in particular, should *not* contain debug info, strerror, errno, ...
+      No, really ! NO STRERROR, NO ERRNO.  If you are too lazy to provide
+      the user of your library with a nice experience, put your crap in
+      the debug string
+
+- Decision should be made if it should go into good (LGPL license,
+  LGPL dependencies, no patent issues) or ugly
+
+- plugin documentation needs to be added:
+  - see gstreamer/docs/README; section on adding plugins and elements
+  - "make update" in docs/plugins and commit the new file
+  - edit -docs.sgml and add an include for the file
+
+
+============================================
+2. Moving plugins with GIT (technical howto)
+============================================
+
+Let's say we are moving the 'weneedthis' plugins from -bad/gst/weneedthis/ to
+-good.
+
+We want to end up with the following situation after the plugin move:
+
+* weneedthis is no longer usable/visible in HEAD of -bad
+* weneedthis is present and usable in HEAD of -good
+* The whole history of commits concerning weneedthis are visible in -good
+* The whole history of commits concerning weneedthis are visible in -bad
+* If we go back to the previous release commit for -good, the 'weneedthis'
+  plugin code and commit history are not visible.
+* If we go back to the previous release commit for -bad, the 'weneedthis'
+  plugin code and commits are visible.
+
+
+# Four steps for moving plugins
+----------
+
+For this, we use git-format-patch which will extract the various commits
+involving the plugin we want to move into individual numbered patches.
+
+> cd gst-plugins-bad.git/
+> git format-patch -o ../patches/ --subject-prefix="MOVED FROM BAD" start..HEAD -- gst/weneedthis/ tests/check/elements/weneedthis.c
+or (without the prefix)
+> git format-patch -o ../patches/ --no-numbered --subject-prefix='' start..HEAD -- gst/weneedthis/ tests/check/elements/weneedthis.c
+
+We can then take those patches and commit them into -good.
+For safety, it is recommended to do all this work in a temporary branch
+
+> cd ../gst-plugins-good.git/
+> git checkout -b moving-weneedthis
+> git am -k ../patches/*.patch
+
+At this point, we have all the commits related to gst/weneedthis/ in -bad.
+
+We also need to move the other related parts in:
+* meson.build
+* meson_options.txt
+* i18n
+* documentation
+
+All those modifications should be committed as one commit with an obvious
+summary:
+"Moved 'weneedthis' from -bad to -good"
+> git commit -v -m "Moved 'weneedthis' from -bad to -good" <modified files>
+
+We can now merge the branch into master and push it out for everybody.
+
+> git checkout master
+> git merge moving-weneedthis
+
+The last step is to remove the plugin from the original module:
+
+> git rm gst/weneedthis/
+
+Remove all the code that was moved from configure, makefiles, documentations,
+and commit that with the *SAME* commit message as the last commit we did in
+-good:
+> git commit -v -m "Moved 'weneedthis' from -bad to -good" <modified files>
+

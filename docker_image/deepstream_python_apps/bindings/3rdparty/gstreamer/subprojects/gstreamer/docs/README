@@ -1,0 +1,143 @@
+GStreamer documentation notes
+
+OVERVIEW
+========
+
+Our documentation uses hotdoc, you should usually refer to the
+[hotdoc documentation](http://hotdoc.github.io/).
+
+GStreamer has two sets of documentation but both are controlled and aggregated in
+the `gst-docs` module:
+
+* API references, using hotdoc (gstreamer, gstreamer-libs) - maintained
+  in each GStreamer modules repository
+* FAQ / Application Development Manual / Plugin Writer's Guide / Tutorials -
+  these are maintained in markdown format and live in the gst-docs repository.
+
+To build the full documentation you should make sure to have `hotdoc` installed and
+build [gst-build](https://cgit.freedesktop.org/gstreamer/gst-build/) configuring it with:
+
+```
+meson -Ddoc=enabled build/
+```
+
+And building the documentation:
+
+```
+ninja -C build/ subprojects/gst-docs/GStreamer-doc`, this will result in two documentation sets:
+```
+
+This will generate two outputs:
+
+  - the html in `build/subprojects/gst-docs/GStreamer-doc/html`
+  - the [devhelp](https://wiki.gnome.org/Apps/Devhelp) in `build/subprojects/gst-docs/GStreamer-doc/devhelp`
+
+HOW THE BUILD SYSTEM IS SET UP
+------------------------------
+Hotdoc build targets are generated for each documentation 'components' (ie. hotdoc
+subprojects). This includes libraries documentation and one target per GStreamer plugin.
+
+One can build a specific documentation target by explicitly building the target,
+for example to build the GStreamer core library documentation (adapt the paths if you
+are using `gst-build`):
+
+    ninja docs/libgstreamer-doc
+
+Then the documentation will be available in `docs/libgstreamer-doc/html/`.
+
+SPELL CHECKING
+--------------
+
+FILL ME.
+
+HOTDOC NOTES
+=============
+
+* files under revision control:
+  - sitemap.txt: defines the overall structure of the documentation
+  - gst_plugins_cache.json: Automatically generated information about plugins
+
+* what to do when adding a new piece of API:
+  - Just let hotdoc generate the documentation and decide where to put it
+  - Make sure to add a `SECTION` documentation section in the file where
+    the documentation should land (hotdoc will use that to create its
+    "smart index" and list symbols from other files that should land
+    on that page in that section.
+  - document functions, signals in the .c files
+  - document structs, typedefs, enums in the .h files
+
+* what to do when trying to improve the docs
+  - compare the output of
+    grep "_get_type" gstreamer-sections.txt | sort
+    with the types in XXX.types to detect entries that
+    are maybe missing
+  - hotdoc does not warns about empty member docs!, run
+    find . -name "*.[c,h]" -exec egrep -Hn "^ +\* +@.*: *$" {} \;
+    in the project root to find them
+  - hotdoc does not warns about empty Returns: docs!, run
+    find . -name "*.[c,h]" -exec egrep -Hn "^ +\* +@Returns: *$" {} \;
+    in the project root to find them
+
+* what happens during a hotdoc build ?
+  - Read the GIR and scan the sources files for the docstrings and
+    generate the documentation laying out pages the way they are documented.
+  - The meson build definition is set in a way that makes it so all plugins
+    in `plugins_doc` are introspected and documented
+
+STYLE GUIDE FOR HOTDOC
+=======================
+- this is in addition to gtk-doc's style-guide.txt
+
+- function/macro descriptions are descriptive, not imperative
+  ie, it uses the third person verb
+- synopsis and description should have most-used/application functions at the
+  top
+- functions that can return FALSE/NULL or fail should describe their failure
+  conditions like this:
+  * Returns NULL if no element with the given name is found in the bin, if
+  * the frobble was stuck in the froob, or the frizzle was frazzed.
+- a line with function attributes should be added before Returns:
+  - can contain:
+    "MT safe." - the function is verified to be multithreadingsafe
+    "Caller owns returned reference" for refcounted classes
+    "Caller owns returned value" for other types (iterators, ..)
+  - we do this because, in contrast with GLib/GTK, we are more explicit
+    about threadsafety and related issues
+
+WEBSITE DOCUMENTATION
+=====================
+
+Updating the online documentation is done from with the `gst-docs` repository
+
+DOCUMENTING ELEMENTS
+====================
+A hotdoc plugin is provided by GStreamer to document GStreamer plugins.
+
+- to add a plugin to be documented:
+  - make sure the plugin is added to the `plugins_doc` variable in meson
+- to add an element to be documented:
+  - add a gtk-doc section to the source code like:
+/**
+ * SECTION:element-multifdsink
+
+  and fill it with documentation about the element
+  - add an example:
+    - either a few pipelines, inside a codeblock
+    - or a piece of code inside a codeblock or in `tests/examples/(pluginname)`
+  - to build the doc for a plugin, do:
+    `ninja docs/(pluginname)-doc`
+
+
+DEVHELP INTEGRATION
+-------------------
+Check https://wiki.gnome.org/Apps/Devhelp
+It's a really nice development app allowing you to look up API stuff
+from various hotdoc/gtk-doc'd libraries.  GStreamer is one of these ;)
+
+hotdoc generates both html API docs and the matching .devhelp(2) books.
+
+IMAGES
+------
+It's important to keep the original source format for images, to be able
+to change and regenerate later on.  Original files go in
+docs/images

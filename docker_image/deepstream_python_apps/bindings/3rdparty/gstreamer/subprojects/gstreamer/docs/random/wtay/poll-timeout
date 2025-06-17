@@ -1,0 +1,123 @@
+WITH LOCK
+*********
+
+create clock id:
+
+  id->state = OK;
+
+
+waiting for id:
+
+   lock
+   /* once unscheduled, the id cannot be used anymore */
+   while (id->state != unscheduled) {
+     id->state = busy;
+     unlock
+
+     ret = gstpoll (timeout);
+
+     lock
+     if (id->state == unscheduled) {
+       /* id became unscheduled, read the fd and broadcast */
+       read (fd)
+       cond_broadcast ()
+     }
+     else {
+       if (ret != 0) {
+         /* some other id got unlocked */ 
+	 /* mark ourselves as EARLY, we release the lock and we could be
+	  * unscheduled ourselves but we don't want the unscheduling thread
+	  * to write on the fd */
+	 id->state = EARLY;
+	 /* wait until it reads the fd and signals us */
+         cond_wait ()
+       }
+       else {
+         /* we timed out */
+	 id->state = OK | EARLY;
+       }
+     }
+   }
+   unlock
+   return id->state;
+
+
+unschedule id:
+
+   lock
+   /* if it's busy waiting in poll, write to the fd */
+   if (id->state == busy) {
+     write (fd)
+   }
+   /* when it leaves the poll, it'll detect the unscheduled. */
+   id->state = unscheduled;
+   unlock
+
+
+
+ATOMIC
+******
+
+create clock id:
+
+  id->state = OK;
+
+
+waiting for id:
+
+   /* once state changes to != OK, the id cannot be used anymore */
+   while (g_atomic_int_compare_and_exchange (&id->state, OK, BUSY) {
+
+     ret = gstpoll (timeout);
+
+     /* two things can happen here, either the entry is BUSY or UNSCHEDULED,
+      * first check if it was busy. */
+     if (g_atomic_int_compare_and_exchange (&id->state, BUSY, OK) {
+       /* we got unscheduled, see if it was because we timed out or some other
+	* id got unscheduled */
+       if (ret != 0) {
+         if (g_atomic_int_get (&waiters) > 0) {
+           lock
+           /* some other id got unlocked */ 
+  	   /* wait until it reads the fd and signals us */
+  	   while (waiters) 
+             cond_wait ()
+           unlock
+	 }
+       }
+       else {
+         /* we timed out update the status. */
+	 id->state = OK | EARLY;
+         break;
+       }
+     }
+     else if (g_atomic_int_get (&id->state) == UNSCHEDULED) {
+       /* id became unscheduled, read the fd and broadcast */
+       lock
+       read (fd)
+       g_atomic_int_dec (&waiters);
+       cond_broadcast ()
+       unlock
+       break;
+     }
+     else {
+       g_assert_not_reached ();
+     }
+   }
+
+   return id->state;
+
+
+unschedule id:
+
+   if (g_atomic_int_compare_and_exchange (&id->state, BUSY, UNSCHEDULED) {
+     /* if it's busy waiting in poll, write to the fd */
+     lock
+     g_atomic_int_inc (&waiters)
+     write (fd)
+     unlock
+   }
+   else {
+     /* was not waiting, just mark unscheduled */
+     g_atomic_int_set (id->state, UNSCHEDULED);
+   }

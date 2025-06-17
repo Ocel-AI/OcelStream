@@ -1,0 +1,144 @@
+GStreamer Release Policies (or: why we should become a country and pass laws)
+--------------------------
+
+Development Period
+------------------
+Development period is marked by having a fourth (nano) version number of 1.
+During development anything goes short of wiping the tree.
+Just try doing a few basic things :
+- make sure it builds for you !
+- preferably, keep an anonymous checkout around as well so you can
+  immediately update and check if your changes work in a clean tree as well
+
+Prerelease Period
+-----------------
+After a bit of development, people want a new release.  This generally happens
+when :
+- core developers get anxious to apply massive changes to the core bound
+  to break everything
+- a few important plugins decide, as if by magic, to work again (avi, mad, ...)
+- thaytan or thomasvs get tired of being lazy.
+
+Also, this should only be allowed after passing a few sanity checks :
+- make distcheck should pass
+- rpms should build
+- FIXME: should debs be built here ? If so, how ?
+
+At this time, we need to do a few prereleases for general checking by all
+interested developers. The git modules that are in the process of being
+released are usually frozen for commits during that time, until the final
+release is made. We intentionally don't do releases in separate branches to
+make sure everyone is focused on testing the code that is about to be released.
+
+
+RELEASE PROCEDURE:
+-----------------
+
+- www/bin/new-release is a release helper script.  It automates a lot of the
+  tedious work.  Now releasing looks like this:
+
+- before release:
+  - make sure all blocker bugs for that release are fixed or deferred
+  - make sure you have a local copy of all online files
+  - run 'make download-po' to make sure translations in CVS are up-to-date,
+    and then 'make update-po' in po/ (which will update the .pot template too
+    and merge the changes into the .po files)
+  - run 'make win32-update' where applicable
+  - Make one or more prereleases
+    - Make sure you've got the latest clean CVS of the module
+    - Run bin/data-get in www/ to sync data from website
+    - Bump the nano number to >= 2 (eg, first pre-release for 
+      0.10.12 is 0.10.11.2)
+    - When releasing -base/-good/-ugly/-bad/gnonlin, make sure GST_REQ and
+      GST_PBREQ are up-to-date. In particular, keep GST_REQ of the
+      to-be-released -base module in sync with the core version that is to
+      be released at the same time
+    - Re-autogen if not in maintainer-mode (which you should be)
+    - Update the changelog
+        python common/gen-changelog.py > ChangeLog
+    - Check (and fix if necessary) make distcheck
+    - run 'make release' to build the tarballs
+    - copy tarballs+md5 sums to the data/src/$module/pre/ dir
+    - Run bin/data-put in www/ to sync the new tarballs to the website
+    - Announce the availability of the new tarballs
+    - Tell the translation project by sending an email to 
+      coordinator@translationproject.org, eg:
+        Subject: gst-plugins-bad-0.10.5.2.pot available
+        Tarball is at http://gstreamer.freedesktop.org/src/gst-plugins-bad/pre/gst-plugins-bad-0.10.5.2.tar.bz2 
+
+- prepare the release:
+  - Make sure your www is up to date: Run bin/data-get in www/
+  - Update the doap file to insert the new release info
+  - Prepare the following in a text file for copy'n'paste purposes:
+    - list of noteworthy changes / new features, check changelog or shortlog:
+        - git log 1.0.98..
+        - git shortlog 1.0.98..
+        - wrap like this:
+         <feature>added this and that</feature>
+         <feature>foodemux now supports seek in twilight mode</feature>
+    - list of API additions, two useful sources:
+        - git diff 1.0.98.. win32/common/*.def \
+            | grep "^+[^+]" | sed -e 's/[^a-z_]*/    <item>/' -e 's%$%</item>%'
+        - git log 1.0.98.. --grep=API
+        - wrap like this:
+             <item>gst_new_func()</item>
+             <item>gst_new_func_full()</item>
+    - list of recently deprecated API, same as above:
+             <item>gst_broken_func()</item>
+  - in www, run bin/new-release (module) (version) (checkoutdir) (release name)
+    - updates git
+    - allows you to update versioning in configure.ac (don't forget to bump
+      core/base requirements from prereleases to released version if needed)
+    - rebuilds
+    - updates ChangeLog
+    - adds a new releases/module/version.xml file and lets you edit
+      --> here you add/fix up the features (from ChangeLog) and check
+	  contributors
+    - allows you to update NEWS file with snippets from RELEASE
+      --> copy stuff
+    - rebuilds docs for plugins
+    - rolls release tarballs and puts them in the local www/data tree
+    - uploads docs to website
+    - commits changes to po files
+    - shows you a diff for evaluation
+
+  - build packages to test
+
+- release:
+  - 'git commit -a' in the tree
+  - tag tree. Tags should be GPG signed.
+    Example: creating a 1.0.42 tag:
+      Signed   : git tag -s -m 'Release 1.0.42' 1.0.42 (may prompt for passphrase)
+      Unsigned : git tag -a -m 'Release 1.0.42' 1.0.42
+    Check: 'git describe' should show '1.0.42' and 'git show 1.0.42' should
+      show the PGP signature attached to the tag if it was signed.
+  - bump nano number in configure.ac, commit
+  - sync source and packages to website
+    + run /bin/data-put in www
+  - change versions in www/src/htdocs/entities.gst
+  - add entry on website
+    + Edit src/htdocs/news/news.xml (in a local checkout of the www git module)
+      and add a new item at the bottom.
+  - commit additions and push changes to the server
+  - run bin/www-update in your www git module checkout. This will ssh into
+    the server and update the website based on the changes you just pushed.
+    This may require an entry for gstreamer.freedesktop.org in your
+    ~/.ssh/config (e.g. in case your local username is different from your
+    freedesktop.org username)
+  - add versions and milestones in bugzilla
+  - upload new core, -base and -good tarballs to gnome ftp
+    + e.g:
+       scp gstreamer-1.0.42.tar.xz master.gnome.org:
+       ssh master.gnome.org
+       ftpadmin install gstreamer-1.0.42.tar.xz
+
+  - Send release announcements to:
+    gstreamer-devel@lists.freedesktop.org
+    gstreamer-announce@lists.freedesktop.org
+    kde-multimedia@kde.org
+    gnome-multimedia@gnome.org
+  - Update freshmeat with new releases (get Uraeus to do it)
+
+  - push release commit(s) to git repo
+  - push new tag to git repo: git push origin tag 1.0.42
+

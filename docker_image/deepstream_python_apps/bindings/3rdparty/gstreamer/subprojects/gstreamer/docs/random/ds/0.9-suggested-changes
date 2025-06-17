@@ -1,0 +1,122 @@
+
+
+API:
+
+  - MAKE A DOCUMENT THAT LISTS ALL API CHANGES AND HOW TO DEAL WITH THEM
+
+ - replace object/structure set/get macros with actual functions.
+
+ - reorganize headers (split app headers vs plugin headers maybe)
+   while at it also make sure to only allow including of the main headers like
+   glib, so we can freely shuffle stuff around
+
+ - make GstPadLinkReturn internal (to either plugins+core or just core)
+   and return gboolean to apps.
+
+ - rewrite GstIndex (it's gross)
+
+ - gst_init() et al. need to work correctly when called multiple times
+   and from libraries, etc.
+
+ - gst_pad_get_pad_template_caps -> gst_pad_get_template_caps()
+
+ - make templates mandatory for pads.
+ 
+ - force pads to use a pad template from the element they belong to.
+
+ - s/PadTemplate/PadFactory/ to describe better what it is and be more in line
+   with the rest of the API?
+ 
+ - add ways for autopluggers to manage negotiation of their children.
+   This would allow autopluggers to no longer need helper identities.
+   (Though the main reason for identities atm is to be able to connect without
+    plugging - Company)
+
+ - read/write locks on buffers
+
+ - be able to send events to unlinked pads (bug #114442)
+
+ - caps should have a flag on fields to indicate that the field is optional
+
+ - fakesrc handoff should be changed to return a GstData * or carry a
+    GstData **, wo the user can provide own buffers and events.
+
+ - don't install gstmarshal.h
+
+ - make sure GstClockTime is used wherever it should (e.g. gstplay)
+
+ - make gst_bin_get_list virtual so subclasses can override it (e.g.
+   gst-play which contains an internal thread not inside the bin that is
+   gstplay)
+ - make gst_bin_get_by_interface search on the list provided by this get_list
+   so that you can search a GstPlay for an element implementing the interface
+   (right now gstplay has added a gst_play_get_by_interface)
+
+ - make multichannel properties on audio caps manditory
+
+ - talk to vektor about various wierdness with NTSC video (combinations of
+   24 fps pulled down to 60 and straight video, etc) and make sure our
+   video stream descriptions make sense.
+
+ - do an audit to remove GtkObject-isms from gtk-1.2
+
+caps:
+
+  (Company:)
+
+  "An idea I had once was to force registration of mimetypes and then
+  only allow caps with a registered mimetype - like it's done now with caps.
+  You could then add functions to those registrations like
+  - gchar *get_human_readable_string (caps);
+  should be kinda selfexplanatory. Would return stuff like "16bit signed
+  integer audio", "MPEG2 video" or "video format in RGB colorspace" (for
+  unfixed RGB)
+  - GstCaps *default_fixate (const GstCaps *caps);
+  A default fixation function, so we don't fixate to minimum integer
+  anymore but have the ability to fixate to 320x240 for video or 44100 for
+  audio rates
+  - gboolean validate (const GstCaps *caps);
+  check if the given caps are ok for this mimetype - debugging only function
+  I'd _really_ like to have - especially during gst_register.
+
+  But that's 0.10 material."
+
+  (Thaytan)
+  - Add rowstride as a property so that video frames don't have to have 
+    rowstride == width. For example, gdkpixbufdec would prefer to pad 
+    rowstrides to multiples of 4 bytes.
+
+negotiation:
+
+- autopluggers would be easier to write if there was a core method
+  to do what plugidentities do.
+
+- there should be a way to hook into negotiation and be able to do something if 
+  negotiation fails. Autopluggers would need that for exchanging elements when
+  they can't link.
+
+bugs with interesting info:
+ 
+ XML descriptions of plugin information:
+   http://bugzilla.gnome.org/show_bug.cgi?id=114216
+  
+
+object hierarchy:
+- a method for elements to know when downstream elements are ignoring
+  the data stream.  This would allow automatic shutoff of pipelines
+  whose processing is being dumped.
+
+- object properties:
+  - all bitrates should be bits per second, since they're specified
+    as integers
+  - use device for nodes (not location; dvdreadsrc, dvdnavsrc, cdparanoia).
+    Also figure out if we want to continue separating uri/location.
+
+- categorization of plugins:
+  - categories were intended from the start as a list of keywords, instead
+    of an implicit tree.
+  - this makes a lot more sense and probably fixes our constant discussion
+    about categorizing
+  - make this explicit by having a list of keywords instead of a fixed string
+    with slashes
+  - fix the editor/el browser to display this nicely

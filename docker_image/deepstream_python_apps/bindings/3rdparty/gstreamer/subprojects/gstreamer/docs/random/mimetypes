@@ -1,0 +1,634 @@
+MIME types in GStreamer
+
+What is a MIME type ?
+=====================
+
+A MIME type is a combination of two (short) strings (words)---the content type
+and the content subtype. Content types are broad categories used for describing
+almost all types of files: video, audio, text, and application are common
+content types. The subtype further breaks the content type down into a more
+specific type description, for example 'application/ogg', 'audio/raw',
+'video/mpeg', or 'text/plain'.
+
+So the content type and subtype make up a pair that describes the type of
+information contained in a file. In multimedia processing, MIME types are used
+to describe the type of information carried by a media stream. In GStreamer, we
+use MIME types in the same way, to identify the types of information that are
+allowed to pass between GStreamer elements. The MIME type is part of a GstCaps
+object that describes a media stream. Besides a MIME type, a GstCaps object also
+contains a name and some stream properties (GstProps, which hold combinations of
+key/value pairs).
+
+An example of a MIME type is 'video/mpeg'. A corresponding GstCaps could be
+created using code:
+
+GstCaps *caps = gst_caps_new_simple ("video/mpeg",
+				     "width",  G_TYPE_INT, 384,
+				     "height", G_TYPE_INT, 288,
+				     NULL);
+
+MIME types and their corresponding properties are of major importance in
+GStreamer for uniquely identifying media streams. Therefore, we define them
+per media type. All GStreamer plugins should keep to this definition.
+
+Official MIME media types are assigned by the IANA. Current assignments are at
+http://www.iana.org/assignments/media-types/.
+
+The problems
+============
+
+Some streams may have MIME types or GstCaps that do not fully describe the
+stream. In most cases, this is not a problem, though. For example, if a stream
+contains Ogg/Vorbis data (which is of type 'application/ogg'), we don't need to
+know the samplerate of the raw audio stream, since we can't play the encoded
+audio anyway. The samplerate is, however, important for raw audio, so a decoder
+would need to retrieve the samplerate from the Ogg/Vorbis stream headers (the
+headers are part of the bytestream) in order to pass it on in the GstCaps that
+belongs to the decoded audio (which becomes a type like 'audio/raw'). However,
+other plugins might want to know such properties, even for compressed streams.
+One such example is an AVI muxer, which does want to know the samplerate of an
+audio stream, even when it is compressed.
+
+Another problem is that many media types can be defined in multiple ways. For
+example, MJPEG video can be defined as 'video/jpeg', 'video/mjpeg',
+'image/jpeg', 'video/x-msvideo' with a compression of (fourcc) MJPG, etc.
+None of these is really official, since there isn't an official mimetype
+for encoded MJPEG video.
+
+The main focus of this document is to propose a standardized set of MIME types
+and properties that will be used by the GStreamer plugins.
+
+Different types of streams
+==========================
+
+There are several types of media streams. The most important distinction will be
+container formats, audio codecs and video codecs. Container formats are
+bytestreams that contain one or more substreams inside it, and don't provide any
+direct media data itself. Examples are Quicktime, AVI or MPEG System Stream.
+They mostly contain of a set of headers that define the media streams that are
+packed inside the container, along with the media data itself.
+
+Video codecs and audio codecs describe encoded audio or video data. Examples are
+MPEG-1 video, DivX video, MPEG-1 layer 3 (MP3) audio or Ogg/Vorbis audio.
+Actually, Ogg is a container format too (for Vorbis audio), but these are
+usually used in conjunction with each other.
+
+Finally, there are the somewhat obvious (but not commonly encountered as files)
+raw data formats.
+
+Container formats
+-----------------
+
+1 - AVI (Microsoft RIFF/AVI)
+    MIME type: video/x-msvideo
+    Properties:
+    Parser: avidemux, ffdemux_avi
+    Formatter: avimux
+
+2 - Quicktime (Apple)
+    MIME type: video/quicktime
+    Properties:
+    Parser: qtdemux
+    Formatter:
+
+3 - MPEG (MPEG LA)
+    MIME type: video/mpeg
+    Properties: 'systemstream' = TRUE (BOOLEAN)
+    Parser: mpegdemux, ffdemux_mpeg (PS), ffdemux_mpegts (TS), dvddemux
+    Formatter: mplex
+
+4 - ASF (Microsoft)
+    MIME type: video/x-ms-asf
+    Properties:
+    Parser: asfdemux, ffdemux_asf
+    Formatter: asfmux
+
+5 - WAV (Microsoft RIFF/WAV)
+    MIME type: audio/x-wav
+    Properties:
+    Parser: wavparse, ffdemux_wav
+    Formatter: wavenc
+
+6 - RealMedia (Real)
+    MIME type: application/vnd.rn-realmedia
+    Properties: 'systemstream' = TRUE (BOOLEAN)
+    Parser: rmdemux, ffdemux_rm
+    Formatter:
+
+7 - DV (Digital Video)
+    MIME type: video/x-dv
+    Properties: 'systemstream' = TRUE (BOOLEAN)
+    Parser: gst1394, ffdemux_dv
+    Formatter:
+
+8 - Ogg (Xiph)
+    MIME type: application/ogg
+    Properties:
+    Parser: oggdemux
+    Formatter: oggmux
+
+9 - Matroska
+    MIME type: video/x-mkv
+    Properties:
+    Parser: matroskademux, ffdemux_matroska
+    Formatter: matroskamux
+
+10 - Shockwave (Macromedia)
+     MIME type: application/x-shockwave-flash
+     Properties:
+     Parser: swfdec, ffdemux_swf
+     Formatter:
+
+11 - AU audio (Sun)
+     MIME type: audio/x-au
+     Properties:
+     Parser: auparse, ffdemux_au
+     Formatter:
+
+12 - Mod audio
+     MIME type: audio/x-mod
+     Properties:
+     Parser: modplug, mikmod
+     Formatter:
+
+13 - FLX video
+     MIME type: video/x-fli
+     Properties:
+     Parser: flxdec
+     Formatter:
+
+14 - Monkeyaudio
+     MIME type: application/x-ape
+     Properties:
+     Parser:
+     Formatter:
+
+15 - AIFF audio
+     MIME type: audio/x-aiff
+     Properties:
+     Parser:
+     Formatter:
+
+16 - SID audio
+     MIME type: audio/x-sid
+     Properties:
+     Parser: siddec
+     Formatter:
+
+Please note that we try to keep these MIME types as similar as possible to the
+MIME types used as standards in Gnome (Gnome-VFS/Nautilus) and KDE
+(Konqueror). Both will (in future) stick to a shared-mime-info database that
+is hosted on freedesktop.org, and bases itself on IANA.
+
+Also, there is a very thin line between audio codecs and audio containers
+(take mp3 vs. sid, etc.). This is just a per-case thing right now and needs to
+be documented further.
+
+Video codecs
+------------
+
+For convenience, the fourcc codes used in the AVI container format will be
+listed along with the MIME type and optional properties.
+
+Optional properties for all video formats are the following:
+
+width = 1 - MAXINT (INT)
+height = 1 - MAXINT (INT)
+pixel_width = 1 - MAXINT (INT, with pixel_height forms aspect ratio)
+pixel_height = 1 - MAXINT (INT, with pixel_width forms aspect ratio)
+framerate = 0 - MAXFLOAT (FLOAT)
+
+1 - MPEG-1, -2 and -4 video (ISO/LA MPEG)
+    MIME type: video/mpeg
+    Properties: systemstream = FALSE (BOOLEAN)
+                mpegversion = 1/2/4 (INT)
+    Known fourccs: MPEG, MPGI
+    Encoder: mpeg1enc, mpeg2enc
+    Decoder: mpeg1dec, mpeg2dec, mpeg2subt
+
+2 - DivX 3.x, 4.x and 5.x video (divx.com)
+    MIME type: video/x-divx
+    Properties:
+    Optional properties: divxversion = 3/4/5 (INT)
+    Known fourccs: DIV3, DIV4, DIV5, DIVX, DX50, DIVX, divx
+    Encoder: divxenc
+    Decoder: divxdec, ffdec_mpeg4
+
+3 - Microsoft MPEG 4.1, 4.2 and 4.3
+    MIME type: video/x-msmpeg
+    Properties:
+    Optional properties: msmpegversion = 41/42/43 (INT)
+    Known fourccs: MPG4, MP42, MP43
+    Encoder: ffenc_msmpeg4, ffenc_msmpeg4v1, ffenc_msmpeg4v2
+    Decoder: ffdec_msmpeg4, ffdec_msmpeg4v1, ffdec_msmpeg4v2
+
+4 - Motion-JPEG (official and extended)
+    MIME type: video/x-jpeg
+    Properties:
+    Known fourccs: MJPG (YUY2 MJPEG), JPEG (any), PIXL (Pinnacle/Miro), VIXL
+    Encoder: jpegenc
+    Decoder: jpegdec, ffdec_mjpeg
+
+5 - Sorensen (Quicktime - SVQ1/SVQ3)
+    MIME types: video/x-svq
+    Properties: svqversion = 1/3 (INT)
+    Encoder:
+    Decoder: ffdec_svq1, ffdec_svq3
+
+6 - H263 and related codecs
+    MIME type: video/x-h263
+    Properties:
+    Known fourccs: H263/h263, i263, L263, M263/m263, s263, x263, VDOW, VIVO
+    Encoder: ffenc_h263, ffenc_h263p
+    Decoder: ffdec_h263, ffdec_h263i
+
+7 - RealVideo (Real)
+    MIME type: video/x-pn-realvideo
+    Properties: rmversion = "1"/"2"/"3"/"4" (INT)
+    Known fourccs: RV10, RV20, RV30, RV40
+    Encoder: ffenc_rv10
+    Decoder: ffdec_rv10, ffdec_rv20
+
+8 - Digital Video (DV)
+    MIME type: video/x-dv
+    Properties: systemstream = FALSE (BOOLEAN)
+    Known fourccs: DVSD/dvsd (SDTV), dvhd (HDTV), dvsl (SDTV LongPlay)
+    Encoder: ffenc_dvvideo
+    Decoder: dvdec, ffdec_dvvideo
+
+9 - Windows Media Video 1, 2 and 3 (WMV)
+    MIME type: video/x-wmv
+    Properties: wmvversion = 1/2/3 (INT)
+    Encoder: ffenc_wmv1, ffenc_wmv2, none
+    Decoder: ffdec_wmv1, ffdec_wmv2, none
+
+10 - XviD (xvid.org)
+     MIME type: video/x-xvid
+     Properties:
+     Known fourccs: xvid, XVID
+     Encoder: xvidenc
+     Decoder: xviddec, ffdec_mpeg4
+
+11 - 3IVX (3ivx.org)
+     MIME type: video/x-3ivx
+     Properties:
+     Known fourccs: 3IV0, 3IV1, 3IV2
+     Encoder:
+     Decoder:
+
+12 - Ogg/Tarkin (Xiph)
+     MIME type: video/x-tarkin
+     Properties:
+     Encoder:
+     Decoder:
+
+13 - VP3
+     MIME type: video/x-vp3
+     Properties:
+     Encoder:
+     Decoder: ffdec_vp3
+
+14 - Ogg/Theora (Xiph, VP3-like)
+     MIME type: video/x-theora
+     Properties:
+     Encoder: theoraenc
+     Decoder: theoradec, ffdec_theora
+     This is the raw stream that comes out of an ogg file.
+
+15 - Huffyuv
+     MIME type: video/x-huffyuv
+     Properties:
+     Known fourccs: HFYU
+     Encoder:
+     Decoder: ffdec_hfyu
+
+16 - FF Video 1 (FFMPEG)
+     MIME type: video/x-ffv
+     Properties: ffvversion = 1 (INT)
+     Encoder:
+     Decoder: ffdec_ffv1
+
+17 - H264
+     MIME type: video/x-h264
+     Properties:
+     Known fourccs: VSSH
+     Encoder:
+     Decoder: ffdec_h264
+
+18 - Indeo 3 (Intel)
+     MIME type: video/x-indeo
+     Properties: indeoversion = 3 (INT)
+     Encoder:
+     Decoder: ffdec_indeo3
+
+19 - Portable Network Graphics (PNG)
+     MIME type: video/x-png
+     Properties:
+     Encoder: pngenc
+     Decoder: pngdec, gdkpixbufdec
+
+20 - Cinepak
+     MIME type: video/x-cinepak
+     Properties:
+     Encoder:
+     Decoder: ffdec_cinepak
+
+TODO: subsampling information for YUV?
+
+TODO: colorspace identifications for MJPEG? How?
+
+TODO: how to distinguish MJPEG-A/B (Quicktime) and lossless JPEG?
+
+TODO: divx4/divx5/xvid/3ivx/mpeg-4 - how to make them overlap? (all
+      ISO MPEG-4 compatible)
+
+3c) Audio Codecs
+----------------
+For convenience, the two-byte hexcodes (as used for identification in AVI files)
+are also given.
+
+Properties for all audio formats include the following:
+
+rate = 1 - MAXINT (INT, sampling rate)
+channels = 1 - MAXINT (INT, number of audio channels)
+
+1 - Alaw Raw Audio
+    MIME type: audio/x-alaw
+    Properties:
+    Encoder: alawenc
+    Decoder: alawdec
+
+2 - Mulaw Raw Audio
+    MIME type: audio/x-mulaw
+    Properties:
+    Encoder: mulawenc
+    Decoder: mulawdec
+
+3 - MPEG-1 layer 1/2/3 audio
+    MIME type: audio/mpeg
+    Properties: mpegversion = 1 (INT)
+                layer = 1/2/3 (INT)
+    Encoder: lame, ffdec_mp3
+    Decoder: mad
+
+4 - Ogg/Vorbis
+    MIME type: audio/x-vorbis
+    Encoder: rawvorbisenc (vorbisenc does rawvorbisenc+oggmux)
+    Decoder: vorbisdec
+
+5 - Windows Media Audio 1, 2 and 3 (WMA)
+    MIME type: audio/x-wma
+    Properties: wmaversion = 1/2/3 (INT)
+    Encoder:
+    Decoder: ffdec_wmav1, ffdec_wmav2, none
+
+6 - AC3
+    MIME type: audio/x-ac3
+    Properties:
+    Encoder: ffenc_ac3
+    Decoder: a52dec, ac3parse
+
+7 - FLAC (Free Lossless Audio Codec)
+    MIME type: audio/x-flac
+    Properties:
+    Encoder: flacenc
+    Decoder: flacdec, ffdec_flac
+
+8 - MACE 3/6 (Quicktime audio)
+    MIME type: audio/x-mace
+    Properties: maceversion = 3/6 (INT)
+    Encoder:
+    Decoder: ffdec_mace3, ffdec_mace6
+
+9 - MPEG-4 AAC
+    MIME type: audio/mpeg
+    Properties: mpegversion = 4 (INT)
+    Encoder: faac
+    Decoder: faad
+
+10 - (IMA) ADPCM (Quicktime/WAV/Microsoft/4XM)
+     MIME type: audio/x-adpcm
+     Properties: layout = "quicktime"/"wav"/"microsoft"/"4xm"/"g721"/"g722"/"g723_3"/"g723_5" (STRING)
+     Encoder: ffenc_adpcm_ima_[qt/wav/dk3/dk4/ws/smjpeg], ffenc_adpcm_[ms/4xm/xa/adx/ea]
+     Decoder: ffdec_adpcm_ima_[qt/wav/dk3/dk4/ws/smjpeg], ffdec_adpcm_[ms/4xm/xa/adx/ea]
+
+     Note: The difference between each of these four PCM formats is the number
+           of samples packed together per channel. For WAV, for example, each
+           sample is 4 bit, and 8 samples are packed together per channel in the
+           bytestream. For the others, refer to technical documentation. We
+           probably want to distinguish these differently, but I don't know how,
+           yet.
+
+11 - RealAudio (Real)
+     MIME type: audio/x-pn-realaudio
+     Properties: raversion ="1"/"2" (INT)
+     Known fourccs: 14_4, 28_8
+     Encoder:
+     Decoder: ffdec_real_144 / ffdec_real_288
+
+12 - DV Audio
+     MIME type: audio/x-dv
+     Properties:
+     Encoder:
+     Decoder:
+
+13 - GSM Audio
+     MIME type: audio/x-gsm
+     Properties:
+     Encoder: gsmenc, rtpgsmenc
+     Decoder: gsmdec, rtpgsmparse
+
+14 - Speex audio
+     MIME type: audio/x-speex
+     Properties:
+     Encoder: speexenc
+     Decoder: speexdec
+
+15 - QDM2
+     MIME type: audio/x-qdm2
+     Properties:
+
+16 - Sony ATRAC4 (detected inside realmedia and wave/avi streams, nothing to decode it yet)
+     MIME type: audio/x-vnd.sony.atrac3
+     Properties:
+     Encoder:
+     Decoder:
+
+17 - Ensoniq PARIS audio
+     MIME type: audio/x-paris
+     Properties:
+     Encoder:
+     Decoder:
+
+18 - Amiga IFF / SVX8 / SV16 audio
+     MIME type: audio/x-svx
+     Properties:
+     Encoder:
+     Decoder:
+
+19 - Sphere NIST audio
+     MIME type: audio/x-nist
+     Properties:
+     Encoder:
+     Decoder:
+
+20 - Sound Blaster VOC audio
+     MIME type: audio/x-voc
+     Properties:
+     Encoder:
+     Decoder:
+
+21 - Berkeley/IRCAM/CARL audio
+     MIME type: audio/x-ircam
+     Properties:
+     Encoder:
+     Decoder:
+
+22 - Sonic Foundry's 64 bit RIFF/WAV
+     MIME type: audio/x-w64
+     Properties:
+     Encoder:
+     Decoder:
+
+TODO: adpcm/dv needs confirmation from someone with knowledge...
+
+Raw formats
+-----------
+
+Raw formats contain unencoded, raw media information. These are rather rare from
+an end user point of view since raw media files have historically been
+prohibitively large ... hence the multitude of encoding formats.
+
+Raw video formats require the following common properties, in addition to
+format-specific properties:
+
+width = 1 - MAXINT (INT)
+height = 1 - MAXINT (INT)
+
+1 - Raw Video (YUV/YCbCr)
+    MIME type: video/x-raw-yuv
+    Properties: 'format' = 'XXXX' (fourcc)
+    Known fourccs: YUY2, I420, Y41P, YVYU, UYVY, etc.
+    Properties:
+
+    Some raw video formats have implicit alignment rules. We should discuss this
+    more. Also, some formats have multiple fourccs (e.g. IYUV/I420 or
+    YUY2/YUYV). For each of these, we only use one (e.g. I420 and YUY2).
+
+    Currently recognized formats:
+
+    YUY2: packed, Y-U-Y-V order, U/V hor 2x subsampled (YUV-4:2:2, 16 bpp)
+    YVYU: packed, Y-V-Y-U order, U/V hor 2x subsampled (YUV-4:2:2, 16 bpp)
+    UYVY: packed, U-Y-V-Y order, U/V hor 2x subsampled (YUV-4:2:2, 16 bpp)
+    Y41P: packed, UYVYUYVYYYYY order, U/V hor 4x subsampled (YUV-4:1:1, 12 bpp)
+    IUY2: packed, U-Y-V order, not subsampled (YUV-1:1:1, 24 bpp)
+
+    Y42B: planar, Y-U-V order, U/V hor 2x subsampled (YUV-4:2:2, 16 bpp)
+    YV12: planar, Y-V-U order, U/V hor+ver 2x subsampled (YUV-4:2:0, 12 bpp)
+    I420: planar, Y-U-V order, U/V hor+ver 2x subsampled (YUV-4:2:0, 12 bpp)
+    Y41B: planar, Y-U-V order, U/V hor 4x subsampled (YUV-4:1:1, 12bpp)
+    YUV9: planar, Y-U-V order, U/V hor+ver 4x subsampled (YUV-4:1:0, 9bpp)
+    YVU9: planar, Y-V-U order, U/V hor+ver 4x subsampled (YUV-4:1:0, 9bpp)
+
+    Y800: one-plane (Y-only, YUV-4:0:0, 8bpp)
+
+    See http://www.fourcc.org/ for more information.
+
+    Note: YUV-4:4:4 (both planar and packed, in multiple orders) are missing.
+
+2 - Raw video (RGB)
+    MIME type: video/x-raw-rgb
+    Properties: endianness = 1234/4321 (INT) <- use G_LITTLE_ENDIAN/G_BIG_ENDIAN
+                depth = 15/16/24 (INT, color depth)
+                bpp = 16/24/32 (INT, bits used to store each pixel)
+                red_mask = bitmask (0x..) (INT)
+                green_mask = bitmask (0x..) (INT)
+                blue_mask = bitmask (0x..) (INT)
+
+    24 and 32 bit RGB should always be specified as big endian, since any little
+    endian format can be transformed into big endian by rearranging the color
+    masks. 15 and 16 bit formats should generally have the same byte order as
+    the CPU.
+
+    Color masks are interpreted by loading 'bpp' number of bits using the given
+    'endianness', and masking and shifting by each color mask. Loading a 24-bit
+    value cannot be done directly, but one can perform an equivalent operation.
+
+    Examples:
+               msb .. lsb
+      - memory: RRRRRRRR GGGGGGGG BBBBBBBB RRRRRRRR GGGGGGGG ...
+                bpp        = 24
+                depth      = 24
+                endianness = 4321 (G_BIG_ENDIAN)
+                red_mask   = 0xff0000
+                green_mask = 0x00ff00
+                blue_mask  = 0x0000ff
+
+      - memory: xRRRRRGG GGGBBBBB xRRRRRGG GGGBBBBB xRRRRRGG ...
+                bpp        = 16
+                depth      = 15
+                endianness = 4321 (G_BIG_ENDIAN)
+                red_mask   = 0x7c00
+                green_mask = 0x03e0
+                blue_mask  = 0x003f
+
+      - memory: GGGBBBBB xRRRRRGG GGGBBBBB xRRRRRGG GGGBBBBB ...
+                bpp        = 16
+                depth      = 15
+                endianness = 1234 (G_LITTLE_ENDIAN)
+                red_mask   = 0x7c00
+                green_mask = 0x03e0
+                blue_mask  = 0x003f
+
+The raw audio formats require the following common properties, in addition to
+format-specific properties:
+
+rate = 1 - MAXINT (INT, sampling rate)
+channels = 1 - MAXINT (INT, number of audio channels)
+endianness = 1234/4321 (INT) <- use G_LITTLE_ENDIAN/G_BIG_ENDIAN/G_BYTE_ORDER
+
+3 - Raw audio (integer format)
+    MIME type: audio/x-raw-int
+    properties: width = 8/16/24/32 (INT, bits used to store each sample)
+                depth = 8 - 32 (INT, bits actually used per sample)
+                signed = TRUE/FALSE (BOOLEAN)
+
+4 - Raw audio (floating point format)
+    MIME type: audio/x-raw-float
+    Properties: width = 32/64 (INT)
+                buffer-frames: number of audio frames per buffer, 0=undefined
+
+Plugin Guidelines
+=================
+
+So, a short bit on what plugins should do. Above, I've stated that audio
+properties like 'channels' and 'rate' or video properties like 'width' and
+'height' are all optional. This doesn't mean you can just simply omit them and
+everything will still work!
+
+An example is the best way to explain all this. AVI needs the width, height,
+rate and channels for the AVI header. So if these properties are missing, the
+avimux element cannot properly create the AVI header. On the other hand, MPEG
+doesn't have such properties in its header, so the mpegdemux element would need
+to parse the separate streams in order to find them out. We don't want that
+either, because a plugin only does one job. So normally, mpegdemux and avimux
+wouldn't allow transcoding. To solve this problem, there are stream parser
+elements (such as mpegaudioparse, ac3parse and mpeg1videoparse).
+
+Conclusions to draw from here: a plugin gives info it can provide as seen from
+its own task/job. If it can't, other elements might still need it and a stream
+parser needs to be written if it doesn't already exist.
+
+On properties that can be described by one of these (properties such as 'width',
+'height', 'fps', etc.): they're forbidden and should be handled using filtered
+caps.
+
+Status of this document
+=======================
+
+Not all plugins strictly follow these guidelines yet, but these are the official
+types. Plugins not following these specs either use extensions that should be
+documented, or are buggy (and should be fixed).
+
+Blame Ronald Bultje <rbultje@ronald.bitfreak.net> aka BBB for any mistakes in
+this document.

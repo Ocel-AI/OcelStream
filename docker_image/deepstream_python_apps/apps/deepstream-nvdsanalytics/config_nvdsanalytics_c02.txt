@@ -1,0 +1,93 @@
+################################################################################
+# SPDX-FileCopyrightText: Copyright (c) 2020-2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+################################################################################
+
+# The values in the config file are overridden by values set through GObject
+# properties.
+
+[property]
+#Width height used for configuration to which below configs are configured
+enable=1
+config-width=1920
+config-height=1080
+
+## Per stream configuration
+[roi-filtering-stream-0]
+#enable or disable following feature
+enable=1
+#ROI to filter select objects, and remove from meta data
+#roi-RF=769;798;1046;772;1204;884;800;951
+roi-C02=673;355;1198;365;1293;708;498;731;
+#roi-RF2=769;798;1046;772;1204;884;800;951
+#remove objects in the ROI
+inverse-roi=0
+class-id=-1
+
+
+
+## Per stream configuration
+[roi-filtering-stream-2]
+#enable or disable following feature
+enable=1
+#ROI to filter select objects, and remove from meta data
+roi-RF4=769;798;1046;772;1204;884;800;951
+#remove objects in the ROI
+inverse-roi=1
+class-id=0
+
+
+
+[overcrowding-stream-1]
+enable=0
+roi-OC=673;355;1198;365;1293;708;498;731;
+#time threshold after which OC event will be triggered
+time-threshold=2000
+#no of objects that will trigger OC
+object-threshold=2
+class-id=-1
+
+[line-crossing-stream-1]
+enable=1
+#Label;direction;lc
+#line-crossing-Entry=772;799;819;946;623;952;1061;926
+line-crossing-Entry=936;464;954;183;646;419;1231;420
+#line-crossing-Exit=0;0;0;0;0;0;0;0;0
+class-id=0
+
+[direction-detection-stream-0]
+enable=1
+#Label;direction;
+#direction-TowardsExit=200;500;200;1000
+#direction-South=400;500;400;1050
+direction-South=250;206;118;306;
+direction-North=379;313;455;218;
+#This will overwrite prev North config.
+#direction-East=600;500;600;1050
+class-id=0
+
+
+[direction-detection-stream-1]
+enable=1
+#Label;direction;
+#direction-TowardsExit=200;500;200;1000
+#direction-South=400;500;400;1050
+direction-South=250;206;118;306;
+direction-North=379;313;455;218;
+#This will overwrite prev North config.
+#direction-East=600;500;600;1050
+class-id=0
+
+

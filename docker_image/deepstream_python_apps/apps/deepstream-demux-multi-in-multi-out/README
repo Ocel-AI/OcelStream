@@ -1,0 +1,63 @@
+################################################################################
+# SPDX-FileCopyrightText: Copyright (c) 2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+################################################################################
+
+Prerequisites:
+- DeepStreamSDK 7.1
+- Python 3.10
+- Gst-python
+
+To run:
+  $ python3 deepstream_demux_multi_in_multi_out.py -i <uri1> [uri2] ... [uriN]
+e.g.
+  $ python3 deepstream_demux_multi_in_multi_out.py -i file:///home/ubuntu/video1.mp4 file:///home/ubuntu/video2.mp4
+  $ python3 deepstream_demux_multi_in_multi_out.py -i rtsp://127.0.0.1/video1 rtsp://127.0.0.1/video2
+
+This document describes the sample deepstream_demux_multi_in_multi_out application.
+
+This sample builds on top of the deepstream-test3 sample to demonstrate how to:
+
+* Uses multiple sources in the pipeline.
+* The pipeline uses `nvstreamdemux` to split batches and output separate buffer/streams. 
+* `nvstreamdemux` helps when separate output is required for each input stream.
+
+Refer to the deepstream-test1 sample documentation for an example of simple
+single-stream inference, bounding-box overlay, and rendering.
+
+Nvstreamdemux reference - https://docs.nvidia.com/metropolis/deepstream/dev-guide/text/DS_plugin_gst-nvstreamdemux.html
+
+This sample accepts one or more H.264/H.265 video streams as input. It creates
+a source bin for each input and connects the bins to an instance of the
+"nvstreammux" element, which forms the batch of frames. The batch of
+frames is fed to "nvinfer" for batched inferencing. "nvstreamdemux" demuxes batched frames into individual buffers. 
+It creates a separate Gst Buffer for each frame in the batch. For each input separate branch is created with the following elements in series
+`nvstreamdemux -> queue -> nvvidconv -> nvosd -> nveglglessink`
+So for two inputs, 2 separate output windows are created, likewise for N input N outputs are created.
+
+The "width" and "height" properties must be set on the stream-muxer to set the
+output resolution. If the input frame resolution is different from
+stream-muxer's "width" and "height", the input frame will be scaled to muxer's
+output resolution.
+
+The stream-muxer waits for a user-defined timeout before forming the batch. The
+timeout is set using the "batched-push-timeout" property. If the complete batch
+is formed before the timeout is reached, the batch is pushed to the downstream
+element. If the timeout is reached before the complete batch can be formed
+(which can happen in case of rtsp sources), the batch is formed from the
+available input buffers and pushed. Ideally, the timeout of the stream-muxer
+should be set based on the framerate of the fastest source. It can also be set
+to -1 to make the stream-muxer wait infinitely.
+

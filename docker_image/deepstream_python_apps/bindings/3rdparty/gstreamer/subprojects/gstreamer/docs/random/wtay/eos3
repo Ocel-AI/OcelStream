@@ -1,0 +1,256 @@
+OUTDATED
+--------
+
+
+case 1) 
+
+(--------------------------------------------------)
+! bin                                              !
+! (--------)         (--------)         (--------) !
+! ! fakesrc!         !identity!         !fakesink! !
+! !       src ----- sink     src ---- sink       ! !
+! (--------)         (--------)         (--------) !
+(--------------------------------------------------)
+
+.scheduling.
+  
+  case1 has just one scheduled entity (chain) no problem here.
+
+.eos.
+
+  fakesrc detects the end of stream. It just returned the last buffer.
+  The next _pull will cause the srcpad to trigger gst_pad_set_eos ().
+  After that it will return a NULL buffer.
+
+  gst_pad_set_eos() will notify the parent about the plugins attempt to
+  signal eos. the parent disables scheduling for the chain containing
+  fakesrc.
+  
+  no more chains are being scheduled so the bin fires EOS.
+
+
+case 2) 
+
+
+(-----------------------------------------------------------------------)
+! bin                                                                   !
+!                                                     (---------------) !
+!                                                     !thread         ! !
+! (--------)         (--------)         (--------)    !     (--------)! !
+! ! fakesrc!         !identity!         !  queue !    !     !fakesink!! !
+! !       src ----- sink     src ---- sink       src ---- sink       !! !
+! (--------)         (--------)         (--------)    !     (--------)! !
+!                                                     (---------------) !
+(-----------------------------------------------------------------------)
+
+.scheduling.
+
+  case2 has two scheduled entities: fsr-i-q, q-fsk.
+  The first one is scheduled by the bin, the second one by the thread.
+  
+.eos.
+
+  fakesrc detects the end of stream. It just returned the last buffer.
+  The next _pull will cause the srcpad to trigger gst_pad_set_eos ().
+  After that it will return a NULL buffer.
+
+  gst_pad_set_eos() will notify the parent about the plugins attempt to
+  signal eos. the parent will take chain1 out if its scheduled chains.
+
+  the bin does not fire EOS yet because the thread has not yet signaled 
+  EOS.
+
+  after the queue has sent out the last buffer, its calls eos on its
+  src pad. the chain with the queue is removed from the threads scheduled
+  chains. there are no more chains to schedule, the thread fires EOS.
+
+  The bin now has no more scheduled chains and no more pending subbins,
+  it fires EOS.
+
+
+case 3) 
+
+(-----------------------------------------------------------------------)
+! bin                                                                   !
+!                                                     (---------------) !
+!                                                     !thread         ! !
+! (--------)         (--------)         (--------)    !     (--------)! !
+! ! fakesrc!         !  tee   !         ! queue1 !    !     !fakesink!! !
+! !       src ----- sink     src ---- sink       src ---- sink       !! !
+! (--------)         !        !         (--------)    !     (--------)! !
+!                    !        !                       (---------------) !
+!                    !        !                                         !
+!                    !        !                       (---------------) !
+!                    !        !                       !thread         ! !
+!                    !        !         (--------)    !     (--------)! !
+!                    !        !         ! queue2 !    !     !fakesink!! !
+!                    !       src ---- sink       src ---- sink       !! !
+!                    !        !         (--------)    !     (--------)! !
+!                    (--------)                       (---------------) !
+(-----------------------------------------------------------------------)
+
+.scheduling.
+
+  case3 has tree scheduled entities: fsr-t(-q1,-q2), q1-fsk. q2-fsk
+  the first one is managed by the bin, the second two are managed by the
+  threads.
+  
+.eos.
+
+  fakesrc detects the end of stream. It just returned the last buffer.
+  The next _pull will cause the srcpad to trigger gst_pad_set_eos ().
+  After that it will return a NULL buffer.
+
+  chain1 is taken out of the scheduling algorithm of the bin.
+
+  after a while, the threads finish their scheduling and fire EOS too.
+
+  The bin now has no more scheduled chains and no more pending subbins,
+  it fires EOS.
+  
+  
+case 4) 
+
+(-----------------------------------------------------------------------)
+! bin                                                                   !
+!                                                     (---------------) !
+!                                                     !thread         ! !
+! (--------)       (----------)         (--------)    !     (--------)! !
+! ! fakesrc!       !mpeg1parse!         ! queue1 !    !     !fakesink!! !
+! !       src -- sink        src ---- sink       src ---- sink       !! !
+! (--------)       !          !         (--------)    !     (--------)! !
+!                  !          !                       (---------------) !
+!                  !          !                                         !
+!                  !          !                       (---------------) !
+!                  !          !                       !thread         ! !
+!                  !          !         (--------)    !     (--------)! !
+!                  !          !         ! queue2 !    !     !fakesink!! !
+!                  !         src ---- sink       src ---- sink       !! !
+!                  !          !         (--------)    !     (--------)! !
+!                  (----------)                       (---------------) !
+(-----------------------------------------------------------------------)
+
+  this case differs from case3 in that one of the queues can be empty
+  while the other isn't. we assume queue1 is empty while queue2 isn't yet.
+
+.scheduling.
+
+  case3 has tree scheduled entities: fsr-t(-q1,-q2), q1-fsk. q2-fsk
+  the first one is managed by the bin, the second two are managed by the
+  threads.
+  
+.eos.
+
+  fakesrc detects the end of stream. It just returned the last buffer.
+  The next _pull will cause the srcpad to trigger gst_pad_set_eos ().
+  After that it will return a NULL buffer.
+
+  chain1 is taken out of the scheduling algorithm of the bin.
+
+  after a while, the threads finish their scheduling and fire EOS too.
+  chain2 (with  queue1) is taken out of the scheduling first because it
+  is empty.
+
+  chain3 (with queue2) finally removes its last scheduled chain and
+  fires EOS.
+
+  The bin now has no more scheduled chains and no more pending subbins,
+  it fires EOS.
+  
+  
+case 5) 
+
+(-----------------------------------------------------------------------)
+! bin                                                                   !
+!                                                     (---------------) !
+!                                                     !audiosink      ! !
+! (--------)       (----------)         (--------)    !               ! !
+! !disksrc1!       ! effect   !         ! mixer  !    !               ! !
+! !       src -- sink        src ---- sink     src -- sink            ! !
+! (--------)       (----------)         !        !    !               ! !
+!                                       !        !    (---------------) !
+! (--------)       (----------)         !        !                      !
+! !disksrc2!       ! effect   !         !        !                      !
+! !       src -- sink        src ---- sink       !                      !
+! (--------)       (----------)         (--------)                      !
+(-----------------------------------------------------------------------)
+
+  This is a simple audio mixer (mp3audio mixer).
+  We assume disksrc1 is going to be in EOS while disksrc2 is still in !EOS
+
+
+.scheduling.
+
+  two chains are detected: disksrc1-effect-mixer-audiosink, 
+  disksrc2-effect-mixer-audiosink
+
+.eos.
+
+  disksrc1 has passed the last buffer in the _get function. with its next 
+  call to _get, it will return a NULL buffer and set the src pad to EOS.
+
+  the EOS call travels up till the mixer element because it has overridden
+  the handler. The first chain is disabled from the scheduler.
+
+  finally disksrc2 run into EOS, same procedure as with disksrc1, except
+  now the mixer also sets EOS to its src pad, chain2 becomes inactive too
+  and the bin fires EOS because there are no more chains to schedule.
+  
+  somebody sets the location of disksrc1 to a new mp3 file, the srcpad 
+  is set to !EOS, chain1 is scheduled again, mixer is activated again too
+  and audio is playing again...
+
+
+case 6) 
+
+(-------------------------------------------------------------------------------------)
+! bin                                                                                 !
+!                                                                   (---------------) !
+! (---------------------------------------------)                   !audiosink      ! !
+! ! thread1                                     !                   !               ! !
+! ! (--------)       (----------)      (-----)  !   (--------)      !               ! !
+! ! !disksrc1!       ! effect   !      !queue!  !   ! mixer  !      !               ! !
+! ! !       src -- sink        src -- sink  src -- sink     src -- sink             ! !
+! ! (--------)       (----------)      (-----)  !   !        !      !               ! !
+! (---------------------------------------------)   !        !      !               ! !
+!                                                   !        !      (---------------) !
+! (---------------------------------------------)   !        !                        !
+! ! thread2                                     !   !        !                        !
+! ! (--------)       (----------)      (-----)  !   !        !                        !
+! ! !disksrc2!       ! effect   !      !queue!  !   !        !                        !
+! ! !       src -- sink        src -- sink  src -- sink      !                        !
+! ! (--------)       (----------)      (-----)  !   (--------)                        !
+! (---------------------------------------------)                                     !
+(-------------------------------------------------------------------------------------)
+
+  This is a simple audio mixer (mp3audio mixer).
+  We assume disksrc1 is going to be in EOS while disksrc2 is still in !EOS
+
+.scheduling.
+
+  Scheduling is a bit tricky here: we have two threads with each one chain ds1-e-q and
+  ds2-e-q. the mixer element is loop based and forms a third chain, mixer-audiosink
+
+.eos.
+
+  disksrc1 has passed the last buffer in the _get function. with its next 
+  call to _get, it will return a NULL buffer and set the src pad to EOS.
+
+  the EOS call travels up till the queue element because it has overridden
+  the handler. The first chain is disabled from the scheduler. thread1 fires EOS
+  because it does not have any chains to schedule.
+
+  the mixer element pulls buffers from queue1 until queue1 is empty. At that time,
+  queue1 sets the pad to EOS, mixer now knows that it does not have to request
+  another buffer from that pad again.
+
+  disksrc2 finally sets its pad to EOS, rendering chain2 unscheduled which makes
+  the thread2 fire an EOS.
+
+  the mixer element pulls buffers from queue2 until queue2 is empty. At that time,
+  queue2 sets the pad to EOS, mixer now knows that it does not have to request
+  another buffer from that pad again. all pads for the mixer are in EOS now so
+  it sets the src pad to EOS. the last chain now also becomes unscheduled and
+  the bin fires EOS.
+
+

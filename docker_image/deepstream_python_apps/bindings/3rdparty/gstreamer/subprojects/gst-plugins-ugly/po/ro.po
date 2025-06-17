@@ -1,0 +1,75 @@
+# Romanian translation for gst-plugins-ugly
+# This file is distributed under the same license as the gst-plugins-ugly package.
+#
+# Lucian Adrian Grijincu <lucian.grijincu@gmail.com>, 2010.
+# Florentina Mușat <florentina.musat.28@gmail.com>, 2020.
+# Actualizare a mesajelor, de la fișierul „gst-plugins-ugly-1.19.2.pot”.
+# Eliminare a mesajelor ce-au dispărut în ultima versiune.
+# Actualizări realizate de Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 15.01.2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gst-plugins-ugly 1.19.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-23 01:34+0100\n"
+"PO-Revision-Date: 2022-01-17 12:10+0100\n"
+"Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>\n"
+"Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);;\n"
+"X-Generator: Poedit 2.3.1\n"
+
+msgid "Could not read from CD."
+msgstr "Nu s-a putut citi de pe CD."
+
+msgid "Could not open CD device for reading."
+msgstr "Nu s-a putut deschide dispozitivul CD pentru citire."
+
+msgid "Disc is not an Audio CD."
+msgstr "Discul nu este un CD audio."
+
+# R-GC, scrie:
+# am adăugat „-ul”, pentru că limba romînă pentru
+# siglele „articulate” și pentru cuvintele străine, intrate în limbajul cotidian, netraduse; îl cere...
+# Și, deasemeni, pentru armonizarea cu restul
+# traducerilor gst/gstreamer
+msgid "Could not open DVD"
+msgstr "Nu s-a putut deschide DVD-ul"
+
+#, c-format
+msgid "Could not open DVD title %d"
+msgstr "Nu s-a putut deschide titlul DVD-ul %d"
+
+#, c-format
+msgid "Failed to go to chapter %d of DVD title %d"
+msgstr "Nu s-a putut sări la capitolul %d al titlului DVD %d"
+
+#, c-format
+msgid ""
+"Could not open DVD title %d. Interactive titles are not supported by this "
+"element"
+msgstr ""
+"Nu s-a putut deschide titlul DVD %d. Titlurile interactive nu sunt suportate "
+"de acest element"
+
+# R-GC, scrie:
+# modificat de la:
+# „Aceasta poate fi pentru că DVD-ul este criptat și o bibliotecă de decriptare de DVD nu este instalată.” - mi se pare o traducere laconică, ca un
+# limbaj de robot: „Paltonul dvs., vă rog!”
+msgid ""
+"Could not read DVD. This may be because the DVD is encrypted and a DVD "
+"decryption library is not installed."
+msgstr ""
+"Nu s-a putut citi DVD-ul. Acest lucru se poate datora faptului că DVD-ul "
+"este criptat și o bibliotecă de decriptare a DVD-ului nu este instalată."
+
+msgid "Could not read DVD."
+msgstr "Nu s-a putut citi DVD-ul."
+
+msgid "This stream contains no data."
+msgstr "Fluxul acesta nu conține date."

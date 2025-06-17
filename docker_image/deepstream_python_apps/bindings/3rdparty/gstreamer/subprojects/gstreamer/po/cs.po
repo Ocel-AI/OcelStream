@@ -1,0 +1,1411 @@
+# Czech translation of gstreamer.
+# Copyright (C) 2004, 2005, 2007, 2008 gstreamer's COPYRIGHT HOLDER
+# This file is put in the public domain.
+#
+# Miloslav Trmac <mitr@volny.cz>, 2004, 2005, 2007, 2008.
+# Marek Černocký <marek@manet.cz>, 2011, 2013, 2015, 2016, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gstreamer 1.12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-25 01:01+0100\n"
+"PO-Revision-Date: 2017-09-13 15:04+0200\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
+"Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Gtranslator 2.91.7\n"
+
+msgid "Print the GStreamer version"
+msgstr "Vypsat verzi systému GStreamer"
+
+msgid "Make all warnings fatal"
+msgstr "Chápat všechna varování jako fatální"
+
+msgid "Print available debug categories and exit"
+msgstr "Vypsat dostupné kategorie ladění a skončit"
+
+msgid ""
+"Default debug level from 1 (only error) to 9 (anything) or 0 for no output"
+msgstr ""
+"Výchozí úroveň ladění od 1 (jen chyby) do 9 (vše) nebo 0 pro žádný výstup"
+
+msgid "LEVEL"
+msgstr "ÚROVEŇ"
+
+msgid ""
+"Comma-separated list of category_name:level pairs to set specific levels for "
+"the individual categories. Example: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+msgstr ""
+"Čárkami oddělovaný seznam dvojic název_kategorie:úroveň pro nastavení "
+"konkrétních úrovní pro jednotlivé kategorie. Příklad: GST_AUTOPLUG:5,"
+"GST_ELEMENT_*:3"
+
+msgid "LIST"
+msgstr "SEZNAM"
+
+msgid "Disable colored debugging output"
+msgstr "Zakázat obarvený ladicí výstup"
+
+msgid ""
+"Changes coloring mode of the debug log. Possible modes: off, on, disable, "
+"auto, unix"
+msgstr ""
+"Změnit režim obarvení ladicího záznamu. Možné režimy: off, on, disable, "
+"auto, unix"
+
+msgid "Disable debugging"
+msgstr "Zakázat ladění"
+
+msgid "Enable verbose plugin loading diagnostics"
+msgstr "Povolit podrobnou diagnostiku načítání zásuvných modulů"
+
+msgid "Colon-separated paths containing plugins"
+msgstr "Dvojtečkou oddělované cesty obsahující zásuvné moduly"
+
+msgid "PATHS"
+msgstr "CESTY"
+
+msgid ""
+"Comma-separated list of plugins to preload in addition to the list stored in "
+"environment variable GST_PLUGIN_PATH"
+msgstr ""
+"Čárkami oddělovaný seznam zásuvných modulů, které se mají načíst dopředu, "
+"navíc k seznamu uloženému v proměnné prostředí GST_PLUGIN_PATH"
+
+msgid "PLUGINS"
+msgstr "ZÁSUVNÉ_MODULY"
+
+msgid "Disable trapping of segmentation faults during plugin loading"
+msgstr "Zakázat zachytávání porušení segmentace při načítání zásuvných modulů"
+
+msgid "Disable updating the registry"
+msgstr "Zakázat aktualizaci registru"
+
+msgid "Disable spawning a helper process while scanning the registry"
+msgstr "Zakázat větvení pomocných procesů při prohledávání registru"
+
+msgid "GStreamer Options"
+msgstr "Přepínače GStreamer"
+
+msgid "Show GStreamer Options"
+msgstr "Zobrazit přepínače GStreamer"
+
+#, c-format
+msgid "Unknown option"
+msgstr "Neznámý přepínač"
+
+msgid "GStreamer encountered a general core library error."
+msgstr "V systému GStreamer došlo k obecné chybě základní knihovny."
+
+msgid ""
+"GStreamer developers were too lazy to assign an error code to this error."
+msgstr ""
+"Vývojáři systému GStreamer byli příliš líní na to, aby této chybě přiřadili "
+"kód."
+
+msgid "Internal GStreamer error: code not implemented."
+msgstr "Interní chyba systému GStreamer: kód neimplementován."
+
+msgid ""
+"GStreamer error: state change failed and some element failed to post a "
+"proper error message with the reason for the failure."
+msgstr ""
+"Chyba systému GStreamer: selhala změna stavu a některý element selhal při "
+"posílání příslušné chybové zprávy s důvodem selhání."
+
+msgid "Internal GStreamer error: pad problem."
+msgstr "Interní chyba systému GStreamer: problém přípojky."
+
+msgid "Internal GStreamer error: thread problem."
+msgstr "Interní chyba systému GStreamer: problém s vlákny."
+
+msgid "GStreamer error: negotiation problem."
+msgstr "Chyba systému GStreamer: problém při vyjednávání."
+
+msgid "Internal GStreamer error: event problem."
+msgstr "Interní chyba systému GStreamer: problém s událostmi."
+
+msgid "Internal GStreamer error: seek problem."
+msgstr "Interní chyba systému GStreamer: problém s posunem."
+
+msgid "Internal GStreamer error: caps problem."
+msgstr "Interní chyba systému GStreamer: problém se schopnostmi."
+
+msgid "Internal GStreamer error: tag problem."
+msgstr "Interní chyba systému GStreamer: problém se štítky."
+
+msgid "Your GStreamer installation is missing a plug-in."
+msgstr "Vaší instalaci systému GStreamer schází zásuvný modul."
+
+msgid "GStreamer error: clock problem."
+msgstr "Chyba systému GStreamer: problém s hodinami."
+
+msgid ""
+"This application is trying to use GStreamer functionality that has been "
+"disabled."
+msgstr ""
+"Tato aplikace se pokouší používat funkce systému GStreamer, které byly "
+"zakázány."
+
+msgid "GStreamer encountered a general supporting library error."
+msgstr "V systému GStreamer došlo k chybě obecné podpůrné knihovny."
+
+msgid "Could not initialize supporting library."
+msgstr "Nelze inicializovat podpůrnou knihovnu."
+
+msgid "Could not close supporting library."
+msgstr "Nelze zavřít podpůrnou knihovnu."
+
+msgid "Could not configure supporting library."
+msgstr "Nelze nastavit podpůrnou knihovnu."
+
+msgid "Encoding error."
+msgstr "Chyba při kódování."
+
+msgid "GStreamer encountered a general resource error."
+msgstr "V systému GStreamer došlo k obecné chybě prostředků."
+
+msgid "Resource not found."
+msgstr "Prostředek nebyl nalezen."
+
+msgid "Resource busy or not available."
+msgstr "Prostředek se právě používá nebo není k dispozici."
+
+msgid "Could not open resource for reading."
+msgstr "Nelze otevřít prostředek pro čtení."
+
+msgid "Could not open resource for writing."
+msgstr "Nelze otevřít prostředek pro zápis."
+
+msgid "Could not open resource for reading and writing."
+msgstr "Nelze otevřít prostředek pro čtení a zápis."
+
+msgid "Could not close resource."
+msgstr "Nelze zavřít prostředek."
+
+msgid "Could not read from resource."
+msgstr "Nelze číst z prostředku."
+
+msgid "Could not write to resource."
+msgstr "Nelze zapisovat do prostředku."
+
+msgid "Could not perform seek on resource."
+msgstr "Nelze se posouvat v prostředku."
+
+msgid "Could not synchronize on resource."
+msgstr "Nelze se synchronizovat s prostředkem."
+
+msgid "Could not get/set settings from/on resource."
+msgstr "Nelze získat/změnit nastavení prostředku."
+
+msgid "No space left on the resource."
+msgstr "V prostředku nezbývá místo."
+
+msgid "Not authorized to access resource."
+msgstr "Není autorizováno pro přístup k prostředku."
+
+msgid "GStreamer encountered a general stream error."
+msgstr "V systému GStreamer došlo k obecné chybě proudu."
+
+msgid "Element doesn't implement handling of this stream. Please file a bug."
+msgstr ""
+"Element neimplementuje obsluhu tohoto proudu. Nahlaste to prosím jako chybu."
+
+msgid "Could not determine type of stream."
+msgstr "Nelze zjistit typ proudu."
+
+msgid "The stream is of a different type than handled by this element."
+msgstr "Proud je jiného typu, než jaký tento element obsluhuje."
+
+msgid "There is no codec present that can handle the stream's type."
+msgstr "Není přítomen žádný kodek, který umí obsloužit typ tohoto proudu."
+
+msgid "Could not decode stream."
+msgstr "Nelze dekódovat proud."
+
+msgid "Could not encode stream."
+msgstr "Nelze zakódovat proud."
+
+msgid "Could not demultiplex stream."
+msgstr "Nelze demultiplexovat proud."
+
+msgid "Could not multiplex stream."
+msgstr "Nelze multiplexovat proud."
+
+msgid "The stream is in the wrong format."
+msgstr "Proud je v nesprávném formátu."
+
+msgid "The stream is encrypted and decryption is not supported."
+msgstr "Proud je zašifrován a dešifrování není podporováno."
+
+msgid ""
+"The stream is encrypted and can't be decrypted because no suitable key has "
+"been supplied."
+msgstr ""
+"Proud je zašifrován a nelze jej dešifrovat, protože nebyl poskytnut vhodný "
+"klíč."
+
+#, c-format
+msgid "No error message for domain %s."
+msgstr "Pro doménu %s není žádná zpráva o chybě."
+
+#, c-format
+msgid "No standard error message for domain %s and code %d."
+msgstr "Pro doménu %s a kód %d není žádná standardní zpráva o chybě."
+
+msgid "Selected clock cannot be used in pipeline."
+msgstr "Vybrané hodiny nelze použít v rouře."
+
+#, c-format
+msgid "Error writing registry cache to %s: %s"
+msgstr "Chyba při zápisu mezipaměti registru do %s: %s"
+
+msgid "title"
+msgstr "název"
+
+msgid "commonly used title"
+msgstr "Obecně používaný název"
+
+msgid "title sortname"
+msgstr "název pro účel řazení"
+
+msgid "commonly used title for sorting purposes"
+msgstr "Obecně používaný název; pro účel řazení"
+
+msgid "artist"
+msgstr "umělec"
+
+msgid "person(s) responsible for the recording"
+msgstr "Osoba čí osoby odpovědné za nahrávku"
+
+msgid "artist sortname"
+msgstr "umělec pro účel řazení"
+
+msgid "person(s) responsible for the recording for sorting purposes"
+msgstr "Osoba či osoby odpovědné za nahrávku; pro účel řazení"
+
+msgid "album"
+msgstr "album"
+
+msgid "album containing this data"
+msgstr "Album obsahující tato data"
+
+msgid "album sortname"
+msgstr "album pro účel řazení"
+
+msgid "album containing this data for sorting purposes"
+msgstr "Album obsahující tato data; pro účel řazení"
+
+msgid "album artist"
+msgstr "umělec alba"
+
+msgid "The artist of the entire album, as it should be displayed"
+msgstr "Umělec daného alba v podobě, jak se má zobrazovat"
+
+msgid "album artist sortname"
+msgstr "umělec alba pro účel řazení"
+
+msgid "The artist of the entire album, as it should be sorted"
+msgstr "Umělec alba v podobě, podle které se má řadit"
+
+msgid "date"
+msgstr "datum"
+
+msgid "date the data was created (as a GDate structure)"
+msgstr "Datum, kdy byla data vytvořena (jako struktura GDate)"
+
+msgid "datetime"
+msgstr "datum a čas"
+
+msgid "date and time the data was created (as a GstDateTime structure)"
+msgstr "Datum a čas, kdy byla data vytvořena (jako struktura GstDateTime)"
+
+msgid "genre"
+msgstr "žánr"
+
+msgid "genre this data belongs to"
+msgstr "Žánr, do kterého tato data patří"
+
+msgid "comment"
+msgstr "poznámka"
+
+msgid "free text commenting the data"
+msgstr "Volný text komentující data"
+
+msgid "extended comment"
+msgstr "rozšířená poznámka"
+
+msgid "free text commenting the data in key=value or key[en]=comment form"
+msgstr ""
+"Volný text komentující data ve tvaru klíč=hodnota nebo klíč[cs]=poznámka"
+
+msgid "track number"
+msgstr "číslo stopy"
+
+msgid "track number inside a collection"
+msgstr "Číslo stopy v rámci sbírky"
+
+msgid "track count"
+msgstr "počet stop"
+
+msgid "count of tracks inside collection this track belongs to"
+msgstr "Počet stop v rámci sbírky, do kterého tato stopa patří"
+
+msgid "disc number"
+msgstr "číslo disku"
+
+msgid "disc number inside a collection"
+msgstr "Číslo disku v rámci sbírky"
+
+msgid "disc count"
+msgstr "počet disků"
+
+msgid "count of discs inside collection this disc belongs to"
+msgstr "Počet disků v rámci sbírky, do kterého tento disk patří"
+
+msgid "location"
+msgstr "umístění"
+
+msgid ""
+"Origin of media as a URI (location, where the original of the file or stream "
+"is hosted)"
+msgstr ""
+"Původ média jako URI (umístění, kde je nabízen originál souboru nebo proudu)"
+
+msgid "homepage"
+msgstr "domovská stránka"
+
+msgid "Homepage for this media (i.e. artist or movie homepage)"
+msgstr ""
+"Domovská stránka tohoto média (např. domovská stránka umělce nebo filmu)"
+
+msgid "description"
+msgstr "popis"
+
+msgid "short text describing the content of the data"
+msgstr "Krátký text popisující obsah dat"
+
+msgid "version"
+msgstr "verze"
+
+msgid "version of this data"
+msgstr "Verze těchto dat"
+
+msgid "ISRC"
+msgstr "ISRC"
+
+msgid "International Standard Recording Code - see http://www.ifpi.org/isrc/"
+msgstr ""
+"International Standard Recording Code – http://www.intergram.cz/cs/isrc/"
+
+msgid "organization"
+msgstr "organizace"
+
+msgid "copyright"
+msgstr "copyright"
+
+msgid "copyright notice of the data"
+msgstr "Oznámení o autorských právech k datům"
+
+msgid "copyright uri"
+msgstr "uri copyrightu"
+
+msgid "URI to the copyright notice of the data"
+msgstr "Adresa URI oznámení o autorských právech k datům"
+
+msgid "encoded by"
+msgstr "zakódoval"
+
+msgid "name of the encoding person or organization"
+msgstr "Jméno osoby nebo název organizace odpovědných za kódování"
+
+msgid "contact"
+msgstr "kontakt"
+
+msgid "contact information"
+msgstr "Kontaktní informace"
+
+msgid "license"
+msgstr "licence"
+
+msgid "license of data"
+msgstr "Licence dat"
+
+msgid "license uri"
+msgstr "uri licence"
+
+msgid "URI to the license of the data"
+msgstr "Adresa URI licence k datům"
+
+msgid "performer"
+msgstr "výkonný umělec"
+
+msgid "person(s) performing"
+msgstr "Vystupující osoba či osoby"
+
+msgid "composer"
+msgstr "skladatel"
+
+msgid "person(s) who composed the recording"
+msgstr "Osoby či osoby, které nahrávku složily"
+
+msgid "conductor"
+msgstr "dirigent"
+
+msgid "conductor/performer refinement"
+msgstr "Dirigent/upřesnění účinkujícího"
+
+msgid "duration"
+msgstr "trvání"
+
+msgid "length in GStreamer time units (nanoseconds)"
+msgstr "Délka v jednotkách času GStreamer (nanosekundách)"
+
+msgid "codec"
+msgstr "kodek"
+
+msgid "codec the data is stored in"
+msgstr "Kodek, ve kterém jsou data uchována"
+
+msgid "video codec"
+msgstr "kodek videa"
+
+msgid "codec the video data is stored in"
+msgstr "Kodek, ve kterém jsou uchována data videa"
+
+msgid "audio codec"
+msgstr "kodek zvuku"
+
+msgid "codec the audio data is stored in"
+msgstr "Kodek, ve kterém jsou uchována data zvuku"
+
+msgid "subtitle codec"
+msgstr "kodek titulků"
+
+msgid "codec the subtitle data is stored in"
+msgstr "Kodek, ve kterém jsou uchována data titulků"
+
+msgid "container format"
+msgstr "formát kontejneru"
+
+msgid "container format the data is stored in"
+msgstr "Formát kontejneru, ve kterém jdou uchována data"
+
+msgid "bitrate"
+msgstr "datový tok"
+
+msgid "exact or average bitrate in bits/s"
+msgstr "Přesný nebo průměrný datový tok v bitech/s"
+
+msgid "nominal bitrate"
+msgstr "nominální datový tok"
+
+msgid "nominal bitrate in bits/s"
+msgstr "Nominální datový tok v bitech/s"
+
+msgid "minimum bitrate"
+msgstr "minimální datový tok"
+
+msgid "minimum bitrate in bits/s"
+msgstr "Minimální datový tok v bitech/s"
+
+msgid "maximum bitrate"
+msgstr "maximální datový tok"
+
+msgid "maximum bitrate in bits/s"
+msgstr "Maximální datový tok v bitech/s"
+
+msgid "encoder"
+msgstr "kodér"
+
+msgid "encoder used to encode this stream"
+msgstr "Kodér používaný pro kódování tohoto proudu"
+
+msgid "encoder version"
+msgstr "verze kodéru"
+
+msgid "version of the encoder used to encode this stream"
+msgstr "Verze kodéru používaného pro kódování tohoto proudu"
+
+msgid "serial"
+msgstr "sériové číslo"
+
+msgid "serial number of track"
+msgstr "Sériové číslo stopy"
+
+msgid "replaygain track gain"
+msgstr "hlasitost přehrávání stopy"
+
+msgid "track gain in db"
+msgstr "Zesílení stopy v db"
+
+msgid "replaygain track peak"
+msgstr "špičková hlasitost přehrávání stopy"
+
+msgid "peak of the track"
+msgstr "Špičkové zesílení stopy"
+
+msgid "replaygain album gain"
+msgstr "hlasitost přehrávání alba"
+
+msgid "album gain in db"
+msgstr "Zesílení alba v db"
+
+msgid "replaygain album peak"
+msgstr "špičková hlasitost přehrávání alba"
+
+msgid "peak of the album"
+msgstr "Špičkové zesílení alba"
+
+msgid "replaygain reference level"
+msgstr "referenční úroveň hlasitosti"
+
+msgid "reference level of track and album gain values"
+msgstr "Hodnota referenční úrovně zesílení stopy a alba"
+
+msgid "language code"
+msgstr "kód jazyka"
+
+msgid "language code for this stream, conforming to ISO-639-1 or ISO-639-2"
+msgstr "Kód jazyka pro tento proud, ve shodě s ISO-639-1 nebo ISO-639-2"
+
+msgid "language name"
+msgstr "název jazyka"
+
+msgid "freeform name of the language this stream is in"
+msgstr "název jazyka (ve volném tvaru), ve kterém je tento proud"
+
+msgid "image"
+msgstr "obrázek"
+
+msgid "image related to this stream"
+msgstr "Obrázek související s tímto proudem"
+
+#. TRANSLATORS: 'preview image' = image that shows a preview of the full image
+msgid "preview image"
+msgstr "obrázek s náhledem"
+
+msgid "preview image related to this stream"
+msgstr "Obrázek s náhledem související s tímto proudem"
+
+msgid "attachment"
+msgstr "příloha"
+
+msgid "file attached to this stream"
+msgstr "Soubor připojený k tomuto proudu"
+
+msgid "beats per minute"
+msgstr "tempo"
+
+msgid "number of beats per minute in audio"
+msgstr "Tempo (v počtech úderů za minutu) zvuku"
+
+msgid "keywords"
+msgstr "klíčová slova"
+
+msgid "comma separated keywords describing the content"
+msgstr "Čárkami oddělovaná klíčová slova popisující obsah"
+
+msgid "geo location name"
+msgstr "název místa"
+
+msgid ""
+"human readable descriptive location of where the media has been recorded or "
+"produced"
+msgstr ""
+"Popisné místo v člověkem čitelné podobě, kde bylo médium nahráno nebo "
+"vytvořeno"
+
+msgid "geo location latitude"
+msgstr "zeměpisná šířka místa"
+
+msgid ""
+"geo latitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the equator, negative values for "
+"southern latitudes)"
+msgstr ""
+"Zeměpisná šířka místa, kde bylo médium nahráno nebo vytvořeno, ve stupních "
+"podle WGS84 (nula na rovníku, záporné hodnoty pro jižní polokouli)"
+
+msgid "geo location longitude"
+msgstr "zeměpisná délka místa"
+
+msgid ""
+"geo longitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the prime meridian in Greenwich/UK,  "
+"negative values for western longitudes)"
+msgstr ""
+"Zeměpisná délka místa, kde bylo médium nahráno nebo vytvořeno, ve stupních "
+"podle WGS84 (nula na hlavním poledníku v Greenwichi, záporné hodnoty pro "
+"západní polokouli)"
+
+msgid "geo location elevation"
+msgstr "zeměpisná výška místa"
+
+msgid ""
+"geo elevation of where the media has been recorded or produced in meters "
+"according to WGS84 (zero is average sea level)"
+msgstr ""
+"Zeměpisná výška místa, kde bylo médium nahráno nebo vytvořeno, v metrech "
+"podle WGS84 (nula je průměrná hladina moře)"
+
+msgid "geo location country"
+msgstr "země"
+
+msgid "country (english name) where the media has been recorded or produced"
+msgstr "Anglický název země, kde bylo médium nahráno nebo vytvořeno"
+
+msgid "geo location city"
+msgstr "město"
+
+msgid "city (english name) where the media has been recorded or produced"
+msgstr "Anglický název města, kde bylo médium nahráno nebo vytvořeno"
+
+msgid "geo location sublocation"
+msgstr "upřesnění místa"
+
+msgid ""
+"a location within a city where the media has been produced or created (e.g. "
+"the neighborhood)"
+msgstr "Místo v rámci města, kde bylo médium nahráno nebo vytvořeno"
+
+msgid "geo location horizontal error"
+msgstr "vodorovná chyba místa"
+
+msgid "expected error of the horizontal positioning measures (in meters)"
+msgstr ""
+"Předpokládaná chyba v udání polohy místa ve vodorovném směru (v metrech)"
+
+msgid "geo location movement speed"
+msgstr "rychlost pohybu"
+
+msgid ""
+"movement speed of the capturing device while performing the capture in m/s"
+msgstr ""
+"Rychlost pohybu zachytávacího zařízení, které mění svoji polohu (v m/s)"
+
+msgid "geo location movement direction"
+msgstr "směr pohybu"
+
+msgid ""
+"indicates the movement direction of the device performing the capture of a "
+"media. It is represented as degrees in floating point representation, 0 "
+"means the geographic north, and increases clockwise"
+msgstr ""
+"Určuje směr pohybu zařízení provádějícího zachytávání média. Je prezentováno "
+"jako stupně v podobě desetinného čísla, kdy 0 značí zeměpisný sever a jde se "
+"po směru hodinových ručiček"
+
+msgid "geo location capture direction"
+msgstr "směr zachytávání"
+
+msgid ""
+"indicates the direction the device is pointing to when capturing  a media. "
+"It is represented as degrees in floating point  representation, 0 means the "
+"geographic north, and increases clockwise"
+msgstr ""
+"Určuje směr, kterým je zařízení nasměrováno během zachytávání média. Je "
+"prezentováno jako stupně v podobě desetinného čísla, kdy 0 značí zeměpisný "
+"sever a jde se po směru hodinových ručiček"
+
+#. TRANSLATORS: 'show name' = 'TV/radio/podcast show name' here
+msgid "show name"
+msgstr "název pořadu"
+
+msgid "Name of the tv/podcast/series show the media is from"
+msgstr ""
+"Název pořadu (televizního, podcastového apod.), ze kterého médium pochází"
+
+#. TRANSLATORS: 'show sortname' = 'TV/radio/podcast show name as used for sorting purposes' here
+msgid "show sortname"
+msgstr "pořad pro účely řazení"
+
+msgid ""
+"Name of the tv/podcast/series show the media is from, for sorting purposes"
+msgstr ""
+"Název pořadu (televizního, podcastového apod.), ze kterého médium pochází; "
+"pro účely řazení"
+
+msgid "episode number"
+msgstr "číslo epizody"
+
+msgid "The episode number in the season the media is part of"
+msgstr "Číslo epizody v rámci řady, které je médium součástí"
+
+msgid "season number"
+msgstr "číslo řady"
+
+msgid "The season number of the show the media is part of"
+msgstr "Číslo řady v rámci pořadu, jehož je médium součástí"
+
+msgid "lyrics"
+msgstr "text"
+
+msgid "The lyrics of the media, commonly used for songs"
+msgstr "Text k médiu, obvykle text hudební skladby"
+
+msgid "composer sortname"
+msgstr "skladatel pro účely řazení"
+
+msgid "person(s) who composed the recording, for sorting purposes"
+msgstr "Osoba či osoby, které záznam složily; pro účely řazení"
+
+msgid "grouping"
+msgstr "seskupování"
+
+msgid ""
+"Groups related media that spans multiple tracks, like the different pieces "
+"of a concerto. It is a higher level than a track, but lower than an album"
+msgstr ""
+"Skupiny vztahující se k médiu, které je rozloženo do více stop, třeba části "
+"koncertu. Jde o vyšší úroveň členění než jsou stopy, ale nižší než je album"
+
+msgid "user rating"
+msgstr "uživatelské hodnocení"
+
+msgid ""
+"Rating attributed by a user. The higher the rank, the more the user likes "
+"this media"
+msgstr ""
+"Hodnocení přidělené uživatelem. Čím vyšší hodnocení, tím se uživateli médium "
+"víc líbí"
+
+msgid "device manufacturer"
+msgstr "výrobce zařízení"
+
+msgid "Manufacturer of the device used to create this media"
+msgstr "Výrobce zařízení použitého k vytvoření tohoto média"
+
+msgid "device model"
+msgstr "model zařízení"
+
+msgid "Model of the device used to create this media"
+msgstr "Model zařízení použitého k vytvoření tohoto média"
+
+msgid "application name"
+msgstr "název aplikace"
+
+msgid "Application used to create the media"
+msgstr "Aplikace použitá k vytvoření média"
+
+msgid "application data"
+msgstr "data aplikace"
+
+msgid "Arbitrary application data to be serialized into the media"
+msgstr "Libovolná aplikační data, která jsou serializována do média"
+
+msgid "image orientation"
+msgstr "natočení obrázku"
+
+msgid "How the image should be rotated or flipped before display"
+msgstr "Jak by měl být obrázek před zobrazením otočen nebo překlopen"
+
+msgid "publisher"
+msgstr "vydavatel"
+
+msgid "Name of the label or publisher"
+msgstr "Název vydavatelství nebo vydavatel"
+
+msgid "interpreted-by"
+msgstr "ztvárnil"
+
+msgid "Information about the people behind a remix and similar interpretations"
+msgstr ""
+"Informace o lidech stojících za mixováním a dalším podobným zpracováním"
+
+msgid "midi-base-note"
+msgstr "základní nota MIDI"
+
+msgid "Midi note number of the audio track."
+msgstr "Číslo noty MIDI pro zvukovou stopu."
+
+msgid "private-data"
+msgstr "soukromá data"
+
+msgid "Private data"
+msgstr "Soukromá data"
+
+#. separator between two strings
+msgid ", "
+msgstr "; "
+
+#, c-format
+msgid "Invalid URI: %s"
+msgstr ""
+
+#, c-format
+msgid "No URI handler for the %s protocol found"
+msgstr "Nebyla nalezena žádná adresa URI ovladače pro protokol %s"
+
+#, c-format
+msgid "URI scheme '%s' not supported"
+msgstr "Schéma URI „%s“ není podporováno"
+
+#, c-format
+msgid "ERROR: from element %s: %s\n"
+msgstr "CHYBA: od elementu %s: %s\n"
+
+#, c-format
+msgid ""
+"Additional debug info:\n"
+"%s\n"
+msgstr ""
+"Dodatečné ladicí informace:\n"
+"%s\n"
+
+#. ******************************************************************************************
+#. *** helpers for pipeline-setup
+#. ******************************************************************************************
+#, c-format
+msgid "link has no source [sink=%s@%p]"
+msgstr "připojení nemá žádný zdroj [sink=%s@%p]"
+
+#, c-format
+msgid "link has no sink [source=%s@%p]"
+msgstr "připojení nemá žádný cíl [source=%s@%p]"
+
+#, c-format
+msgid "no property \"%s\" in element \"%s\""
+msgstr "v elementu „%2$s“ není žádná vlastnost „%1$s“"
+
+#, c-format
+msgid "could not set property \"%s\" in element \"%s\" to \"%s\""
+msgstr "nelze nastavit vlastnost „%s“ v elementu „%s“ na „%s“"
+
+#, fuzzy, c-format
+msgid "Element \"%s\" is not a GstPreset"
+msgstr "Soubor „%s“ je soket."
+
+#, fuzzy, c-format
+msgid "could not set preset \"%s\" in element \"%s\""
+msgstr "nelze nastavit vlastnost „%s“ v elementu „%s“ na „%s“"
+
+msgid "Delayed linking failed."
+msgstr "Odložené propojení selhalo."
+
+#, c-format
+msgid "could not link %s to %s, %s can't handle caps %s"
+msgstr "nelze připojit element „%s“ k elementu „%s“, %s nezvládá schopnost %s"
+
+#, c-format
+msgid "could not link %s to %s, neither element can handle caps %s"
+msgstr ""
+"nelze připojit element „%s“ k elementu „%s“, žádný element nezvládá "
+"schopnost %s"
+
+#, c-format
+msgid "could not link %s to %s with caps %s"
+msgstr "nelze připojit element „%s“ k elementu „%s“ se schopností %s"
+
+#, c-format
+msgid "could not link %s to %s"
+msgstr "nelze připojit element „%s“ k elementu „%s“"
+
+#, c-format
+msgid "no element \"%s\""
+msgstr "element „%s“ neexistuje"
+
+#, c-format
+msgid "unexpected reference \"%s\" - ignoring"
+msgstr "neočekávaný odkaz „%s“ – ignoruje se"
+
+#, c-format
+msgid "unexpected pad-reference \"%s\" - ignoring"
+msgstr "neočekávaný odkaz přípojky „%s“ – ignoruje se"
+
+#, c-format
+msgid "could not parse caps \"%s\""
+msgstr "nelze zpracovat schopnosti „%s“"
+
+#, c-format
+msgid "no sink element for URI \"%s\""
+msgstr "neexistuje žádný cílový element pro adresu URI „%s“"
+
+#, c-format
+msgid "no source element for URI \"%s\""
+msgstr "neexistuje žádný zdrojový element pro adresu URI „%s“"
+
+msgid "syntax error"
+msgstr "syntaktická chyba"
+
+#, c-format
+msgid "specified empty bin \"%s\", not allowed"
+msgstr "zadán prázdný zásobník „%s“, to není dovoleno"
+
+#, c-format
+msgid "no bin \"%s\", unpacking elements"
+msgstr "zásobník „%s“, rozbaluje se element"
+
+msgid "empty pipeline not allowed"
+msgstr "prázdná roura není povolena"
+
+msgid "Pipeline construction is invalid, please add queues."
+msgstr ""
+
+msgid "A lot of buffers are being dropped."
+msgstr "Většina vyrovnávacích pamětí je vyřazena."
+
+msgid "Internal data flow problem."
+msgstr "Interní problém toku dat."
+
+msgid "Internal data flow error."
+msgstr "Interní chyba toku dat."
+
+msgid "Internal clock error."
+msgstr "Interní chyba hodin."
+
+msgid "Failed to map buffer."
+msgstr "Selhalo namapování vyrovnávací paměti."
+
+msgid "Filter caps"
+msgstr "Filtrovat schopnosti"
+
+msgid ""
+"Restrict the possible allowed capabilities (NULL means ANY). Setting this "
+"property takes a reference to the supplied GstCaps object."
+msgstr ""
+"Omezit povolené schopnosti (NULL znamená VŠECHNY). Nastavení této vlastnosti "
+"přebírá odkaz na zadaný objekt GstCaps."
+
+msgid "Caps Change Mode"
+msgstr "Režim změny schopností"
+
+msgid "Filter caps change behaviour"
+msgstr "Filtrovat chování změny schopností"
+
+msgid "No Temp directory specified."
+msgstr "Není určena složka pro dočasné soubory."
+
+#, c-format
+msgid "Could not create temp file \"%s\"."
+msgstr "Nelze vytvořit dočasný soubor „%s“."
+
+#, c-format
+msgid "Could not open file \"%s\" for reading."
+msgstr "Nelze otevřít soubor „%s“ pro čtení."
+
+msgid "Error while writing to download file."
+msgstr "Chyba při zápisu do stahovaného souboru."
+
+msgid "No file name specified for writing."
+msgstr "Není zadán název souboru pro zápis."
+
+#, c-format
+msgid "Could not open file \"%s\" for writing."
+msgstr "Nelze otevřít soubor „%s“ pro zápis."
+
+#, c-format
+msgid "Error closing file \"%s\"."
+msgstr "Chyba při zavírání souboru „%s“."
+
+#, c-format
+msgid "Error while seeking in file \"%s\"."
+msgstr "Chyba při posunu v souboru „%s“."
+
+#, c-format
+msgid "Error while writing to file \"%s\"."
+msgstr "Chyba při zápisu do souboru „%s“."
+
+msgid "No file name specified for reading."
+msgstr "Není zadán název souboru pro čtení."
+
+#, c-format
+msgid "Could not get info on \"%s\"."
+msgstr "Nelze získat informace o „%s“."
+
+#, c-format
+msgid "\"%s\" is a directory."
+msgstr "„%s“ je složka."
+
+#, c-format
+msgid "File \"%s\" is a socket."
+msgstr "Soubor „%s“ je soket."
+
+msgid "Failed after iterations as requested."
+msgstr "Selhání po iteracích podle požadavku."
+
+msgid "eos-after and error-after can't both be defined."
+msgstr ""
+
+msgid "caps"
+msgstr "schopnosti"
+
+msgid "detected capabilities in stream"
+msgstr "detekované schopnosti v proudu"
+
+msgid "minimum"
+msgstr "minimum"
+
+msgid "force caps"
+msgstr "vynutit schopnosti"
+
+msgid "force caps without doing a typefind"
+msgstr "vynutit schopnosti bez hledání typu"
+
+msgid "Stream doesn't contain enough data."
+msgstr "Proud neobsahuje dostatek dat."
+
+msgid "Stream contains no data."
+msgstr "Proud neobsahuje žádná data."
+
+#, fuzzy, c-format
+msgid "%sImplemented Interfaces%s:\n"
+msgstr "Implementovaná rozhraní:\n"
+
+msgid "readable"
+msgstr "lze číst"
+
+msgid "writable"
+msgstr "lze zapisovat"
+
+msgid "deprecated"
+msgstr "zavržené"
+
+msgid "controllable"
+msgstr "lze ovládat"
+
+#, fuzzy
+msgid "conditionally available"
+msgstr "lze ovládat"
+
+msgid "changeable in NULL, READY, PAUSED or PLAYING state"
+msgstr "lze změnit ve stavu PRÁZDNÉ, PŘIPRAVENO, POZASTAVENO nebo PŘEHRÁVÁ"
+
+msgid "changeable only in NULL, READY or PAUSED state"
+msgstr "lze měnit jen ve stavu PRÁZDNÉ, PŘIPRAVENO nebo POZASTAVENO"
+
+msgid "changeable only in NULL or READY state"
+msgstr "lze měnit jen ve stavu PRÁZDNÉ nebo PŘIPRAVENO"
+
+msgid "Blacklisted files:"
+msgstr "Soubory na černé listině:"
+
+#, fuzzy, c-format
+msgid "%sTotal count%s: %s"
+msgstr "Celkový počet: "
+
+#, c-format
+msgid "%d blacklisted file"
+msgid_plural "%d blacklisted files"
+msgstr[0] "%d soubor na černé listině"
+msgstr[1] "%d soubory na černé listině"
+msgstr[2] "%d souborů na černé listině"
+
+#, c-format
+msgid "%d plugin"
+msgid_plural "%d plugins"
+msgstr[0] "%d zásuvný modul"
+msgstr[1] "%d zásuvné moduly"
+msgstr[2] "%d zásuvných modulů"
+
+#, c-format
+msgid "%d blacklist entry"
+msgid_plural "%d blacklist entries"
+msgstr[0] "%d záznam na černé listině"
+msgstr[1] "%d záznamy na černé listině"
+msgstr[2] "%d záznamů na černé listině"
+
+#, c-format
+msgid "%d feature"
+msgid_plural "%d features"
+msgstr[0] "%d funkce"
+msgstr[1] "%d funkce"
+msgstr[2] "%d funkcí"
+
+msgid "Print all elements"
+msgstr "Vypsat všechny elementy"
+
+msgid "Print list of blacklisted files"
+msgstr "Vypsat seznam souborů na černé listině"
+
+msgid ""
+"Print a machine-parsable list of features the specified plugin or all "
+"plugins provide.\n"
+"                                       Useful in connection with external "
+"automatic plugin installation mechanisms"
+msgstr ""
+"Vypsat strojem zpracovatelný seznam funkcí, které poskytuje zadaný nebo "
+"všechny zásuvné moduly.\n"
+"                                       Užitečné spolu s externími mechanismy "
+"pro automatickou instalaci zásuvných modulů"
+
+msgid "List the plugin contents"
+msgstr "Vypsat obsah zásuvných modulů"
+
+msgid ""
+"A slashes ('/') separated list of types of elements (also known as klass) to "
+"list. (unordered)"
+msgstr ""
+"Seznam typů elementů (nazývaných také třídy) oddělený lomítky („/“), který "
+"se má vypsat (neseřazený)"
+
+msgid "Check if the specified element or plugin exists"
+msgstr "Zkontrolovat, zda zadaný element nebo zásuvný modul existuje"
+
+msgid ""
+"When checking if an element or plugin exists, also check that its version is "
+"at least the version specified"
+msgstr ""
+"Při kontrole existence elementu nebo zásuvného modulu rovněž zkontrolovat, "
+"zda je jeho verze stejná nebo novější než zadaná"
+
+msgid "Print supported URI schemes, with the elements that implement them"
+msgstr "Vypsat podporovaná schémata URI, včetně elementů, které implementují"
+
+msgid ""
+"Disable colors in output. You can also achieve the same by setting "
+"'GST_INSPECT_NO_COLORS' environment variable to any value."
+msgstr ""
+
+msgid "Color output, even when not sending to a tty."
+msgstr ""
+
+#, c-format
+msgid "Could not load plugin file: %s\n"
+msgstr "Nelze načíst soubor se zásuvným modulem: %s\n"
+
+#, c-format
+msgid "No such element or plugin '%s'\n"
+msgstr "Element nebo zásuvný modul „%s“ neexistuje\n"
+
+msgid "Index statistics"
+msgstr "Přehledové statistiky"
+
+msgid "Setting pipeline to PLAYING ...\n"
+msgstr "Nastavuje se roura na PŘEHRÁVÁNÍ…\n"
+
+# On strike?
+msgid "ERROR: pipeline doesn't want to play.\n"
+msgstr "CHYBA: roura nechce přehrávat.\n"
+
+#, c-format
+msgid "Got message #%u from element \"%s\" (%s): "
+msgstr "Obdržena zpráva čís. %u od elementu „%s“ (%s): "
+
+#, c-format
+msgid "Got message #%u from pad \"%s:%s\" (%s): "
+msgstr "Obdržena zpráva čís. %u od přípojky „%s:%s“ (%s): "
+
+#, c-format
+msgid "Got message #%u from object \"%s\" (%s): "
+msgstr "Obdržena zpráva čís. %u od objektu „%s“ (%s): "
+
+#, c-format
+msgid "Got message #%u (%s): "
+msgstr "Obdržena zpráva čís. %u (%s): "
+
+#, c-format
+msgid "Got EOS from element \"%s\".\n"
+msgstr "Obdržen konec proudu od elementu „%s“.\n"
+
+msgid "EOS received - stopping pipeline...\n"
+msgstr "Obdržen konec proudu (EOS) – zastavuje se roura…\n"
+
+#, c-format
+msgid "FOUND TAG      : found by element \"%s\".\n"
+msgstr ""
+"NALEZEN ŠTÍTEK: nalezen elementem „%s“.\n"
+"\n"
+
+#, c-format
+msgid "FOUND TAG      : found by pad \"%s:%s\".\n"
+msgstr "NALEZEN ŠTÍTEK: nalezen přípojkou „%s:%s“.\n"
+
+#, c-format
+msgid "FOUND TAG      : found by object \"%s\".\n"
+msgstr "NALEZEN ŠTÍTEK: nalezen objektem „%s“.\n"
+
+msgid "FOUND TAG\n"
+msgstr "NALEZEN ŠTÍTEK\n"
+
+#, c-format
+msgid "FOUND TOC      : found by element \"%s\".\n"
+msgstr ""
+"NALEZENA TABULKA S OBSAHEM: nalezena elementem „%s“.\n"
+"\n"
+
+#, c-format
+msgid "FOUND TOC      : found by object \"%s\".\n"
+msgstr "NALEZENA TABULKA S OBSAHEM: nalezena objektem „%s“.\n"
+
+msgid "FOUND TOC\n"
+msgstr "NALEZENA TABULKA S OBSAHEM\n"
+
+#, c-format
+msgid ""
+"INFO:\n"
+"%s\n"
+msgstr ""
+"INFORMACE:\n"
+"%s\n"
+
+#, c-format
+msgid "WARNING: from element %s: %s\n"
+msgstr "VAROVÁNÍ: od elementu %s: %s\n"
+
+msgid "Pipeline is PREROLLED ...\n"
+msgstr "Roura je PŘEDVINUTA…\n"
+
+msgid "Prerolled, waiting for buffering to finish...\n"
+msgstr ""
+"Video vložené před začátek, čeká se na dokončení ulokládání do vyrovnávací "
+"paměti…\n"
+
+msgid "Prerolled, waiting for progress to finish...\n"
+msgstr "Video vložené před začátek, čeká se na dokončení průběhu…\n"
+
+msgid "buffering..."
+msgstr "ukládá se do vyrovnávací paměti…"
+
+msgid "Done buffering, setting pipeline to PLAYING ...\n"
+msgstr ""
+"Ukládání do vyrovnávací paměti hotovo, nastavuje se roura na PŘEHRÁVÁ…\n"
+
+#. we were not buffering but PLAYING, PAUSE  the pipeline.
+msgid "Buffering, setting pipeline to PAUSED ...\n"
+msgstr "Ukládá se do vyrovnávací paměti, nastavuje se roura na POZASTAVENA…\n"
+
+msgid "Redistribute latency...\n"
+msgstr "Šíří se zpoždění…\n"
+
+#, c-format
+msgid "Setting state to %s as requested by %s...\n"
+msgstr "Nastavuje se stav na %s na základě požadavku od %s…\n"
+
+#. this application message is posted when we caught an interrupt and
+#. * we need to stop the pipeline.
+msgid "Interrupt: Stopping pipeline ...\n"
+msgstr "Přerušení: Zastavuje se roura…\n"
+
+msgid "Interrupt while waiting for EOS - stopping pipeline...\n"
+msgstr "Přerušení při čekání na konec proudu – zastavuje se roura…\n"
+
+msgid "EOS on shutdown enabled -- Forcing EOS on the pipeline\n"
+msgstr ""
+"Zakončení proudu (EOS) při vypnutí povoleno -- Vynucuje se zakončení proudu "
+"v rouře\n"
+
+msgid "Waiting for EOS...\n"
+msgstr "Čeká se na konec proudu (EOS)…\n"
+
+#, c-format
+msgid "Progress: (%s) %s\n"
+msgstr "Průběh: (%s) %s\n"
+
+#, c-format
+msgid "Missing element: %s\n"
+msgstr "Schází element: %s\n"
+
+#, c-format
+msgid "Got context from element '%s': %s=%s\n"
+msgstr "Obdržen kontext od elementu „%s“: %s=%s\n"
+
+# On strike?
+msgid "ERROR: pipeline doesn't want to preroll.\n"
+msgstr "CHYBA: roura se nechce předvinout.\n"
+
+msgid "An error happened while waiting for EOS\n"
+msgstr "Nastala chyba při čekání na konec proudu (EOS)\n"
+
+#, c-format
+msgid "Use Windows high-resolution clock, precision: %u ms\n"
+msgstr ""
+
+msgid "Output tags (also known as metadata)"
+msgstr "Vypsat štítky (známé také jako metadata)"
+
+msgid "Output TOC (chapters and editions)"
+msgstr "Vypsat tabulku s obsahem (kapitoly nebo vydání)"
+
+msgid "Output status information and property notifications"
+msgstr "Vypsat informace o stavu a upozornění na vlastnosti"
+
+msgid "Do not print any progress information"
+msgstr "Nevypisovat žádné informace o průběhu"
+
+msgid "Output messages"
+msgstr "Zprávy výstupu"
+
+msgid ""
+"Do not output status information for the specified property if verbose "
+"output is enabled (can be used multiple times)"
+msgstr ""
+"Když je zapnutý podrobný výpis, nevypisovat stavové informace pro zadanou "
+"vlastnost (může být uvedeno vícekrát)"
+
+msgid "PROPERTY-NAME"
+msgstr "NÁZEV-VLASTNOSTI"
+
+msgid "Do not install a fault handler"
+msgstr "Neinstalovat obsluhu výjimek"
+
+msgid "Force EOS on sources before shutting the pipeline down"
+msgstr "Vynucuje se zakončení proudu (EOS) před vypnutím roury"
+
+msgid "Gather and print index statistics"
+msgstr "Sesbírat a vypsat přehledové statistiky"
+
+msgid ""
+"Do not print current position of pipeline. If this option is unspecified, "
+"the position will be printed when stdout is a TTY. To enable printing "
+"position when stdout is not a TTY, use \"force-position\" option"
+msgstr ""
+
+msgid ""
+"Allow printing current position of pipeline even if stdout is not a TTY. "
+"This option has no effect if the \"no-position\" option is specified"
+msgstr ""
+
+#, c-format
+msgid "ERROR: pipeline could not be constructed: %s.\n"
+msgstr "CHYBA: nelze sestavit rouru: %s.\n"
+
+msgid "ERROR: pipeline could not be constructed.\n"
+msgstr "CHYBA: nelze sestavit rouru.\n"
+
+#, c-format
+msgid "WARNING: erroneous pipeline: %s\n"
+msgstr "VAROVÁNÍ: chybná roura: %s\n"
+
+msgid "ERROR: the 'pipeline' element wasn't found.\n"
+msgstr "CHYBA: element „pipeline“ nebyl nalezen.\n"
+
+msgid "Setting pipeline to PAUSED ...\n"
+msgstr "Nastavuje se rouru na POZASTAVENA…\n"
+
+#, fuzzy
+msgid "Failed to set pipeline to PAUSED.\n"
+msgstr "Nastavuje se rouru na POZASTAVENA…\n"
+
+msgid "Pipeline is live and does not need PREROLL ...\n"
+msgstr "Roura žije a nepotřebuje PŘEDVINUTÍ…\n"
+
+msgid "Pipeline is PREROLLING ...\n"
+msgstr "Roura se PŘEDVINUJE…\n"
+
+msgid "Execution ended after %"
+msgstr "Provádění skončilo po %"
+
+msgid "Setting pipeline to NULL ...\n"
+msgstr "Nastavuje se roura na PRÁZDNÁ…\n"
+
+msgid "Freeing pipeline ...\n"
+msgstr "Uvolňuje se roura…\n"
+
+# On strike?
+#~ msgid "ERROR: Pipeline doesn't want to pause.\n"
+#~ msgstr "CHYBA: Roura se nechce pozastavit.\n"
+
+#~ msgid "EOS on shutdown enabled -- waiting for EOS after Error\n"
+#~ msgstr ""
+#~ "Zakončení proudu (EOS) při vypnutí povoleno -- Čeká se na značku EOS po "
+#~ "výskytu chyby\n"
+
+#~ msgid "Setting pipeline to READY ...\n"
+#~ msgstr "Nastavuje se roura na PŘIPRAVENA…\n"

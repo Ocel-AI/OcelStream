@@ -1,0 +1,175 @@
+################################################################################
+# SPDX-FileCopyrightText: Copyright (c) 2019-2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+################################################################################
+
+Prerequisites:
+- DeepStreamSDK 7.1
+- NVIDIA Triton Inference Server (optional)
+- Python 3.10
+- Gst-python
+
+To set up Triton Inference Server: (optional)
+For x86_64 and Jetson Docker:
+  1. Use the provided docker container and follow directions for
+     Triton Inference Server in the SDK README --
+     be sure to prepare the detector models.
+  2. Run the docker with this Python Bindings directory mapped
+  3. Install required Python packages inside the container:
+     $ apt update
+     $ apt install python3-gi python3-dev python3-gst-1.0 -y
+     $ pip3 install pathlib
+  4. Build and install pyds bindings:
+     Follow the instructions in bindings README in this repo to build and install
+     pyds wheel for Ubuntu 22.04
+  5. For Triton gRPC setup, please follow the instructions at below location:
+     /opt/nvidia/deepstream/deepstream/samples/configs/deepstream-app-triton-grpc/README
+
+For Jetson without Docker:
+  1. Follow instructions in the DeepStream SDK README to set up
+     Triton Inference Server:
+     2.1 Compile and install the nvdsinfer_customparser
+     2.2 Prepare at least the Triton detector models
+  2. Build and install pyds bindings:
+     Follow the instructions in bindings README in this repo to build and install
+     pyds wheel for Ubuntu 22.04
+  3. Clear the GStreamer cache if pipeline creation fails:
+     rm ~/.cache/gstreamer-1.0/*
+  4. For Triton gRPC setup, please follow the instructions at below location:
+     /opt/nvidia/deepstream/deepstream/samples/configs/deepstream-app-triton-grpc/README
+
+To setup peoplenet model and configs (optional):
+Please follow instructions in the README located here : /opt/nvidia/deepstream/deepstream/samples/configs/tao_pretrained_models/README
+
+Also follow these instructions for multi-stream Triton support (optional):
+  1. Update the max_batch_size in config_triton_infer_primary_peoplenet.txt to the maximum expected number of streams
+  2. Regenerate engine file for peoplenet as described below using deepstream-app:
+      a. cd to /opt/nvidia/deepstream/deepstream/samples/configs/tao_pretrained_models
+ 
+      b. Edit "primary-pgie" section in the deepstream_app_source1_peoplenet.txt file to reflect below:
+            "
+            enable=1
+            plugin-type=0
+            model-engine-file=../../models/tao_pretrained_models/peopleNet/<.engine file>
+            batch-size=<max_batch_size>
+            config-file=config_infer_primary_peoplenet.txt
+            "
+      c. Make sure that you make corresponding changes in the config_infer_primary_peoplenet.txt file in above dir.
+         For ex.
+            "
+            tlt-model-key=tlt_encode
+            tlt-encoded-model=../../models/tao_pretrained_models/peopleNet/resnet34_peoplenet_int8.etlt
+            labelfile-path=/opt/nvidia/deepstream/deepstream/samples/configs/tao_pretrained_models/labels_peoplenet.txt
+            model-engine-file=../../models/tao_pretrained_models/peopleNet/<.engine file>
+            int8-calib-file=../../models/tao_pretrained_models/peopleNet/resnet34_peoplenet_int8.txt
+            batch-size=16
+            "
+      d. While inside the dir /opt/nvidia/deepstream/deepstream/samples/configs/tao_pretrained_models/ , run the deepstream-app
+         as follows:
+            deepstream-app -c deepstream_app_source1_peoplenet.txt
+
+         This would generate the engine file required for the next step.
+
+      e. Create the following dir if not present:
+         sudo mkdir -p /opt/nvidia/deepstream/deepstream/samples/triton_model_repo/peoplenet/1/
+
+      f. Copy engine file from dir /opt/nvidia/deepstream/deepstream/samples/models/tao_pretrained_models/peopleNet/
+         to
+         /opt/nvidia/deepstream/deepstream/samples/triton_model_repo/peoplenet/1/
+
+      g. Copy file config.pbtxt from deepstream-test3 dir to /opt/nvidia/deepstream/deepstream/samples/triton_model_repo/peoplenet/ dir
+
+      h. cd to /opt/nvidia/deepstream/deepstream/samples/triton_model_repo/peoplenet and make sure that config.pbtxt
+         has the correct "max_batch_size" set along with "default_model_filename" set to the newly moved engine file
+
+Note: For gRPC case, grpc url according to the grpc server configuration and make sure that the labelfile_path points to the
+      correct/expected labelfile
+
+
+To run:
+  $ python3 deepstream_test_3.py -i <uri1> [uri2] ... [uriN] [--no-display] [--silent]
+e.g.
+  $ python3 deepstream_test_3.py -i file:///home/ubuntu/video1.mp4 file:///home/ubuntu/video2.mp4
+  $ python3 deepstream_test_3.py -i rtsp://127.0.0.1/video1 rtsp://127.0.0.1/video2 -s
+
+To run peoplenet, test3 now supports 3 modes:
+
+  1. nvinfer + peoplenet: this mode still uses TRT for inferencing.
+
+     $ python3 deepstream_test_3.py -i <uri1> [uri2] ... [uriN] --pgie nvinfer -c <configfile> [--no-display] [--silent]
+
+  2. nvinferserver + peoplenet : this mode uses Triton for inferencing.
+
+     $ python3 deepstream_test_3.py -i <uri1> [uri2] ... [uriN] --pgie nvinferserver -c <configfile> [--no-display] [-s]
+
+  3. nvinferserver (gRPC) + peoplenet : this mode uses Triton gRPC for inferencing.
+
+     $ python3 deepstream_test_3.py -i <uri1> [uri2] ... [uriN] --pgie nvinferserver-grpc -c <configfile> [--no-display] [--silent]
+
+e.g.
+  $ python3 deepstream_test_3.py -i file:///home/ubuntu/video1.mp4 file:///home/ubuntu/video2.mp4 --pgie nvinfer -c config_infer_primary_peoplenet.tx --no-display --silent
+  $ python3 deepstream_test_3.py -i rtsp://127.0.0.1/video1 rtsp://127.0.0.1/video2 --pgie nvinferserver -c config_triton_infer_primary_peoplenet.txt -s
+  $ python3 deepstream_test_3.py -i rtsp://127.0.0.1/video1 rtsp://127.0.0.1/video2 --pgie nvinferserver-grpc -c config_triton_grpc_infer_primary_peoplenet.txt --no-display --silent
+
+Note:
+1) if --pgie is not specified, test3 uses nvinfer and default model, not peoplenet.
+2) Both --pgie and -c need to be provided for custom models.
+3) Configs other than peoplenet can also be provided using the above approach.
+4) --no-display option disables on-screen video display.
+5) -s/--silent option can be used to suppress verbose output.
+6) --file-loop option can be used to loop input files after EOS.
+7) --disable-probe option can be used to disable the probe function and to use nvdslogger for perf measurements.
+8) To enable Pipeline Latency Measurement, set environment variable : NVDS_ENABLE_LATENCY_MEASUREMENT=1
+9) To enable Component Level Latency Measurement, set environment variable : NVDS_ENABLE_COMPONENT_LATENCY_MEASUREMENT=1 in addition to NVDS_ENABLE_LATENCY_MEASUREMENT=1
+
+This document describes the sample deepstream-test3 application.
+
+
+ * Use multiple sources in the pipeline.
+ * Use a uridecodebin so that any type of input (e.g. RTSP/File), any GStreamer
+   supported container format, and any codec can be used as input.
+ * Configure the stream-muxer to generate a batch of frames and infer on the
+   batch for better resource utilization.
+ * Extract the stream metadata, which contains useful information about the
+   frames in the batched buffer.
+ * Showcases how to enable latency measurement using probe function
+
+Refer to the deepstream-test1 sample documentation for an example of simple
+single-stream inference, bounding-box overlay, and rendering.
+
+This sample accepts one or more H.264/H.265 video streams as input. It creates
+a source bin for each input and connects the bins to an instance of the
+"nvstreammux" element, which forms the batch of frames. The batch of
+frames is fed to "nvinfer" for batched inferencing. The batched buffer is
+composited into a 2D tile array using "nvmultistreamtiler." The rest of the
+pipeline is similar to the deepstream-test1 sample.
+
+The "width" and "height" properties must be set on the stream-muxer to set the
+output resolution. If the input frame resolution is different from
+stream-muxer's "width" and "height", the input frame will be scaled to muxer's
+output resolution.
+
+The stream-muxer waits for a user-defined timeout before forming the batch. The
+timeout is set using the "batched-push-timeout" property. If the complete batch
+is formed before the timeout is reached, the batch is pushed to the downstream
+element. If the timeout is reached before the complete batch can be formed
+(which can happen in case of rtsp sources), the batch is formed from the
+available input buffers and pushed. Ideally, the timeout of the stream-muxer
+should be set based on the framerate of the fastest source. It can also be set
+to -1 to make the stream-muxer wait infinitely.
+
+The "nvmultistreamtiler" composite streams based on their stream-ids in
+row-major order (starting from stream 0, left to right across the top row, then
+across the next row, etc.).

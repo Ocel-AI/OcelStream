@@ -1,0 +1,1512 @@
+# Përkthimi i mesazheve të gstreamer në shqip.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Laurent Dhima <laurenti@alblinux.net>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gstreamer 0.8.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-25 01:01+0100\n"
+"PO-Revision-Date: 2004-08-07 23:46+0200\n"
+"Last-Translator: Laurent Dhima <laurenti@alblinux.net>\n"
+"Language-Team: Albanian <begraj@hotmail.com>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Print the GStreamer version"
+msgstr "Printo versionin e GStreamer"
+
+msgid "Make all warnings fatal"
+msgstr "Bëj që të gjithë paralajmërimet të jenë fatale"
+
+msgid "Print available debug categories and exit"
+msgstr "Printo kategoritë e debug në dispozicion dhe dil"
+
+#, fuzzy
+msgid ""
+"Default debug level from 1 (only error) to 9 (anything) or 0 for no output"
+msgstr ""
+"Niveli i prezgjedhur i debug nga 1 (vetëm gabimi) në 5 (gjithçka) ose 0 për "
+"jo output"
+
+msgid "LEVEL"
+msgstr "NIVELI"
+
+msgid ""
+"Comma-separated list of category_name:level pairs to set specific levels for "
+"the individual categories. Example: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+msgstr ""
+"Lista e category_name, ndarë me presje:etiketë çifte për të përcaktuar "
+"etiketa specifike për kategoritë individuale. Shembull: GST_AUTOPLUG:5,"
+"GST_ELEMENT_*:3"
+
+msgid "LIST"
+msgstr "LISTË"
+
+msgid "Disable colored debugging output"
+msgstr "Ç'aktivo output shumëngjyrësh të debug"
+
+msgid ""
+"Changes coloring mode of the debug log. Possible modes: off, on, disable, "
+"auto, unix"
+msgstr ""
+
+msgid "Disable debugging"
+msgstr "Ç'aktivo debug"
+
+msgid "Enable verbose plugin loading diagnostics"
+msgstr "Aktivo kërkesën e plugin të ngarkimit të diagnostikimeve"
+
+msgid "Colon-separated paths containing plugins"
+msgstr ""
+
+msgid "PATHS"
+msgstr "POZICIONET"
+
+#, fuzzy
+msgid ""
+"Comma-separated list of plugins to preload in addition to the list stored in "
+"environment variable GST_PLUGIN_PATH"
+msgstr ""
+"Lista e plugin, të ndarë me presje, që duhen parangarkuar në plotësim të "
+"listës së regjistruar tek e ndryshueshmja e ambientit GST_PLUGIN_PATH"
+
+msgid "PLUGINS"
+msgstr "PLUGINS"
+
+msgid "Disable trapping of segmentation faults during plugin loading"
+msgstr ""
+"Ç'aktivo regjistrimin e dështimeve të segmentuara gjatë ngarkimit të plugin"
+
+msgid "Disable updating the registry"
+msgstr ""
+
+msgid "Disable spawning a helper process while scanning the registry"
+msgstr ""
+
+msgid "GStreamer Options"
+msgstr ""
+
+#, fuzzy
+msgid "Show GStreamer Options"
+msgstr "Printo versionin e GStreamer"
+
+#, c-format
+msgid "Unknown option"
+msgstr ""
+
+msgid "GStreamer encountered a general core library error."
+msgstr "GStreamer ndeshi në një gabim të përgjithshëm të librarisë bazë."
+
+#, fuzzy
+msgid ""
+"GStreamer developers were too lazy to assign an error code to this error."
+msgstr ""
+"Zhvilluesit e GStreamer ishin tepër të lodhur për t'i caktuar një kod gabimi "
+"këtij difekti.  Ju lutem dërgoni një raport."
+
+#, fuzzy
+msgid "Internal GStreamer error: code not implemented."
+msgstr "Gabim i brendshëm i GStreamer: kodi mungon.  Raporto bug."
+
+msgid ""
+"GStreamer error: state change failed and some element failed to post a "
+"proper error message with the reason for the failure."
+msgstr ""
+
+#, fuzzy
+msgid "Internal GStreamer error: pad problem."
+msgstr "Gabim i brendshëm i GStreamer: problem me shtegun.  Raporto bug."
+
+#, fuzzy
+msgid "Internal GStreamer error: thread problem."
+msgstr "Gabim i brendshëm i GStreamer: problem i thread.  Raporto bug."
+
+#, fuzzy
+msgid "GStreamer error: negotiation problem."
+msgstr "Gabim i brendshëm i GStreamer: problem negocimi.  Raporto bug."
+
+#, fuzzy
+msgid "Internal GStreamer error: event problem."
+msgstr "Gabim i brendshëm i GStreamer: problem ndodhie.  Raporto bug."
+
+#, fuzzy
+msgid "Internal GStreamer error: seek problem."
+msgstr "Gabim i brendshëm i GStreamer: problem kërkimi.  Raporto bug."
+
+#, fuzzy
+msgid "Internal GStreamer error: caps problem."
+msgstr "Gabim i brendshëm i GStreamer: problem drejtimi.  Raporto bug."
+
+#, fuzzy
+msgid "Internal GStreamer error: tag problem."
+msgstr "Gabim i brendshëm i GStreamer: problem me tag.  Raporto bug."
+
+msgid "Your GStreamer installation is missing a plug-in."
+msgstr ""
+
+#, fuzzy
+msgid "GStreamer error: clock problem."
+msgstr "Gabim i brendshëm i GStreamer: problem kërkimi.  Raporto bug."
+
+msgid ""
+"This application is trying to use GStreamer functionality that has been "
+"disabled."
+msgstr ""
+
+msgid "GStreamer encountered a general supporting library error."
+msgstr "GStreamer ndeshi në një gabim librarie të suportit të përgjithshëm."
+
+msgid "Could not initialize supporting library."
+msgstr "E pamundur nisja e librarisë mbështetëse."
+
+msgid "Could not close supporting library."
+msgstr "E pamundur mbyllja e librarisë mbështetëse."
+
+#, fuzzy
+msgid "Could not configure supporting library."
+msgstr "E pamundur mbyllja e librarisë mbështetëse."
+
+msgid "Encoding error."
+msgstr ""
+
+#, fuzzy
+msgid "GStreamer encountered a general resource error."
+msgstr "GStreamer ndeshi në një gabim të përgjithshëm të librarisë bazë."
+
+msgid "Resource not found."
+msgstr "Burimi nuk u gjet."
+
+msgid "Resource busy or not available."
+msgstr "Burimi është i zënë ose jo në dispozicion."
+
+msgid "Could not open resource for reading."
+msgstr "E pamundur hapja e burimit për lexim."
+
+msgid "Could not open resource for writing."
+msgstr "E pamundur hapja e burimit për shkrim."
+
+msgid "Could not open resource for reading and writing."
+msgstr "E pamundur hapja e burimit për lexim dhe shkrim."
+
+msgid "Could not close resource."
+msgstr "E pamundur mbyllja e burimit."
+
+msgid "Could not read from resource."
+msgstr "I pamundur leximi nga burimi."
+
+msgid "Could not write to resource."
+msgstr "I pamundur hkrimi në burim."
+
+msgid "Could not perform seek on resource."
+msgstr "E pamundur kryerja e kërkimit në burim."
+
+msgid "Could not synchronize on resource."
+msgstr "Sinkronizim i pamundur në burim."
+
+msgid "Could not get/set settings from/on resource."
+msgstr "E pamundur marrja/vendosja e rregullimeve nga/në burim."
+
+msgid "No space left on the resource."
+msgstr ""
+
+#, fuzzy
+msgid "Not authorized to access resource."
+msgstr "I pamundur hkrimi në burim."
+
+#, fuzzy
+msgid "GStreamer encountered a general stream error."
+msgstr "GStreamer ndeshi në një gabim të përgjithshëm të librarisë bazë."
+
+msgid "Element doesn't implement handling of this stream. Please file a bug."
+msgstr ""
+"Elementi nuk suporton trajtimin e kësaj vazhde. Ju lutem raporto një bug."
+
+msgid "Could not determine type of stream."
+msgstr "I pamundur përcaktimi i llojit të vazhdës."
+
+msgid "The stream is of a different type than handled by this element."
+msgstr "Vazhda është e një lloji të ndryshëm nga të trajtuarit nga ky element."
+
+msgid "There is no codec present that can handle the stream's type."
+msgstr "Asnjë kodues/dekodues në dispozicion për të trajtuar llojin e vazhdës."
+
+msgid "Could not decode stream."
+msgstr "I pamundur dekodifikimi i vazhdës."
+
+msgid "Could not encode stream."
+msgstr "I pamundur kodifikimi i vazhdës."
+
+msgid "Could not demultiplex stream."
+msgstr "I pamundur demultipleksimi i stream."
+
+msgid "Could not multiplex stream."
+msgstr "I pamundur multipleksimi i vazhdës."
+
+#, fuzzy
+msgid "The stream is in the wrong format."
+msgstr "Vazhda është në një format të gabuar."
+
+msgid "The stream is encrypted and decryption is not supported."
+msgstr ""
+
+msgid ""
+"The stream is encrypted and can't be decrypted because no suitable key has "
+"been supplied."
+msgstr ""
+
+#, c-format
+msgid "No error message for domain %s."
+msgstr "Asnjë mesazh gabimi për domain %s."
+
+#, c-format
+msgid "No standard error message for domain %s and code %d."
+msgstr "Asnjë mesazh gabimi standart për domain %s dhe kodin %d."
+
+msgid "Selected clock cannot be used in pipeline."
+msgstr ""
+
+#, c-format
+msgid "Error writing registry cache to %s: %s"
+msgstr ""
+
+msgid "title"
+msgstr "titulli"
+
+msgid "commonly used title"
+msgstr "titulli i përdorur zakonisht"
+
+msgid "title sortname"
+msgstr ""
+
+#, fuzzy
+msgid "commonly used title for sorting purposes"
+msgstr "titulli i përdorur zakonisht"
+
+msgid "artist"
+msgstr "artisti"
+
+msgid "person(s) responsible for the recording"
+msgstr "personi(at) përgjegjës për regjistrimin"
+
+msgid "artist sortname"
+msgstr ""
+
+#, fuzzy
+msgid "person(s) responsible for the recording for sorting purposes"
+msgstr "personi(at) përgjegjës për regjistrimin"
+
+msgid "album"
+msgstr "albumi"
+
+msgid "album containing this data"
+msgstr "albumi që përmban këtë të dhënë"
+
+msgid "album sortname"
+msgstr ""
+
+#, fuzzy
+msgid "album containing this data for sorting purposes"
+msgstr "albumi që përmban këtë të dhënë"
+
+#, fuzzy
+msgid "album artist"
+msgstr "artisti"
+
+msgid "The artist of the entire album, as it should be displayed"
+msgstr ""
+
+msgid "album artist sortname"
+msgstr ""
+
+msgid "The artist of the entire album, as it should be sorted"
+msgstr ""
+
+msgid "date"
+msgstr "data"
+
+#, fuzzy
+msgid "date the data was created (as a GDate structure)"
+msgstr "data e krijimit të së dhënës (në ditë të kalendarit Julian)"
+
+#, fuzzy
+msgid "datetime"
+msgstr "data"
+
+#, fuzzy
+msgid "date and time the data was created (as a GstDateTime structure)"
+msgstr "data e krijimit të së dhënës (në ditë të kalendarit Julian)"
+
+msgid "genre"
+msgstr "lloji"
+
+msgid "genre this data belongs to"
+msgstr "lloji së cilit i takon e dhëna"
+
+msgid "comment"
+msgstr "komenti"
+
+msgid "free text commenting the data"
+msgstr "tekst i lirë komentues i së dhënës"
+
+#, fuzzy
+msgid "extended comment"
+msgstr "komenti"
+
+#, fuzzy
+msgid "free text commenting the data in key=value or key[en]=comment form"
+msgstr "tekst i lirë komentues i së dhënës"
+
+msgid "track number"
+msgstr "numri i pistës"
+
+msgid "track number inside a collection"
+msgstr "numri i pjesës në brendësi të një koleksioni"
+
+msgid "track count"
+msgstr "numërimi i pjesës"
+
+msgid "count of tracks inside collection this track belongs to"
+msgstr "numurimi i pjesëve në brendësi të koleksionit të cilit i përket pjesa"
+
+msgid "disc number"
+msgstr "numri i diskut"
+
+msgid "disc number inside a collection"
+msgstr "numri i diskut në brendësi të një koleksioni"
+
+msgid "disc count"
+msgstr "numurimi i diskut"
+
+msgid "count of discs inside collection this disc belongs to"
+msgstr "numurimi i disqeve në brendësi të koleksionit të cilit i përket disku"
+
+msgid "location"
+msgstr "pozicioni"
+
+msgid ""
+"Origin of media as a URI (location, where the original of the file or stream "
+"is hosted)"
+msgstr ""
+
+msgid "homepage"
+msgstr ""
+
+msgid "Homepage for this media (i.e. artist or movie homepage)"
+msgstr ""
+
+msgid "description"
+msgstr "përshkrimi"
+
+msgid "short text describing the content of the data"
+msgstr "teks i shkurtër përshkrues i përmbajtjes së së dhënës"
+
+msgid "version"
+msgstr "versioni"
+
+msgid "version of this data"
+msgstr "versioni i kësaj të dhëne"
+
+msgid "ISRC"
+msgstr "ISRC"
+
+msgid "International Standard Recording Code - see http://www.ifpi.org/isrc/"
+msgstr ""
+"International Standard Recording Code - shiko http://www.ifpi.org/isrc/"
+
+msgid "organization"
+msgstr "organizata"
+
+msgid "copyright"
+msgstr "copyright"
+
+msgid "copyright notice of the data"
+msgstr "shënime mbi të drejtat e së dhënës"
+
+#, fuzzy
+msgid "copyright uri"
+msgstr "copyright"
+
+#, fuzzy
+msgid "URI to the copyright notice of the data"
+msgstr "shënime mbi të drejtat e së dhënës"
+
+#, fuzzy
+msgid "encoded by"
+msgstr "kodifikuesi"
+
+msgid "name of the encoding person or organization"
+msgstr ""
+
+msgid "contact"
+msgstr "kontakti"
+
+msgid "contact information"
+msgstr "informacione në lidhje me kontaktin"
+
+msgid "license"
+msgstr "liçenca"
+
+msgid "license of data"
+msgstr "liçenca e së dhënës"
+
+#, fuzzy
+msgid "license uri"
+msgstr "liçenca"
+
+#, fuzzy
+msgid "URI to the license of the data"
+msgstr "liçenca e së dhënës"
+
+msgid "performer"
+msgstr "interpretuesi"
+
+msgid "person(s) performing"
+msgstr "personi(at) interpretues"
+
+msgid "composer"
+msgstr ""
+
+#, fuzzy
+msgid "person(s) who composed the recording"
+msgstr "personi(at) përgjegjës për regjistrimin"
+
+msgid "conductor"
+msgstr ""
+
+msgid "conductor/performer refinement"
+msgstr ""
+
+msgid "duration"
+msgstr "kohëzgjatja"
+
+msgid "length in GStreamer time units (nanoseconds)"
+msgstr "gjatësia në njësi kohore të GStreamer (nanosekonda)"
+
+msgid "codec"
+msgstr "codec"
+
+msgid "codec the data is stored in"
+msgstr "codec ku janë regjistruar të dhënat"
+
+msgid "video codec"
+msgstr "video codec"
+
+msgid "codec the video data is stored in"
+msgstr "codec ku janë regjistruar të dhënat video"
+
+msgid "audio codec"
+msgstr "audio codec"
+
+msgid "codec the audio data is stored in"
+msgstr "codec ku janë regjistruar të dhënat audio"
+
+#, fuzzy
+msgid "subtitle codec"
+msgstr "video codec"
+
+#, fuzzy
+msgid "codec the subtitle data is stored in"
+msgstr "codec ku janë regjistruar të dhënat video"
+
+#, fuzzy
+msgid "container format"
+msgstr "informacione në lidhje me kontaktin"
+
+#, fuzzy
+msgid "container format the data is stored in"
+msgstr "codec ku janë regjistruar të dhënat"
+
+msgid "bitrate"
+msgstr "bitrate"
+
+msgid "exact or average bitrate in bits/s"
+msgstr "bitrate preçize ose mesatare në bits/s"
+
+msgid "nominal bitrate"
+msgstr "bitrate nominale"
+
+msgid "nominal bitrate in bits/s"
+msgstr "bitrate nominale në bits/s"
+
+msgid "minimum bitrate"
+msgstr "bitrate minimum"
+
+msgid "minimum bitrate in bits/s"
+msgstr "bitrate minimum në bits/s"
+
+msgid "maximum bitrate"
+msgstr "bitrate maksimum"
+
+msgid "maximum bitrate in bits/s"
+msgstr "bitrate maksimum në bits/s"
+
+msgid "encoder"
+msgstr "kodifikuesi"
+
+msgid "encoder used to encode this stream"
+msgstr "kodifikuesi i përdorur për të kodifikuar këtë fluks"
+
+msgid "encoder version"
+msgstr "versioni i kodifikuesit"
+
+msgid "version of the encoder used to encode this stream"
+msgstr "versioni i kodifikuesit të përdorur për të kodifikuar këtë fluks"
+
+msgid "serial"
+msgstr "seria"
+
+msgid "serial number of track"
+msgstr "numri serisë së pjesës"
+
+msgid "replaygain track gain"
+msgstr "ecuria i pjesës në replygain"
+
+msgid "track gain in db"
+msgstr "rritja e pjesës në db"
+
+msgid "replaygain track peak"
+msgstr "maksimumi i pjesës në replygain"
+
+msgid "peak of the track"
+msgstr "skaji i pistës"
+
+msgid "replaygain album gain"
+msgstr "replaygain album gain"
+
+msgid "album gain in db"
+msgstr "gain i albumit në db"
+
+msgid "replaygain album peak"
+msgstr "replaygain album peak"
+
+msgid "peak of the album"
+msgstr "kulmi i albumit"
+
+#, fuzzy
+msgid "replaygain reference level"
+msgstr "maksimumi i pjesës në replygain"
+
+msgid "reference level of track and album gain values"
+msgstr ""
+
+msgid "language code"
+msgstr ""
+
+msgid "language code for this stream, conforming to ISO-639-1 or ISO-639-2"
+msgstr ""
+
+msgid "language name"
+msgstr ""
+
+msgid "freeform name of the language this stream is in"
+msgstr ""
+
+msgid "image"
+msgstr ""
+
+#, fuzzy
+msgid "image related to this stream"
+msgstr "kodifikuesi i përdorur për të kodifikuar këtë fluks"
+
+#. TRANSLATORS: 'preview image' = image that shows a preview of the full image
+msgid "preview image"
+msgstr ""
+
+msgid "preview image related to this stream"
+msgstr ""
+
+msgid "attachment"
+msgstr ""
+
+#, fuzzy
+msgid "file attached to this stream"
+msgstr "kodifikuesi i përdorur për të kodifikuar këtë fluks"
+
+msgid "beats per minute"
+msgstr ""
+
+msgid "number of beats per minute in audio"
+msgstr ""
+
+msgid "keywords"
+msgstr ""
+
+#, fuzzy
+msgid "comma separated keywords describing the content"
+msgstr "teks i shkurtër përshkrues i përmbajtjes së së dhënës"
+
+#, fuzzy
+msgid "geo location name"
+msgstr "pozicioni"
+
+msgid ""
+"human readable descriptive location of where the media has been recorded or "
+"produced"
+msgstr ""
+
+msgid "geo location latitude"
+msgstr ""
+
+msgid ""
+"geo latitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the equator, negative values for "
+"southern latitudes)"
+msgstr ""
+
+msgid "geo location longitude"
+msgstr ""
+
+msgid ""
+"geo longitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the prime meridian in Greenwich/UK,  "
+"negative values for western longitudes)"
+msgstr ""
+
+msgid "geo location elevation"
+msgstr ""
+
+msgid ""
+"geo elevation of where the media has been recorded or produced in meters "
+"according to WGS84 (zero is average sea level)"
+msgstr ""
+
+msgid "geo location country"
+msgstr ""
+
+msgid "country (english name) where the media has been recorded or produced"
+msgstr ""
+
+#, fuzzy
+msgid "geo location city"
+msgstr "pozicioni"
+
+msgid "city (english name) where the media has been recorded or produced"
+msgstr ""
+
+msgid "geo location sublocation"
+msgstr ""
+
+msgid ""
+"a location within a city where the media has been produced or created (e.g. "
+"the neighborhood)"
+msgstr ""
+
+msgid "geo location horizontal error"
+msgstr ""
+
+msgid "expected error of the horizontal positioning measures (in meters)"
+msgstr ""
+
+msgid "geo location movement speed"
+msgstr ""
+
+msgid ""
+"movement speed of the capturing device while performing the capture in m/s"
+msgstr ""
+
+msgid "geo location movement direction"
+msgstr ""
+
+msgid ""
+"indicates the movement direction of the device performing the capture of a "
+"media. It is represented as degrees in floating point representation, 0 "
+"means the geographic north, and increases clockwise"
+msgstr ""
+
+msgid "geo location capture direction"
+msgstr ""
+
+msgid ""
+"indicates the direction the device is pointing to when capturing  a media. "
+"It is represented as degrees in floating point  representation, 0 means the "
+"geographic north, and increases clockwise"
+msgstr ""
+
+#. TRANSLATORS: 'show name' = 'TV/radio/podcast show name' here
+msgid "show name"
+msgstr ""
+
+msgid "Name of the tv/podcast/series show the media is from"
+msgstr ""
+
+#. TRANSLATORS: 'show sortname' = 'TV/radio/podcast show name as used for sorting purposes' here
+msgid "show sortname"
+msgstr ""
+
+msgid ""
+"Name of the tv/podcast/series show the media is from, for sorting purposes"
+msgstr ""
+
+#, fuzzy
+msgid "episode number"
+msgstr "numri i diskut"
+
+msgid "The episode number in the season the media is part of"
+msgstr ""
+
+#, fuzzy
+msgid "season number"
+msgstr "numri i diskut"
+
+msgid "The season number of the show the media is part of"
+msgstr ""
+
+msgid "lyrics"
+msgstr ""
+
+msgid "The lyrics of the media, commonly used for songs"
+msgstr ""
+
+msgid "composer sortname"
+msgstr ""
+
+msgid "person(s) who composed the recording, for sorting purposes"
+msgstr ""
+
+msgid "grouping"
+msgstr ""
+
+msgid ""
+"Groups related media that spans multiple tracks, like the different pieces "
+"of a concerto. It is a higher level than a track, but lower than an album"
+msgstr ""
+
+#, fuzzy
+msgid "user rating"
+msgstr "kohëzgjatja"
+
+msgid ""
+"Rating attributed by a user. The higher the rank, the more the user likes "
+"this media"
+msgstr ""
+
+msgid "device manufacturer"
+msgstr ""
+
+#, fuzzy
+msgid "Manufacturer of the device used to create this media"
+msgstr "versioni i kodifikuesit të përdorur për të kodifikuar këtë fluks"
+
+msgid "device model"
+msgstr ""
+
+#, fuzzy
+msgid "Model of the device used to create this media"
+msgstr "versioni i kodifikuesit të përdorur për të kodifikuar këtë fluks"
+
+msgid "application name"
+msgstr ""
+
+msgid "Application used to create the media"
+msgstr ""
+
+msgid "application data"
+msgstr ""
+
+msgid "Arbitrary application data to be serialized into the media"
+msgstr ""
+
+msgid "image orientation"
+msgstr ""
+
+msgid "How the image should be rotated or flipped before display"
+msgstr ""
+
+msgid "publisher"
+msgstr ""
+
+msgid "Name of the label or publisher"
+msgstr ""
+
+msgid "interpreted-by"
+msgstr ""
+
+msgid "Information about the people behind a remix and similar interpretations"
+msgstr ""
+
+msgid "midi-base-note"
+msgstr ""
+
+msgid "Midi note number of the audio track."
+msgstr ""
+
+msgid "private-data"
+msgstr ""
+
+msgid "Private data"
+msgstr ""
+
+#. separator between two strings
+msgid ", "
+msgstr ", "
+
+#, c-format
+msgid "Invalid URI: %s"
+msgstr ""
+
+#, c-format
+msgid "No URI handler for the %s protocol found"
+msgstr ""
+
+#, c-format
+msgid "URI scheme '%s' not supported"
+msgstr ""
+
+#, c-format
+msgid "ERROR: from element %s: %s\n"
+msgstr "GABIM: nga elementi %s: %s\n"
+
+#, c-format
+msgid ""
+"Additional debug info:\n"
+"%s\n"
+msgstr ""
+"Informacione shtesë të debug:\n"
+"%s\n"
+
+#. ******************************************************************************************
+#. *** helpers for pipeline-setup
+#. ******************************************************************************************
+#, c-format
+msgid "link has no source [sink=%s@%p]"
+msgstr ""
+
+#, c-format
+msgid "link has no sink [source=%s@%p]"
+msgstr ""
+
+#, c-format
+msgid "no property \"%s\" in element \"%s\""
+msgstr "asnjë pronësi \"%s\" tek elementi \"%s\""
+
+#, c-format
+msgid "could not set property \"%s\" in element \"%s\" to \"%s\""
+msgstr "e pamundur vendosja e pronësisë \"%s\" tek elementi \"%s\" në \"%s"
+
+#, fuzzy, c-format
+msgid "Element \"%s\" is not a GstPreset"
+msgstr "File \"%s\" është një socket."
+
+#, fuzzy, c-format
+msgid "could not set preset \"%s\" in element \"%s\""
+msgstr "e pamundur vendosja e pronësisë \"%s\" tek elementi \"%s\" në \"%s"
+
+msgid "Delayed linking failed."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "could not link %s to %s, %s can't handle caps %s"
+msgstr "e pamundur lidhja e %s me %s"
+
+#, fuzzy, c-format
+msgid "could not link %s to %s, neither element can handle caps %s"
+msgstr "e pamundur lidhja e elementit sink për URI \"%s\""
+
+#, fuzzy, c-format
+msgid "could not link %s to %s with caps %s"
+msgstr "e pamundur lidhja e %s me %s"
+
+#, c-format
+msgid "could not link %s to %s"
+msgstr "e pamundur lidhja e %s me %s"
+
+#, c-format
+msgid "no element \"%s\""
+msgstr "asnjë element \"%s\""
+
+#, c-format
+msgid "unexpected reference \"%s\" - ignoring"
+msgstr ""
+
+#, c-format
+msgid "unexpected pad-reference \"%s\" - ignoring"
+msgstr ""
+
+#, c-format
+msgid "could not parse caps \"%s\""
+msgstr "i pamundur analizimi i caps \"%s\""
+
+#, c-format
+msgid "no sink element for URI \"%s\""
+msgstr "asnjë element shpërndarës për URI \"%s\""
+
+#, c-format
+msgid "no source element for URI \"%s\""
+msgstr "asnjë element burues për URI \"%s\""
+
+msgid "syntax error"
+msgstr ""
+
+#, c-format
+msgid "specified empty bin \"%s\", not allowed"
+msgstr "u specifikua bin bosh \"%s\", nuk lejohet"
+
+#, fuzzy, c-format
+msgid "no bin \"%s\", unpacking elements"
+msgstr "asnjë bin \"%s\", u kapërcye"
+
+msgid "empty pipeline not allowed"
+msgstr "nuk lejohet konduktori bosh"
+
+msgid "Pipeline construction is invalid, please add queues."
+msgstr ""
+
+msgid "A lot of buffers are being dropped."
+msgstr ""
+
+msgid "Internal data flow problem."
+msgstr ""
+
+msgid "Internal data flow error."
+msgstr ""
+
+msgid "Internal clock error."
+msgstr ""
+
+msgid "Failed to map buffer."
+msgstr ""
+
+msgid "Filter caps"
+msgstr ""
+
+msgid ""
+"Restrict the possible allowed capabilities (NULL means ANY). Setting this "
+"property takes a reference to the supplied GstCaps object."
+msgstr ""
+
+msgid "Caps Change Mode"
+msgstr ""
+
+msgid "Filter caps change behaviour"
+msgstr ""
+
+msgid "No Temp directory specified."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Could not create temp file \"%s\"."
+msgstr "E pamundur hapja e file \"%s\" në shkrim."
+
+#, c-format
+msgid "Could not open file \"%s\" for reading."
+msgstr "E pamundur hapja e file \"%s\" për lexim."
+
+#, fuzzy
+msgid "Error while writing to download file."
+msgstr "Gabim gjatë shkrimit tek file \"%s\"."
+
+msgid "No file name specified for writing."
+msgstr "Nuk është përcaktuar asnjë emër file për tu shkruar."
+
+#, c-format
+msgid "Could not open file \"%s\" for writing."
+msgstr "E pamundur hapja e file \"%s\" në shkrim."
+
+#, c-format
+msgid "Error closing file \"%s\"."
+msgstr "Gabim gjatë mbylljes së file \"%s\"."
+
+#, fuzzy, c-format
+msgid "Error while seeking in file \"%s\"."
+msgstr "Gabim gjatë shkrimit tek file \"%s\"."
+
+#, c-format
+msgid "Error while writing to file \"%s\"."
+msgstr "Gabim gjatë shkrimit tek file \"%s\"."
+
+msgid "No file name specified for reading."
+msgstr "Nuk është përcaktuar asnjë emër file për tu lexuar."
+
+#, fuzzy, c-format
+msgid "Could not get info on \"%s\"."
+msgstr "E pamundur marrja/vendosja e rregullimeve nga/në burim."
+
+#, c-format
+msgid "\"%s\" is a directory."
+msgstr "\"%s\" është një directory."
+
+#, c-format
+msgid "File \"%s\" is a socket."
+msgstr "File \"%s\" është një socket."
+
+msgid "Failed after iterations as requested."
+msgstr "Dështoi mbas përsëritjeve sikurse të kërkuara."
+
+msgid "eos-after and error-after can't both be defined."
+msgstr ""
+
+msgid "caps"
+msgstr "mbrojtëse"
+
+msgid "detected capabilities in stream"
+msgstr "u zbuluan mundësi në fluks"
+
+msgid "minimum"
+msgstr "minimum"
+
+msgid "force caps"
+msgstr ""
+
+msgid "force caps without doing a typefind"
+msgstr ""
+
+msgid "Stream doesn't contain enough data."
+msgstr ""
+
+#, fuzzy
+msgid "Stream contains no data."
+msgstr "albumi që përmban këtë të dhënë"
+
+#, c-format
+msgid "%sImplemented Interfaces%s:\n"
+msgstr ""
+
+msgid "readable"
+msgstr ""
+
+msgid "writable"
+msgstr ""
+
+msgid "deprecated"
+msgstr ""
+
+msgid "controllable"
+msgstr ""
+
+msgid "conditionally available"
+msgstr ""
+
+msgid "changeable in NULL, READY, PAUSED or PLAYING state"
+msgstr ""
+
+msgid "changeable only in NULL, READY or PAUSED state"
+msgstr ""
+
+msgid "changeable only in NULL or READY state"
+msgstr ""
+
+msgid "Blacklisted files:"
+msgstr ""
+
+#, c-format
+msgid "%sTotal count%s: %s"
+msgstr ""
+
+#, c-format
+msgid "%d blacklisted file"
+msgid_plural "%d blacklisted files"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%d plugin"
+msgid_plural "%d plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%d blacklist entry"
+msgid_plural "%d blacklist entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy, c-format
+msgid "%d feature"
+msgid_plural "%d features"
+msgstr[0] "karakteristika"
+msgstr[1] "karakteristikat"
+
+msgid "Print all elements"
+msgstr "Printo të gjithë elementët"
+
+msgid "Print list of blacklisted files"
+msgstr ""
+
+msgid ""
+"Print a machine-parsable list of features the specified plugin or all "
+"plugins provide.\n"
+"                                       Useful in connection with external "
+"automatic plugin installation mechanisms"
+msgstr ""
+
+msgid "List the plugin contents"
+msgstr ""
+
+msgid ""
+"A slashes ('/') separated list of types of elements (also known as klass) to "
+"list. (unordered)"
+msgstr ""
+
+msgid "Check if the specified element or plugin exists"
+msgstr ""
+
+msgid ""
+"When checking if an element or plugin exists, also check that its version is "
+"at least the version specified"
+msgstr ""
+
+msgid "Print supported URI schemes, with the elements that implement them"
+msgstr ""
+
+msgid ""
+"Disable colors in output. You can also achieve the same by setting "
+"'GST_INSPECT_NO_COLORS' environment variable to any value."
+msgstr ""
+
+msgid "Color output, even when not sending to a tty."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Could not load plugin file: %s\n"
+msgstr "E pamundur hapja e file \"%s\" në shkrim."
+
+#, fuzzy, c-format
+msgid "No such element or plugin '%s'\n"
+msgstr "asnjë element burues për URI \"%s\""
+
+msgid "Index statistics"
+msgstr ""
+
+msgid "Setting pipeline to PLAYING ...\n"
+msgstr ""
+
+msgid "ERROR: pipeline doesn't want to play.\n"
+msgstr "GABIM: pipeline nuk dëshiron të luajë.\n"
+
+#, c-format
+msgid "Got message #%u from element \"%s\" (%s): "
+msgstr ""
+
+#, c-format
+msgid "Got message #%u from pad \"%s:%s\" (%s): "
+msgstr ""
+
+#, c-format
+msgid "Got message #%u from object \"%s\" (%s): "
+msgstr ""
+
+#, c-format
+msgid "Got message #%u (%s): "
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Got EOS from element \"%s\".\n"
+msgstr "GABIM: nga elementi %s: %s\n"
+
+msgid "EOS received - stopping pipeline...\n"
+msgstr ""
+
+#, c-format
+msgid "FOUND TAG      : found by element \"%s\".\n"
+msgstr "NDRYSHIM I GJETUR      : u gjet nga elementi \"%s\".\n"
+
+#, fuzzy, c-format
+msgid "FOUND TAG      : found by pad \"%s:%s\".\n"
+msgstr "NDRYSHIM I GJETUR      : u gjet nga elementi \"%s\".\n"
+
+#, fuzzy, c-format
+msgid "FOUND TAG      : found by object \"%s\".\n"
+msgstr "NDRYSHIM I GJETUR      : u gjet nga elementi \"%s\".\n"
+
+msgid "FOUND TAG\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "FOUND TOC      : found by element \"%s\".\n"
+msgstr "NDRYSHIM I GJETUR      : u gjet nga elementi \"%s\".\n"
+
+#, fuzzy, c-format
+msgid "FOUND TOC      : found by object \"%s\".\n"
+msgstr "NDRYSHIM I GJETUR      : u gjet nga elementi \"%s\".\n"
+
+msgid "FOUND TOC\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"INFO:\n"
+"%s\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: from element %s: %s\n"
+msgstr "GABIM: nga elementi %s: %s\n"
+
+msgid "Pipeline is PREROLLED ...\n"
+msgstr ""
+
+msgid "Prerolled, waiting for buffering to finish...\n"
+msgstr ""
+
+msgid "Prerolled, waiting for progress to finish...\n"
+msgstr ""
+
+msgid "buffering..."
+msgstr ""
+
+msgid "Done buffering, setting pipeline to PLAYING ...\n"
+msgstr ""
+
+#. we were not buffering but PLAYING, PAUSE  the pipeline.
+msgid "Buffering, setting pipeline to PAUSED ...\n"
+msgstr ""
+
+msgid "Redistribute latency...\n"
+msgstr ""
+
+#, c-format
+msgid "Setting state to %s as requested by %s...\n"
+msgstr ""
+
+#. this application message is posted when we caught an interrupt and
+#. * we need to stop the pipeline.
+msgid "Interrupt: Stopping pipeline ...\n"
+msgstr ""
+
+msgid "Interrupt while waiting for EOS - stopping pipeline...\n"
+msgstr ""
+
+msgid "EOS on shutdown enabled -- Forcing EOS on the pipeline\n"
+msgstr ""
+
+msgid "Waiting for EOS...\n"
+msgstr ""
+
+#, c-format
+msgid "Progress: (%s) %s\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Missing element: %s\n"
+msgstr "asnjë element \"%s\""
+
+#, fuzzy, c-format
+msgid "Got context from element '%s': %s=%s\n"
+msgstr "GABIM: nga elementi %s: %s\n"
+
+#, fuzzy
+msgid "ERROR: pipeline doesn't want to preroll.\n"
+msgstr "GABIM: pipeline nuk dëshiron të luajë.\n"
+
+msgid "An error happened while waiting for EOS\n"
+msgstr ""
+
+#, c-format
+msgid "Use Windows high-resolution clock, precision: %u ms\n"
+msgstr ""
+
+msgid "Output tags (also known as metadata)"
+msgstr "Tags e output (njohur gjithashtu si metadata)"
+
+msgid "Output TOC (chapters and editions)"
+msgstr ""
+
+msgid "Output status information and property notifications"
+msgstr "Njoftime të informacioneve dhe pronësisë së kondicionit të daljes"
+
+#, fuzzy
+msgid "Do not print any progress information"
+msgstr "Mos jep informacionin e gjendjes së LLOJIT"
+
+msgid "Output messages"
+msgstr ""
+
+msgid ""
+"Do not output status information for the specified property if verbose "
+"output is enabled (can be used multiple times)"
+msgstr ""
+
+msgid "PROPERTY-NAME"
+msgstr ""
+
+msgid "Do not install a fault handler"
+msgstr "Mos instalo një ushqyes të dëmtuar"
+
+msgid "Force EOS on sources before shutting the pipeline down"
+msgstr ""
+
+msgid "Gather and print index statistics"
+msgstr ""
+
+msgid ""
+"Do not print current position of pipeline. If this option is unspecified, "
+"the position will be printed when stdout is a TTY. To enable printing "
+"position when stdout is not a TTY, use \"force-position\" option"
+msgstr ""
+
+msgid ""
+"Allow printing current position of pipeline even if stdout is not a TTY. "
+"This option has no effect if the \"no-position\" option is specified"
+msgstr ""
+
+#, c-format
+msgid "ERROR: pipeline could not be constructed: %s.\n"
+msgstr "GABIM: i pamundur ndërtimi i pipeline: %s.\n"
+
+msgid "ERROR: pipeline could not be constructed.\n"
+msgstr "GABIM: i pamundur ndërtimi i pipeline.\n"
+
+#, c-format
+msgid "WARNING: erroneous pipeline: %s\n"
+msgstr "KUJDES: pipline e gabuar: %s\n"
+
+msgid "ERROR: the 'pipeline' element wasn't found.\n"
+msgstr "GABIM: elementi 'konduktor' nuk u gjet.\n"
+
+msgid "Setting pipeline to PAUSED ...\n"
+msgstr ""
+
+msgid "Failed to set pipeline to PAUSED.\n"
+msgstr ""
+
+msgid "Pipeline is live and does not need PREROLL ...\n"
+msgstr ""
+
+msgid "Pipeline is PREROLLING ...\n"
+msgstr ""
+
+msgid "Execution ended after %"
+msgstr "Ekzekutimi përfundoi mbas %"
+
+msgid "Setting pipeline to NULL ...\n"
+msgstr ""
+
+#, fuzzy
+msgid "Freeing pipeline ...\n"
+msgstr "DUKE ZBATUAR pipeline ...\n"
+
+#~ msgid "Disable accelerated CPU instructions"
+#~ msgstr "Ç'aktivo instruksionet e përshpejtimit të CPU"
+
+#~ msgid "SCHEDULER"
+#~ msgstr "PLANIFIKUES"
+
+#~ msgid "Registry to use"
+#~ msgstr "Regjistri që duhet përdorur"
+
+#~ msgid "REGISTRY"
+#~ msgstr "REGJISTRI"
+
+#, c-format
+#~ msgid "path list for loading plugins (separated by '%s')"
+#~ msgstr "pozicioni i listës për ngarkimin e plugins (ndarë me '%s')"
+
+#, c-format
+#~ msgid "Scheduler to use (default is '%s')"
+#~ msgstr "Planifikuesi që duhet përdorur (i prezgjedhuri është '%s')"
+
+#~ msgid "Internal GStreamer error: state change failed.  File a bug."
+#~ msgstr ""
+#~ "Gabim i brendshëm i GStreamer: ndryshimi i gjendjes dështoi.  Raporto bug."
+
+#~ msgid "Internal GStreamer error: scheduler problem.  File a bug."
+#~ msgstr "Gabim i brendshëm i GStreamer: problem planifikimi.  Raporto bug."
+
+#~ msgid "original location of file as a URI"
+#~ msgstr "vendodhja orgjinale e file si një URI"
+
+#, c-format
+#~ msgid "There is no element present to handle the stream's mime type %s."
+#~ msgstr ""
+#~ "Nuk ekziston asnjë element për të trajtuar llojin mime %s të fluksit."
+
+#~ msgid "maximum"
+#~ msgstr "maksimum"
+
+#~ msgid "link without source element"
+#~ msgstr "lidhje ma element burues"
+
+#~ msgid "link without sink element"
+#~ msgstr "lidhje pa elementin sink"
+
+#, c-format
+#~ msgid "no element to link URI \"%s\" to"
+#~ msgstr "asnjë element për të lidhur URI \"%s\" me"
+
+#~ msgid " iterations (sum %"
+#~ msgstr " përsëritjet (shuma %"
+
+#~ msgid " ns, average %"
+#~ msgstr " ns, mesatarja %"
+
+#~ msgid " ns, min %"
+#~ msgstr " ns, min %"
+
+#~ msgid " ns, max %"
+#~ msgstr " ns, max %"
+
+#~ msgid " ns).\n"
+#~ msgstr " ns).\n"
+
+#~ msgid "Usage: gst-xmllaunch <file.xml> [ element.property=value ... ]\n"
+#~ msgstr ""
+#~ "Përdorimi: gst-xmllaunch <file.xml> [ element.property=vlera ... ]\n"
+
+#, c-format
+#~ msgid "ERROR: parse of xml file '%s' failed.\n"
+#~ msgstr "GABIM: analizimi i file xml '%s' dështoi.\n"
+
+#, c-format
+#~ msgid "ERROR: no toplevel pipeline element in file '%s'.\n"
+#~ msgstr "GABIM: asnjë element i pipline të toplevel tek file '%s'.\n"
+
+#, c-format
+#~ msgid "WARNING: only one toplevel element is supported at this time."
+#~ msgstr "KUJDES: vetëm një element toplevel suportohet aktualisht."
+
+#, c-format
+#~ msgid "ERROR: could not parse command line argument %d: %s.\n"
+#~ msgstr ""
+#~ "GABIM: i pamundur analizimi i argumentit %d të rreshtit të komandës: %s.\n"
+
+#, c-format
+#~ msgid "WARNING: element named '%s' not found.\n"
+#~ msgstr "KUJDES: elementi me emrin '%s' nuk u gjet.\n"
+
+#~ msgid "TYPE1,TYPE2,..."
+#~ msgstr "LLOJI1,LLOJI2,..."
+
+#~ msgid "Save xml representation of pipeline to FILE and exit"
+#~ msgstr "Ruaj prezantimin xml të pipeline tek FILE dhe dil"
+
+#~ msgid "FILE"
+#~ msgstr "FILE"
+
+#~ msgid "Print alloc trace (if enabled at compile time)"
+#~ msgstr "Printo shenjat e alloc (nëse aktivuar në kohën e kompilimit)"
+
+#~ msgid "Number of times to iterate pipeline"
+#~ msgstr "Numri i herëve të përsëritjes së kanalit"
+
+#, c-format
+#~ msgid "         Trying to run anyway.\n"
+#~ msgstr "         Duke u përpjekur të zbatohet sidoqoftë.\n"
+
+#, c-format
+#~ msgid "Added plugin %s with %d %s.\n"
+#~ msgstr "U shtua plugin %s me %d %s.\n"
+
+#, c-format
+#~ msgid "Added path   %s to %s \n"
+#~ msgstr "U shtua pozicioni   %s tek %s \n"
+
+#, c-format
+#~ msgid "Rebuilding %s (%s) ...\n"
+#~ msgstr "Duke rindërtuar %s (%s) ...\n"
+
+#, c-format
+#~ msgid "Trying to load %s ...\n"
+#~ msgstr "Duke u përpjekur të ngarkoj %s ...\n"
+
+#, c-format
+#~ msgid "Error loading %s\n"
+#~ msgstr "Gabim gjatë ngarkimit të %s\n"
+
+#, c-format
+#~ msgid "Loaded %d plugins with %d %s.\n"
+#~ msgstr "U ngarkuan %d plugins me %d %s.\n"

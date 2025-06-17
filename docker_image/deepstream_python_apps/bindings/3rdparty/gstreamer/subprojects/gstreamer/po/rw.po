@@ -1,0 +1,1702 @@
+# Kinyarwanda translations for gstreamer package.
+# Copyright (C) 2005 Free Software Foundation, Inc.
+# Steve Murphy <murf@e-tools.com>, 2005.
+# Steve performed initial rough translation from compendium built from translations provided by the following translators:
+# Philibert Ndandali  <ndandali@yahoo.fr>, 2005.
+# Viateur MUGENZI <muvia1@yahoo.fr>, 2005.
+# Noëlla Mupole <s24211045@tuks.co.za>, 2005.
+# Carole Karema <karemacarole@hotmail.com>, 2005.
+# JEAN BAPTISTE NGENDAHAYO <ngenda_denis@yahoo.co.uk>, 2005.
+# Augustin KIBERWA  <akiberwa@yahoo.co.uk>, 2005.
+# Donatien NSENGIYUMVA <ndonatienuk@yahoo.co.uk>, 2005.
+# Antoine Bigirimana <antoine@e-tools.com>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gstreamer 0.8.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-25 01:01+0100\n"
+"PO-Revision-Date: 2005-04-04 10:55-0700\n"
+"Last-Translator: Steven Michael Murphy <murf@e-tools.com>\n"
+"Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
+"Language: rw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, fuzzy
+msgid "Print the GStreamer version"
+msgstr "i Verisiyo"
+
+#, fuzzy
+msgid "Make all warnings fatal"
+msgstr "Byose Iburira"
+
+#, fuzzy
+msgid "Print available debug categories and exit"
+msgstr "Bihari Kosora amakosa Ibyiciro Na Gusohoka"
+
+#, fuzzy
+msgid ""
+"Default debug level from 1 (only error) to 9 (anything) or 0 for no output"
+msgstr ""
+"Kosora amakosa urwego Bivuye 1. Ikosa Kuri 5 Cyangwa 0 kugirango Oya "
+"Ibisohoka"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Table.Settings.Level.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Frame.Settings.Level.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.WriterObject.Graphic.Settings.Level.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Calc.Settings.Level.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Draw.Settings.Level.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Chart.Settings.Level.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Image.Settings.Level.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Formula.Settings.Level.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.Impress.Settings.Level.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Insert.Caption.OfficeObject.OLEMisc.Settings.Level.text
+#, fuzzy
+msgid "LEVEL"
+msgstr "urwego"
+
+#, fuzzy
+msgid ""
+"Comma-separated list of category_name:level pairs to set specific levels for "
+"the individual categories. Example: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+msgstr ""
+"Urutonde Bya Izina ry'icyiciro urwego Kuri Gushyiraho Intera kugirango i "
+"Ibyiciro Urugero 5 3."
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFont.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCJK.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCTL.List.text
+#, fuzzy
+msgid "LIST"
+msgstr "Urutonde"
+
+#, fuzzy
+msgid "Disable colored debugging output"
+msgstr "Ibisohoka"
+
+msgid ""
+"Changes coloring mode of the debug log. Possible modes: off, on, disable, "
+"auto, unix"
+msgstr ""
+
+msgid "Disable debugging"
+msgstr ""
+
+#, fuzzy
+msgid "Enable verbose plugin loading diagnostics"
+msgstr "Itangira..."
+
+msgid "Colon-separated paths containing plugins"
+msgstr ""
+
+# offmgr/source\offapp\dialog\treeopt.src:RID_OFADLG_OPTIONS_TREE_PAGES.SID_GENERAL_OPTIONS.8.text
+#, fuzzy
+msgid "PATHS"
+msgstr "Inzira"
+
+#, fuzzy
+msgid ""
+"Comma-separated list of plugins to preload in addition to the list stored in "
+"environment variable GST_PLUGIN_PATH"
+msgstr "Urutonde Bya Kuri in Guteranya+ Kuri i Urutonde in IMPINDURAGACIRO"
+
+msgid "PLUGINS"
+msgstr ""
+
+#, fuzzy
+msgid "Disable trapping of segmentation faults during plugin loading"
+msgstr "Bya Itangira..."
+
+msgid "Disable updating the registry"
+msgstr ""
+
+msgid "Disable spawning a helper process while scanning the registry"
+msgstr ""
+
+msgid "GStreamer Options"
+msgstr ""
+
+#, fuzzy
+msgid "Show GStreamer Options"
+msgstr "i Verisiyo"
+
+#, c-format
+msgid "Unknown option"
+msgstr ""
+
+#, fuzzy
+msgid "GStreamer encountered a general core library error."
+msgstr "a Rusange Isomero Ikosa"
+
+#, fuzzy
+msgid ""
+"GStreamer developers were too lazy to assign an error code to this error."
+msgstr "Kuri Kugenera... Ikosa ITEGEKONGENGA Kuri iyi Ikosa IDOSIYE a"
+
+#, fuzzy
+msgid "Internal GStreamer error: code not implemented."
+msgstr "Ikosa ITEGEKONGENGA OYA Idosiye a"
+
+msgid ""
+"GStreamer error: state change failed and some element failed to post a "
+"proper error message with the reason for the failure."
+msgstr ""
+
+#, fuzzy
+msgid "Internal GStreamer error: pad problem."
+msgstr "Ikosa Idosiye a"
+
+#, fuzzy
+msgid "Internal GStreamer error: thread problem."
+msgstr "Ikosa Urudodo Idosiye a"
+
+#, fuzzy
+msgid "GStreamer error: negotiation problem."
+msgstr "Ikosa Idosiye a"
+
+#, fuzzy
+msgid "Internal GStreamer error: event problem."
+msgstr "Ikosa Icyabaye Idosiye a"
+
+#, fuzzy
+msgid "Internal GStreamer error: seek problem."
+msgstr "Ikosa Idosiye a"
+
+#, fuzzy
+msgid "Internal GStreamer error: caps problem."
+msgstr "Ikosa Inyuguti nkuru Idosiye a"
+
+#, fuzzy
+msgid "Internal GStreamer error: tag problem."
+msgstr "Ikosa Itagi: Idosiye a"
+
+msgid "Your GStreamer installation is missing a plug-in."
+msgstr ""
+
+#, fuzzy
+msgid "GStreamer error: clock problem."
+msgstr "Ikosa Idosiye a"
+
+msgid ""
+"This application is trying to use GStreamer functionality that has been "
+"disabled."
+msgstr ""
+
+#, fuzzy
+msgid "GStreamer encountered a general supporting library error."
+msgstr "a Rusange Isomero Ikosa"
+
+#, fuzzy
+msgid "Could not initialize supporting library."
+msgstr "OYA gutangiza Isomero"
+
+#, fuzzy
+msgid "Could not close supporting library."
+msgstr "OYA Gufunga Isomero"
+
+#, fuzzy
+msgid "Could not configure supporting library."
+msgstr "OYA Gufunga Isomero"
+
+msgid "Encoding error."
+msgstr ""
+
+#, fuzzy
+msgid "GStreamer encountered a general resource error."
+msgstr "a Rusange Isomero Ikosa"
+
+#, fuzzy
+msgid "Resource not found."
+msgstr "OYA Byabonetse"
+
+#, fuzzy
+msgid "Resource busy or not available."
+msgstr "Irahuze Cyangwa OYA Bihari"
+
+#, fuzzy
+msgid "Could not open resource for reading."
+msgstr "OYA Gufungura kugirango"
+
+#, fuzzy
+msgid "Could not open resource for writing."
+msgstr "OYA Gufungura kugirango"
+
+#, fuzzy
+msgid "Could not open resource for reading and writing."
+msgstr "OYA Gufungura kugirango Na"
+
+#, fuzzy
+msgid "Could not close resource."
+msgstr "OYA Gufunga"
+
+#, fuzzy
+msgid "Could not read from resource."
+msgstr "OYA Gusoma Bivuye"
+
+#, fuzzy
+msgid "Could not write to resource."
+msgstr "OYA Kwandika Kuri"
+
+#, fuzzy
+msgid "Could not perform seek on resource."
+msgstr "OYA ku"
+
+#, fuzzy
+msgid "Could not synchronize on resource."
+msgstr "OYA Kuringaniza ku"
+
+#, fuzzy
+msgid "Could not get/set settings from/on resource."
+msgstr "OYA Kubona Gushyiraho Amagenamiterere Bivuye ku"
+
+msgid "No space left on the resource."
+msgstr ""
+
+#, fuzzy
+msgid "Not authorized to access resource."
+msgstr "OYA Kwandika Kuri"
+
+#, fuzzy
+msgid "GStreamer encountered a general stream error."
+msgstr "a Rusange Isomero Ikosa"
+
+#, fuzzy
+msgid "Element doesn't implement handling of this stream. Please file a bug."
+msgstr "Bya iyi IDOSIYE a"
+
+#, fuzzy
+msgid "Could not determine type of stream."
+msgstr "OYA Ubwoko Bya"
+
+#, fuzzy
+msgid "The stream is of a different type than handled by this element."
+msgstr "ni Bya a Ubwoko ku iyi Ikigize:"
+
+#, fuzzy
+msgid "There is no codec present that can handle the stream's type."
+msgstr "ni Oya i Ubwoko"
+
+#, fuzzy
+msgid "Could not decode stream."
+msgstr "OYA"
+
+#, fuzzy
+msgid "Could not encode stream."
+msgstr "OYA"
+
+#, fuzzy
+msgid "Could not demultiplex stream."
+msgstr "OYA"
+
+#, fuzzy
+msgid "Could not multiplex stream."
+msgstr "OYA"
+
+#, fuzzy
+msgid "The stream is in the wrong format."
+msgstr "ni Bya i Imiterere"
+
+msgid "The stream is encrypted and decryption is not supported."
+msgstr ""
+
+msgid ""
+"The stream is encrypted and can't be decrypted because no suitable key has "
+"been supplied."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "No error message for domain %s."
+msgstr "Ikosa Ubutumwa kugirango Urwego"
+
+#, fuzzy, c-format
+msgid "No standard error message for domain %s and code %d."
+msgstr "Bisanzwe Ikosa Ubutumwa kugirango Urwego Na ITEGEKONGENGA"
+
+msgid "Selected clock cannot be used in pipeline."
+msgstr ""
+
+#, c-format
+msgid "Error writing registry cache to %s: %s"
+msgstr ""
+
+msgid "title"
+msgstr "umutwe"
+
+#, fuzzy
+msgid "commonly used title"
+msgstr "Umutwe"
+
+msgid "title sortname"
+msgstr ""
+
+#, fuzzy
+msgid "commonly used title for sorting purposes"
+msgstr "Umutwe"
+
+#, fuzzy
+msgid "artist"
+msgstr "Umuhanzi"
+
+#, fuzzy
+msgid "person(s) responsible for the recording"
+msgstr "S Nshingwabikorwa kugirango i"
+
+msgid "artist sortname"
+msgstr ""
+
+#, fuzzy
+msgid "person(s) responsible for the recording for sorting purposes"
+msgstr "S Nshingwabikorwa kugirango i"
+
+msgid "album"
+msgstr ""
+
+#, fuzzy
+msgid "album containing this data"
+msgstr "iyi Ibyatanzwe"
+
+msgid "album sortname"
+msgstr ""
+
+#, fuzzy
+msgid "album containing this data for sorting purposes"
+msgstr "iyi Ibyatanzwe"
+
+#, fuzzy
+msgid "album artist"
+msgstr "Umuhanzi"
+
+msgid "The artist of the entire album, as it should be displayed"
+msgstr ""
+
+msgid "album artist sortname"
+msgstr ""
+
+msgid "The artist of the entire album, as it should be sorted"
+msgstr ""
+
+msgid "date"
+msgstr "Itariki"
+
+#, fuzzy
+msgid "date the data was created (as a GDate structure)"
+msgstr "Itariki i Ibyatanzwe Byaremwe in Kalindari Iminsi"
+
+#, fuzzy
+msgid "datetime"
+msgstr "Itariki"
+
+#, fuzzy
+msgid "date and time the data was created (as a GstDateTime structure)"
+msgstr "Itariki i Ibyatanzwe Byaremwe in Kalindari Iminsi"
+
+msgid "genre"
+msgstr ""
+
+#, fuzzy
+msgid "genre this data belongs to"
+msgstr "iyi Ibyatanzwe Kuri"
+
+# padmin/source\padialog.src:RID_TXT_TESTPAGE_COMMENT.text
+#, fuzzy
+msgid "comment"
+msgstr "Icyo wongeraho"
+
+#, fuzzy
+msgid "free text commenting the data"
+msgstr "Kigenga Umwandiko i Ibyatanzwe"
+
+# padmin/source\padialog.src:RID_TXT_TESTPAGE_COMMENT.text
+#, fuzzy
+msgid "extended comment"
+msgstr "Icyo wongeraho"
+
+#, fuzzy
+msgid "free text commenting the data in key=value or key[en]=comment form"
+msgstr "Kigenga Umwandiko i Ibyatanzwe"
+
+#, fuzzy
+msgid "track number"
+msgstr "Umubare"
+
+#, fuzzy
+msgid "track number inside a collection"
+msgstr "Umubare Mo Imbere a"
+
+#, fuzzy
+msgid "track count"
+msgstr "IBARA"
+
+#, fuzzy
+msgid "count of tracks inside collection this track belongs to"
+msgstr "IBARA Bya Mo Imbere iyi Kuri"
+
+#, fuzzy
+msgid "disc number"
+msgstr "DISIKI Umubare"
+
+#, fuzzy
+msgid "disc number inside a collection"
+msgstr "DISIKI Umubare Mo Imbere a"
+
+#, fuzzy
+msgid "disc count"
+msgstr "DISIKI IBARA"
+
+#, fuzzy
+msgid "count of discs inside collection this disc belongs to"
+msgstr "IBARA Bya Mo Imbere iyi DISIKI Kuri"
+
+msgid "location"
+msgstr "Inturo"
+
+msgid ""
+"Origin of media as a URI (location, where the original of the file or stream "
+"is hosted)"
+msgstr ""
+
+msgid "homepage"
+msgstr ""
+
+msgid "Homepage for this media (i.e. artist or movie homepage)"
+msgstr ""
+
+msgid "description"
+msgstr "Isobanuramiterere"
+
+#, fuzzy
+msgid "short text describing the content of the data"
+msgstr "Umwandiko i Ibikubiyemo Bya i Ibyatanzwe"
+
+# goodies/source\filter.vcl\eps\dlgeps.src:DLG_EXPORT_EPS.GRP_VERSION.text
+#, fuzzy
+msgid "version"
+msgstr "Verisiyo"
+
+#, fuzzy
+msgid "version of this data"
+msgstr "Verisiyo Bya iyi Ibyatanzwe"
+
+msgid "ISRC"
+msgstr ""
+
+#, fuzzy
+msgid "International Standard Recording Code - see http://www.ifpi.org/isrc/"
+msgstr "HTTP www org"
+
+#, fuzzy
+msgid "organization"
+msgstr "Ihuzagahunda"
+
+#, fuzzy
+msgid "copyright"
+msgstr "Uburenganzira bw'umuhimbyi"
+
+#, fuzzy
+msgid "copyright notice of the data"
+msgstr "Uburenganzira bw'umuhimbyi Bya i Ibyatanzwe"
+
+#, fuzzy
+msgid "copyright uri"
+msgstr "Uburenganzira bw'umuhimbyi"
+
+#, fuzzy
+msgid "URI to the copyright notice of the data"
+msgstr "Uburenganzira bw'umuhimbyi Bya i Ibyatanzwe"
+
+msgid "encoded by"
+msgstr ""
+
+msgid "name of the encoding person or organization"
+msgstr ""
+
+# ***** BEGIN LICENSE BLOCK *****
+# Version: MPL 1.1/GPL 2.0/LGPL 2.1
+#
+# The contents of this file are subject to the Mozilla Public License Version
+# 1.1 (the "License"); you may not use this file except in compliance with
+# the License. You may obtain a copy of the License at
+# http://www.mozilla.org/MPL/
+#
+# Software distributed under the License is distributed on an "AS IS" basis,
+# WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+# for the specific language governing rights and limitations under the
+# License.
+#
+# The Original Code is Mozilla Communicator client code, released
+# March 31, 1998.
+#
+# The Initial Developer of the Original Code is
+# Netscape Communications Corporation.
+# Portions created by the Initial Developer are Copyright (C) 1998-1999
+# the Initial Developer. All Rights Reserved.
+#
+# Contributor(s):
+#
+# Alternatively, the contents of this file may be used under the terms of
+# either of the GNU General Public License Version 2 or later (the "GPL"),
+# or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+# in which case the provisions of the GPL or the LGPL are applicable instead
+# of those above. If you wish to allow use of your version of this file only
+# under the terms of either the GPL or the LGPL, and not to allow others to
+# use your version of this file under the terms of the MPL, indicate your
+# decision by deleting the provisions above and replace them with the notice
+# and other provisions required by the GPL or the LGPL. If you do not delete
+# the provisions above, a recipient may use your version of this file under
+# the terms of any one of the MPL, the GPL or the LGPL.
+#
+# ***** END LICENSE BLOCK *****
+# Box Headings
+#, fuzzy
+msgid "contact"
+msgstr "Umuntu"
+
+#, fuzzy
+msgid "contact information"
+msgstr "Umuntu Ibisobanuro"
+
+msgid "license"
+msgstr ""
+
+#, fuzzy
+msgid "license of data"
+msgstr "Bya Ibyatanzwe"
+
+#, fuzzy
+msgid "license uri"
+msgstr "Bya Ibyatanzwe"
+
+#, fuzzy
+msgid "URI to the license of the data"
+msgstr "Bya Ibyatanzwe"
+
+msgid "performer"
+msgstr ""
+
+#, fuzzy
+msgid "person(s) performing"
+msgstr "S"
+
+msgid "composer"
+msgstr ""
+
+#, fuzzy
+msgid "person(s) who composed the recording"
+msgstr "S Nshingwabikorwa kugirango i"
+
+msgid "conductor"
+msgstr ""
+
+msgid "conductor/performer refinement"
+msgstr ""
+
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....AgendaType.Duration.text
+#, fuzzy
+msgid "duration"
+msgstr "Igihe- ngombwa"
+
+#, fuzzy
+msgid "length in GStreamer time units (nanoseconds)"
+msgstr "Uburebure in Igihe"
+
+msgid "codec"
+msgstr ""
+
+#, fuzzy
+msgid "codec the data is stored in"
+msgstr "i Ibyatanzwe ni in"
+
+#, fuzzy
+msgid "video codec"
+msgstr "Videwo..."
+
+#, fuzzy
+msgid "codec the video data is stored in"
+msgstr "i Videwo... Ibyatanzwe ni in"
+
+msgid "audio codec"
+msgstr ""
+
+#, fuzzy
+msgid "codec the audio data is stored in"
+msgstr "i Ibyatanzwe ni in"
+
+#, fuzzy
+msgid "subtitle codec"
+msgstr "Videwo..."
+
+#, fuzzy
+msgid "codec the subtitle data is stored in"
+msgstr "i Videwo... Ibyatanzwe ni in"
+
+#, fuzzy
+msgid "container format"
+msgstr "Umuntu Ibisobanuro"
+
+#, fuzzy
+msgid "container format the data is stored in"
+msgstr "i Ibyatanzwe ni in"
+
+msgid "bitrate"
+msgstr ""
+
+#, fuzzy
+msgid "exact or average bitrate in bits/s"
+msgstr "NYACYO Cyangwa Impuzandengo in S"
+
+#, fuzzy
+msgid "nominal bitrate"
+msgstr "SHINGIRO"
+
+#, fuzzy
+msgid "nominal bitrate in bits/s"
+msgstr "SHINGIRO in S"
+
+#, fuzzy
+msgid "minimum bitrate"
+msgstr "Gito"
+
+#, fuzzy
+msgid "minimum bitrate in bits/s"
+msgstr "Gito in S"
+
+#, fuzzy
+msgid "maximum bitrate"
+msgstr "Kinini"
+
+#, fuzzy
+msgid "maximum bitrate in bits/s"
+msgstr "Kinini in S"
+
+msgid "encoder"
+msgstr ""
+
+#, fuzzy
+msgid "encoder used to encode this stream"
+msgstr "Kuri iyi"
+
+#, fuzzy
+msgid "encoder version"
+msgstr "Verisiyo"
+
+#, fuzzy
+msgid "version of the encoder used to encode this stream"
+msgstr "Verisiyo Bya i Kuri iyi"
+
+msgid "serial"
+msgstr ""
+
+#, fuzzy
+msgid "serial number of track"
+msgstr "Umubare Bya"
+
+msgid "replaygain track gain"
+msgstr ""
+
+#, fuzzy
+msgid "track gain in db"
+msgstr "in DB"
+
+msgid "replaygain track peak"
+msgstr ""
+
+#, fuzzy
+msgid "peak of the track"
+msgstr "Bya i"
+
+msgid "replaygain album gain"
+msgstr ""
+
+#, fuzzy
+msgid "album gain in db"
+msgstr "in DB"
+
+msgid "replaygain album peak"
+msgstr ""
+
+#, fuzzy
+msgid "peak of the album"
+msgstr "Bya i"
+
+msgid "replaygain reference level"
+msgstr ""
+
+msgid "reference level of track and album gain values"
+msgstr ""
+
+msgid "language code"
+msgstr ""
+
+msgid "language code for this stream, conforming to ISO-639-1 or ISO-639-2"
+msgstr ""
+
+msgid "language name"
+msgstr ""
+
+msgid "freeform name of the language this stream is in"
+msgstr ""
+
+msgid "image"
+msgstr ""
+
+#, fuzzy
+msgid "image related to this stream"
+msgstr "Kuri iyi"
+
+#. TRANSLATORS: 'preview image' = image that shows a preview of the full image
+msgid "preview image"
+msgstr ""
+
+msgid "preview image related to this stream"
+msgstr ""
+
+msgid "attachment"
+msgstr ""
+
+#, fuzzy
+msgid "file attached to this stream"
+msgstr "Kuri iyi"
+
+msgid "beats per minute"
+msgstr ""
+
+msgid "number of beats per minute in audio"
+msgstr ""
+
+msgid "keywords"
+msgstr ""
+
+#, fuzzy
+msgid "comma separated keywords describing the content"
+msgstr "Umwandiko i Ibikubiyemo Bya i Ibyatanzwe"
+
+#, fuzzy
+msgid "geo location name"
+msgstr "Inturo"
+
+msgid ""
+"human readable descriptive location of where the media has been recorded or "
+"produced"
+msgstr ""
+
+msgid "geo location latitude"
+msgstr ""
+
+msgid ""
+"geo latitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the equator, negative values for "
+"southern latitudes)"
+msgstr ""
+
+msgid "geo location longitude"
+msgstr ""
+
+msgid ""
+"geo longitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the prime meridian in Greenwich/UK,  "
+"negative values for western longitudes)"
+msgstr ""
+
+msgid "geo location elevation"
+msgstr ""
+
+msgid ""
+"geo elevation of where the media has been recorded or produced in meters "
+"according to WGS84 (zero is average sea level)"
+msgstr ""
+
+#, fuzzy
+msgid "geo location country"
+msgstr "Inturo"
+
+msgid "country (english name) where the media has been recorded or produced"
+msgstr ""
+
+#, fuzzy
+msgid "geo location city"
+msgstr "Inturo"
+
+msgid "city (english name) where the media has been recorded or produced"
+msgstr ""
+
+#, fuzzy
+msgid "geo location sublocation"
+msgstr "Inturo"
+
+msgid ""
+"a location within a city where the media has been produced or created (e.g. "
+"the neighborhood)"
+msgstr ""
+
+#, fuzzy
+msgid "geo location horizontal error"
+msgstr "Inturo"
+
+msgid "expected error of the horizontal positioning measures (in meters)"
+msgstr ""
+
+#, fuzzy
+msgid "geo location movement speed"
+msgstr "Inturo"
+
+msgid ""
+"movement speed of the capturing device while performing the capture in m/s"
+msgstr ""
+
+#, fuzzy
+msgid "geo location movement direction"
+msgstr "Inturo"
+
+msgid ""
+"indicates the movement direction of the device performing the capture of a "
+"media. It is represented as degrees in floating point representation, 0 "
+"means the geographic north, and increases clockwise"
+msgstr ""
+
+#, fuzzy
+msgid "geo location capture direction"
+msgstr "Inturo"
+
+msgid ""
+"indicates the direction the device is pointing to when capturing  a media. "
+"It is represented as degrees in floating point  representation, 0 means the "
+"geographic north, and increases clockwise"
+msgstr ""
+
+#. TRANSLATORS: 'show name' = 'TV/radio/podcast show name' here
+msgid "show name"
+msgstr ""
+
+msgid "Name of the tv/podcast/series show the media is from"
+msgstr ""
+
+#. TRANSLATORS: 'show sortname' = 'TV/radio/podcast show name as used for sorting purposes' here
+msgid "show sortname"
+msgstr ""
+
+msgid ""
+"Name of the tv/podcast/series show the media is from, for sorting purposes"
+msgstr ""
+
+#, fuzzy
+msgid "episode number"
+msgstr "DISIKI Umubare"
+
+msgid "The episode number in the season the media is part of"
+msgstr ""
+
+#, fuzzy
+msgid "season number"
+msgstr "DISIKI Umubare"
+
+msgid "The season number of the show the media is part of"
+msgstr ""
+
+msgid "lyrics"
+msgstr ""
+
+msgid "The lyrics of the media, commonly used for songs"
+msgstr ""
+
+msgid "composer sortname"
+msgstr ""
+
+#, fuzzy
+msgid "person(s) who composed the recording, for sorting purposes"
+msgstr "S Nshingwabikorwa kugirango i"
+
+msgid "grouping"
+msgstr ""
+
+msgid ""
+"Groups related media that spans multiple tracks, like the different pieces "
+"of a concerto. It is a higher level than a track, but lower than an album"
+msgstr ""
+
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....AgendaType.Duration.text
+#, fuzzy
+msgid "user rating"
+msgstr "Igihe- ngombwa"
+
+msgid ""
+"Rating attributed by a user. The higher the rank, the more the user likes "
+"this media"
+msgstr ""
+
+msgid "device manufacturer"
+msgstr ""
+
+#, fuzzy
+msgid "Manufacturer of the device used to create this media"
+msgstr "Verisiyo Bya i Kuri iyi"
+
+msgid "device model"
+msgstr ""
+
+#, fuzzy
+msgid "Model of the device used to create this media"
+msgstr "Verisiyo Bya i Kuri iyi"
+
+#, fuzzy
+msgid "application name"
+msgstr "Inturo"
+
+#, fuzzy
+msgid "Application used to create the media"
+msgstr "Verisiyo Bya i Kuri iyi"
+
+msgid "application data"
+msgstr ""
+
+msgid "Arbitrary application data to be serialized into the media"
+msgstr ""
+
+msgid "image orientation"
+msgstr ""
+
+msgid "How the image should be rotated or flipped before display"
+msgstr ""
+
+msgid "publisher"
+msgstr ""
+
+msgid "Name of the label or publisher"
+msgstr ""
+
+msgid "interpreted-by"
+msgstr ""
+
+msgid "Information about the people behind a remix and similar interpretations"
+msgstr ""
+
+msgid "midi-base-note"
+msgstr ""
+
+msgid "Midi note number of the audio track."
+msgstr ""
+
+msgid "private-data"
+msgstr ""
+
+msgid "Private data"
+msgstr ""
+
+#. separator between two strings
+msgid ", "
+msgstr ", "
+
+#, c-format
+msgid "Invalid URI: %s"
+msgstr ""
+
+#, c-format
+msgid "No URI handler for the %s protocol found"
+msgstr ""
+
+#, c-format
+msgid "URI scheme '%s' not supported"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "ERROR: from element %s: %s\n"
+msgstr "Bivuye Ikigize:"
+
+#, fuzzy, c-format
+msgid ""
+"Additional debug info:\n"
+"%s\n"
+msgstr "Kosora amakosa Ibisobanuro"
+
+#. ******************************************************************************************
+#. *** helpers for pipeline-setup
+#. ******************************************************************************************
+#, c-format
+msgid "link has no source [sink=%s@%p]"
+msgstr ""
+
+#, c-format
+msgid "link has no sink [source=%s@%p]"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "no property \"%s\" in element \"%s\""
+msgstr "Oya indangakintu in Ikigize:"
+
+#, fuzzy, c-format
+msgid "could not set property \"%s\" in element \"%s\" to \"%s\""
+msgstr "OYA Gushyiraho indangakintu in Ikigize: Kuri"
+
+#, fuzzy, c-format
+msgid "Element \"%s\" is not a GstPreset"
+msgstr "Idosiye ni a"
+
+#, fuzzy, c-format
+msgid "could not set preset \"%s\" in element \"%s\""
+msgstr "OYA Gushyiraho indangakintu in Ikigize: Kuri"
+
+msgid "Delayed linking failed."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "could not link %s to %s, %s can't handle caps %s"
+msgstr "OYA Ihuza Kuri"
+
+#, fuzzy, c-format
+msgid "could not link %s to %s, neither element can handle caps %s"
+msgstr "OYA Ihuza Ikigize: kugirango"
+
+#, fuzzy, c-format
+msgid "could not link %s to %s with caps %s"
+msgstr "OYA Ihuza Kuri"
+
+#, fuzzy, c-format
+msgid "could not link %s to %s"
+msgstr "OYA Ihuza Kuri"
+
+#, fuzzy, c-format
+msgid "no element \"%s\""
+msgstr "Oya Ikigize:"
+
+#, c-format
+msgid "unexpected reference \"%s\" - ignoring"
+msgstr ""
+
+#, c-format
+msgid "unexpected pad-reference \"%s\" - ignoring"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "could not parse caps \"%s\""
+msgstr "OYA Inyuguti nkuru"
+
+#, fuzzy, c-format
+msgid "no sink element for URI \"%s\""
+msgstr "Oya Ikigize: kugirango"
+
+#, fuzzy, c-format
+msgid "no source element for URI \"%s\""
+msgstr "Oya Inkomoko Ikigize: kugirango"
+
+msgid "syntax error"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "specified empty bin \"%s\", not allowed"
+msgstr "ubusa OYA"
+
+#, fuzzy, c-format
+msgid "no bin \"%s\", unpacking elements"
+msgstr "Oya Gusimbuka: %s%s"
+
+#, fuzzy
+msgid "empty pipeline not allowed"
+msgstr "ubusa OYA"
+
+msgid "Pipeline construction is invalid, please add queues."
+msgstr ""
+
+msgid "A lot of buffers are being dropped."
+msgstr ""
+
+msgid "Internal data flow problem."
+msgstr ""
+
+msgid "Internal data flow error."
+msgstr ""
+
+msgid "Internal clock error."
+msgstr ""
+
+msgid "Failed to map buffer."
+msgstr ""
+
+msgid "Filter caps"
+msgstr ""
+
+msgid ""
+"Restrict the possible allowed capabilities (NULL means ANY). Setting this "
+"property takes a reference to the supplied GstCaps object."
+msgstr ""
+
+msgid "Caps Change Mode"
+msgstr ""
+
+msgid "Filter caps change behaviour"
+msgstr ""
+
+msgid "No Temp directory specified."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Could not create temp file \"%s\"."
+msgstr "OYA Kubona Gushyiraho Amagenamiterere Bivuye ku"
+
+#, fuzzy, c-format
+msgid "Could not open file \"%s\" for reading."
+msgstr "OYA Gufungura IDOSIYE kugirango"
+
+#, fuzzy
+msgid "Error while writing to download file."
+msgstr "Kuri IDOSIYE"
+
+#, fuzzy
+msgid "No file name specified for writing."
+msgstr "IDOSIYE Izina: kugirango"
+
+#, fuzzy, c-format
+msgid "Could not open file \"%s\" for writing."
+msgstr "OYA Gufungura IDOSIYE kugirango"
+
+#, fuzzy, c-format
+msgid "Error closing file \"%s\"."
+msgstr "IDOSIYE"
+
+#, fuzzy, c-format
+msgid "Error while seeking in file \"%s\"."
+msgstr "Kuri IDOSIYE"
+
+#, fuzzy, c-format
+msgid "Error while writing to file \"%s\"."
+msgstr "Kuri IDOSIYE"
+
+#, fuzzy
+msgid "No file name specified for reading."
+msgstr "IDOSIYE Izina: kugirango"
+
+#, fuzzy, c-format
+msgid "Could not get info on \"%s\"."
+msgstr "OYA Kubona Gushyiraho Amagenamiterere Bivuye ku"
+
+#, fuzzy, c-format
+msgid "\"%s\" is a directory."
+msgstr "\"%s\"ni a bushyinguro"
+
+#, fuzzy, c-format
+msgid "File \"%s\" is a socket."
+msgstr "Idosiye ni a"
+
+#, fuzzy
+msgid "Failed after iterations as requested."
+msgstr "Nyuma Amasubiramo Nka"
+
+msgid "eos-after and error-after can't both be defined."
+msgstr ""
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Revision.TextDisplay.Insert.Attribute..5.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Revision.TextDisplay.Delete.Attribute..4.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Revision.TextDisplay.ChangedAttribute.Attribute..5.text
+#, fuzzy
+msgid "caps"
+msgstr "Inyuguti nkuru"
+
+#, fuzzy
+msgid "detected capabilities in stream"
+msgstr "in"
+
+# officecfg/registry\schema\org\openoffice\Office\Calc.xcs:....Layout.Other.StatusbarFunction..5.text
+#, fuzzy
+msgid "minimum"
+msgstr "Gito"
+
+msgid "force caps"
+msgstr ""
+
+msgid "force caps without doing a typefind"
+msgstr ""
+
+#, fuzzy
+msgid "Stream doesn't contain enough data."
+msgstr "iyi Ibyatanzwe"
+
+#, fuzzy
+msgid "Stream contains no data."
+msgstr "iyi Ibyatanzwe"
+
+#, c-format
+msgid "%sImplemented Interfaces%s:\n"
+msgstr ""
+
+msgid "readable"
+msgstr ""
+
+#, fuzzy
+msgid "writable"
+msgstr "umutwe"
+
+msgid "deprecated"
+msgstr ""
+
+msgid "controllable"
+msgstr ""
+
+msgid "conditionally available"
+msgstr ""
+
+msgid "changeable in NULL, READY, PAUSED or PLAYING state"
+msgstr ""
+
+msgid "changeable only in NULL, READY or PAUSED state"
+msgstr ""
+
+msgid "changeable only in NULL or READY state"
+msgstr ""
+
+msgid "Blacklisted files:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sTotal count%s: %s"
+msgstr "IBARA"
+
+#, c-format
+msgid "%d blacklisted file"
+msgid_plural "%d blacklisted files"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%d plugin"
+msgid_plural "%d plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%d blacklist entry"
+msgid_plural "%d blacklist entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%d feature"
+msgid_plural "%d features"
+msgstr[0] ""
+msgstr[1] ""
+
+#, fuzzy
+msgid "Print all elements"
+msgstr "Byose Ibintu"
+
+msgid "Print list of blacklisted files"
+msgstr ""
+
+msgid ""
+"Print a machine-parsable list of features the specified plugin or all "
+"plugins provide.\n"
+"                                       Useful in connection with external "
+"automatic plugin installation mechanisms"
+msgstr ""
+
+msgid "List the plugin contents"
+msgstr ""
+
+msgid ""
+"A slashes ('/') separated list of types of elements (also known as klass) to "
+"list. (unordered)"
+msgstr ""
+
+msgid "Check if the specified element or plugin exists"
+msgstr ""
+
+msgid ""
+"When checking if an element or plugin exists, also check that its version is "
+"at least the version specified"
+msgstr ""
+
+msgid "Print supported URI schemes, with the elements that implement them"
+msgstr ""
+
+msgid ""
+"Disable colors in output. You can also achieve the same by setting "
+"'GST_INSPECT_NO_COLORS' environment variable to any value."
+msgstr ""
+
+msgid "Color output, even when not sending to a tty."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Could not load plugin file: %s\n"
+msgstr "OYA Gufungura IDOSIYE kugirango"
+
+#, fuzzy, c-format
+msgid "No such element or plugin '%s'\n"
+msgstr "Oya Inkomoko Ikigize: kugirango"
+
+msgid "Index statistics"
+msgstr ""
+
+msgid "Setting pipeline to PLAYING ...\n"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: pipeline doesn't want to play.\n"
+msgstr "Kuri Gukina"
+
+#, fuzzy, c-format
+msgid "Got message #%u from element \"%s\" (%s): "
+msgstr "Bivuye Ikigize:"
+
+#, fuzzy, c-format
+msgid "Got message #%u from pad \"%s:%s\" (%s): "
+msgstr "Bivuye Ikigize:"
+
+#, fuzzy, c-format
+msgid "Got message #%u from object \"%s\" (%s): "
+msgstr "Bivuye Ikigize:"
+
+#, fuzzy, c-format
+msgid "Got message #%u (%s): "
+msgstr "Bivuye Ikigize:"
+
+#, fuzzy, c-format
+msgid "Got EOS from element \"%s\".\n"
+msgstr "Bivuye Ikigize:"
+
+msgid "EOS received - stopping pipeline...\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "FOUND TAG      : found by element \"%s\".\n"
+msgstr "Byabonetse ku Ikigize:"
+
+#, fuzzy, c-format
+msgid "FOUND TAG      : found by pad \"%s:%s\".\n"
+msgstr "Byabonetse ku Ikigize:"
+
+#, fuzzy, c-format
+msgid "FOUND TAG      : found by object \"%s\".\n"
+msgstr "Byabonetse ku Ikigize:"
+
+msgid "FOUND TAG\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "FOUND TOC      : found by element \"%s\".\n"
+msgstr "Byabonetse ku Ikigize:"
+
+#, fuzzy, c-format
+msgid "FOUND TOC      : found by object \"%s\".\n"
+msgstr "Byabonetse ku Ikigize:"
+
+msgid "FOUND TOC\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"INFO:\n"
+"%s\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: from element %s: %s\n"
+msgstr "Bivuye Ikigize:"
+
+msgid "Pipeline is PREROLLED ...\n"
+msgstr ""
+
+msgid "Prerolled, waiting for buffering to finish...\n"
+msgstr ""
+
+msgid "Prerolled, waiting for progress to finish...\n"
+msgstr ""
+
+msgid "buffering..."
+msgstr ""
+
+msgid "Done buffering, setting pipeline to PLAYING ...\n"
+msgstr ""
+
+#. we were not buffering but PLAYING, PAUSE  the pipeline.
+msgid "Buffering, setting pipeline to PAUSED ...\n"
+msgstr ""
+
+msgid "Redistribute latency...\n"
+msgstr ""
+
+#, c-format
+msgid "Setting state to %s as requested by %s...\n"
+msgstr ""
+
+#. this application message is posted when we caught an interrupt and
+#. * we need to stop the pipeline.
+msgid "Interrupt: Stopping pipeline ...\n"
+msgstr ""
+
+msgid "Interrupt while waiting for EOS - stopping pipeline...\n"
+msgstr ""
+
+msgid "EOS on shutdown enabled -- Forcing EOS on the pipeline\n"
+msgstr ""
+
+msgid "Waiting for EOS...\n"
+msgstr ""
+
+#, c-format
+msgid "Progress: (%s) %s\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Missing element: %s\n"
+msgstr "Oya Ikigize:"
+
+#, fuzzy, c-format
+msgid "Got context from element '%s': %s=%s\n"
+msgstr "Bivuye Ikigize:"
+
+#, fuzzy
+msgid "ERROR: pipeline doesn't want to preroll.\n"
+msgstr "Kuri Gukina"
+
+msgid "An error happened while waiting for EOS\n"
+msgstr ""
+
+#, c-format
+msgid "Use Windows high-resolution clock, precision: %u ms\n"
+msgstr ""
+
+#, fuzzy
+msgid "Output tags (also known as metadata)"
+msgstr "Nka"
+
+msgid "Output TOC (chapters and editions)"
+msgstr ""
+
+#, fuzzy
+msgid "Output status information and property notifications"
+msgstr "Imimerere Ibisobanuro Na indangakintu Ibimenyetso"
+
+#, fuzzy
+msgid "Do not print any progress information"
+msgstr "OYA Ibisohoka Imimerere Ibisobanuro Bya"
+
+msgid "Output messages"
+msgstr ""
+
+msgid ""
+"Do not output status information for the specified property if verbose "
+"output is enabled (can be used multiple times)"
+msgstr ""
+
+msgid "PROPERTY-NAME"
+msgstr ""
+
+#, fuzzy
+msgid "Do not install a fault handler"
+msgstr "OYA Kwinjiza porogaramu a"
+
+msgid "Force EOS on sources before shutting the pipeline down"
+msgstr ""
+
+msgid "Gather and print index statistics"
+msgstr ""
+
+msgid ""
+"Do not print current position of pipeline. If this option is unspecified, "
+"the position will be printed when stdout is a TTY. To enable printing "
+"position when stdout is not a TTY, use \"force-position\" option"
+msgstr ""
+
+msgid ""
+"Allow printing current position of pipeline even if stdout is not a TTY. "
+"This option has no effect if the \"no-position\" option is specified"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "ERROR: pipeline could not be constructed: %s.\n"
+msgstr "OYA"
+
+#, fuzzy
+msgid "ERROR: pipeline could not be constructed.\n"
+msgstr "OYA"
+
+#, c-format
+msgid "WARNING: erroneous pipeline: %s\n"
+msgstr ""
+
+#, fuzzy
+msgid "ERROR: the 'pipeline' element wasn't found.\n"
+msgstr "i Ikigize: Byabonetse"
+
+msgid "Setting pipeline to PAUSED ...\n"
+msgstr ""
+
+msgid "Failed to set pipeline to PAUSED.\n"
+msgstr ""
+
+msgid "Pipeline is live and does not need PREROLL ...\n"
+msgstr ""
+
+msgid "Pipeline is PREROLLING ...\n"
+msgstr ""
+
+msgid "Execution ended after %"
+msgstr ""
+
+msgid "Setting pipeline to NULL ...\n"
+msgstr ""
+
+msgid "Freeing pipeline ...\n"
+msgstr ""
+
+#, fuzzy
+#~ msgid "ERROR: Pipeline doesn't want to pause.\n"
+#~ msgstr "Kuri Gukina"
+
+#, fuzzy
+#~ msgid "Error creating pipe: %s\n"
+#~ msgstr "Itangira..."
+
+#, fuzzy
+#~ msgid "Error forking: %s\n"
+#~ msgstr "Itangira..."
+
+#, fuzzy
+#~ msgid "Error reading from console: %s\n"
+#~ msgstr "Itangira..."
+
+#, fuzzy
+#~ msgid "Error writing to console: %s\n"
+#~ msgstr "Kuri IDOSIYE"
+
+#, fuzzy
+#~ msgid "Do not output status information of TYPE"
+#~ msgstr "OYA Ibisohoka Imimerere Ibisobanuro Bya"
+
+#, fuzzy
+#~ msgid "link without source element"
+#~ msgstr "Ihuza Inkomoko Ikigize:"
+
+#, fuzzy
+#~ msgid "link without sink element"
+#~ msgstr "Ihuza Ikigize:"
+
+#, fuzzy
+#~ msgid "no element to link URI \"%s\" to"
+#~ msgstr "Oya Ikigize: Kuri Ihuza Kuri"
+
+#, fuzzy
+#~ msgid "Print alloc trace (if enabled at compile time)"
+#~ msgstr "NIBA Bikora ku Gukusanya Igihe"
+
+#, fuzzy
+#~ msgid "Usage: gst-xmllaunch <file.xml> [ element.property=value ... ]\n"
+#~ msgstr "IDOSIYE xml Ikigize: indangakintu Agaciro"
+
+#, fuzzy
+#~ msgid "ERROR: parse of xml file '%s' failed.\n"
+#~ msgstr "Bya xml IDOSIYE Byanze"
+
+#, fuzzy
+#~ msgid "ERROR: no toplevel pipeline element in file '%s'.\n"
+#~ msgstr "Oya Ikigize: in IDOSIYE"
+
+#, fuzzy
+#~ msgid "WARNING: only one toplevel element is supported at this time.\n"
+#~ msgstr "Ikigize: ni ku iyi Igihe"
+
+#, fuzzy
+#~ msgid "ERROR: could not parse command line argument %d: %s.\n"
+#~ msgstr "OYA Komandi: Umurongo"
+
+#, fuzzy
+#~ msgid "WARNING: element named '%s' not found.\n"
+#~ msgstr "Ikigize: OYA Byabonetse"
+
+#, fuzzy
+#~ msgid "Save xml representation of pipeline to FILE and exit"
+#~ msgstr "Kubika xml Bya Kuri Na Gusohoka"
+
+#~ msgid "FILE"
+#~ msgstr "IDOSIYE"
+
+#, fuzzy
+#~ msgid "Do not install signal handlers for SIGUSR1 and SIGUSR2"
+#~ msgstr "OYA Kwinjiza porogaramu a"
+
+#, fuzzy
+#~ msgid "Error while writing to file descriptor \"%d\"."
+#~ msgstr "Kuri IDOSIYE"
+
+#, fuzzy
+#~ msgid "Error while seeking in file \"%d\"."
+#~ msgstr "Kuri IDOSIYE"
+
+#, fuzzy
+#~ msgid "Internal GStreamer error: state change failed."
+#~ msgstr "Ikosa Leta Guhindura>> Byanze Idosiye a"
+
+#, fuzzy
+#~ msgid "original location of file as a URI"
+#~ msgstr "Umwimerere Ahantu Bya IDOSIYE Nka a"
+
+#, fuzzy
+#~ msgid "Disable accelerated CPU instructions"
+#~ msgstr "Amabwiriza"
+
+#, fuzzy
+#~ msgid "Registry to use"
+#~ msgstr "Kuri Gukoresha"
+
+#, fuzzy
+#~ msgid "path list for loading plugins (separated by '%s')"
+#~ msgstr "Inzira Urutonde kugirango Itangira... ku"
+
+#, fuzzy
+#~ msgid "Scheduler to use (default is '%s')"
+#~ msgstr "Kuri Gukoresha Mburabuzi ni"
+
+#, fuzzy
+#~ msgid "Internal GStreamer error: scheduler problem.  File a bug."
+#~ msgstr "Ikosa Idosiye a"
+
+#, fuzzy
+#~ msgid "There is no element present to handle the stream's mime type %s."
+#~ msgstr "ni Oya Ikigize: Kuri i Ubwoko"
+
+#, fuzzy
+#~ msgid ""
+#~ "Execution ended after %s iterations (sum %s ns, average %s ns, min %s ns, "
+#~ "max %s ns).\n"
+#~ msgstr "Nyuma Amasubiramo Igiteranyo Impuzandengo GITO KININI"
+
+#, fuzzy
+#~ msgid "Number of times to iterate pipeline"
+#~ msgstr "Bya Times Kuri"
+
+#, fuzzy
+#~ msgid "         Trying to run anyway.\n"
+#~ msgstr "Kuri Gukoresha"
+
+#, fuzzy
+#~ msgid "Added plugin %s with %d %s.\n"
+#~ msgstr "Na:"
+
+#, fuzzy
+#~ msgid "Added path   %s to %s \n"
+#~ msgstr "Inzira Kuri"
+
+#, fuzzy
+#~ msgid "Trying to load %s ...\n"
+#~ msgstr "Kuri Ibirimo"
+
+#, fuzzy
+#~ msgid "Loaded %d plugins with %d %s.\n"
+#~ msgstr "Na:"

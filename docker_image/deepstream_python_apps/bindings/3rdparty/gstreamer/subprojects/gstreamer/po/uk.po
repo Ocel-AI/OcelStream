@@ -1,0 +1,1495 @@
+# Ukrainian translation to gstreamer.
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gstreamer package.
+#
+# Maxim V. Dziumanenko <dziumanenko@gmail.com>, 2004-2007.
+# Yuri Chornoivan <yurchor@ukr.net>, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2019, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: gstreamer 1.19.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-25 01:01+0100\n"
+"PO-Revision-Date: 2021-09-24 15:08+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 20.12.0\n"
+
+msgid "Print the GStreamer version"
+msgstr "Показати дані щодо версії GStreamer"
+
+msgid "Make all warnings fatal"
+msgstr "Вважати всі попередження помилками"
+
+msgid "Print available debug categories and exit"
+msgstr "Вивести наявні категорії діагностики і завершити роботу"
+
+msgid ""
+"Default debug level from 1 (only error) to 9 (anything) or 0 for no output"
+msgstr ""
+"Типовий рівень діагностики від 1 (лише помилки) до 9 (усе), або 0 — без "
+"діагностики"
+
+msgid "LEVEL"
+msgstr "РІВЕНЬ"
+
+msgid ""
+"Comma-separated list of category_name:level pairs to set specific levels for "
+"the individual categories. Example: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+msgstr ""
+"Перелік розділених комою пар «назва_категорії:рівень» для встановлення "
+"певних рівнів окремим категоріям. Приклад: GST_AUTOPLUG:5,GST_ELEMENT_*:3"
+
+msgid "LIST"
+msgstr "СПИСОК"
+
+msgid "Disable colored debugging output"
+msgstr "Вимкнути оформлення кольором діагностичних повідомлень"
+
+msgid ""
+"Changes coloring mode of the debug log. Possible modes: off, on, disable, "
+"auto, unix"
+msgstr ""
+"Змінити режим розфарбовування повідомлень діагностичного журналу. Можливі "
+"режими: off, on, disable, auto, unix"
+
+msgid "Disable debugging"
+msgstr "Вимкнути діагностику"
+
+msgid "Enable verbose plugin loading diagnostics"
+msgstr "Вимкнути докладну діагностику завантаження модулів"
+
+msgid "Colon-separated paths containing plugins"
+msgstr "Список розділених крапкою з комою шляхів, які містять модулі"
+
+msgid "PATHS"
+msgstr "ШЛЯХИ"
+
+msgid ""
+"Comma-separated list of plugins to preload in addition to the list stored in "
+"environment variable GST_PLUGIN_PATH"
+msgstr ""
+"Перелік розділених комою назв модулів, що попередньо завантажуються, "
+"додатково до переліку, який зберігається у змінній оточення GST_PLUGIN_PATH"
+
+msgid "PLUGINS"
+msgstr "МОДУЛІ"
+
+msgid "Disable trapping of segmentation faults during plugin loading"
+msgstr "Вимкнути перехоплення помилок сегментації при завантаженні модулів"
+
+msgid "Disable updating the registry"
+msgstr "Вимкнути оновлення реєстру"
+
+msgid "Disable spawning a helper process while scanning the registry"
+msgstr "Вимкнути створення допоміжного процесу під час сканування реєстру"
+
+msgid "GStreamer Options"
+msgstr "Параметри GStreamer"
+
+msgid "Show GStreamer Options"
+msgstr "Показати параметри GStreamer"
+
+#, c-format
+msgid "Unknown option"
+msgstr "Невідомий параметр"
+
+msgid "GStreamer encountered a general core library error."
+msgstr "GStreamer перехопив загальну помилку основної бібліотеки."
+
+msgid ""
+"GStreamer developers were too lazy to assign an error code to this error."
+msgstr "Розробники GStreamer не призначили код для цієї помилки."
+
+msgid "Internal GStreamer error: code not implemented."
+msgstr "Внутрішня помилка GStreamer: код не реалізовано."
+
+msgid ""
+"GStreamer error: state change failed and some element failed to post a "
+"proper error message with the reason for the failure."
+msgstr ""
+"Помилка GStreamer: не вдалося змінити стан, деяким елементам не вдалося "
+"вивести належне повідомлення про помилку з причиною помилки."
+
+msgid "Internal GStreamer error: pad problem."
+msgstr "Внутрішня помилка GStreamer: проблема наповнення."
+
+msgid "Internal GStreamer error: thread problem."
+msgstr "Внутрішня помилка GStreamer: помилка потоку виконання."
+
+msgid "GStreamer error: negotiation problem."
+msgstr "Помилка GStreamer: помилка встановлення зв'язку."
+
+msgid "Internal GStreamer error: event problem."
+msgstr "Внутрішня помилка GStreamer: помилка події."
+
+msgid "Internal GStreamer error: seek problem."
+msgstr "Внутрішня помилка GStreamer: помилка встановлення позиції."
+
+msgid "Internal GStreamer error: caps problem."
+msgstr "Внутрішня помилка GStreamer: проблема можливостей."
+
+msgid "Internal GStreamer error: tag problem."
+msgstr "Внутрішня помилка GStreamer: помилка у мітці."
+
+msgid "Your GStreamer installation is missing a plug-in."
+msgstr "У вашій збірці GStreamer відсутній модуль."
+
+msgid "GStreamer error: clock problem."
+msgstr "Помилка GStreamer: помилка годинника."
+
+msgid ""
+"This application is trying to use GStreamer functionality that has been "
+"disabled."
+msgstr ""
+"Програма намагається використовувати вимкнену функціональність GStreamer."
+
+msgid "GStreamer encountered a general supporting library error."
+msgstr "GStreamer перехопив загальну помилку основної бібліотеки підтримки."
+
+msgid "Could not initialize supporting library."
+msgstr "Не вдалося ініціалізувати бібліотеку підтримки."
+
+msgid "Could not close supporting library."
+msgstr "Не вдалося закрити бібліотеку підтримки."
+
+msgid "Could not configure supporting library."
+msgstr "Не вдалося налаштувати бібліотеку підтримки."
+
+msgid "Encoding error."
+msgstr "Помилка кодування."
+
+msgid "GStreamer encountered a general resource error."
+msgstr "GStreamer перехопив загальну помилку ресурсу."
+
+msgid "Resource not found."
+msgstr "Ресурсу не знайдено."
+
+msgid "Resource busy or not available."
+msgstr "Ресурс зайнятий або недоступний."
+
+msgid "Could not open resource for reading."
+msgstr "Не вдалося відкрити ресурс для читання."
+
+msgid "Could not open resource for writing."
+msgstr "Не вдалося відкрити ресурс для запису."
+
+msgid "Could not open resource for reading and writing."
+msgstr "Не вдалося відкрити ресурс для читання чи запису."
+
+msgid "Could not close resource."
+msgstr "Не вдалося закрити ресурс."
+
+msgid "Could not read from resource."
+msgstr "Не вдалося прочитати з ресурсу."
+
+msgid "Could not write to resource."
+msgstr "Не вдалося записати у ресурс."
+
+msgid "Could not perform seek on resource."
+msgstr "Не вдалося виконати встановлення позиції у ресурсі."
+
+msgid "Could not synchronize on resource."
+msgstr "Не вдалося синхронізуватись з ресурсом."
+
+msgid "Could not get/set settings from/on resource."
+msgstr ""
+"Не вдалося отримати параметри з ресурсу або встановити параметри у ресурсі."
+
+msgid "No space left on the resource."
+msgstr "На ресурсі не залишилось місця."
+
+msgid "Not authorized to access resource."
+msgstr "Не уповноважено на доступ до ресурсу."
+
+msgid "GStreamer encountered a general stream error."
+msgstr "GStreamer перехопив загальну помилку потоку."
+
+msgid "Element doesn't implement handling of this stream. Please file a bug."
+msgstr ""
+"У елементі не реалізовано перехоплення цього потоку. Сповістіть про помилку."
+
+msgid "Could not determine type of stream."
+msgstr "Не вдалося визначити тип потоку."
+
+msgid "The stream is of a different type than handled by this element."
+msgstr "Потік іншого типу ніж тип, який обробляє цей елемент."
+
+msgid "There is no codec present that can handle the stream's type."
+msgstr "Немає кодека, який здатен обробляти цей тип потоку."
+
+msgid "Could not decode stream."
+msgstr "Не вдалося розкодувати потік."
+
+msgid "Could not encode stream."
+msgstr "Не вдалося закодувати потік."
+
+msgid "Could not demultiplex stream."
+msgstr "Не вдалося демультиплексувати потік."
+
+msgid "Could not multiplex stream."
+msgstr "Не вдалося мультиплексувати потік."
+
+msgid "The stream is in the wrong format."
+msgstr "Потік у некоректному форматі."
+
+msgid "The stream is encrypted and decryption is not supported."
+msgstr "Дані потоку зашифровано, дешифрування не підтримується."
+
+msgid ""
+"The stream is encrypted and can't be decrypted because no suitable key has "
+"been supplied."
+msgstr ""
+"Дані потоку зашифровано, їх не можна дешифрувати, оскільки не надано "
+"відповідного ключа дешифрування."
+
+#, c-format
+msgid "No error message for domain %s."
+msgstr "Немає повідомлення про помилку для домену %s."
+
+#, c-format
+msgid "No standard error message for domain %s and code %d."
+msgstr "Немає стандартного повідомлення про помилку для домену %s та коду %d."
+
+msgid "Selected clock cannot be used in pipeline."
+msgstr "Обраний годинник не може використовуватись у конвеєрі."
+
+#, c-format
+msgid "Error writing registry cache to %s: %s"
+msgstr "Помилка при записі кешу реєстру у %s: %s"
+
+msgid "title"
+msgstr "назва"
+
+msgid "commonly used title"
+msgstr "загальновживана назва"
+
+msgid "title sortname"
+msgstr "назва (для впорядкування)"
+
+msgid "commonly used title for sorting purposes"
+msgstr "загальновживана назва (для впорядкування)"
+
+msgid "artist"
+msgstr "виконавець"
+
+msgid "person(s) responsible for the recording"
+msgstr "особа, відповідальна за запис"
+
+msgid "artist sortname"
+msgstr "виконавець (для впорядкування)"
+
+msgid "person(s) responsible for the recording for sorting purposes"
+msgstr "особа або особи, відповідальні за запис (для впорядкування)"
+
+msgid "album"
+msgstr "альбом"
+
+msgid "album containing this data"
+msgstr "альбом, що містить ці дані"
+
+msgid "album sortname"
+msgstr "альбом (для впорядкування)"
+
+msgid "album containing this data for sorting purposes"
+msgstr "альбом, який містить ці дані (для впорядкування)"
+
+msgid "album artist"
+msgstr "виконавець альбому"
+
+msgid "The artist of the entire album, as it should be displayed"
+msgstr "Виконавець всього альбому у форматі показу запису"
+
+msgid "album artist sortname"
+msgstr "виконавець альбому (для впорядкування)"
+
+msgid "The artist of the entire album, as it should be sorted"
+msgstr "Виконавець всього альбому у форматі впорядкування"
+
+msgid "date"
+msgstr "дата"
+
+msgid "date the data was created (as a GDate structure)"
+msgstr "дата створення (у форматі структури GDate)"
+
+msgid "datetime"
+msgstr "дата-час"
+
+msgid "date and time the data was created (as a GstDateTime structure)"
+msgstr "дата і час створення даних (у форматі структури GstDateTime)"
+
+msgid "genre"
+msgstr "жанр"
+
+msgid "genre this data belongs to"
+msgstr "жанр цих даних"
+
+msgid "comment"
+msgstr "коментар"
+
+msgid "free text commenting the data"
+msgstr "довільний текст з описом даних"
+
+msgid "extended comment"
+msgstr "розширений коментар"
+
+msgid "free text commenting the data in key=value or key[en]=comment form"
+msgstr ""
+"довільний текст з описом даних у формі ключ=значення чи ключ[en]=коментар"
+
+msgid "track number"
+msgstr "номер композиції"
+
+msgid "track number inside a collection"
+msgstr "номер композиції у збірці"
+
+msgid "track count"
+msgstr "кількість композицій"
+
+msgid "count of tracks inside collection this track belongs to"
+msgstr "кількість композицій у збірці, до якої належить ця композиція"
+
+msgid "disc number"
+msgstr "номер диска"
+
+msgid "disc number inside a collection"
+msgstr "номер диска у збірці"
+
+msgid "disc count"
+msgstr "кількість дисків"
+
+msgid "count of discs inside collection this disc belongs to"
+msgstr "кількість дисків у збірці, до якої належить цей диск"
+
+msgid "location"
+msgstr "адреса"
+
+msgid ""
+"Origin of media as a URI (location, where the original of the file or stream "
+"is hosted)"
+msgstr ""
+"Джерело даних як адреса (місце, де розташовано початкові дані файла або "
+"адреса поширення потоку)"
+
+msgid "homepage"
+msgstr "домашня сторінка"
+
+msgid "Homepage for this media (i.e. artist or movie homepage)"
+msgstr ""
+"Домашня сторінка цього носія даних (домашня сторінка виконавця або фільму)"
+
+msgid "description"
+msgstr "опис"
+
+msgid "short text describing the content of the data"
+msgstr "короткий текст з описом вмісту даних"
+
+msgid "version"
+msgstr "версія"
+
+msgid "version of this data"
+msgstr "версія цих даних"
+
+msgid "ISRC"
+msgstr "ISRC"
+
+msgid "International Standard Recording Code - see http://www.ifpi.org/isrc/"
+msgstr ""
+"Інтернаціональний стандартний код запису (ISRC) — дивіться http://www.ifpi."
+"org/isrc/"
+
+msgid "organization"
+msgstr "організація"
+
+msgid "copyright"
+msgstr "авторські права"
+
+msgid "copyright notice of the data"
+msgstr "примітка щодо авторських прав на дані"
+
+msgid "copyright uri"
+msgstr "uri авторських прав"
+
+msgid "URI to the copyright notice of the data"
+msgstr "URI примітки про авторські права даних"
+
+msgid "encoded by"
+msgstr "автор кодування"
+
+msgid "name of the encoding person or organization"
+msgstr "ім’я людини або назва установи, якою було виконано кодування"
+
+msgid "contact"
+msgstr "контакти"
+
+msgid "contact information"
+msgstr "контактна інформація"
+
+msgid "license"
+msgstr "ліцензія"
+
+msgid "license of data"
+msgstr "ліцензія даних"
+
+msgid "license uri"
+msgstr "uri ліцензії"
+
+msgid "URI to the license of the data"
+msgstr "URI ліцензії даних"
+
+msgid "performer"
+msgstr "виконавець"
+
+msgid "person(s) performing"
+msgstr "особа(и), що виконала"
+
+msgid "composer"
+msgstr "композитор"
+
+msgid "person(s) who composed the recording"
+msgstr "особа чи особи, якими було створено музику запису"
+
+msgid "conductor"
+msgstr "диригент"
+
+msgid "conductor/performer refinement"
+msgstr "диригент або покращувач виконання"
+
+msgid "duration"
+msgstr "тривалість"
+
+msgid "length in GStreamer time units (nanoseconds)"
+msgstr "тривалість у одиницях виміру GStreamer (наносекунди)"
+
+msgid "codec"
+msgstr "кодек"
+
+msgid "codec the data is stored in"
+msgstr "кодек, яким закодовано дані"
+
+msgid "video codec"
+msgstr "відеокодек"
+
+msgid "codec the video data is stored in"
+msgstr "кодек, яким закодовано відеодані"
+
+msgid "audio codec"
+msgstr "аудіокодек"
+
+msgid "codec the audio data is stored in"
+msgstr "кодек, яким закодовані звукові дані"
+
+msgid "subtitle codec"
+msgstr "кодек субтитрів"
+
+msgid "codec the subtitle data is stored in"
+msgstr "кодек, у якому зберігаються субтитри"
+
+msgid "container format"
+msgstr "формат контейнера"
+
+msgid "container format the data is stored in"
+msgstr "формат контейнера, у якому зберігаються дані"
+
+msgid "bitrate"
+msgstr "щільність потоку бітів"
+
+msgid "exact or average bitrate in bits/s"
+msgstr "точна або приблизна щільність потоку бітів у біт/с"
+
+msgid "nominal bitrate"
+msgstr "номінальна щільність потоку бітів"
+
+msgid "nominal bitrate in bits/s"
+msgstr "номінальна щільність потоку бітів у біт/с"
+
+msgid "minimum bitrate"
+msgstr "мінімальна щільність потоку бітів"
+
+msgid "minimum bitrate in bits/s"
+msgstr "мінімальна щільність потоку бітів у біт/с"
+
+msgid "maximum bitrate"
+msgstr "максимальна щільність потоку бітів"
+
+msgid "maximum bitrate in bits/s"
+msgstr "максимальна щільність потоку бітів у біт/с"
+
+msgid "encoder"
+msgstr "кодувальник"
+
+msgid "encoder used to encode this stream"
+msgstr "кодувальник, який використовувався для кодування цих даних"
+
+msgid "encoder version"
+msgstr "версія кодувальника"
+
+msgid "version of the encoder used to encode this stream"
+msgstr "версія кодувальника, який використовувався для кодування цих даних"
+
+msgid "serial"
+msgstr "номер"
+
+msgid "serial number of track"
+msgstr "послідовний номер композиції"
+
+msgid "replaygain track gain"
+msgstr "рівень відтворення композиції"
+
+msgid "track gain in db"
+msgstr "рівень композиції, у дБ"
+
+msgid "replaygain track peak"
+msgstr "пік відтворення композиції"
+
+msgid "peak of the track"
+msgstr "пік композиції"
+
+msgid "replaygain album gain"
+msgstr "рівень відтворення альбому"
+
+msgid "album gain in db"
+msgstr "рівень альбому, у дБ"
+
+msgid "replaygain album peak"
+msgstr "пік відтворення альбому"
+
+msgid "peak of the album"
+msgstr "пік альбому"
+
+msgid "replaygain reference level"
+msgstr "опорний рівень гучності відтворення"
+
+msgid "reference level of track and album gain values"
+msgstr "опорні рівні гучності композиції чи альбому"
+
+msgid "language code"
+msgstr "код мови"
+
+msgid "language code for this stream, conforming to ISO-639-1 or ISO-639-2"
+msgstr "код мови для потоку, код має відповідати ISO-639-1 або ISO-639-2"
+
+msgid "language name"
+msgstr "назва мови"
+
+msgid "freeform name of the language this stream is in"
+msgstr "назва мови цього потоку звукових даних у довільній формі"
+
+msgid "image"
+msgstr "зображення"
+
+msgid "image related to this stream"
+msgstr "зображення, що стосується цього потоку"
+
+#. TRANSLATORS: 'preview image' = image that shows a preview of the full image
+msgid "preview image"
+msgstr "попередній перегляд зображення"
+
+msgid "preview image related to this stream"
+msgstr "попередній перегляд зображення, пов’язаного з цим потоком"
+
+msgid "attachment"
+msgstr "долучення"
+
+msgid "file attached to this stream"
+msgstr "файл, долучений до цього потоку"
+
+msgid "beats per minute"
+msgstr "тактів за хвилину"
+
+msgid "number of beats per minute in audio"
+msgstr "кількість тактів звуку за хвилину"
+
+msgid "keywords"
+msgstr "ключові слова"
+
+msgid "comma separated keywords describing the content"
+msgstr "відокремлені комами ключові слова, що описують дані"
+
+msgid "geo location name"
+msgstr "географічна назва"
+
+msgid ""
+"human readable descriptive location of where the media has been recorded or "
+"produced"
+msgstr ""
+"зручний для читання описова назва місцевості, у якій було записано або "
+"створено дані"
+
+msgid "geo location latitude"
+msgstr "географічна широта"
+
+msgid ""
+"geo latitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the equator, negative values for "
+"southern latitudes)"
+msgstr ""
+"географічна широта місцевості, де було записано або створено дані у градусах "
+"відповідно до WGS84 (нуль — екватор, від’ємні значення відповідають "
+"південній широті)"
+
+msgid "geo location longitude"
+msgstr "географічна довгота"
+
+msgid ""
+"geo longitude location of where the media has been recorded or produced in "
+"degrees according to WGS84 (zero at the prime meridian in Greenwich/UK,  "
+"negative values for western longitudes)"
+msgstr ""
+"географічна довгота місцевості, де було записано або створено дані у "
+"градусах відповідно до WGS84 (нуль — нульовий меридіан Гринвіча, від’ємні "
+"значення відповідають західній довготі)"
+
+msgid "geo location elevation"
+msgstr "географічна висота"
+
+msgid ""
+"geo elevation of where the media has been recorded or produced in meters "
+"according to WGS84 (zero is average sea level)"
+msgstr ""
+"висота над рівнем моря, де було записано або створено дані у метрах "
+"відповідно до WGS84 (нуль відповідає рівню моря)"
+
+msgid "geo location country"
+msgstr "країна"
+
+msgid "country (english name) where the media has been recorded or produced"
+msgstr "країна (англійською), у якій було записано або створено дані"
+
+msgid "geo location city"
+msgstr "місто"
+
+msgid "city (english name) where the media has been recorded or produced"
+msgstr "місто (англійською), у якому було записано або створено дані"
+
+msgid "geo location sublocation"
+msgstr "додаткові дані розташування"
+
+msgid ""
+"a location within a city where the media has been produced or created (e.g. "
+"the neighborhood)"
+msgstr ""
+"місце у місті, де виконувалася зйомка або було створено дані (наприклад, "
+"район)"
+
+msgid "geo location horizontal error"
+msgstr "похибка у даних гор. розташування"
+
+msgid "expected error of the horizontal positioning measures (in meters)"
+msgstr "очікувана похибка у вимірюванні горизонтальних координат (у метрах)"
+
+msgid "geo location movement speed"
+msgstr "географічна швидкість пересування"
+
+msgid ""
+"movement speed of the capturing device while performing the capture in m/s"
+msgstr "швидкість руху пристрою для знімання під час виконання зйомки у м/с"
+
+msgid "geo location movement direction"
+msgstr "географічний напрямок пересування"
+
+msgid ""
+"indicates the movement direction of the device performing the capture of a "
+"media. It is represented as degrees in floating point representation, 0 "
+"means the geographic north, and increases clockwise"
+msgstr ""
+"напрямок руху пристрою, яким виконувалося знімання даних. Визначається у "
+"градусах з використанням десяткових дробів, 0 відповідає географічній "
+"півночі, відлік ведеться за годинниковою стрілкою."
+
+msgid "geo location capture direction"
+msgstr "географічний напрямок зйомки"
+
+msgid ""
+"indicates the direction the device is pointing to when capturing  a media. "
+"It is represented as degrees in floating point  representation, 0 means the "
+"geographic north, and increases clockwise"
+msgstr ""
+"напрямок, у якому було спрямовано об’єктив пристрою, яким виконувалося "
+"знімання даних. Визначається у градусах з використанням десяткових дробів, 0 "
+"відповідає географічній півночі, відлік ведеться за годинниковою стрілкою."
+
+#. TRANSLATORS: 'show name' = 'TV/radio/podcast show name' here
+msgid "show name"
+msgstr "назва передачі"
+
+msgid "Name of the tv/podcast/series show the media is from"
+msgstr "Назва телепрограми/трансляції/серіалу звідки взято дані"
+
+#. TRANSLATORS: 'show sortname' = 'TV/radio/podcast show name as used for sorting purposes' here
+msgid "show sortname"
+msgstr "назва передачі (для впорядкування)"
+
+msgid ""
+"Name of the tv/podcast/series show the media is from, for sorting purposes"
+msgstr ""
+"Назва телепрограми/трансляції/серіалу звідки взято дані (для впорядкування)"
+
+msgid "episode number"
+msgstr "номер серії"
+
+msgid "The episode number in the season the media is part of"
+msgstr "Номер серії у сезоні, частиною якого є дані"
+
+msgid "season number"
+msgstr "номер сезону"
+
+msgid "The season number of the show the media is part of"
+msgstr "Номер сезону, частиною якого є дані"
+
+msgid "lyrics"
+msgstr "текст"
+
+msgid "The lyrics of the media, commonly used for songs"
+msgstr "Текст, що супроводжує дані, типово — текст пісні"
+
+msgid "composer sortname"
+msgstr "композитор (для впорядкування)"
+
+msgid "person(s) who composed the recording, for sorting purposes"
+msgstr ""
+"особа (чи особи), якою виконувалося компонування запису (для впорядкування)"
+
+msgid "grouping"
+msgstr "групування"
+
+msgid ""
+"Groups related media that spans multiple tracks, like the different pieces "
+"of a concerto. It is a higher level than a track, but lower than an album"
+msgstr ""
+"Групує пов’язані дані, які складаються з декількох композицій, наприклад, "
+"різні частини концерту. Має вищий рівень за окрему композицію, але нижчий за "
+"рівень альбому."
+
+msgid "user rating"
+msgstr "оцінка користувачем"
+
+msgid ""
+"Rating attributed by a user. The higher the rank, the more the user likes "
+"this media"
+msgstr ""
+"Оцінка, визначена користувачем. Більшим значенням відповідає вища оцінка."
+
+msgid "device manufacturer"
+msgstr "виробник пристрою"
+
+msgid "Manufacturer of the device used to create this media"
+msgstr "Виробник пристрою, використаного для створення цих даних"
+
+msgid "device model"
+msgstr "модель пристрою"
+
+msgid "Model of the device used to create this media"
+msgstr "Модель пристрою, використаного для створення цих даних"
+
+msgid "application name"
+msgstr "назва програми"
+
+msgid "Application used to create the media"
+msgstr "Програма, за допомогою якої записано дані"
+
+msgid "application data"
+msgstr "дані програми"
+
+msgid "Arbitrary application data to be serialized into the media"
+msgstr "Довільні дані програми, якими підписано дані"
+
+msgid "image orientation"
+msgstr "орієнтація зображення"
+
+msgid "How the image should be rotated or flipped before display"
+msgstr "Визначає обертання та віддзеркалення зображення перед показом"
+
+msgid "publisher"
+msgstr "поширювач"
+
+msgid "Name of the label or publisher"
+msgstr "Назва лейбла або поширювача"
+
+msgid "interpreted-by"
+msgstr "інтерпретація"
+
+msgid "Information about the people behind a remix and similar interpretations"
+msgstr "Дані щодо тих, ким було виконано ремікс або подібну інтерпретацію"
+
+msgid "midi-base-note"
+msgstr "базова-нота-midi"
+
+msgid "Midi note number of the audio track."
+msgstr "Номер ноти MIDI звукової доріжки."
+
+msgid "private-data"
+msgstr "конфіденційні-дані"
+
+msgid "Private data"
+msgstr "Конфіденційні дані"
+
+#. separator between two strings
+msgid ", "
+msgstr ", "
+
+#, c-format
+msgid "Invalid URI: %s"
+msgstr "Некоректна адреса: %s"
+
+#, c-format
+msgid "No URI handler for the %s protocol found"
+msgstr "Не знайдено обробника адрес для протоколу %s"
+
+#, c-format
+msgid "URI scheme '%s' not supported"
+msgstr "Підтримки схеми адреси «%s» не передбачено"
+
+#, c-format
+msgid "ERROR: from element %s: %s\n"
+msgstr "ПОМИЛКА: у елементі %s: %s\n"
+
+#, c-format
+msgid ""
+"Additional debug info:\n"
+"%s\n"
+msgstr ""
+"Додаткова діагностична інформація:\n"
+"%s\n"
+
+#. ******************************************************************************************
+#. *** helpers for pipeline-setup
+#. ******************************************************************************************
+#, c-format
+msgid "link has no source [sink=%s@%p]"
+msgstr "у посилання немає джерела [приймач=%s@%p]"
+
+#, c-format
+msgid "link has no sink [source=%s@%p]"
+msgstr "у посилання немає приймача [джерело=%s@%p]"
+
+#, c-format
+msgid "no property \"%s\" in element \"%s\""
+msgstr "немає властивості «%s» у елементі «%s»"
+
+#, c-format
+msgid "could not set property \"%s\" in element \"%s\" to \"%s\""
+msgstr "не вдалося встановити властивість «%s» у елементі «%s» у значення «%s»"
+
+#, c-format
+msgid "Element \"%s\" is not a GstPreset"
+msgstr "Елемент «%s» не належить до типу GstPreset"
+
+#, c-format
+msgid "could not set preset \"%s\" in element \"%s\""
+msgstr "не вдалося встановити набір «%s» у елементі «%s»"
+
+msgid "Delayed linking failed."
+msgstr "Спроба відкладеного компонування зазнала невдачі."
+
+#, c-format
+msgid "could not link %s to %s, %s can't handle caps %s"
+msgstr "не вдалося прив'язати %s до %s, %s не може обробити можливості %s"
+
+#, c-format
+msgid "could not link %s to %s, neither element can handle caps %s"
+msgstr ""
+"не вдалося прив'язати %s до %s, жоден елемент не може обробити можливості %s"
+
+#, c-format
+msgid "could not link %s to %s with caps %s"
+msgstr "не вдалося прив'язати %s до %s із можливостями %s"
+
+#, c-format
+msgid "could not link %s to %s"
+msgstr "не вдалося прив'язати %s до %s"
+
+#, c-format
+msgid "no element \"%s\""
+msgstr "немає елемента «%s»"
+
+#, c-format
+msgid "unexpected reference \"%s\" - ignoring"
+msgstr "неочікуване посилання «%s» — ігноруємо"
+
+#, c-format
+msgid "unexpected pad-reference \"%s\" - ignoring"
+msgstr "неочікуване посилання-підкладка «%s» — ігноруємо"
+
+#, c-format
+msgid "could not parse caps \"%s\""
+msgstr "не вдалося розібрати можливості «%s»"
+
+#, c-format
+msgid "no sink element for URI \"%s\""
+msgstr "немає елемента-споживача для URI «%s»"
+
+#, c-format
+msgid "no source element for URI \"%s\""
+msgstr "відсутній елемент-джерело для URI «%s»"
+
+msgid "syntax error"
+msgstr "синтаксична помилка"
+
+#, c-format
+msgid "specified empty bin \"%s\", not allowed"
+msgstr "вказано порожній контейнер «%s», не допускається"
+
+#, c-format
+msgid "no bin \"%s\", unpacking elements"
+msgstr "немає фрагмента «%s», розпаковуємо елементи"
+
+msgid "empty pipeline not allowed"
+msgstr "не можна використовувати порожній канал"
+
+msgid "Pipeline construction is invalid, please add queues."
+msgstr "Некоректна конструкція конвеєра, будь ласка, додайте черги."
+
+msgid "A lot of buffers are being dropped."
+msgstr "Викинуто багато буферів."
+
+msgid "Internal data flow problem."
+msgstr "Помилка внутрішнього перенесення даних."
+
+msgid "Internal data flow error."
+msgstr "Помилка внутрішнього перенесення даних."
+
+msgid "Internal clock error."
+msgstr "Помилка внутрішньої синхронізації."
+
+msgid "Failed to map buffer."
+msgstr "Не вдалося отримати місце під буфер."
+
+msgid "Filter caps"
+msgstr "Фільтр можливостей"
+
+msgid ""
+"Restrict the possible allowed capabilities (NULL means ANY). Setting this "
+"property takes a reference to the supplied GstCaps object."
+msgstr ""
+"Обмежити допустимі можливості (NULL означає ANY). Встановлення цієї "
+"властивості призводить до посилання на поставлений об'єкт GstCaps."
+
+msgid "Caps Change Mode"
+msgstr "Режим зміни можливостей"
+
+msgid "Filter caps change behaviour"
+msgstr "Зміна поведінки можливостей фільтрування"
+
+msgid "No Temp directory specified."
+msgstr "Не вказано каталог тимчасових даних."
+
+#, c-format
+msgid "Could not create temp file \"%s\"."
+msgstr "Не вдалося створити тимчасовий файл даних «%s»."
+
+#, c-format
+msgid "Could not open file \"%s\" for reading."
+msgstr "Не вдалося відкрити файл «%s» для читання."
+
+msgid "Error while writing to download file."
+msgstr "Помилка під час запису до файла отриманих даних."
+
+msgid "No file name specified for writing."
+msgstr "Не вказано назви файла для запису."
+
+#, c-format
+msgid "Could not open file \"%s\" for writing."
+msgstr "Не вдалося відкрити файл «%s» для запису."
+
+#, c-format
+msgid "Error closing file \"%s\"."
+msgstr "Помилка закривання файла «%s»."
+
+#, c-format
+msgid "Error while seeking in file \"%s\"."
+msgstr "Помилка при встановленні позиції у файлі «%s»."
+
+#, c-format
+msgid "Error while writing to file \"%s\"."
+msgstr "Помилка при записуванні до файла «%s»."
+
+msgid "No file name specified for reading."
+msgstr "Не вказано назву файла для читання."
+
+#, c-format
+msgid "Could not get info on \"%s\"."
+msgstr "Не вдалося отримати інформацію щодо «%s»."
+
+#, c-format
+msgid "\"%s\" is a directory."
+msgstr "«%s» є каталогом."
+
+#, c-format
+msgid "File \"%s\" is a socket."
+msgstr "Файл «%s» є сокетом."
+
+msgid "Failed after iterations as requested."
+msgstr "Помилка після ітерацій у запитаному порядку."
+
+msgid "eos-after and error-after can't both be defined."
+msgstr "Не можна одночасно визначати eos-after і error-after."
+
+msgid "caps"
+msgstr "можливості"
+
+msgid "detected capabilities in stream"
+msgstr "у потоці знайдено можливості"
+
+msgid "minimum"
+msgstr "мінімум"
+
+msgid "force caps"
+msgstr "примусово визначені можливості"
+
+msgid "force caps without doing a typefind"
+msgstr "примусово визначити можливості без виконання typefind"
+
+msgid "Stream doesn't contain enough data."
+msgstr "У потоці міститься недостатньо даних."
+
+msgid "Stream contains no data."
+msgstr "Потік не містить даних."
+
+#, c-format
+msgid "%sImplemented Interfaces%s:\n"
+msgstr "%sРеалізовані інтерфейси%s:\n"
+
+msgid "readable"
+msgstr "читання"
+
+msgid "writable"
+msgstr "запис"
+
+msgid "deprecated"
+msgstr "застаріле"
+
+msgid "controllable"
+msgstr "контроль"
+
+msgid "conditionally available"
+msgstr "умовно доступний"
+
+msgid "changeable in NULL, READY, PAUSED or PLAYING state"
+msgstr "можна змінювати у станах NULL, READY, PAUSED та PLAYING"
+
+msgid "changeable only in NULL, READY or PAUSED state"
+msgstr "можна змінювати лише у станах NULL, READY і PAUSED"
+
+msgid "changeable only in NULL or READY state"
+msgstr "можна змінювати лише у станах NULL і READY"
+
+msgid "Blacklisted files:"
+msgstr "Заблоковані файли:"
+
+#, c-format
+msgid "%sTotal count%s: %s"
+msgstr "%sЗагальна кількість%s: %s"
+
+#, c-format
+msgid "%d blacklisted file"
+msgid_plural "%d blacklisted files"
+msgstr[0] "%d заблокований файл"
+msgstr[1] "%d заблокованих файли"
+msgstr[2] "%d заблокованих файлів"
+
+#, c-format
+msgid "%d plugin"
+msgid_plural "%d plugins"
+msgstr[0] "%d модуль"
+msgstr[1] "%d модулі"
+msgstr[2] "%d модулів"
+
+#, c-format
+msgid "%d blacklist entry"
+msgid_plural "%d blacklist entries"
+msgstr[0] "%d заблокований запис"
+msgstr[1] "%d заблокованих записи"
+msgstr[2] "%d заблокованих записів"
+
+#, c-format
+msgid "%d feature"
+msgid_plural "%d features"
+msgstr[0] "%d функція"
+msgstr[1] "%d функції"
+msgstr[2] "%d функцій"
+
+msgid "Print all elements"
+msgstr "Вивести усі елементи"
+
+msgid "Print list of blacklisted files"
+msgstr "Показати список заблокованих файлів"
+
+msgid ""
+"Print a machine-parsable list of features the specified plugin or all "
+"plugins provide.\n"
+"                                       Useful in connection with external "
+"automatic plugin installation mechanisms"
+msgstr ""
+"Вивести придатний для обробки комп’ютером список можливостей, роботу яких "
+"забезпечує модуль або всі модулі.\n"
+"                                       Використовується разом з зовнішніми "
+"механізмами автоматичного встановлення модулів"
+
+msgid "List the plugin contents"
+msgstr "Показати вміст модуля"
+
+msgid ""
+"A slashes ('/') separated list of types of elements (also known as klass) to "
+"list. (unordered)"
+msgstr ""
+"Список типів елементів (також відомих як класи), відокремлених похилими "
+"рисками («/»). (неупорядкований)"
+
+msgid "Check if the specified element or plugin exists"
+msgstr "Перевірити, чи існує вказаний елемент або додаток"
+
+msgid ""
+"When checking if an element or plugin exists, also check that its version is "
+"at least the version specified"
+msgstr ""
+"Під час перевірки існування елемента або додатка також перевірити, чи є його "
+"версія новішою за вказану або рівною їй"
+
+msgid "Print supported URI schemes, with the elements that implement them"
+msgstr "Показати підтримувані схеми адрес з елементами, які їх реалізують"
+
+msgid ""
+"Disable colors in output. You can also achieve the same by setting "
+"'GST_INSPECT_NO_COLORS' environment variable to any value."
+msgstr ""
+"Вимкнути кольори у виведених даних. Ви також можете досягти встановленням "
+"для змінної середовища GST_INSPECT_NO_COLORS будь-якого значення."
+
+msgid "Color output, even when not sending to a tty."
+msgstr "Розфарбовувати виведені дані, навіть якщо вони не надсилаються до tty."
+
+#, c-format
+msgid "Could not load plugin file: %s\n"
+msgstr "Не вдалося завантажити файл модулю %s\n"
+
+#, c-format
+msgid "No such element or plugin '%s'\n"
+msgstr "Немає елемента елемента або модуля «%s»\n"
+
+msgid "Index statistics"
+msgstr "Статистичні дані покажчика"
+
+msgid "Setting pipeline to PLAYING ...\n"
+msgstr "Канал переводиться у стан ВІДТВОРЕННЯ...\n"
+
+msgid "ERROR: pipeline doesn't want to play.\n"
+msgstr "ПОМИЛКА: канал не може почати відтворення.\n"
+
+#, c-format
+msgid "Got message #%u from element \"%s\" (%s): "
+msgstr "Отримано повідомлення %u від елемента «%s» (%s): "
+
+#, c-format
+msgid "Got message #%u from pad \"%s:%s\" (%s): "
+msgstr "Отримано повідомлення %u від гнізда «%s:%s» (%s): "
+
+#, c-format
+msgid "Got message #%u from object \"%s\" (%s): "
+msgstr "Отримано повідомлення %u від об’єкта «%s» (%s): "
+
+#, c-format
+msgid "Got message #%u (%s): "
+msgstr "Отримано повідомлення %u (%s): "
+
+#, c-format
+msgid "Got EOS from element \"%s\".\n"
+msgstr "Отримано ознаку кінця рядка від елементу «%s».\n"
+
+msgid "EOS received - stopping pipeline...\n"
+msgstr "Отримано EOS - завершення роботи каналу...\n"
+
+#, c-format
+msgid "FOUND TAG      : found by element \"%s\".\n"
+msgstr "ЗНАЙДЕНО ТЕГ  : знайдено у елементі «%s».\n"
+
+#, c-format
+msgid "FOUND TAG      : found by pad \"%s:%s\".\n"
+msgstr "ЗНАЙДЕНО МІТКУ  : знайдено у елементі «%s:%s».\n"
+
+#, c-format
+msgid "FOUND TAG      : found by object \"%s\".\n"
+msgstr "ЗНАЙДЕНО МІТКУ : знайдено об’єктом «%s».\n"
+
+msgid "FOUND TAG\n"
+msgstr "ЗНАЙДЕНО МІТКУ\n"
+
+#, c-format
+msgid "FOUND TOC      : found by element \"%s\".\n"
+msgstr "ЗНАЙДЕНО ЗМІСТ : знайдено елементом «%s».\n"
+
+#, c-format
+msgid "FOUND TOC      : found by object \"%s\".\n"
+msgstr "ЗНАЙДЕНО ЗМІСТУ: знайдено об’єктом «%s».\n"
+
+msgid "FOUND TOC\n"
+msgstr "ЗНАЙДЕНО ЗМІСТ\n"
+
+#, c-format
+msgid ""
+"INFO:\n"
+"%s\n"
+msgstr ""
+"ІНФОРМАЦІЯ:\n"
+"%s\n"
+
+#, c-format
+msgid "WARNING: from element %s: %s\n"
+msgstr "ПОПЕРЕДЖЕННЯ: у елементі %s: %s\n"
+
+msgid "Pipeline is PREROLLED ...\n"
+msgstr "Канал у стані випереджального просування даних...\n"
+
+msgid "Prerolled, waiting for buffering to finish...\n"
+msgstr ""
+"Виконано випереджальне просування даних, очікуємо на завершення "
+"буферизації...\n"
+
+msgid "Prerolled, waiting for progress to finish...\n"
+msgstr ""
+"Виконано випереджальне просування даних, очікуємо на завершення обробки...\n"
+
+msgid "buffering..."
+msgstr "буферизація..."
+
+msgid "Done buffering, setting pipeline to PLAYING ...\n"
+msgstr "Буферизацію завершено, канал переводиться у стан ВІДТВОРЕННЯ ...\n"
+
+#. we were not buffering but PLAYING, PAUSE  the pipeline.
+msgid "Buffering, setting pipeline to PAUSED ...\n"
+msgstr "Буферизація, канал переводиться у стан ПРИЗУПИНЕНО ...\n"
+
+msgid "Redistribute latency...\n"
+msgstr "Перерозподіл затримки...\n"
+
+#, c-format
+msgid "Setting state to %s as requested by %s...\n"
+msgstr "Встановлення стану %s, потрібно для %s...\n"
+
+#. this application message is posted when we caught an interrupt and
+#. * we need to stop the pipeline.
+msgid "Interrupt: Stopping pipeline ...\n"
+msgstr "Переривання: зупинка каналу...\n"
+
+msgid "Interrupt while waiting for EOS - stopping pipeline...\n"
+msgstr ""
+"Переривання під час очікування на EOS - перериваємо роботу каналу "
+"передавання даних...\n"
+
+msgid "EOS on shutdown enabled -- Forcing EOS on the pipeline\n"
+msgstr "Увімкнено EOS при завершенні - Примусове виведення EOS до каналу\n"
+
+msgid "Waiting for EOS...\n"
+msgstr "Очікування на EOS...\n"
+
+#, c-format
+msgid "Progress: (%s) %s\n"
+msgstr "Поступ: (%s) %s\n"
+
+#, c-format
+msgid "Missing element: %s\n"
+msgstr "Не вистачає елемента: %s\n"
+
+#, c-format
+msgid "Got context from element '%s': %s=%s\n"
+msgstr "Отримано контекст з елемента «%s»: %s=%s\n"
+
+msgid "ERROR: pipeline doesn't want to preroll.\n"
+msgstr ""
+"ПОМИЛКА: канал не може перейти у стан випереджального просування даних.\n"
+
+msgid "An error happened while waiting for EOS\n"
+msgstr "Під час очікування на EOS сталася помилка\n"
+
+#, c-format
+msgid "Use Windows high-resolution clock, precision: %u ms\n"
+msgstr "Використати високоточний годинник Windows, точність: %u мс\n"
+
+msgid "Output tags (also known as metadata)"
+msgstr "Вивести мітки (також відомі як метадані)"
+
+msgid "Output TOC (chapters and editions)"
+msgstr "Виведений зміст (розділи та редакції)"
+
+msgid "Output status information and property notifications"
+msgstr "Вивести інформацію про стан та сповіщення щодо властивостей"
+
+msgid "Do not print any progress information"
+msgstr "Не показувати даних щодо поступу"
+
+msgid "Output messages"
+msgstr "Виведено повідомлення"
+
+msgid ""
+"Do not output status information for the specified property if verbose "
+"output is enabled (can be used multiple times)"
+msgstr ""
+"Не виводити дані щодо стану для вказаної властивості, якщо увімкнено "
+"докладне виведення (можна використовувати декілька разів)"
+
+msgid "PROPERTY-NAME"
+msgstr "НАЗВА-ВЛАСТИВОСТІ"
+
+msgid "Do not install a fault handler"
+msgstr "Не встановлювати обробник збоїв"
+
+msgid "Force EOS on sources before shutting the pipeline down"
+msgstr "Примусово надіслати EOS до джерел до завершення роботи каналу"
+
+msgid "Gather and print index statistics"
+msgstr "Зібрати та показати статистичні дані покажчика"
+
+msgid ""
+"Do not print current position of pipeline. If this option is unspecified, "
+"the position will be printed when stdout is a TTY. To enable printing "
+"position when stdout is not a TTY, use \"force-position\" option"
+msgstr ""
+"Не виводити поточну позицію конвеєра. Якщо не вказано цей параметр, позицію "
+"буде виведено, якщо stdout є TTY. Щоб увімкнути виведення позиції, якщо "
+"stdout не є TTY, скористайтеся параметром «force-position»."
+
+msgid ""
+"Allow printing current position of pipeline even if stdout is not a TTY. "
+"This option has no effect if the \"no-position\" option is specified"
+msgstr ""
+"Дозволити виведення поточної позиції у конвеєрі, навіть якщо stdout не є "
+"TTY. Цей параметр ні на що не впливає, якщо вказано параметр «no-position»."
+
+#, c-format
+msgid "ERROR: pipeline could not be constructed: %s.\n"
+msgstr "ПОМИЛКА: канал не може бути сконструйований: %s.\n"
+
+msgid "ERROR: pipeline could not be constructed.\n"
+msgstr "ПОМИЛКА: канал не може бути сконструйований.\n"
+
+#, c-format
+msgid "WARNING: erroneous pipeline: %s\n"
+msgstr "ПОПЕРЕДЖЕННЯ: помилковий канал: %s\n"
+
+msgid "ERROR: the 'pipeline' element wasn't found.\n"
+msgstr "ПОМИЛКА: не знайдений елемент \"pipeline\".\n"
+
+msgid "Setting pipeline to PAUSED ...\n"
+msgstr "Канал переводиться у стан PAUSED...\n"
+
+msgid "Failed to set pipeline to PAUSED.\n"
+msgstr "Не вдалося встановити стан конвеєра PAUSED (ПРИЗУПИНЕНО).\n"
+
+msgid "Pipeline is live and does not need PREROLL ...\n"
+msgstr "Конвеєр активний та не потребує випереджального просування даних...\n"
+
+msgid "Pipeline is PREROLLING ...\n"
+msgstr "Канал у стані приготування до випереджального просування даних...\n"
+
+msgid "Execution ended after %"
+msgstr "Виконання завершено після %"
+
+msgid "Setting pipeline to NULL ...\n"
+msgstr "Канал переводиться у стан NULL ...\n"
+
+msgid "Freeing pipeline ...\n"
+msgstr "Спорожнення каналу...\n"
+
+#~ msgid "Error creating pipe: %s\n"
+#~ msgstr "Помилка під час створення конвеєра: %s\n"
+
+#~ msgid "Error forking: %s\n"
+#~ msgstr "Помилка відгалуження: %s\n"
+
+#~ msgid "Error reading from console: %s\n"
+#~ msgstr "Помилка під час читання з консолі: %s\n"
+
+#~ msgid "Error writing to console: %s\n"
+#~ msgstr "Помилка під час запису до консолі: %s\n"
+
+#~ msgid "ERROR: Pipeline doesn't want to pause.\n"
+#~ msgstr "ПОМИЛКА: канал не може призупинитись.\n"
+
+#~ msgid "EOS on shutdown enabled -- waiting for EOS after Error\n"
+#~ msgstr "Увімкнено EOS при завершенні - очікуємо на EOS після помилки\n"
+
+#~ msgid "Setting pipeline to READY ...\n"
+#~ msgstr "Канал переводиться у стан ГОТОВИЙ ...\n"
+
+#~ msgid "bin"
+#~ msgstr "фрагмент"
+
+#~ msgid "Internal data stream error."
+#~ msgstr "Помилка внутрішнього потоку даних."
+
+#~ msgid "Do not output status information of TYPE"
+#~ msgstr "Не виводити інформацію про стан типу ТИП"
+
+#~ msgid "TYPE1,TYPE2,..."
+#~ msgstr "ТИП1,ТИП2,..."
+
+#~ msgid "link without source element"
+#~ msgstr "зв'язок без елемента-джерела"
+
+#~ msgid "link without sink element"
+#~ msgstr "зв'язок без елемента-споживача"
+
+#~ msgid "no element to link URI \"%s\" to"
+#~ msgstr "немає елемента для зв'язку URI «%s» до"
+
+#~ msgid "maximum"
+#~ msgstr "максимум"
+
+#~ msgid "Usage: gst-xmllaunch <file.xml> [ element.property=value ... ]\n"
+#~ msgstr ""
+#~ "Використання: gst-xmllaunch <file.xml> [ елемент."
+#~ "властивість=значення ... ]\n"
+
+#~ msgid "ERROR: parse of xml file '%s' failed.\n"
+#~ msgstr "ПОМИЛКА: помилка при аналізі xml файлу «%s».\n"
+
+#~ msgid "ERROR: no toplevel pipeline element in file '%s'.\n"
+#~ msgstr "ПОМИЛКА: немає верхнього елемента каналу у файлі «%s».\n"
+
+#~ msgid "WARNING: only one toplevel element is supported at this time.\n"
+#~ msgstr ""
+#~ "ПОПЕРЕДЖЕННЯ: наразі підтримується лише один елемент найвищого рівня.\n"
+
+#~ msgid "ERROR: could not parse command line argument %d: %s.\n"
+#~ msgstr ""
+#~ "ПОМИЛКА: не вдалося проаналізувати аргумент командного рядка %d: %s.\n"
+
+#~ msgid "WARNING: element named '%s' not found.\n"
+#~ msgstr "ПОПЕРЕДЖЕННЯ: елемент з назвою «%s» не існує.\n"
+
+#~ msgid "Save xml representation of pipeline to FILE and exit"
+#~ msgstr "Зберегти xml представлення каналу у файл ФАЙЛ та завершитись"
+
+#~ msgid "FILE"
+#~ msgstr "ФАЙЛ"
+
+#~ msgid "Do not install signal handlers for SIGUSR1 and SIGUSR2"
+#~ msgstr "Не встановлювати обробники сигналів для SIGUSR1 і SIGUSR2"
+
+#~ msgid "Print alloc trace (if enabled at compile time)"
+#~ msgstr ""
+#~ "Вивести трасування розподілу пам’яті (якщо ввімкнено при компіляції)"
+
+#~ msgid "Error re-scanning registry %s"
+#~ msgstr "Помилка при повторному скануванні реєстру %s"
+
+#~ msgid "Internal GStreamer error: state change failed."
+#~ msgstr "Внутрішня помилка GStreamer: помилка зміни стану."
+
+#~ msgid "original location of file as a URI"
+#~ msgstr "оригінальне розташування файлу у вигляді URI"
+
+#~ msgid "Error while writing to file descriptor \"%d\"."
+#~ msgstr "Помилка при записуванні у дескриптор файлу \"%d\"."
+
+#~ msgid "File descriptor \"%d\" is not valid."
+#~ msgstr "Дескриптор файлу \"%d\" некоректний."
+
+#~ msgid "FREEING pipeline ...\n"
+#~ msgstr "канал ЗВІЛЬНЕННЯ...\n"
