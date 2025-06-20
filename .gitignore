@@ -14,3 +14,5 @@ deepstream/app/core
 deepstream/app/debug.log
 deepstream/app/libnvinfer_plugin.so.10.3.0.x86_64
 deepstream/app/libnvinfer_plugin.so.10.3.0.x86_64.ori.bak
+docker_image/deepstream_python_apps/apps/deepstream-demux-multi-in-multi-out/core
+docker_image/deepstream_python_apps/apps/common/__pycache__/

@@ -59,6 +59,53 @@ OSD_DISPLAY_TEXT = 1
 pgie_classes_str = ["Vehicle", "TwoWheeler", "Person", "RoadSign"]
 
 
+
+
+def perf_print_callback():
+    global perf_data
+    fps_report = {
+        stream_id: fps_obj.get_fps()
+        for stream_id, fps_obj in self.perf_data.all_stream_fps.items()
+    }
+    print(f"FPS data: {fps_report}")
+    # Notify about performance data
+    return True
+def conv_pad_buffer_probe(pad, info, u_data):
+
+    global perf_data
+    gst_buffer = info.get_buffer()
+    if not gst_buffer:
+        return Gst.PadProbeReturn.OK
+
+    batch_meta = pyds.gst_buffer_get_nvds_batch_meta(hash(gst_buffer))
+    l_frame = batch_meta.frame_meta_list
+
+    while l_frame is not None:
+        frame_meta = pyds.NvDsFrameMeta.cast(l_frame.data)
+
+        # Enqueue work
+        # self.process_queue.put({
+        #     "gst_buffer": gst_buffer,
+        #     "batch_id": frame_meta.batch_id,
+        #     "frame_meta": frame_meta
+        # })
+        # ----------------------------------------------------------------------
+        # CALCULATE FPS
+        # ----------------------------------------------------------------------
+        stream_id = f"stream{frame_meta.pad_index}"
+
+        if stream_id not in perf_data.all_stream_fps:
+            from FPS import GETFPS
+            perf_data.all_stream_fps[stream_id] = GETFPS(stream_id)
+
+        perf_data.update_fps(stream_id)
+        # ----------------------------------------------------------------------
+
+        l_frame = l_frame.next
+
+    return Gst.PadProbeReturn.OK
+
+
 def pgie_src_pad_buffer_probe(pad, info, u_data):
     """
     The function pgie_src_pad_buffer_probe() is a callback function that is called every time a buffer
@@ -378,6 +425,7 @@ def main(args, requested_pgie=None, config=None, disable_probe=False):
         nvdsosd.set_property("process-mode", OSD_PROCESS_MODE)
         nvdsosd.set_property("display-text", OSD_DISPLAY_TEXT)
 
+
         # connect nvstreamdemux -> queue
         padname = "src_%u" % i
         demuxsrcpad = nvstreamdemux.request_pad_simple(padname)
@@ -397,6 +445,9 @@ def main(args, requested_pgie=None, config=None, disable_probe=False):
 
         sink.set_property("qos", 0)
 
+        nvdsosd.get_static_pad("src").add_probe(
+            Gst.PadProbeType.BUFFER, conv_pad_buffer_probe, 0
+        )
     print("Linking elements in the Pipeline \n")
     # create an event loop and feed gstreamer bus mesages to it
     loop = GLib.MainLoop()
@@ -407,7 +458,7 @@ def main(args, requested_pgie=None, config=None, disable_probe=False):
     if not pgie_src_pad:
         sys.stderr.write(" Unable to get src pad \n")
     else:
-        pgie_src_pad.add_probe(Gst.PadProbeType.BUFFER, pgie_src_pad_buffer_probe, 0)
+        # pgie_src_pad.add_probe(Gst.PadProbeType.BUFFER, conv_pad_buffer_probe, 0)
         # perf callback function to print fps every 5 sec
         GLib.timeout_add(5000, perf_data.perf_print_callback)
 
