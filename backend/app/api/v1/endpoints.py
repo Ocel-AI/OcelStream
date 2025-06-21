@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, WebSocket, File, UploadFile, WebSocketDisconnect
 from fastapi.responses import JSONResponse
-from app.models import StreamRequest
+from backend.app.models import StreamRequest
 
 import os
 import shutil
@@ -13,7 +13,7 @@ from typing import Set, Dict
 
 
 import sys
-sys.path.append("../deepstream/app") 
+sys.path.append("deepstream/app") 
 from deepstream import DynamicRTSPPipeline
 
 

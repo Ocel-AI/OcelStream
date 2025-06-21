@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.v1.endpoints import router
+from backend.app.api.v1.endpoints import router
 import asyncio
 
 app = FastAPI(title="DeepStream API")

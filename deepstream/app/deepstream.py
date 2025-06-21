@@ -9,6 +9,7 @@ from bus_call import bus_call
 from FPS import PERF_DATA
 import pyds
 from spotmanager import SpotManager
+from source_bin_factory import SourceBinFactory
 from utils import transform_image_to_base64
 import asyncio
 import multiprocessing
@@ -46,7 +47,7 @@ class DynamicRTSPPipeline:
         self.streammux.set_property("batch-size", max_sources)
         self.streammux.set_property("width", 1920)
         self.streammux.set_property("height", 1080)
-        self.streammux.set_property("batched-push-timeout", 16600)
+        self.streammux.set_property("batched-push-timeout", 66700)
         self.streammux.set_property("live-source", 1)  # Enable live source mode
         self.streammux.set_property("sync-inputs", 1)
         self.pipeline.add(self.streammux)
@@ -103,32 +104,7 @@ class DynamicRTSPPipeline:
         self.processor_thread = threading.Thread(target=self._processing_worker_loop, daemon=True)
         self.processor_thread.start()
 
-    # ------------------------------------------------------------------
-    # Source bin helpers
-    # ------------------------------------------------------------------
-    def _create_source_bin(self, index: int, uri: str) -> Gst.Bin:
-        """Builds a uridecodebin wrapped in a Bin with a ghost src pad."""
-
-        bin_name = f"source-bin-{index}"
-        bin_ = Gst.Bin.new(bin_name)
-
-        uridecodebin = Gst.ElementFactory.make("uridecodebin", f"uridecodebin-{index}")
-        uridecodebin.set_property("uri", uri)
-        uridecodebin.connect("pad-added", self._cb_decode_pad_added, bin_)
-        bin_.add(uridecodebin)
-        # Create ghost pad with no target
-        ghost = Gst.GhostPad.new_no_target("src", Gst.PadDirection.SRC)
-        bin_.add_pad(ghost)
-
-        return bin_
-
-    @staticmethod
-    def _cb_decode_pad_added(decodebin, pad, bin_):
-        if pad.get_current_caps().to_string().startswith("video"):
-            ghost = bin_.get_static_pad("src")
-            if ghost.get_target():
-                ghost.set_target(None)
-            ghost.set_target(pad)
+        self.source_bin_factory = SourceBinFactory()
 
     # ------------------------------------------------------------------
     # Public API
@@ -140,11 +116,12 @@ class DynamicRTSPPipeline:
         if self.check_rtsp_link(uri) is False or not uri.startswith("rtsp://") or uri is None:
             raise RuntimeError(f"Invalid RTSP link: {uri}")
         spot, is_fresh = self.spot_manager.acquire()
+        print(f"Acquired spot {spot} for new source: {uri}")
         if spot is None:
             raise RuntimeError("No available spots for new source")
 
         # 1. Create and link source bin
-        src_bin = self._create_source_bin(spot, uri)
+        src_bin = self.source_bin_factory.create_source_bin(spot, uri, "nvurisrcbin")
         self.pipeline.add(src_bin)
         src_pad = src_bin.get_static_pad("src")
         if is_fresh:
@@ -238,8 +215,7 @@ class DynamicRTSPPipeline:
         enc.link(pay)
         pay.link(sink)
 
-        # Pad probes (optional but keep for eos/debug)
-        conv1.get_static_pad("sink").add_probe(
+        self.streammux.get_static_pad(f"sink_{index}").add_probe(
             Gst.PadProbeType.EVENT_DOWNSTREAM,
             lambda pad, info: self.eos_probe_callback(pad, info, index)
         )
@@ -268,8 +244,7 @@ class DynamicRTSPPipeline:
         if info.type & Gst.PadProbeType.EVENT_DOWNSTREAM:
             event = info.get_event()
             if event.type == Gst.EventType.EOS:
-                print(f"[pad-probe] EOS detected on stream {index}")
-                self.remove_source(index)
+                return Gst.PadProbeReturn.DROP 
         return Gst.PadProbeReturn.OK
 
 
@@ -440,7 +415,7 @@ class DynamicRTSPPipeline:
 
     def check_rtsp_link(self, uri: str) -> bool:
         """Check if the RTSP link is valid by trying to open it with OpenCV."""
-        
+
         cap = cv2.VideoCapture(uri)
         try:
             if not cap.isOpened():
@@ -473,21 +448,29 @@ if __name__ == "__main__":
     file7_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/4.mp4"
     file8_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/8.mp4"
     live_uri = "rtsp://localhost:4000/looped"
-    rts_conveyor = "rtsp://admin:m10i.m10i@ophen.ddns.net:1337/cam/realmonitor?channel=1&subtype=0"
+    rtsp_conveyor = "rtsp://admin:m10i.m10i@ophen.ddns.net:1337/cam/realmonitor?channel=1&subtype=0"
     app = DynamicRTSPPipeline(max_sources=100)
     threading.Thread(target=app.start, daemon=True).start()
     time.sleep(5)  # Ensure pipeline is up
     print("Pipeline started, adding sources...")
-    # app.add_source(rts_conveyor)
-    y = 0
-    while y < 10:
+    app.add_source(rtsp_conveyor)
+    time.sleep(30)
+    while True:
         try:
-            app.add_source(live_uri)
-            time.sleep(4)
-            y += 1
+            app.add_source(rtsp_conveyor)
+            break
         except RuntimeError as e:
             print(f"Failed to add source: {e}")
-        time.sleep(1)
+            time.sleep(2)
+    # y = 0
+    # while y < 10:
+    #     try:
+    #         app.add_source(live_uri)
+    #         time.sleep(4)
+    #         y += 1
+    #     except RuntimeError as e:
+    #         print(f"Failed to add source: {e}")
+    #     time.sleep(1)
 
     while True:
         time.sleep(1)
