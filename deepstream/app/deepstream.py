@@ -308,11 +308,11 @@ class DynamicRTSPPipeline:
             frame_meta = pyds.NvDsFrameMeta.cast(l_frame.data)
 
             # Enqueue work
-            # self.process_queue.put({
-            #     "gst_buffer": gst_buffer,
-            #     "batch_id": frame_meta.batch_id,
-            #     "frame_meta": frame_meta
-            # })
+            self.process_queue.put({
+                "gst_buffer": gst_buffer,
+                "batch_id": frame_meta.batch_id,
+                "frame_meta": frame_meta
+            })
             # ----------------------------------------------------------------------
             # CALCULATE FPS
             # ----------------------------------------------------------------------
