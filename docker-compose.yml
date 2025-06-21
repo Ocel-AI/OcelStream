@@ -2,7 +2,9 @@ version: '3.9'
 
 services:
   deepstream:
-    build: ./docker_image
+    build:
+      context: .
+      dockerfile: ./docker_image/Dockerfile
     image: deepstream_app:experimental
     container_name: deepstream_app
     network_mode: host
