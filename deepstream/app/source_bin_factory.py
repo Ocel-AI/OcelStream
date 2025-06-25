@@ -1,5 +1,6 @@
 import gi
-gi.require_version("Gst", "1.0")
+gi.require_version('Gst', '1.0') 
+gi.require_version("GstRtspServer", "1.0")
 from gi.repository import Gst
 
 class SourceBinFactory:
@@ -43,13 +44,20 @@ class SourceBinFactory:
         return bin_
 
     def _create_nvurisrcbin(self, index: int, uri: str) -> Gst.Bin:
+        """ 
+            This GstBin is a GStreamer source bin. This bin is a wrapper over uridecodebin with additional 
+            functionality of the file looping, rtsp reconnection and smart record.
+        """
         bin_name = f"source-bin-{index}"
         bin_ = Gst.Bin.new(bin_name)
 
         nvurisrc = Gst.ElementFactory.make("nvurisrcbin", f"src-{index}")
         nvurisrc.set_property("uri", uri)
-        nvurisrc.set_property("rtsp-reconnect-interval", 1)
+        nvurisrc.set_property("rtsp-reconnect-interval", 5)
+        nvurisrc.set_property("rtsp-reconnect-attempts", 10)
         nvurisrc.set_property("select-rtp-protocol", 4)
+        nvurisrc.set_property("disable-audio", True)
+
 
         bin_.add(nvurisrc)
 
