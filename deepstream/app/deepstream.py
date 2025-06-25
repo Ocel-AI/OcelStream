@@ -21,6 +21,7 @@ import math
 import ctypes
 import queue
 import re
+import base64
 
 
 
@@ -45,10 +46,10 @@ class DynamicRTSPPipeline:
         self.pipeline = Gst.Pipeline()
         self.streammux = Gst.ElementFactory.make("nvstreammux", "stream-mux")
         self.streammux.set_property("batch-size", max_sources)
-        self.streammux.set_property("width", 1920)
-        self.streammux.set_property("height", 1080)
+        self.streammux.set_property("width", 640)
+        self.streammux.set_property("height", 640)
         self.streammux.set_property("batched-push-timeout", 66700)
-        self.streammux.set_property("live-source", 1)  # Enable live source mode
+        self.streammux.set_property("live-source", 1)
         self.streammux.set_property("sync-inputs", 1)
         self.pipeline.add(self.streammux)
 
@@ -433,45 +434,5 @@ class DynamicRTSPPipeline:
 
 
 
-# ----------------------------------------------------------------------
-# Stand‑alone test
-# ----------------------------------------------------------------------
 
-if __name__ == "__main__":
-    uri_file = "file:///opt/nvidia/deepstream/deepstream-7.1/samples/streams/sample_1080p_h264.mp4"
-    file1_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/1.mp4"
-    file2_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/2.mp4"
-    file3_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/3.mp4"
-    file4_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/4.mp4"
-    file5_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/5.mp4"
-    file6_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/6.mp4"
-    file7_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/4.mp4"
-    file8_uri = "file:///opt/nvidia/deepstream/deepstream-7.1/sources/my_data/static/8.mp4"
-    live_uri = "rtsp://localhost:4000/looped"
-    rtsp_conveyor = "rtsp://admin:m10i.m10i@ophen.ddns.net:1337/cam/realmonitor?channel=1&subtype=0"
-    app = DynamicRTSPPipeline(max_sources=100)
-    threading.Thread(target=app.start, daemon=True).start()
-    time.sleep(5)  # Ensure pipeline is up
-    print("Pipeline started, adding sources...")
-    app.add_source(rtsp_conveyor)
-    time.sleep(30)
-    while True:
-        try:
-            app.add_source(rtsp_conveyor)
-            break
-        except RuntimeError as e:
-            print(f"Failed to add source: {e}")
-            time.sleep(2)
-    # y = 0
-    # while y < 10:
-    #     try:
-    #         app.add_source(live_uri)
-    #         time.sleep(4)
-    #         y += 1
-    #     except RuntimeError as e:
-    #         print(f"Failed to add source: {e}")
-    #     time.sleep(1)
-
-    while True:
-        time.sleep(1)
 
