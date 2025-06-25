@@ -1,5 +1,7 @@
 import threading
 import gi
+gi.require_version('Gst', '1.0') 
+gi.require_version('GstRtspServer', '1.0')
 import time
 import sys
 sys.path.append('/deepstream_python_apps/apps/common')
@@ -25,9 +27,6 @@ import base64
 
 
 
-gi.require_version('Gst', '1.0')
-gi.require_version('GstRtspServer', '1.0')
-
 class DynamicRTSPPipeline:
     """DeepStream pipeline that supports runtime add & remove of sources.
 
@@ -48,7 +47,7 @@ class DynamicRTSPPipeline:
         self.streammux.set_property("batch-size", max_sources)
         self.streammux.set_property("width", 640)
         self.streammux.set_property("height", 640)
-        self.streammux.set_property("batched-push-timeout", 66700)
+        self.streammux.set_property("batched-push-timeout", 67000)  # 67 ms for ~15 FPS
         self.streammux.set_property("live-source", 1)
         self.streammux.set_property("sync-inputs", 1)
         self.pipeline.add(self.streammux)
@@ -216,10 +215,10 @@ class DynamicRTSPPipeline:
         enc.link(pay)
         pay.link(sink)
 
-        self.streammux.get_static_pad(f"sink_{index}").add_probe(
-            Gst.PadProbeType.EVENT_DOWNSTREAM,
-            lambda pad, info: self.eos_probe_callback(pad, info, index)
-        )
+        # self.streammux.get_static_pad(f"sink_{index}").add_probe(
+        #     Gst.PadProbeType.EVENT_DOWNSTREAM,
+        #     lambda pad, info: self.eos_probe_callback(pad, info, index)
+        # )
         osd.get_static_pad("sink").add_probe(
             Gst.PadProbeType.BUFFER, self.conv_pad_buffer_probe, 0
         )
@@ -253,6 +252,21 @@ class DynamicRTSPPipeline:
         t = message.type
         if t == Gst.MessageType.ELEMENT:
             struct = message.get_structure()
+            print(f"[bus] Element message: {struct.get_name()}")
+            if struct and struct.get_name() == "attempt-exceeded":
+                stream_id = struct.get_uint("stream-id")[1]
+                print(f"[bus] Attempt exceeded for stream {stream_id}")
+                # Notify about attempt exceeded
+                if self.notification_callback:
+                    asyncio.run_coroutine_threadsafe(
+                        self.notification_callback({
+                            "type": "attempt_exceeded",
+                            "stream_id": stream_id,
+                            "message": f"Attempt exceeded for stream {stream_id}"
+                        }),
+                        self.loop_event
+                    )
+                self.remove_source(stream_id)
             if struct and struct.get_name() == "GstNvStreamEos":
                 stream_id = struct.get_uint("stream-id")[1]
                 print(f"[bus] Stream {stream_id} EOS detected")
