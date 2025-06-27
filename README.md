@@ -18,18 +18,28 @@
 
 ```bash
 DeepVisionStream/
-├── docker/                 # Dockerfile and compose files
-│   ├── Dockerfile
-│   └── docker-compose.yml
-├── parsers/                # Custom C++ parsers for models
-├── python_binding/         # Python API to access DeepStream output
-├── socket_server/          # WebSocket server (Python)
-├── configs/                # DeepStream pipeline configs
-└── README.md
+                ├── backend
+                │   ├── app
+                │   ├── requirements.txt
+                ├── deepstream
+                │   ├── app
+                │   ├── config
+                │   └── models
+                ├── docker-compose.yml
+                ├── docker_image
+                │   ├── compile_nvdsinfer_yolo.sh
+                │   ├── deepstream_python_apps
+                │   ├── DeepStream-Yolo
+                │   ├── Dockerfile
+                │   ├── nvdsinfer_yolo
+                │   ├── patch_libnvinfer.sh
+                │   └── run.sh
+                ├── docs
+                ├── LICENSE
+                ├── README.md
+                └── tools
+                    ├── export_yolo11.py
+                    └── ultralytics
+
 ```
-
-## i use new mexur
-
-```shell
-export USE_NEW_NVSTREAMMUX=yes
 
