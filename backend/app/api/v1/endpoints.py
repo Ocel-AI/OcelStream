@@ -41,9 +41,9 @@ async def notification_handler(data: Dict):
 
 
 # ----------------- Pipeline -----------------
-pipeline = DynamicRTSPPipeline(max_sources=15, metadata_callback=queue_detection, notification_callback=notification_handler)
-threading.Thread(target=pipeline.start, daemon=True).start()
-time.sleep(3)
+# pipeline = DynamicRTSPPipeline(max_sources=15, metadata_callback=queue_detection, notification_callback=notification_handler)
+# threading.Thread(target=pipeline.start, daemon=True).start()
+# time.sleep(3)
 
 
 # ----------------- Endpoints -----------------

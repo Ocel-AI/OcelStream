@@ -113,8 +113,9 @@ class DynamicRTSPPipeline:
         """Add a new stream. Returns its stream index."""
         if self.pipeline.get_state(0).state != Gst.State.PLAYING:
             raise RuntimeError("Pipeline is not running. Start the pipeline before adding sources.")
-        if self.check_rtsp_link(uri) is False or not uri.startswith("rtsp://") or uri is None:
-            raise RuntimeError(f"Invalid RTSP link: {uri}")
+        # if self.check_rtsp_link(uri) is False or not uri.startswith("rtsp://") or uri is None:
+            # raise RuntimeError(f"Invalid RTSP link: {uri}")
+        print(f"Adding source____1: {uri}")
         spot, is_fresh = self.spot_manager.acquire()
         print(f"Acquired spot {spot} for new source: {uri}")
         if spot is None:
@@ -444,9 +445,18 @@ class DynamicRTSPPipeline:
 
 
 
+if __name__ == "__main__":
+    # url ="rtsp://127.0.0.1:4000/looped"
+    url = "rtsp://admin:m10i.m10i@ophen.ddns.net:1337/cam/realmonitor?channel=1&subtype=1"
+    # url = "file:///deepstream_app/static/output2.mp4"
+    # dynamic_rtsp.add_source(url)
+    # rtsp_conveyor = "rtsp://admin:m10i.m10i@ophen.ddns.net:1337/cam/realmonitor?channel=1&subtype=1"
+    app = DynamicRTSPPipeline(max_sources=1)
+    threading.Thread(target=app.start, daemon=True).start()
+    time.sleep(5)  # Ensure pipeline is up
+    print("Pipeline started, adding sources...")
+    # app.add_source(rtsp_conveyor)
+    app.add_source(url)
 
-
-
-
-
-
+    while True:
+        time.sleep(1)

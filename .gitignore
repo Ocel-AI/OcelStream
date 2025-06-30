@@ -18,3 +18,7 @@ docker_image/deepstream_python_apps/apps/deepstream-demux-multi-in-multi-out/cor
 docker_image/deepstream_python_apps/apps/common/__pycache__/
 core
 best.pt
+.venv/
+
+#ignore all python cache files
+*.pyc
