@@ -44,14 +44,15 @@ class DynamicRTSPPipeline:
         # --- GStreamer elements ---
         self.pipeline = Gst.Pipeline()
         self.streammux = Gst.ElementFactory.make("nvstreammux", "stream-mux")
-        self.streammux.set_property("batch-size", max_sources)
+        self.streammux.set_property("batch-size", 1)
         self.streammux.set_property("width", 640)
         self.streammux.set_property("height", 640)
-        self.streammux.set_property("batched-push-timeout", 67000)  # 67 ms for ~15 FPS
+        self.streammux.set_property("batched-push-timeout", 66666)
         self.streammux.set_property("live-source", 1)
-        self.streammux.set_property("sync-inputs", 1)
         self.pipeline.add(self.streammux)
 
+
+        # --- Primary and secondary inference elements ---
         self.pgie = Gst.ElementFactory.make("nvinfer", "pgie")
         self.sgie = Gst.ElementFactory.make("nvinfer", "spgie")
         self.pgie.set_property("config-file-path", "/deepstream_app/deepstream/config/config_infer_primary_yolo11.txt")
@@ -66,9 +67,13 @@ class DynamicRTSPPipeline:
         self.demux_src_pads = [self.demux.get_request_pad(f"src_{i}") for i in range(self.max_sources)]
 
         # Link static portion of pipeline
+
         self.streammux.link(self.pgie)
+
         self.pgie.link(self.sgie)
+
         self.sgie.link(self.demux)
+        
         self.pgie.link(self.demux)
 
         # --- Runtime bookkeeping ---
@@ -111,12 +116,20 @@ class DynamicRTSPPipeline:
     # ------------------------------------------------------------------
     def add_source(self, uri: str) -> int:
         """Add a new stream. Returns its stream index."""
-        if self.pipeline.get_state(0).state != Gst.State.PLAYING:
+
+
+        if self.pipeline.get_state(1).state != Gst.State.PLAYING:
             raise RuntimeError("Pipeline is not running. Start the pipeline before adding sources.")
-        if self.check_rtsp_link(uri) is False or not uri.startswith("rtsp://") or uri is None:
+    
+        if uri.startswith("file:///"):
+            if not re.match(r"^file:///.+", uri):
+                raise RuntimeError(f"Invalid file URI: {uri}")
+            if not uri[7:] or not uri[7:].strip():
+                raise RuntimeError(f"File URI is empty: {uri}")
+        elif self.check_rtsp_link(uri) is False or not uri.startswith("rtsp://") or uri is None:
             raise RuntimeError(f"Invalid RTSP link: {uri}")
+
         spot, is_fresh = self.spot_manager.acquire()
-        print(f"Acquired spot {spot} for new source: {uri}")
         if spot is None:
             raise RuntimeError("No available spots for new source")
 
@@ -138,6 +151,7 @@ class DynamicRTSPPipeline:
 
         # 2. Build per‑stream output branch and RTSP mount
         self._setup_output_branch(spot)
+        
         src_bin.sync_state_with_parent()
         src_bin.set_state(Gst.State.PLAYING)
         self.urls_sources.append(uri)
@@ -176,7 +190,7 @@ class DynamicRTSPPipeline:
     # Internal helpers
     # ------------------------------------------------------------------
     def _setup_output_branch(self, index: int):
-        print(f"Setting up output branch for stream {index}")
+
         conv1 = Gst.ElementFactory.make("nvvideoconvert", f"conv1_{index}")
         capsfilter1 = Gst.ElementFactory.make("capsfilter", f"capsfilter1_{index}")
         capsfilter1.set_property("caps", Gst.Caps.from_string("video/x-raw(memory:NVMM), format=RGBA"))
@@ -207,12 +221,19 @@ class DynamicRTSPPipeline:
             elem.sync_state_with_parent()
 
         self.demux_src_pads[index].link(conv1.get_static_pad("sink"))
+
         conv1.link(capsfilter1)
+
         capsfilter1.link(osd)
+
         osd.link(conv2)
+
         conv2.link(capsfilter2)
+
         capsfilter2.link(enc)
+
         enc.link(pay)
+
         pay.link(sink)
 
         # self.streammux.get_static_pad(f"sink_{index}").add_probe(
