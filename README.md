@@ -18,15 +18,15 @@
 
 ### Model Support
 
-Currently, **DeepVisionStream** only supports **YOLO 11** models. You can use both detection and segmentation models.
+Currently, **DeepVisionStream** supports **YOLO ** models ** 8, 9, 10, 11, 12 **. You can use both detection and segmentation models.
 
-#### Converting YOLO 11 Models
+#### Converting YOLO Models
 
-1. **For YOLO 11 Detection:**
+1. **For YOLO Detection:**
    - Use the script at `tools/export_yolo11.py` to convert your YOLO 11 detection model
    - This will generate a `.onnx` model file
 
-2. **For YOLO 11 Segmentation:**
+2. **For YOLO Segmentation:**
    - Use Ultralytics (located in `tools/ultralytics`) to export your YOLO 11 segmentation model
    - Follow the Ultralytics README for proper export commands
    - This will also generate a `.onnx` model file
@@ -42,8 +42,8 @@ After conversion, place your files as follows:
 
 Update the configuration files to point to your models:
 
-- **For YOLO 11 Detection:** Update `deepstream/config/config_infer_primary_yolo11.txt`
-- **For YOLO 11 Segmentation:** Update `deepstream/config/config_pgie_yolo_seg.txt`
+- **For YOLO Detection:** Update `deepstream/config/config_infer_primary_yolo11.txt`
+- **For YOLO Segmentation:** Update `deepstream/config/config_pgie_yolo_seg.txt`
 
 Make sure to adapt the paths in these config files to match your model and label file locations.
 
