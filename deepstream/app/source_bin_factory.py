@@ -53,12 +53,13 @@ class SourceBinFactory:
 
         nvurisrc = Gst.ElementFactory.make("nvurisrcbin", f"src-{index}")
         nvurisrc.set_property("uri", uri)
-        nvurisrc.set_property("rtsp-reconnect-interval", 5)
-        nvurisrc.set_property("rtsp-reconnect-attempts", 10)
-        nvurisrc.set_property("select-rtp-protocol", 4)
+        if uri.startswith("rtsp://"):
+            nvurisrc.set_property("rtsp-reconnect-interval", 5)
+            nvurisrc.set_property("rtsp-reconnect-attempts", 10)
+            nvurisrc.set_property("select-rtp-protocol", 4)
+        elif uri.startswith("file://"):
+            nvurisrc.set_property("file-loop", True)
         nvurisrc.set_property("disable-audio", True)
-
-
         bin_.add(nvurisrc)
 
         ghost_pad = Gst.GhostPad.new_no_target("src", Gst.PadDirection.SRC)
@@ -67,6 +68,46 @@ class SourceBinFactory:
         nvurisrc.connect("pad-added", self._on_nvurisrc_pad_added, ghost_pad)
 
         return bin_
+
+
+
+
+    def _create_nvurisrcbin_experiment(self, index: int, uri: str) -> Gst.Bin:
+        """ 
+            This GstBin is a GStreamer source bin. This bin is a wrapper over uridecodebin with additional 
+            functionality of the file looping, rtsp reconnection and smart record.
+        """
+
+        bin_name = f"source-bin-{index}"
+        nbin=Gst.Bin.new(bin_name)
+        if not nbin:
+            raise RuntimeError("Failed to create source bin check with ilkay-brahim")
+
+        uri_decode_bin = Gst.ElementFactory.make("nvurisrcbin", f"src-{index}")
+
+        if uri.startswith("rtsp://"):
+            uri_decode_bin.set_property("rtsp-reconnect-interval", 5)
+            uri_decode_bin.set_property("rtsp-reconnect-attempts", 10)
+            uri_decode_bin.set_property("select-rtp-protocol", 4)
+        elif uri.startswith("file://"):
+            uri_decode_bin.set_property("file-loop", 1)
+            uri_decode_bin.set_property("cudadec-memtype", 0)
+
+        if not uri_decode_bin:
+            raise RuntimeError("Failed to create nvurisrcbin element check with ilkay-brahim")
+
+        uri_decode_bin.set_property("uri", uri)
+        uri_decode_bin.connect("pad-added", self.cb_newpad, nbin)
+        uri_decode_bin.connect("child-added",self.decodebin_child_added, nbin)
+
+        Gst.Bin.add(nbin,uri_decode_bin)
+        bin_pad=nbin.add_pad(Gst.GhostPad.new_no_target("src",Gst.PadDirection.SRC))
+
+        if not bin_pad:
+            sys.stderr.write(" Failed to add ghost pad in source bin \n")
+            return None
+
+        return nbin
 
     def _create_rtspsrc(self, index: int, uri: str) -> Gst.Bin:
         bin_name = f"source-bin-{index}"
@@ -124,3 +165,32 @@ class SourceBinFactory:
         sink_pad = depay.get_static_pad("sink")
         if not sink_pad.is_linked():
             pad.link(sink_pad)
+
+    @staticmethod
+    def cb_newpad(self, decodebin, decoder_src_pad,data):
+        caps=decoder_src_pad.get_current_caps()
+        if not caps:
+            caps = decoder_src_pad.query_caps()
+        gststruct=caps.get_structure(0)
+        gstname=gststruct.get_name()
+        source_bin=data
+        features=caps.get_features(0)
+
+        if(gstname.find("video")!=-1):
+            if features.contains("memory:NVMM"):
+                bin_ghost_pad=source_bin.get_static_pad("src")
+                if not bin_ghost_pad.set_target(decoder_src_pad):
+                    raise RuntimeError("Failed to link decoder src pad to source bin ghost pad. Check with ilkay-brahim")
+            else:
+                raise RuntimeError("Decodebin did not pick nvidia decoder plugin. Check with ilkay-brahim")
+
+    @staticmethod
+    def decodebin_child_added(self, child_proxy,Object,name,user_data):
+        print("Decodebin child added:", name, "\n")
+        if(name.find("decodebin") != -1):
+            Object.connect("child-added",self.decodebin_child_added,user_data)
+
+        if "source" in name:
+            source_element = child_proxy.get_by_name("source")
+            if source_element.find_property('drop-on-latency') != None:
+                Object.set_property("drop-on-latency", True)
