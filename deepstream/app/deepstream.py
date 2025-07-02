@@ -418,6 +418,8 @@ class DynamicRTSPPipeline:
                     if maskparams is not None and maskparams.data:
                         mask_img = resize_mask(maskparams, math.floor(rectparams.width), math.floor(rectparams.height))
                         mask_b64 = encode_mask_to_base64(mask_img)
+                        mask_img = mask_img.astype(np.uint8)
+
                     if rectparams is not None:
                         left = rectparams.left
                         top = rectparams.top
@@ -439,8 +441,9 @@ class DynamicRTSPPipeline:
                     l_obj = l_obj.next
                 
                 if objects.__len__() > 0:
+                    uuid = self.spot_manager.get_uuid(frame_meta.source_id)
                     metadata = {
-                        "source_id": frame_meta.source_id,
+                        "source_id": uuid,
                         "frame_number": frame_meta.frame_num,
                         "objects": objects,
                         "frame_base64": transform_image_to_base64(frame_image)
