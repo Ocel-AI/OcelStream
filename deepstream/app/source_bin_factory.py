@@ -11,7 +11,7 @@ class SourceBinFactory:
         """
         Gst.init(None)
 
-    def create_source_bin(self, index: int, uri: str, source_type: str = "nvurisrcbin") -> Gst.Bin:
+    def create_source_bin(self, uuid: str, uri: str, source_type: str = "nvurisrcbin") -> Gst.Bin:
         """
         Create a source bin based on the specified type.
 
@@ -21,11 +21,11 @@ class SourceBinFactory:
         :return: Gst.Bin containing the configured source
         """
         if source_type == "uridecodebin":
-            return self._create_uridecodebin(index, uri)
+            return self._create_uridecodebin(uuid, uri)
         elif source_type == "nvurisrcbin":
-            return self._create_nvurisrcbin(index, uri)
+            return self._create_nvurisrcbin(uuid, uri)
         elif source_type == "rtspsrc":
-            return self._create_rtspsrc(index, uri)
+            return self._create_rtspsrc(uuid, uri)
         else:
             raise ValueError(f"Unsupported source_type: {source_type}")
 
@@ -43,15 +43,15 @@ class SourceBinFactory:
 
         return bin_
 
-    def _create_nvurisrcbin(self, index: int, uri: str) -> Gst.Bin:
+    def _create_nvurisrcbin(self, uuid: str, uri: str) -> Gst.Bin:
         """ 
             This GstBin is a GStreamer source bin. This bin is a wrapper over uridecodebin with additional 
             functionality of the file looping, rtsp reconnection and smart record.
         """
-        bin_name = f"source-bin-{index}"
+        bin_name = f"source-bin-{uuid}"
         bin_ = Gst.Bin.new(bin_name)
 
-        nvurisrc = Gst.ElementFactory.make("nvurisrcbin", f"src-{index}")
+        nvurisrc = Gst.ElementFactory.make("nvurisrcbin", f"src-{uuid}")
         nvurisrc.set_property("uri", uri)
         if uri.startswith("rtsp://"):
             nvurisrc.set_property("rtsp-reconnect-interval", 5)

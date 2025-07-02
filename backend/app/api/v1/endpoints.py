@@ -53,21 +53,21 @@ def add_stream(req: StreamRequest):
         rtsp_output_width = req.rtsp_output_width
         rtsp_output_height = req.rtsp_output_height
         source_uri = req.uri 
-        idx = pipeline.add_source(source_uri, rtsp_output_width, rtsp_output_height)
-
-        active_streams[idx] = req.uri
-        return {"message": "Stream added", "index": idx, "rtsp": f"rtsp://localhost:8554/ds-test{idx}"}
+        uuid = pipeline.add_source(source_uri, rtsp_output_width, rtsp_output_height)
+        # active_streams[idx] = req.uri
+        return {"message": "Stream added", "uuid": uuid, "rtsp": f"rtsp://localhost:8554/ds-test{uuid}"}
     except RuntimeError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.delete("/remove/{index}")
-def remove_stream(index: int):
-    if index not in active_streams:
-        raise HTTPException(status_code=404, detail="Stream not found")
-    pipeline.remove_source(index)
-    uri = active_streams.pop(index)
-    return {"message": "Stream removed", "index": index, "uri": uri}
+@router.delete("/remove/{uuid}")
+def remove_stream(uuid: int):
+    # if index not in active_streams:
+    #     raise HTTPException(status_code=404, detail="Stream not found")
+    pipeline.remove_source(uuid)
+    # uri = active_streams.pop(index)
+    uri = "for now we do not return the uri"
+    return {"message": "Stream removed", "uuid": uuid, "uri": uri}
 
 
 @router.get("/streams")
@@ -101,41 +101,3 @@ async def websocket_notifications(websocket: WebSocket):
     except:
         clients_notifications.remove(websocket)
     
-
-# -------------------------------------------------------
-# for testing purposes, we can upload a video file
-#--------------------------------------------------------
-
-@router.post("/test/process-video/")
-async def process_video(file: UploadFile = File(...)):
-    try:
-        file_path = os.path.join(UPLOAD_DIR, file.filename)
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
-
-        uri = f"file://{os.path.abspath(file_path)}"
-        index = pipeline.add_source(uri)
-        upload_streams[index] = file.filename
-
-        return {
-            "message": "Video submitted and added to DeepStream pipeline",
-            "index": index,
-            "uri": uri,
-            "rtsp": f"rtsp://localhost:8554/ds-test{index}"
-        }
-
-    except RuntimeError as e:
-        return JSONResponse(status_code=400, content={"error": str(e)})
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
-
-@router.delete("/test/cleanup/{index}")
-def cleanup_video(index: int):
-    if index not in upload_streams:
-        raise HTTPException(status_code=404, detail="Stream not found")
-    pipeline.remove_source(index)
-    filename = upload_streams.pop(index)
-    file_path = os.path.join(UPLOAD_DIR, filename)
-    if os.path.exists(file_path):
-        os.remove(file_path)
-    return {"message": "Stream removed and file deleted", "index": index}

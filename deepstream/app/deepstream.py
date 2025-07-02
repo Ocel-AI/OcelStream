@@ -44,7 +44,7 @@ class DynamicRTSPPipeline:
         # --- GStreamer elements ---
         self.pipeline = Gst.Pipeline()
         self.streammux = Gst.ElementFactory.make("nvstreammux", "stream-mux")
-        self.streammux.set_property("batch-size", 1)
+        self.streammux.set_property("batch-size", self.max_sources)
         self.streammux.set_property("width", 640)
         self.streammux.set_property("height", 640)
         self.streammux.set_property("batched-push-timeout", 66666)
@@ -55,7 +55,7 @@ class DynamicRTSPPipeline:
         # --- Primary and secondary inference elements ---
         self.pgie = Gst.ElementFactory.make("nvinfer", "pgie")
         self.sgie = Gst.ElementFactory.make("nvinfer", "spgie")
-        self.pgie.set_property("config-file-path", "/deepstream_app/deepstream/config/config_infer_primary_yolo11.txt")
+        self.pgie.set_property("config-file-path", "/deepstream_app/deepstream/config/config_pgie_yolo_detct.txt")
         self.sgie.set_property("config-file-path", "/deepstream_app/deepstream/config/config_pgie_yolo_seg.txt")
         self.pipeline.add(self.pgie)
         self.pipeline.add(self.sgie)
@@ -139,12 +139,12 @@ class DynamicRTSPPipeline:
         elif self.check_rtsp_link(uri) is False or not uri.startswith("rtsp://") or uri is None:
             raise RuntimeError(f"Invalid RTSP link: {uri}")
 
-        spot, is_fresh = self.spot_manager.acquire()
+        spot, uuid, is_fresh = self.spot_manager.acquire()
         if spot is None:
             raise RuntimeError("No available spots for new source")
 
         # 1. Create and link source bin
-        src_bin = self.source_bin_factory.create_source_bin(spot, uri, "nvurisrcbin")
+        src_bin = self.source_bin_factory.create_source_bin(uuid, uri, "nvurisrcbin")
         self.pipeline.add(src_bin)
         src_pad = src_bin.get_static_pad("src")
         if is_fresh:
@@ -152,7 +152,7 @@ class DynamicRTSPPipeline:
         else:
             mux_pad = self.streammux.get_static_pad(f"sink_{spot}")
         if not mux_pad:
-            raise RuntimeError(f"Failed to get request pad sink_{spot} — maybe not released?")
+            raise RuntimeError(f"Failed to get request pad sink_{uuid} — maybe not released?")
         self.pad_to_index[src_pad] = spot
 
         src_pad.link(mux_pad)
@@ -160,19 +160,21 @@ class DynamicRTSPPipeline:
         self.sources[spot] = src_bin
 
         # 2. Build per‑stream output branch and RTSP mount
-        self._setup_output_branch(spot, rtsp_output_width, rtsp_output_height)
+        self._setup_output_branch(spot, uuid, rtsp_output_width, rtsp_output_height)
         
         src_bin.sync_state_with_parent()
         src_bin.set_state(Gst.State.PLAYING)
         self.urls_sources.append(uri)
 
-        return spot
+        return uuid
 
     # ============================================================================================================
     # check later this function not remove all the resources
     # ============================================================================================================
-    def remove_source(self, index: int):
+    def remove_source(self, uuid: str):
         """Remove an existing stream and clean up all associated resources."""
+
+        index = self.spot_manager.get_spot_by_uuid(uuid)
         if index not in self.sources:
             print(f"No source with index {index}")
             return
@@ -199,37 +201,43 @@ class DynamicRTSPPipeline:
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
-    def _setup_output_branch(self, index: int, width: int, height: int):
+# <<<<<<< 14-add-per-stream-video-dimension-settings
+    def _setup_output_branch(self, index: int, uuid: str, width: int, height: int):
         '''
         Setup the output branch for a specific stream index.
             args:
                 index (int): The stream index.
                 width (int): The width of the output video.
                 height (int): The height of the output video.
+                uuid: (str): unique value for each straem used in url
             returns:
                 None
         '''
+# =======
+#     def _setup_output_branch(self, index: int, uuid: str):
+# >>>>>>> main
 
-        conv1 = Gst.ElementFactory.make("nvvideoconvert", f"conv1_{index}")
-        capsfilter1 = Gst.ElementFactory.make("capsfilter", f"capsfilter1_{index}")
+        conv1 = Gst.ElementFactory.make("nvvideoconvert", f"conv1_{uuid}")
+        capsfilter1 = Gst.ElementFactory.make("capsfilter", f"capsfilter1_{uuid}")
         capsfilter1.set_property("caps", Gst.Caps.from_string("video/x-raw(memory:NVMM), format=RGBA"))
         self.streammux.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
         conv1.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
 
-        osd = Gst.ElementFactory.make("nvdsosd", f"osd{index}")
+        osd = Gst.ElementFactory.make("nvdsosd", f"osd{uuid}")
         osd.set_property("display-bbox", 1)
         osd.set_property("display-mask", 1)
 
-        conv2 = Gst.ElementFactory.make("nvvideoconvert", f"conv2_{index}")
+        conv2 = Gst.ElementFactory.make("nvvideoconvert", f"conv2_{uuid}")
         conv2.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
-        capsfilter2 = Gst.ElementFactory.make("capsfilter", f"capsfilter2_{index}")
+
+        capsfilter2 = Gst.ElementFactory.make("capsfilter", f"capsfilter2_{uuid}")
         capsfilter2.set_property("caps", Gst.Caps.from_string(f"video/x-raw(memory:NVMM),width={width},height={height}, format=NV12"))
 
-        enc = Gst.ElementFactory.make("nvv4l2h264enc", f"enc{index}")
+        enc = Gst.ElementFactory.make("nvv4l2h264enc", f"enc{uuid}")
         enc.set_property("bitrate", self.bitrate)
 
-        pay = Gst.ElementFactory.make("rtph264pay", f"pay{index}")
-        sink = Gst.ElementFactory.make("udpsink", f"sink{index}")
+        pay = Gst.ElementFactory.make("rtph264pay", f"pay{uuid}")
+        sink = Gst.ElementFactory.make("udpsink", f"sink{uuid}")
         sink.set_property("sync", 0)
         port = 5400 + index
         sink.set_property("host", "127.0.0.1")
@@ -273,9 +281,9 @@ class DynamicRTSPPipeline:
         )
         factory.set_launch(launch)
         factory.set_shared(True)
-        self.rtsp_server.get_mount_points().add_factory(f"/ds-test{index}", factory)
-        print(f"Stream {index} at rtsp://localhost:8554/ds-test{index}")
-        self._rtsp_mount_paths.add(f"/ds-test{index}")
+        self.rtsp_server.get_mount_points().add_factory(f"/ds-test{uuid}", factory)
+        print(f"Stream {uuid} at rtsp://localhost:8554/ds-test{uuid}")
+        self._rtsp_mount_paths.add(f"/ds-test{uuid}")
 
 
     # ------------------------------------------------------------------
@@ -481,24 +489,6 @@ class DynamicRTSPPipeline:
             print(f"Error checking RTSP link {uri}: {e}")
             return False
         return False
-
-
-
-if __name__ == "__main__":
-    live_uri = "rtsp://localhost:4000/looped"
-    rtsp_conveyor = "rtsp://admin:m10i.m10i@ophen.ddns.net:1337/cam/realmonitor?channel=1&subtype=0"
-    app = DynamicRTSPPipeline(max_sources=100)
-    threading.Thread(target=app.start, daemon=True).start()
-    time.sleep(5)  # Ensure pipeline is up
-    print("Pipeline started, adding sources...")
-    
-    app.add_source(rtsp_conveyor, 256, 144)
-    time.sleep(2)
-    #2k
-    app.add_source(rtsp_conveyor, 2048, 1080)
-
-    while True:
-        time.sleep(1)
 
 
 
