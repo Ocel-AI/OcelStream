@@ -114,9 +114,18 @@ class DynamicRTSPPipeline:
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
-    def add_source(self, uri: str) -> int:
-        """Add a new stream. Returns its stream index."""
-
+    def add_source(self, uri: str, rtsp_output_width: int = 640, rtsp_output_height: int = 640) -> int:
+        '''
+        Add a new source to the pipeline and create an RTSP mount for it.
+            args:
+                uri (str): The URI of the source (file or RTSP).
+                rtsp_output_width (int): Width of the RTSP output stream.
+                rtsp_output_height (int): Height of the RTSP output stream.
+            returns:
+                int: The index of the added source.
+            raises:
+                RuntimeError: If the pipeline is not running, or if the URI is invalid.
+        '''
 
         if self.pipeline.get_state(1).state != Gst.State.PLAYING:
             raise RuntimeError("Pipeline is not running. Start the pipeline before adding sources.")
@@ -126,6 +135,7 @@ class DynamicRTSPPipeline:
                 raise RuntimeError(f"Invalid file URI: {uri}")
             if not uri[7:] or not uri[7:].strip():
                 raise RuntimeError(f"File URI is empty: {uri}")
+    
         elif self.check_rtsp_link(uri) is False or not uri.startswith("rtsp://") or uri is None:
             raise RuntimeError(f"Invalid RTSP link: {uri}")
 
@@ -150,7 +160,7 @@ class DynamicRTSPPipeline:
         self.sources[spot] = src_bin
 
         # 2. Build per‑stream output branch and RTSP mount
-        self._setup_output_branch(spot, uuid)
+        self._setup_output_branch(spot, uuid, rtsp_output_width, rtsp_output_height)
         
         src_bin.sync_state_with_parent()
         src_bin.set_state(Gst.State.PLAYING)
@@ -191,7 +201,21 @@ class DynamicRTSPPipeline:
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
-    def _setup_output_branch(self, index: int, uuid: str):
+# <<<<<<< 14-add-per-stream-video-dimension-settings
+    def _setup_output_branch(self, index: int, uuid: str, width: int, height: int):
+        '''
+        Setup the output branch for a specific stream index.
+            args:
+                index (int): The stream index.
+                width (int): The width of the output video.
+                height (int): The height of the output video.
+                uuid: (str): unique value for each straem used in url
+            returns:
+                None
+        '''
+# =======
+#     def _setup_output_branch(self, index: int, uuid: str):
+# >>>>>>> main
 
         conv1 = Gst.ElementFactory.make("nvvideoconvert", f"conv1_{uuid}")
         capsfilter1 = Gst.ElementFactory.make("capsfilter", f"capsfilter1_{uuid}")
@@ -205,8 +229,9 @@ class DynamicRTSPPipeline:
 
         conv2 = Gst.ElementFactory.make("nvvideoconvert", f"conv2_{uuid}")
         conv2.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
+
         capsfilter2 = Gst.ElementFactory.make("capsfilter", f"capsfilter2_{uuid}")
-        capsfilter2.set_property("caps", Gst.Caps.from_string("video/x-raw(memory:NVMM), format=NV12"))
+        capsfilter2.set_property("caps", Gst.Caps.from_string(f"video/x-raw(memory:NVMM),width={width},height={height}, format=NV12"))
 
         enc = Gst.ElementFactory.make("nvv4l2h264enc", f"enc{uuid}")
         enc.set_property("bitrate", self.bitrate)
@@ -464,11 +489,6 @@ class DynamicRTSPPipeline:
             print(f"Error checking RTSP link {uri}: {e}")
             return False
         return False
-
-
-
-
-
 
 
 
