@@ -50,7 +50,11 @@ time.sleep(3)
 @router.post("/add")
 def add_stream(req: StreamRequest):
     try:
-        idx = pipeline.add_source(req.uri)
+        rtsp_output_width = req.rtsp_output_width
+        rtsp_output_height = req.rtsp_output_height
+        source_uri = req.uri 
+        idx = pipeline.add_source(source_uri, rtsp_output_width, rtsp_output_height)
+
         active_streams[idx] = req.uri
         return {"message": "Stream added", "index": idx, "rtsp": f"rtsp://localhost:8554/ds-test{idx}"}
     except RuntimeError as e:

@@ -114,9 +114,18 @@ class DynamicRTSPPipeline:
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
-    def add_source(self, uri: str) -> int:
-        """Add a new stream. Returns its stream index."""
-
+    def add_source(self, uri: str, rtsp_output_width: int = 640, rtsp_output_height: int = 640) -> int:
+        '''
+        Add a new source to the pipeline and create an RTSP mount for it.
+            args:
+                uri (str): The URI of the source (file or RTSP).
+                rtsp_output_width (int): Width of the RTSP output stream.
+                rtsp_output_height (int): Height of the RTSP output stream.
+            returns:
+                int: The index of the added source.
+            raises:
+                RuntimeError: If the pipeline is not running, or if the URI is invalid.
+        '''
 
         if self.pipeline.get_state(1).state != Gst.State.PLAYING:
             raise RuntimeError("Pipeline is not running. Start the pipeline before adding sources.")
@@ -126,6 +135,7 @@ class DynamicRTSPPipeline:
                 raise RuntimeError(f"Invalid file URI: {uri}")
             if not uri[7:] or not uri[7:].strip():
                 raise RuntimeError(f"File URI is empty: {uri}")
+    
         elif self.check_rtsp_link(uri) is False or not uri.startswith("rtsp://") or uri is None:
             raise RuntimeError(f"Invalid RTSP link: {uri}")
 
@@ -150,7 +160,7 @@ class DynamicRTSPPipeline:
         self.sources[spot] = src_bin
 
         # 2. Build per‑stream output branch and RTSP mount
-        self._setup_output_branch(spot)
+        self._setup_output_branch(spot, rtsp_output_width, rtsp_output_height)
         
         src_bin.sync_state_with_parent()
         src_bin.set_state(Gst.State.PLAYING)
@@ -189,7 +199,16 @@ class DynamicRTSPPipeline:
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
-    def _setup_output_branch(self, index: int):
+    def _setup_output_branch(self, index: int, width: int, height: int):
+        '''
+        Setup the output branch for a specific stream index.
+            args:
+                index (int): The stream index.
+                width (int): The width of the output video.
+                height (int): The height of the output video.
+            returns:
+                None
+        '''
 
         conv1 = Gst.ElementFactory.make("nvvideoconvert", f"conv1_{index}")
         capsfilter1 = Gst.ElementFactory.make("capsfilter", f"capsfilter1_{index}")
@@ -204,7 +223,7 @@ class DynamicRTSPPipeline:
         conv2 = Gst.ElementFactory.make("nvvideoconvert", f"conv2_{index}")
         conv2.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
         capsfilter2 = Gst.ElementFactory.make("capsfilter", f"capsfilter2_{index}")
-        capsfilter2.set_property("caps", Gst.Caps.from_string("video/x-raw(memory:NVMM), format=NV12"))
+        capsfilter2.set_property("caps", Gst.Caps.from_string(f"video/x-raw(memory:NVMM),width={width},height={height}, format=NV12"))
 
         enc = Gst.ElementFactory.make("nvv4l2h264enc", f"enc{index}")
         enc.set_property("bitrate", self.bitrate)
@@ -465,8 +484,21 @@ class DynamicRTSPPipeline:
 
 
 
+if __name__ == "__main__":
+    live_uri = "rtsp://localhost:4000/looped"
+    rtsp_conveyor = "rtsp://admin:m10i.m10i@ophen.ddns.net:1337/cam/realmonitor?channel=1&subtype=0"
+    app = DynamicRTSPPipeline(max_sources=100)
+    threading.Thread(target=app.start, daemon=True).start()
+    time.sleep(5)  # Ensure pipeline is up
+    print("Pipeline started, adding sources...")
+    
+    app.add_source(rtsp_conveyor, 256, 144)
+    time.sleep(2)
+    #2k
+    app.add_source(rtsp_conveyor, 2048, 1080)
 
-
+    while True:
+        time.sleep(1)
 
 
 
