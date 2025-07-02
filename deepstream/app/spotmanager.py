@@ -1,9 +1,12 @@
+import uuid
+
 class SpotManager:
     def __init__(self, max_spots):
         self.max_spots = max_spots
         self.used_spots = set()
         self.released_spots = set()
         self.next_spot = 0
+        self.uuid_map = {}  # Map from spot to UUID
 
     def acquire(self):
         if self.released_spots:
@@ -14,9 +17,14 @@ class SpotManager:
             self.next_spot += 1
             is_fresh = True
         else:
-            return None, None  # No available spot
+            return None, None, None  # No available spot
+
         self.used_spots.add(spot)
-        return spot, is_fresh
+
+        if spot not in self.uuid_map:
+            self.uuid_map[spot] = str(uuid.uuid4())  # Assign new UUID if not already present
+
+        return spot, self.uuid_map[spot], is_fresh
 
     def release(self, spot):
         if spot in self.used_spots:
@@ -28,27 +36,19 @@ class SpotManager:
 
     def get_available(self):
         return list(self.released_spots) + list(range(self.next_spot, self.max_spots))
-    
+
     def release_all(self):
         self.released_spots.update(self.used_spots)
         self.used_spots.clear()
         self.next_spot = 0
 
+    def get_uuid(self, spot):
+        return self.uuid_map.get(spot)
+    
+    def get_spot_by_uuid(self, uid):
+        for spot, uuid in self.uuid_map.items():
+            if uuid == uid:
+                return spot
+        return None
 
-if __name__ == "__main__":
-    manager = SpotManager(5)
-    print("Acquiring spots:")
-    for _ in range(7):
-        spot, is_fresh = manager.acquire()
-        print(f"Acquired spot: {spot}, Fresh: {is_fresh}")
 
-    print("\nUsed spots:", manager.get_used())
-    print("Available spots:", manager.get_available())
-
-    print("\nReleasing spot 2")
-    manager.release(2)
-    print("Used spots after release:", manager.get_used())
-    print("Available spots after release:", manager.get_available())
-
-    spot, is_fresh = manager.acquire()
-    print(f"Acquired spot after release: {spot}, Fresh: {is_fresh}")
