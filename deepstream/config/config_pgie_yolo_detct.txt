@@ -2,11 +2,11 @@
 gpu-id=0
 net-scale-factor=0.0039215697906911373
 model-color-format=0
-onnx-file=/deepstream_app/deepstream/models/best.pt.onnx
+onnx-file=/deepstream_app/deepstream/models/best_bbox_v3.pt.onnx
 model-engine-file=/deepstream_app/deepstream/models/model_b30_gpu0_fp32.engine
 
 #int8-calib-file=calib.table
-labelfile-path=/deepstream_app/deepstream/config/labels_det.txt
+labelfile-path=/deepstream_app/deepstream/config/labels.txt
 batch-size=30
 #enable-batch-process=1
 network-mode=0
