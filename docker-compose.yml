@@ -11,6 +11,8 @@ services:
     privileged: true
     environment:
       - DISPLAY=${DISPLAY}
+      - DEEPSTREAM_DISABLE_BOX_SEGMENTATION=1  # Disable bounding box segmentation
+      - DEEPSTREAM_IGNORE_CLASS_IDS_SEGMENTATION=0,4 # you can specify class IDs to ignore here in list example: 0,4
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./:/deepstream_app
