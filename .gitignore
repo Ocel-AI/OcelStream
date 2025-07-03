@@ -16,3 +16,4 @@ best.pt
 .venv/
 # Ignore Python cache files
 *.pyc
+deepstream/config/*.txt

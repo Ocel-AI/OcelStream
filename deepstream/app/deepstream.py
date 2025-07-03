@@ -24,7 +24,7 @@ import ctypes
 import queue
 import re
 import base64
-
+import os
 
 
 class DynamicRTSPPipeline:
@@ -41,6 +41,11 @@ class DynamicRTSPPipeline:
         self.max_sources = max_sources
         self.codec = "H264"
         self.bitrate = 4_000_000  # 4 Mbps for H264, adjust as needed
+
+        # --- Environment variables for configuration ---
+        self.hide_class_ids = os.getenv("DEEPSTREAM_IGNORE_CLASS_IDS_SEGMENTATION", "") # List of class IDs to hide in rtsp stream segmentation
+        self.hide_class_ids = [int(x.strip()) for x in self.hide_class_ids.split(",") if x.strip().isdigit()]
+        self.disable_box_segmentation = os.getenv("DEEPSTREAM_DISABLE_BOX_SEGMENTATION", "0").lower() == "1" # Disable bounding box segmentation if set to 1
         # --- GStreamer elements ---
         self.pipeline = Gst.Pipeline()
         self.streammux = Gst.ElementFactory.make("nvstreammux", "stream-mux")
@@ -201,7 +206,6 @@ class DynamicRTSPPipeline:
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
-# <<<<<<< 14-add-per-stream-video-dimension-settings
     def _setup_output_branch(self, index: int, uuid: str, width: int, height: int):
         '''
         Setup the output branch for a specific stream index.
@@ -209,13 +213,10 @@ class DynamicRTSPPipeline:
                 index (int): The stream index.
                 width (int): The width of the output video.
                 height (int): The height of the output video.
-                uuid: (str): unique value for each straem used in url
+                uuid: (str): unique value for the stream, used for RTSP mount path.
             returns:
                 None
         '''
-# =======
-#     def _setup_output_branch(self, index: int, uuid: str):
-# >>>>>>> main
 
         conv1 = Gst.ElementFactory.make("nvvideoconvert", f"conv1_{uuid}")
         capsfilter1 = Gst.ElementFactory.make("capsfilter", f"capsfilter1_{uuid}")
@@ -360,6 +361,12 @@ class DynamicRTSPPipeline:
 
     
     def conv_pad_buffer_probe(self, pad, info, u_data):
+        '''
+        This probe function processes each buffer that reaches the OSD pad.
+        It extracts metadata, enqueues work for processing, and handles mask data.
+        It also calculates FPS for each stream and updates the performance data.
+
+        '''        
         gst_buffer = info.get_buffer()
         if not gst_buffer:
             return Gst.PadProbeReturn.OK
@@ -376,6 +383,40 @@ class DynamicRTSPPipeline:
                 "batch_id": frame_meta.batch_id,
                 "frame_meta": frame_meta
             })
+
+            #? hide the mask data for objects with classes that are not in the range of interest
+            l_obj = frame_meta.obj_meta_list
+            while l_obj:
+                obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
+
+                mp = obj_meta.mask_params
+
+                #? Check if the mask is valid and if the object is within the confidence range
+                if mp is not None and mp.data:
+                    if obj_meta.class_id in self.hide_class_ids:
+
+                        #? clear the mask data
+                        mp.data = 0.0
+                        mp.size = 0
+                        mp.width = 0
+                        mp.height = 0
+                        
+                        #? hide the rectangle around the object
+                        rect = obj_meta.rect_params
+                        rect.border_width = 0
+                        rect.border_color.alpha = 0.0
+                        
+                        #? hide the label
+                        obj_meta.text_params.display_text = ""
+
+                        #? hide the bounding box of only segmentation objects
+                    elif self.disable_box_segmentation: 
+                        rect = obj_meta.rect_params
+                        rect.border_width = 0
+                        rect.border_color.alpha = 0.0
+                l_obj = l_obj.next
+
+            
             # ----------------------------------------------------------------------
             # CALCULATE FPS
             # ----------------------------------------------------------------------
