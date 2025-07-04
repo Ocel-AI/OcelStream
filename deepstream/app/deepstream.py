@@ -376,23 +376,18 @@ class DynamicRTSPPipeline:
 
         while l_frame is not None:
             frame_meta = pyds.NvDsFrameMeta.cast(l_frame.data)
+
             n_frame = pyds.get_nvds_buf_surface(hash(gst_buffer), frame_meta.batch_id)
-            surface_copy = np.array(n_frame, copy=True)
-            frame_image = cv2.cvtColor(surface_copy, cv2.COLOR_RGBA2BGR)
-            l_obj = frame_meta.obj_meta_list
+            flat_frame = np.array(n_frame, copy=True)
+            frame_image = cv2.cvtColor(flat_frame, cv2.COLOR_RGBA2BGR)
 
-            while l_obj is not None:
-                obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
-                gie_unique_id = obj_meta.unique_component_id #? Get the unique ID of the inference component used in the configuration
-                self.process_queue.put({
-                    "frame_image": frame_image,
-                    "obj_meta": obj_meta,
-                    "source_id": frame_meta.source_id,
-                    "frame_number": frame_meta.frame_num,
-                    "gie_unique_id": gie_unique_id
-                })
-
-                l_obj = l_obj.next
+            # Enqueue work
+            self.process_queue.put({
+                "gst_buffer": gst_buffer,
+                "batch_id": frame_meta.batch_id,
+                "frame_meta": frame_meta,
+                "frame_image": frame_image
+            })
 
             #? hide the mask data for objects with classes that are not in the range of interest
             l_obj = frame_meta.obj_meta_list
@@ -446,53 +441,55 @@ class DynamicRTSPPipeline:
     def _processing_worker_loop(self):
         while True:
             task = self.process_queue.get()
+            gst_buffer = task["gst_buffer"]
+            batch_id = task["batch_id"]
+            frame_meta = task["frame_meta"]
             frame_image = task["frame_image"]
-            obj_meta = task["obj_meta"]
-            source_id = task["source_id"]
-            frame_number = task["frame_number"]
-            gie_unique_id = task["gie_unique_id"]
 
             try:
 
                 objects = []
-                rectparams = obj_meta.rect_params
-                maskparams = obj_meta.mask_params
-                mask_b64 = None
-                left = None
-                top = None
-                width = None
-                height = None
-                if maskparams is not None and maskparams.data:
-                    mask_img = resize_mask(maskparams, math.floor(rectparams.width), math.floor(rectparams.height))
-                    # mask_b64 = encode_mask_to_base64(mask_img)
-                    mask_img = mask_img.astype(np.uint8)
+                l_obj = frame_meta.obj_meta_list
+                while l_obj is not None:
+                    obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
+                    gie_unique_id = obj_meta.unique_component_id #? Get the unique ID of the inference component used in the configuration
+                    rectparams = obj_meta.rect_params
+                    maskparams = obj_meta.mask_params
+                    mask_b64 = None
+                    left = None
+                    top = None
+                    width = None
+                    height = None
+                    if maskparams is not None and maskparams.data:
+                        mask_img = resize_mask(maskparams, math.floor(rectparams.width), math.floor(rectparams.height))
+                        mask_img = mask_img.astype(np.uint8)
 
-
-                if rectparams is not None:
-                    left = rectparams.left
-                    top = rectparams.top
-                    width = rectparams.width
-                    height = rectparams.height
-                if rectparams is not None or mask_b64 is not None:
-                    objects.append({
-                        "object_id": obj_meta.object_id,
-                        "model_id": gie_unique_id,
-                        "class_id": obj_meta.class_id,
-                        "confidence": obj_meta.confidence,
-                        "bbox": {
-                            "left": left,
-                            "top": top,
-                            "width": width,
-                            "height": height
-                        },
-                        "mask": mask_img.tolist() if mask_img is not None else None,
-                    })
+                    if rectparams is not None:
+                        left = rectparams.left
+                        top = rectparams.top
+                        width = rectparams.width
+                        height = rectparams.height
+                    if rectparams is not None or mask_b64 is not None:
+                        objects.append({
+                            "object_id": obj_meta.object_id,
+                            "model_id": gie_unique_id,
+                            "class_id": obj_meta.class_id,
+                            "confidence": obj_meta.confidence,
+                            "bbox": {
+                                "left": left,
+                                "top": top,
+                                "width": width,
+                                "height": height
+                            },
+                            "mask": mask_img.tobytes() if mask_img is not None else None,
+                        })
+                    l_obj = l_obj.next
                 
                 if objects.__len__() > 0:
-                    uuid = self.spot_manager.get_uuid(source_id)
+                    uuid = self.spot_manager.get_uuid(frame_meta.source_id)
                     metadata = {
                         "source_id": uuid,
-                        "frame_number": frame_number,
+                        "frame_number": frame_meta.frame_num,
                         "objects": objects,
                         "frame_base64": transform_image_to_base64(frame_image)
                     }
