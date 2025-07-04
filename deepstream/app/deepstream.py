@@ -449,6 +449,7 @@ class DynamicRTSPPipeline:
                 l_obj = frame_meta.obj_meta_list
                 while l_obj is not None:
                     obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
+                    gie_unique_id = obj_meta.unique_component_id #? Get the unique ID of the inference component used in the configuration
                     rectparams = obj_meta.rect_params
                     maskparams = obj_meta.mask_params
                     mask_b64 = None
@@ -469,6 +470,7 @@ class DynamicRTSPPipeline:
                     if rectparams is not None or mask_b64 is not None:
                         objects.append({
                             "object_id": obj_meta.object_id,
+                            "model_id": gie_unique_id,
                             "class_id": obj_meta.class_id,
                             "confidence": obj_meta.confidence,
                             "bbox": {
