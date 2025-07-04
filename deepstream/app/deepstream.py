@@ -379,14 +379,13 @@ class DynamicRTSPPipeline:
 
             n_frame = pyds.get_nvds_buf_surface(hash(gst_buffer), frame_meta.batch_id)
             flat_frame = np.array(n_frame, copy=True)
-            frame_image = cv2.cvtColor(flat_frame, cv2.COLOR_RGBA2BGR)
-
+            
             # Enqueue work
             self.process_queue.put({
                 "gst_buffer": gst_buffer,
                 "batch_id": frame_meta.batch_id,
                 "frame_meta": frame_meta,
-                "frame_image": frame_image
+                "flat_frame": flat_frame
             })
 
             #? hide the mask data for objects with classes that are not in the range of interest
@@ -444,12 +443,13 @@ class DynamicRTSPPipeline:
             gst_buffer = task["gst_buffer"]
             batch_id = task["batch_id"]
             frame_meta = task["frame_meta"]
-            frame_image = task["frame_image"]
+            flat_frame = task["flat_frame"]
 
             try:
 
                 objects = []
                 l_obj = frame_meta.obj_meta_list
+                frame_image = cv2.cvtColor(flat_frame, cv2.COLOR_RGBA2BGR)
                 while l_obj is not None:
                     obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
                     gie_unique_id = obj_meta.unique_component_id #? Get the unique ID of the inference component used in the configuration
