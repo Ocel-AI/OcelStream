@@ -464,8 +464,9 @@ class DynamicRTSPPipeline:
                 height = None
                 if maskparams is not None and maskparams.data:
                     mask_img = resize_mask(maskparams, math.floor(rectparams.width), math.floor(rectparams.height))
-                    mask_b64 = encode_mask_to_base64(mask_img)
+                    # mask_b64 = encode_mask_to_base64(mask_img)
                     mask_img = mask_img.astype(np.uint8)
+
 
                 if rectparams is not None:
                     left = rectparams.left
@@ -484,7 +485,7 @@ class DynamicRTSPPipeline:
                             "width": width,
                             "height": height
                         },
-                        "mask": mask_b64
+                        "mask": mask_img.tolist() if mask_img is not None else None,
                     })
                 
                 if objects.__len__() > 0:
