@@ -65,8 +65,8 @@ time.sleep(3)
 @router.post("/add")
 def add_stream(req: StreamRequest):
     try:
-        rtsp_output_width = 640
-        rtsp_output_height = 640
+        rtsp_output_width = req.rtsp_output_width
+        rtsp_output_height = req.rtsp_output_height
         source_uri = req.uri 
         uuid = pipeline.add_source(source_uri, rtsp_output_width, rtsp_output_height)
         active_streams[uuid] = f"rtsp://localhost:8554/ds-test{uuid}"
