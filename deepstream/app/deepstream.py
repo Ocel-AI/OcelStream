@@ -460,6 +460,7 @@ class DynamicRTSPPipeline:
                     top = None
                     width = None
                     height = None
+                    mask_img = None
                     if maskparams is not None and maskparams.data:
                         mask_img = resize_mask(maskparams, math.floor(rectparams.width), math.floor(rectparams.height))
                         mask_img = mask_img.astype(np.uint8)
@@ -481,7 +482,7 @@ class DynamicRTSPPipeline:
                                 "width": width,
                                 "height": height
                             },
-                            "mask": mask_img.tobytes() if mask_img is not None else None,
+                            "mask": mask_img.tolist() if mask_img is not None else None,
                         })
                     l_obj = l_obj.next
                 
