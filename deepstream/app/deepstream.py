@@ -50,8 +50,8 @@ class DynamicRTSPPipeline:
         self.pipeline = Gst.Pipeline()
         self.streammux = Gst.ElementFactory.make("nvstreammux", "stream-mux")
         self.streammux.set_property("batch-size", self.max_sources)
-        self.streammux.set_property("width", 640)
-        self.streammux.set_property("height", 640)
+        self.streammux.set_property("width", 1920)
+        self.streammux.set_property("height", 1080)
         self.streammux.set_property("batched-push-timeout", 66666)
         self.streammux.set_property("live-source", 1)
         self.pipeline.add(self.streammux)
@@ -463,7 +463,8 @@ class DynamicRTSPPipeline:
                     mask_img = None
                     if maskparams is not None and maskparams.data:
                         mask_img = resize_mask(maskparams, math.floor(rectparams.width), math.floor(rectparams.height))
-                        mask_img = mask_img.astype(np.uint8)
+                        mask_b64 = encode_mask_to_base64(mask_img)
+                        # mask_img = mask_img.astype(np.uint8)
 
                     if rectparams is not None:
                         left = rectparams.left
@@ -482,7 +483,7 @@ class DynamicRTSPPipeline:
                                 "width": width,
                                 "height": height
                             },
-                            "mask": mask_img.tolist() if mask_img is not None else None,
+                            "mask": mask_b64,
                         })
                     l_obj = l_obj.next
                 
