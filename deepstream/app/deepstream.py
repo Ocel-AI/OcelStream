@@ -392,34 +392,21 @@ class DynamicRTSPPipeline:
             l_obj = frame_meta.obj_meta_list
             while l_obj:
                 obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
-
-                mp = obj_meta.mask_params
+                next_obj = l_obj.next
 
                 #? Check if the mask is valid and if the object is within the confidence range
-                if mp is not None and mp.data:
+                if obj_meta.mask_params is not None and obj_meta.mask_params.data:
                     if obj_meta.class_id in self.hide_class_ids:
 
-                        #? clear the mask data
-                        mp.data = 0.0
-                        mp.size = 0
-                        mp.width = 0
-                        mp.height = 0
-                        
-                        #? hide the rectangle around the object
-                        rect = obj_meta.rect_params
-                        rect.border_width = 0
-                        rect.border_color.alpha = 0.0
-                        
-                        #? hide the label
-                        obj_meta.text_params.display_text = ""
+                        #? rm the object from the frame
+                        pyds.nvds_remove_obj_meta_from_frame(frame_meta, obj_meta)
 
-                        #? hide the bounding box of only segmentation objects
+                    #? hide the bounding box of only segmentation objects
                     elif self.disable_box_segmentation: 
                         rect = obj_meta.rect_params
                         rect.border_width = 0
                         rect.border_color.alpha = 0.0
-                l_obj = l_obj.next
-
+                l_obj = next_obj
             
             # ----------------------------------------------------------------------
             # CALCULATE FPS
