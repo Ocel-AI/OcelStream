@@ -20,32 +20,11 @@ from deepstream import SpotManager
 
 router = APIRouter()
 
-UPLOAD_DIR = "./uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
-upload_streams = {}
 active_streams = {}
-connected_clients: Set[WebSocket] = set()
 clients_notifications: Set[WebSocket] = set()
-detection_queue = queue.Queue()
 notification_queue = queue.Queue()
-stream_clients: Dict[int, Set[WebSocket]] = {}
 
 
-
-
-
-async def queue_detection(data: Dict):
-    """Queue detection data for processing in the main event loop"""
-    stream_id = data.get("source_id")
-    if stream_id is None:
-        return
-
-    if stream_id in stream_clients:
-        for ws in list(stream_clients[stream_id]):
-            try:
-                await ws.send_text(json.dumps(data))
-            except Exception:
-                stream_clients[stream_id].remove(ws)
 
 
 async def notification_handler(data: Dict):
@@ -53,7 +32,7 @@ async def notification_handler(data: Dict):
     notification_queue.put(data)
 
 # ----------------- Pipeline -----------------
-pipeline = DynamicRTSPPipeline(max_sources=15, metadata_callback=queue_detection, notification_callback=notification_handler)
+pipeline = DynamicRTSPPipeline(max_sources=15, notification_callback=notification_handler)
 threading.Thread(target=pipeline.start, daemon=True).start()
 time.sleep(3)
 
@@ -68,6 +47,7 @@ def add_stream(req: StreamRequest):
         rtsp_output_width = req.rtsp_output_width
         rtsp_output_height = req.rtsp_output_height
         source_uri = req.uri 
+        print (f"Adding stream: {source_uri} with width: {rtsp_output_width} and height: {rtsp_output_height}")
         uuid = pipeline.add_source(source_uri, rtsp_output_width, rtsp_output_height)
         active_streams[uuid] = f"rtsp://localhost:8554/ds-test{uuid}"
         return {"message": "Stream added", "uuid": uuid, "rtsp": f"rtsp://localhost:8554/ds-test{uuid}"}
@@ -90,22 +70,6 @@ def list_streams():
     return active_streams
 
 
-@router.websocket("/ws/{uuid}")
-async def stream_specific_ws(websocket: WebSocket, uuid: str):
-
-    await websocket.accept()
-    if uuid not in stream_clients:
-        stream_clients[uuid] = set()
-    stream_clients[uuid].add(websocket)
-    try:
-        while True:
-            await asyncio.sleep(0.1)
-    except WebSocketDisconnect:
-        stream_clients[uuid].remove(websocket)
-        if not stream_clients[uuid]:
-            del stream_clients[uuid]
-
-
 @router.websocket("/ws/notifications")
 async def websocket_notifications(websocket: WebSocket):
     await websocket.accept()
@@ -118,4 +82,5 @@ async def websocket_notifications(websocket: WebSocket):
             await asyncio.sleep(0.1)
     except:
         clients_notifications.remove(websocket)
+
     

@@ -5,14 +5,13 @@ services:
     build:
       context: .
       dockerfile: ./docker_image/Dockerfile
-    image: deepstream_app:experimental
-    container_name: deepstream_app
-    network_mode: host
+    image: deepstream_app:experimental-
+    container_name: deepstream_app-
+    networks:
+      - deepstream_network
     privileged: true
-    environment:
-      - DISPLAY=${DISPLAY}
-      - DEEPSTREAM_DISABLE_BOX_SEGMENTATION=1  # Disable bounding box segmentation
-      - DEEPSTREAM_IGNORE_CLASS_IDS_SEGMENTATION=0,4 # you can specify class IDs to ignore here in list example: 0,4
+    env_file:
+      - .env
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./:/deepstream_app
@@ -25,6 +24,26 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "8554:8554"  # Example RTSP
-      - "5000:5000"  # Example HTTP inference API
-      - "8888:8888"  # Example Jupyter or UI
+      - "8554:8554"
+      - "5000:5000"
+      - "8888:8888"
+      - "8000:8000"
+
+  rabbitmq:
+    image: rabbitmq:4.0-management
+    networks:
+      - deepstream_network
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  deepstream_network:
+    driver: bridge

@@ -17,3 +17,6 @@ best.pt
 # Ignore Python cache files
 *.pyc
 deepstream/config/*.txt
+/consumer
+deepstream/messaging/__pycache__
+.env
