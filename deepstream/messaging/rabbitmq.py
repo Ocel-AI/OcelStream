@@ -14,9 +14,6 @@ class RabbitMQManager:
         self.message_ttl = int(os.getenv("MESSAGE_TTL", 10000))
         self.max_length = int(os.getenv("MAX_LENGTH", 1000))
 
-    def create_connection(self):
-        return pika.BlockingConnection(pika.ConnectionParameters(self.host, credentials=self.credentials))
-
     def publish_message(self, queue: str, message: dict):
         try:
             self.channel.queue_declare(queue=queue, durable=True, arguments={
@@ -30,5 +27,5 @@ class RabbitMQManager:
                 body=json.dumps(message),
                 properties=pika.BasicProperties(delivery_mode=2),
             )
-        finally:
-            pass
+        except pika.exceptions.AMQPError as e:
+            print(f"Failed to publish message to {queue}: {e}")
