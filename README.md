@@ -9,7 +9,7 @@
 - 🎥 Real-time inference with DeepStream and TensorRT
 - 🧩 Plugin support for YOLO, SAM, D-Fine, and more
 - 🐍 Python bindings for accessing frames and metadata
-- 🌐 WebSocket server to broadcast metadata to clients
+- 🌐 RabbitMQ server to broadcast metadata to clients
 - 🐳 Docker Compose setup for simplified deployment
 
 ---
@@ -64,7 +64,8 @@ Make sure to adapt the paths in these config files to match your model and label
    ```bash
    docker-compose up --build
    ```
-3. **Access the WebSocket server** at `ws://localhost:<port>` (see your configuration).
+3. **Connect to the RabbitMQ server** to receive inference metadata. The server details (host, port, credentials) are specified in your configuration files.
+When you add a new source using the API, the response includes a unique UUID. This UUID is used as the queue name for receiving inference metadata from RabbitMQ.
 
 ### API Usage
 
@@ -72,7 +73,7 @@ The project includes a built-in API to interact with the DeepStream pipeline:
 
 - **Add sources** (files or RTSP links) dynamically
 - **Delete sources** from the pipeline
-- **Real-time inference results** via WebSocket
+- **Real-time inference results** are now delivered via RabbitMQ
 
 You can add video sources as files (`file:///deepstream_app/static/video.mp4`) or RTSP streams (`rtsp://camera-ip:port/stream`) and remove them as needed during runtime.
 
