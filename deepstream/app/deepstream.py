@@ -5,6 +5,7 @@ gi.require_version('GstRtspServer', '1.0')
 import time
 import sys
 sys.path.append('/deepstream_python_apps/apps/common')
+sys.path.append('/deepstream_app/deepstream/messaging')
 
 from gi.repository import Gst, GstRtspServer, GLib
 from bus_call import bus_call
@@ -12,6 +13,7 @@ from FPS import PERF_DATA
 import pyds
 from spotmanager import SpotManager
 from source_bin_factory import SourceBinFactory
+from rabbitmq import RabbitMQManager
 from utils import transform_image_to_base64
 import asyncio
 import multiprocessing
@@ -34,7 +36,7 @@ class DynamicRTSPPipeline:
     now exposes remove_source() in addition to add_source().
     """
 
-    def __init__(self, max_sources: int = 5, metadata_callback=None, notification_callback=None):
+    def __init__(self, max_sources: int = 5, notification_callback=None):
 
         Gst.init(None)
         # --- Pipeline‑wide parameters ---
@@ -86,6 +88,9 @@ class DynamicRTSPPipeline:
         self.branches = {}
         self.urls_sources = []
         self._rtsp_mount_paths = set()
+        self.notification_callback = notification_callback
+        self.loop_event = asyncio.get_event_loop()
+
 
         # --- GLib/RTSP setup ---
         self.loop = GLib.MainLoop()
@@ -98,16 +103,10 @@ class DynamicRTSPPipeline:
         self.perf_data = PERF_DATA()
 
         # --- Spot management for dynamic sources ---
-        self.spot_manager = SpotManager(max_sources)
 
         # --- Pad probe for conv sink ---
         self.MIN_CONFIDENCE = 0.3
         self.MAX_CONFIDENCE = 0.4
-
-        # --- Callbacks for send data via WebSocket ---
-        self.metadata_callback = metadata_callback
-        self.notification_callback = notification_callback
-        self.loop_event = asyncio.get_event_loop()
 
         # --- Processing queue and worker thread ---
         self.process_queue = queue.Queue()
@@ -115,6 +114,11 @@ class DynamicRTSPPipeline:
         self.processor_thread.start()
 
         self.source_bin_factory = SourceBinFactory()
+        self.spot_manager = SpotManager(max_sources)
+        # get the host from environment variable or default to localhost
+        self.rabbitmq_manager = RabbitMQManager(host=os.getenv("RABBITMQ_HOST"),
+                                                username=os.getenv("RABBITMQ_DEFAULT_USER"),
+                                                password=os.getenv("RABBITMQ_DEFAULT_PASS"))
 
     # ------------------------------------------------------------------
     # Public API
@@ -264,10 +268,6 @@ class DynamicRTSPPipeline:
 
         pay.link(sink)
 
-        # self.streammux.get_static_pad(f"sink_{index}").add_probe(
-        #     Gst.PadProbeType.EVENT_DOWNSTREAM,
-        #     lambda pad, info: self.eos_probe_callback(pad, info, index)
-        # )
         osd.get_static_pad("sink").add_probe(
             Gst.PadProbeType.BUFFER, self.conv_pad_buffer_probe, 0
         )
@@ -286,15 +286,6 @@ class DynamicRTSPPipeline:
         print(f"Stream {uuid} at rtsp://localhost:8554/ds-test{uuid}")
         self._rtsp_mount_paths.add(f"/ds-test{uuid}")
 
-
-    # ------------------------------------------------------------------
-
-    def eos_probe_callback(self, pad, info, index):
-        if info.type & Gst.PadProbeType.EVENT_DOWNSTREAM:
-            event = info.get_event()
-            if event.type == Gst.EventType.EOS:
-                return Gst.PadProbeReturn.DROP 
-        return Gst.PadProbeReturn.OK
 
 
     def bus_call(self, bus, message, loop):
@@ -451,7 +442,6 @@ class DynamicRTSPPipeline:
                     if maskparams is not None and maskparams.data:
                         mask_img = resize_mask(maskparams, math.floor(rectparams.width), math.floor(rectparams.height))
                         mask_b64 = encode_mask_to_base64(mask_img)
-                        # mask_img = mask_img.astype(np.uint8)
 
                     if rectparams is not None:
                         left = rectparams.left
@@ -472,6 +462,8 @@ class DynamicRTSPPipeline:
                             },
                             "mask": mask_b64,
                         })
+                    del obj_meta  # Release the object metadata reference
+                    
                     l_obj = l_obj.next
                 
                 if objects.__len__() > 0:
@@ -486,11 +478,12 @@ class DynamicRTSPPipeline:
                     metadata = {}
 
 
-                if self.metadata_callback:
-                    asyncio.run_coroutine_threadsafe(
-                        self.metadata_callback(metadata),
-                        self.loop_event
-                    )
+                self.rabbitmq_manager.publish_message(
+                    queue=str(uuid),
+                    message=metadata
+                )
+                
+
 
             except Exception as e:
                 print(f"[worker] Error processing frame: {e}")
