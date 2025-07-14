@@ -20,6 +20,7 @@ class RabbitMQManager:
                 "x-message-ttl": self.message_ttl,
                 "x-max-length": self.max_length,
                 "x-overflow": "drop-head",
+                "x-consumer-timeout": 10000,
             })
         except pika.exceptions.AMQPError as e:
             raise RuntimeError(f"Failed to create queue {queue}: {e}")
@@ -30,7 +31,7 @@ class RabbitMQManager:
                 exchange="",
                 routing_key=queue,
                 body=json.dumps(message),
-                properties=pika.BasicProperties(delivery_mode=2),
+                properties=pika.BasicProperties(delivery_mode=1),
             )
         except pika.exceptions.AMQPError as e:
             print(f"Failed to publish message to {queue}: {e}")

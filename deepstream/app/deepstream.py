@@ -27,6 +27,7 @@ import queue
 import re
 import base64
 import os
+import re
 
 
 class DynamicRTSPPipeline:
@@ -40,7 +41,7 @@ class DynamicRTSPPipeline:
 
         Gst.init(None)
         # --- Pipeline‑wide parameters ---
-        self.max_sources = max_sources
+        self.max_sources = int(os.getenv("MAX_RESOURCES", 15))
         self.codec = "H264"
         self.bitrate = 4_000_000  # 4 Mbps for H264, adjust as needed
 
@@ -52,36 +53,42 @@ class DynamicRTSPPipeline:
         self.pipeline = Gst.Pipeline()
         self.streammux = Gst.ElementFactory.make("nvstreammux", "stream-mux")
         self.streammux.set_property("batch-size", self.max_sources)
-        self.streammux.set_property("width", 1920)
-        self.streammux.set_property("height", 1080)
-        self.streammux.set_property("batched-push-timeout", 66666)
+        self.streammux.set_property("width", int(os.getenv("STREMUX_WIDTH", 1920)))
+        self.streammux.set_property("height", int(os.getenv("STREMUX_HEIGHT", 1080)))
+        self.streammux.set_property("batched-push-timeout", int(os.getenv("batched_push_timeout", 66666)))
         self.streammux.set_property("live-source", 1)
         self.pipeline.add(self.streammux)
 
 
         # --- Primary and secondary inference elements ---
-        self.pgie = Gst.ElementFactory.make("nvinfer", "pgie")
-        self.sgie = Gst.ElementFactory.make("nvinfer", "spgie")
-        self.pgie.set_property("config-file-path", "/deepstream_app/deepstream/config/config_pgie_yolo_detct.txt")
-        self.sgie.set_property("config-file-path", "/deepstream_app/deepstream/config/config_pgie_yolo_seg.txt")
-        self.pipeline.add(self.pgie)
-        self.pipeline.add(self.sgie)
+        gie_pattern = re.compile(r"^GIE_(\d+)_CONFIG$")
+        gie_configs = {}
+        for key, value in os.environ.items():
+            match = gie_pattern.match(key)
+            if match:
+                index = int(match.group(1))
+                gie_configs[index] = value.strip()
+        
+        self.gie_configs = [gie_configs[i] for i in sorted(gie_configs.keys())]
 
+        self.gies = []
+        previous_elm = self.streammux
+        for i, config in enumerate(self.gie_configs):
+            gie = Gst.ElementFactory.make("nvinfer", f"gie_{i}")
+            if not gie:
+                raise RuntimeError(f"Failed to create GIE element for config {config}")
+            gie.set_property("config-file-path", config)
+            self.pipeline.add(gie)
+            previous_elm.link(gie)
+            self.gies.append(gie)
+            previous_elm = gie
+        
         self.demux = Gst.ElementFactory.make("nvstreamdemux", "stream-demux")
         self.pipeline.add(self.demux)
+        previous_elm.link(self.demux)
 
         # Pre‑create request pads on demux for potential sources
         self.demux_src_pads = [self.demux.get_request_pad(f"src_{i}") for i in range(self.max_sources)]
-
-        # Link static portion of pipeline
-
-        self.streammux.link(self.pgie)
-
-        self.pgie.link(self.sgie)
-
-        self.sgie.link(self.demux)
-        
-        self.pgie.link(self.demux)
 
         # --- Runtime bookkeeping ---
         self.sources = {}
