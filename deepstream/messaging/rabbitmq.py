@@ -14,13 +14,18 @@ class RabbitMQManager:
         self.message_ttl = int(os.getenv("MESSAGE_TTL", 10000))
         self.max_length = int(os.getenv("MAX_LENGTH", 1000))
 
-    def publish_message(self, queue: str, message: dict):
+    def create_queue(self, queue: str):
         try:
             self.channel.queue_declare(queue=queue, durable=True, arguments={
                 "x-message-ttl": self.message_ttl,
                 "x-max-length": self.max_length,
                 "x-overflow": "drop-head",
             })
+        except pika.exceptions.AMQPError as e:
+            raise RuntimeError(f"Failed to create queue {queue}: {e}")
+
+    def publish_message(self, queue: str, message: dict):
+        try:
             self.channel.basic_publish(
                 exchange="",
                 routing_key=queue,

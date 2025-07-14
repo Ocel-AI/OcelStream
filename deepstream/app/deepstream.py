@@ -174,6 +174,7 @@ class DynamicRTSPPipeline:
         src_bin.sync_state_with_parent()
         src_bin.set_state(Gst.State.PLAYING)
         self.urls_sources.append(uri)
+        self.rabbitmq_manager.create_queue(str(uuid))
 
         return uuid
 
