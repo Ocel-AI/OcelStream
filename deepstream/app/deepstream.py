@@ -59,8 +59,18 @@ class DynamicRTSPPipeline:
         self.streammux.set_property("live-source", 1)
         self.pipeline.add(self.streammux)
 
+        self.hide_class_names = []
+        hide_pattern = re.compile(r"^GIE_(\d+)_HIDE_CLASS_NAMES$")
+        for key, value in os.environ.items():
+            match = hide_pattern.match(key)
+            if match:
+                names = {v.strip() for v in value.split(",") if v.strip()}
+                for name in names:
+                    self.hide_class_names.append(name)
+        
 
-        # --- Primary and secondary inference elements ---
+
+        # ========= Primary and secondary inference elements ==============
         gie_pattern = re.compile(r"^GIE_(\d+)_CONFIG$")
         gie_configs = {}
         for key, value in os.environ.items():
@@ -123,13 +133,90 @@ class DynamicRTSPPipeline:
         self.source_bin_factory = SourceBinFactory()
         self.spot_manager = SpotManager(max_sources)
         # get the host from environment variable or default to localhost
-        self.rabbitmq_manager = RabbitMQManager(host=os.getenv("RABBITMQ_HOST"),
-                                                username=os.getenv("RABBITMQ_DEFAULT_USER"),
-                                                password=os.getenv("RABBITMQ_DEFAULT_PASS"))
+        try:
+            self.rabbitmq_manager = RabbitMQManager(host=os.getenv("RABBITMQ_HOST"),
+                                                    username=os.getenv("RABBITMQ_DEFAULT_USER"),
+                                                    password=os.getenv("RABBITMQ_DEFAULT_PASS"))
+        except Exception as e:
+            # raise RuntimeError(f"Failed to initialize RabbitMQ manager: {e}")
+            print(f"Failed to initialize RabbitMQ manager: {e}")
+            self.rabbitmq_manager = None
 
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
+    def get_labels_status(self) -> dict:
+        """
+        Returns a visibility map of all labels across all GIEs.
+
+        Output format:
+        {
+            "belt": False,
+            "user": False,
+            "helmet": True,
+            ...
+        }
+
+        Where False = hidden, True = visible
+        """
+        all_labels = set()
+        all_hidden_labels = set()
+
+        i = 0
+        while True:
+            label_file = os.getenv(f"LABEL_{i}_FILE")
+            if not label_file:
+                break
+
+            # Load label names
+            if os.path.exists(label_file):
+                with open(label_file, "r") as f:
+                    labels = {line.strip() for line in f if line.strip()}
+                    all_labels.update(labels)
+
+            i += 1
+
+        # Build visibility map
+        return {
+            label: label not in self.hide_class_names
+            for label in all_labels
+        }
+    
+    def hide_class_name(self, class_name: str) -> bool:
+        """
+        Check if a class name is hidden in any GIE.
+        
+        Args:
+            class_name (str): The class name to check.
+        
+        Returns:
+            bool: True if the class name is hidden, False otherwise.
+        """
+        if not class_name:
+            return False
+        if class_name in self.hide_class_names:
+            return True
+        else:
+            self.hide_class_names.append(class_name)
+        return True
+    
+    def enable_class_name(self, class_name: str) -> bool:
+        """
+        Enable a class name that was previously hidden in any GIE.
+        
+        Args:
+            class_name (str): The class name to enable.
+        
+        Returns:
+            bool: True if the class name was enabled, False if it was not hidden.
+        """
+        if not class_name:
+            return False
+        if class_name in self.hide_class_names:
+            self.hide_class_names.remove(class_name)
+            return True
+        return False
+
     def add_source(self, uri: str, rtsp_output_width: int = 640, rtsp_output_height: int = 640) -> int:
         '''
         Add a new source to the pipeline and create an RTSP mount for it.
@@ -181,7 +268,8 @@ class DynamicRTSPPipeline:
         src_bin.sync_state_with_parent()
         src_bin.set_state(Gst.State.PLAYING)
         self.urls_sources.append(uri)
-        self.rabbitmq_manager.create_queue(str(uuid))
+        if self.rabbitmq_manager is not None:
+            self.rabbitmq_manager.create_queue(str(uuid))
 
         return uuid
 
@@ -378,30 +466,42 @@ class DynamicRTSPPipeline:
 
             n_frame = pyds.get_nvds_buf_surface(hash(gst_buffer), frame_meta.batch_id)
             flat_frame = np.array(n_frame, copy=True)
-            
-            # Enqueue work
-            self.process_queue.put({
-                "gst_buffer": gst_buffer,
-                "batch_id": frame_meta.batch_id,
-                "frame_meta": frame_meta,
-                "flat_frame": flat_frame
-            })
 
             #? hide the mask data for objects with classes that are not in the range of interest
             l_obj = frame_meta.obj_meta_list
             while l_obj:
                 obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
                 next_obj = l_obj.next
+                gie_unique_id = obj_meta.unique_component_id
+                
+                self.process_queue.put({
+                    "flat_frame": flat_frame,
+                    "class_id": obj_meta.class_id if obj_meta.class_id is not None else None,
+                    "confidence": obj_meta.confidence if obj_meta.confidence is not None else None,
+                    "label": obj_meta.obj_label if obj_meta.obj_label is not None else None,
+                    "gie_unique_id": gie_unique_id,
+                    "object_id": obj_meta.object_id if obj_meta.object_id is not None else None,
+                    "source_id": frame_meta.source_id if frame_meta.source_id is not None else None,
+                    "frame_number": frame_meta.frame_num if frame_meta.frame_num is not None else None,
+                    "left": obj_meta.rect_params.left if obj_meta.rect_params is not None else None,
+                    "top": obj_meta.rect_params.top if obj_meta.rect_params is not None else None,
+                    "width": obj_meta.rect_params.width if obj_meta.rect_params is not None else None,
+                    "height": obj_meta.rect_params.height if obj_meta.rect_params is not None else None,
+                    "mask": obj_meta.mask_params.get_mask_array().reshape(
+                        (obj_meta.mask_params.height, obj_meta.mask_params.width)
+                    ) if obj_meta.mask_params is not None and obj_meta.mask_params.data else None,
+                    "therchold": obj_meta.mask_params.threshold if obj_meta.mask_params is not None else None,
+                    "mask_width": obj_meta.mask_params.width if obj_meta.mask_params is not None else None,
+                    "mask_height": obj_meta.mask_params.height if obj_meta.mask_params is not None else None,
+                })
 
-                #? Check if the mask is valid and if the object is within the confidence range
-                if obj_meta.mask_params is not None and obj_meta.mask_params.data:
-                    if obj_meta.class_id in self.hide_class_ids:
-
-                        #? rm the object from the frame
+                label = obj_meta.obj_label if obj_meta.obj_label is not None else None
+                if label and label in self.hide_class_names:
                         pyds.nvds_remove_obj_meta_from_frame(frame_meta, obj_meta)
-
+                        
+                if obj_meta.mask_params is not None and obj_meta.mask_params.data:
                     #? hide the bounding box of only segmentation objects
-                    elif self.disable_box_segmentation: 
+                    if self.disable_box_segmentation: 
                         rect = obj_meta.rect_params
                         rect.border_width = 0
                         rect.border_color.alpha = 0.0
@@ -426,70 +526,60 @@ class DynamicRTSPPipeline:
     def _processing_worker_loop(self):
         while True:
             task = self.process_queue.get()
-            gst_buffer = task["gst_buffer"]
-            batch_id = task["batch_id"]
-            frame_meta = task["frame_meta"]
             flat_frame = task["flat_frame"]
+            class_id = task.get("class_id")
+            confidence = task.get("confidence")
+            gie_unique_id = task.get("gie_unique_id")
+            object_id = task.get("object_id")
+            source_id = task.get("source_id")
+            frame_number = task.get("frame_number")
+            label = task.get("label")
+            left = task.get("left")
+            top = task.get("top")
+            width = task.get("width")
+            height = task.get("height")
+            mask = task.get("mask")
 
             try:
 
                 objects = []
-                l_obj = frame_meta.obj_meta_list
                 frame_image = cv2.cvtColor(flat_frame, cv2.COLOR_RGBA2BGR)
-                while l_obj is not None:
-                    obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
-                    gie_unique_id = obj_meta.unique_component_id #? Get the unique ID of the inference component used in the configuration
-                    rectparams = obj_meta.rect_params
-                    maskparams = obj_meta.mask_params
-                    mask_b64 = None
-                    left = None
-                    top = None
-                    width = None
-                    height = None
-                    mask_img = None
-                    if maskparams is not None and maskparams.data:
-                        mask_img = resize_mask(maskparams, math.floor(rectparams.width), math.floor(rectparams.height))
-                        mask_b64 = encode_mask_to_base64(mask_img)
-
-                    if rectparams is not None:
-                        left = rectparams.left
-                        top = rectparams.top
-                        width = rectparams.width
-                        height = rectparams.height
-                    if rectparams is not None or mask_b64 is not None:
-                        objects.append({
-                            "object_id": obj_meta.object_id,
-                            "model_id": gie_unique_id,
-                            "class_id": obj_meta.class_id,
-                            "confidence": obj_meta.confidence,
-                            "bbox": {
-                                "left": left,
-                                "top": top,
-                                "width": width,
-                                "height": height
-                            },
-                            "mask": mask_b64,
-                        })
-                    del obj_meta  # Release the object metadata reference
-                    
-                    l_obj = l_obj.next
-                
+                mask_b64 = None
+                mask_img = None
+                if mask is not None:
+                    mask_img = resize_mask(mask, math.floor(width), math.floor(height), task.get("therchold"))
+                    mask_b64 = encode_mask_to_base64(mask_img)
+                if left is not None or mask_b64 is not None:
+                    objects.append({
+                        "object_id": object_id,
+                        "model_id": gie_unique_id,
+                        "class_id": class_id,
+                        "label": label,
+                        "confidence": confidence,
+                        "bbox": {
+                            "left": left,
+                            "top": top,
+                            "width": width,
+                            "height": height
+                        },
+                        "mask": mask_b64,
+                    })
                 if objects.__len__() > 0:
-                    uuid = self.spot_manager.get_uuid(frame_meta.source_id)
+                    uuid = self.spot_manager.get_uuid(source_id)
                     metadata = {
                         "source_id": uuid,
-                        "frame_number": frame_meta.frame_num,
+                        "frame_number": frame_number,
                         "objects": objects,
                         "frame_base64": transform_image_to_base64(frame_image)
                     }
                 else:
                     metadata = {}
 
-
-                self.rabbitmq_manager.publish_message(
-                    queue=str(uuid),
-                    message=metadata
-                )
+                if self.rabbitmq_manager is not None:
+                    self.rabbitmq_manager.publish_message(
+                        queue=str(uuid),
+                        message=metadata
+                    )
                 
 
 

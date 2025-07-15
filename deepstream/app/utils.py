@@ -63,13 +63,11 @@ def transform_image_to_base64(image):
 #                     dst[y,x] = 255
 #     return dst
 
-def resize_mask(maskparams, target_width, target_height):
-    src = maskparams.get_mask_array().reshape((maskparams.height, maskparams.width)).astype(np.float32)
+def resize_mask(src, target_width, target_height, threshold):
     if src.size == 0:
         return np.empty((target_height, target_width), dtype=np.uint8)
 
     resized = cv2.resize(src, (target_width, target_height), interpolation=cv2.INTER_LINEAR)
-    threshold = maskparams.threshold  # keep as float between 0-1
     binarized = (resized >= threshold).astype(np.uint8) * 255  # convert to 0 or 255
     return binarized
 

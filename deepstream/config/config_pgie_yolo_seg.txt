@@ -12,7 +12,7 @@ infer-dims=3;1088;1088
 network-mode=0
 num-detected-classes=80
 interval=0
-gie-unique-id=1
+gie-unique-id=2
 process-mode=1
 # 0: Detector 1: Classifier 2: Segmentation 3: Instance Segmentation
 network-type=3
