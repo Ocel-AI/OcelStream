@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, WebSocket, File, UploadFile, WebSocketDisconnect
 from fastapi.responses import JSONResponse
 from backend.app.models import StreamRequest
+from backend.app.core.context import pipeline
 
 import os
 import shutil
@@ -21,24 +22,6 @@ from deepstream import SpotManager
 router = APIRouter()
 
 active_streams = {}
-clients_notifications: Set[WebSocket] = set()
-notification_queue = queue.Queue()
-
-
-
-
-async def notification_handler(data: Dict):
-    """Handle notifications and queue them for WebSocket clients"""
-    notification_queue.put(data)
-
-# ----------------- Pipeline -----------------
-pipeline = DynamicRTSPPipeline(max_sources=15, notification_callback=notification_handler)
-threading.Thread(target=pipeline.start, daemon=True).start()
-time.sleep(3)
-
-
-
-
 
 # ----------------- Endpoints -----------------
 @router.post("/add")
@@ -92,19 +75,3 @@ def enable_class_name(class_name: str):
 @router.get("/streams")
 def list_streams():
     return active_streams
-
-
-@router.websocket("/ws/notifications")
-async def websocket_notifications(websocket: WebSocket):
-    await websocket.accept()
-    clients_notifications.add(websocket)
-    try:
-        while True:
-            if not notification_queue.empty():
-                data = notification_queue.get_nowait()
-                await websocket.send_text(json.dumps(data))
-            await asyncio.sleep(0.1)
-    except:
-        clients_notifications.remove(websocket)
-
-    

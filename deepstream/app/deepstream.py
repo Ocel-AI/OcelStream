@@ -38,13 +38,11 @@ class DynamicRTSPPipeline:
     """
 
     def __init__(self, max_sources: int = 5, notification_callback=None):
-
         Gst.init(None)
         # --- Pipeline‑wide parameters ---
         self.max_sources = int(os.getenv("MAX_RESOURCES", 15))
         self.codec = "H264"
         self.bitrate = 4_000_000  # 4 Mbps for H264, adjust as needed
-
         # --- Environment variables for configuration ---
         self.hide_class_ids = os.getenv("DEEPSTREAM_IGNORE_CLASS_IDS_SEGMENTATION", "") # List of class IDs to hide in rtsp stream segmentation
         self.hide_class_ids = [int(x.strip()) for x in self.hide_class_ids.split(",") if x.strip().isdigit()]
@@ -58,7 +56,7 @@ class DynamicRTSPPipeline:
         self.streammux.set_property("batched-push-timeout", int(os.getenv("batched_push_timeout", 66666)))
         self.streammux.set_property("live-source", 1)
         self.pipeline.add(self.streammux)
-
+        #------ hide class names from GIEs ------
         self.hide_class_names = []
         hide_pattern = re.compile(r"^GIE_(\d+)_HIDE_CLASS_NAMES$")
         for key, value in os.environ.items():
@@ -67,9 +65,6 @@ class DynamicRTSPPipeline:
                 names = {v.strip() for v in value.split(",") if v.strip()}
                 for name in names:
                     self.hide_class_names.append(name)
-        
-
-
         # ========= Primary and secondary inference elements ==============
         gie_pattern = re.compile(r"^GIE_(\d+)_CONFIG$")
         gie_configs = {}
@@ -80,7 +75,6 @@ class DynamicRTSPPipeline:
                 gie_configs[index] = value.strip()
         
         self.gie_configs = [gie_configs[i] for i in sorted(gie_configs.keys())]
-
         self.gies = []
         previous_elm = self.streammux
         for i, config in enumerate(self.gie_configs):
@@ -96,10 +90,8 @@ class DynamicRTSPPipeline:
         self.demux = Gst.ElementFactory.make("nvstreamdemux", "stream-demux")
         self.pipeline.add(self.demux)
         previous_elm.link(self.demux)
-
         # Pre‑create request pads on demux for potential sources
         self.demux_src_pads = [self.demux.get_request_pad(f"src_{i}") for i in range(self.max_sources)]
-
         # --- Runtime bookkeeping ---
         self.sources = {}
         self.branches = {}
@@ -107,8 +99,6 @@ class DynamicRTSPPipeline:
         self._rtsp_mount_paths = set()
         self.notification_callback = notification_callback
         self.loop_event = asyncio.get_event_loop()
-
-
         # --- GLib/RTSP setup ---
         self.loop = GLib.MainLoop()
         self.rtsp_server = GstRtspServer.RTSPServer()
@@ -118,18 +108,8 @@ class DynamicRTSPPipeline:
         # --- Performance data ---
         self.pad_to_index = {}
         self.perf_data = PERF_DATA()
-
-        # --- Spot management for dynamic sources ---
-
-        # --- Pad probe for conv sink ---
-        self.MIN_CONFIDENCE = 0.3
-        self.MAX_CONFIDENCE = 0.4
-
-        # --- Processing queue and worker thread ---
-        self.process_queue = queue.Queue()
-        self.processor_thread = threading.Thread(target=self._processing_worker_loop, daemon=True)
-        self.processor_thread.start()
-
+        # --- Processing queue for metadata ---
+        self.process_queue = asyncio.Queue()
         self.source_bin_factory = SourceBinFactory()
         self.spot_manager = SpotManager(max_sources)
         # get the host from environment variable or default to localhost
@@ -141,7 +121,6 @@ class DynamicRTSPPipeline:
             # raise RuntimeError(f"Failed to initialize RabbitMQ manager: {e}")
             print(f"Failed to initialize RabbitMQ manager: {e}")
             self.rabbitmq_manager = None
-
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
@@ -269,7 +248,13 @@ class DynamicRTSPPipeline:
         src_bin.set_state(Gst.State.PLAYING)
         self.urls_sources.append(uri)
         if self.rabbitmq_manager is not None:
-            self.rabbitmq_manager.create_queue(str(uuid))
+            try:
+                asyncio.run_coroutine_threadsafe(
+                    self.rabbitmq_manager.create_queue(queue=str(uuid)),
+                    self.loop_event
+                )
+            except Exception as e:
+                print(f"[add_source] Failed to create RabbitMQ queue for {uuid}: {e}")
 
         return uuid
 
@@ -299,6 +284,7 @@ class DynamicRTSPPipeline:
         src_bin = self.sources.pop(index)
         src_bin.set_state(Gst.State.NULL)
         self.pipeline.remove(src_bin)
+        self.demux_src_pads[index].unlink(src_bin.get_static_pad("src"))
         # self.spot_manager.release(index)
         print(f"[✓] Removed source-bin-{index} and released spot {index}")
 
@@ -469,12 +455,13 @@ class DynamicRTSPPipeline:
 
             #? hide the mask data for objects with classes that are not in the range of interest
             l_obj = frame_meta.obj_meta_list
+            index = 0
             while l_obj:
                 obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
                 next_obj = l_obj.next
                 gie_unique_id = obj_meta.unique_component_id
                 
-                self.process_queue.put({
+                self.process_queue.put_nowait({
                     "flat_frame": flat_frame,
                     "class_id": obj_meta.class_id if obj_meta.class_id is not None else None,
                     "confidence": obj_meta.confidence if obj_meta.confidence is not None else None,
@@ -493,6 +480,7 @@ class DynamicRTSPPipeline:
                     "therchold": obj_meta.mask_params.threshold if obj_meta.mask_params is not None else None,
                     "mask_width": obj_meta.mask_params.width if obj_meta.mask_params is not None else None,
                     "mask_height": obj_meta.mask_params.height if obj_meta.mask_params is not None else None,
+                    "index": index
                 })
 
                 label = obj_meta.obj_label if obj_meta.obj_label is not None else None
@@ -506,6 +494,7 @@ class DynamicRTSPPipeline:
                         rect.border_width = 0
                         rect.border_color.alpha = 0.0
                 l_obj = next_obj
+                index += 1
             
             # ----------------------------------------------------------------------
             # CALCULATE FPS
@@ -523,9 +512,10 @@ class DynamicRTSPPipeline:
 
         return Gst.PadProbeReturn.OK
 
-    def _processing_worker_loop(self):
+    async def _processing_worker_loop(self):
+        objects = []
         while True:
-            task = self.process_queue.get()
+            task = await self.process_queue.get()
             flat_frame = task["flat_frame"]
             class_id = task.get("class_id")
             confidence = task.get("confidence")
@@ -539,10 +529,10 @@ class DynamicRTSPPipeline:
             width = task.get("width")
             height = task.get("height")
             mask = task.get("mask")
+            index = task.get("index")
 
             try:
 
-                objects = []
                 frame_image = cv2.cvtColor(flat_frame, cv2.COLOR_RGBA2BGR)
                 mask_b64 = None
                 mask_img = None
@@ -564,22 +554,28 @@ class DynamicRTSPPipeline:
                         },
                         "mask": mask_b64,
                     })
-                if objects.__len__() > 0:
-                    uuid = self.spot_manager.get_uuid(source_id)
-                    metadata = {
-                        "source_id": uuid,
-                        "frame_number": frame_number,
-                        "objects": objects,
-                        "frame_base64": transform_image_to_base64(frame_image)
-                    }
-                else:
-                    metadata = {}
+                if index == 0 and objects.__len__() > 0:
+                    if objects.__len__() > 0:
+                        uuid = self.spot_manager.get_uuid(source_id)
+                        metadata = {
+                            "source_id": uuid,
+                            "frame_number": frame_number,
+                            "objects": objects,
+                            "frame_base64": transform_image_to_base64(frame_image),
+                        }
+                    else:
+                        metadata = {}
 
-                if self.rabbitmq_manager is not None:
-                    self.rabbitmq_manager.publish_message(
-                        queue=str(uuid),
-                        message=metadata
-                    )
+                    if self.rabbitmq_manager:
+                        try:
+                            await self.rabbitmq_manager.publish_message(
+                                queue=str(uuid),
+                                message=metadata
+                            )
+                        except Exception as e:
+                            print(f"[worker] Failed to send message to RabbitMQ: {e}")
+                        
+                        objects = []
                 
 
 
