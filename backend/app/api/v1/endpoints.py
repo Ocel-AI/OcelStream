@@ -64,6 +64,30 @@ def remove_stream(uuid: int):
     uri = "for now we do not return the uri"
     return {"message": "Stream removed", "uuid": uuid, "uri": uri}
 
+@router.get("/labels/status")
+def get_labels_status():
+    try:
+        labels_status = pipeline.get_labels_status()
+        return JSONResponse(content=labels_status)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/hide_class_name")
+def hide_class_name(class_name: str):
+    try:
+        pipeline.hide_class_name(class_name)
+        return {"message": f"Class name '{class_name}'"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/enable_class_name")
+def enable_class_name(class_name: str):
+    try:
+        pipeline.enable_class_name(class_name)
+        return {"message": f"Class name '{class_name}' enabled"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @router.get("/streams")
 def list_streams():
