@@ -1,6 +1,6 @@
 # DeepVisionStream
 
-**DeepVisionStream** is a modular DeepStream-based computer vision platform for real-time video analytics. It supports custom models like YOLO, SAM, and D-Fine, with C++ parsers and Python bindings. Inference results (bounding boxes, masks, metadata) are streamed to external apps using WebSocket.
+**DeepVisionStream** is a modular DeepStream-based computer vision platform for real-time video analytics. It supports custom models like YOLO, SAM, and D-Fine, with C++ parsers and Python bindings. Inference results (bounding boxes, masks, metadata) are streamed to external apps using RabbitMQ.
 
 ---
 
