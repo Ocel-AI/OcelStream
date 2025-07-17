@@ -44,8 +44,6 @@ class DynamicRTSPPipeline:
         self.codec = "H264"
         self.bitrate = 4_000_000  # 4 Mbps for H264, adjust as needed
         # --- Environment variables for configuration ---
-        self.hide_class_ids = os.getenv("DEEPSTREAM_IGNORE_CLASS_IDS_SEGMENTATION", "") # List of class IDs to hide in rtsp stream segmentation
-        self.hide_class_ids = [int(x.strip()) for x in self.hide_class_ids.split(",") if x.strip().isdigit()]
         self.disable_box_segmentation = os.getenv("DEEPSTREAM_DISABLE_BOX_SEGMENTATION", "0").lower() == "1" # Disable bounding box segmentation if set to 1
         # --- GStreamer elements ---
         self.pipeline = Gst.Pipeline()
@@ -213,10 +211,13 @@ class DynamicRTSPPipeline:
             raise RuntimeError("Pipeline is not running. Start the pipeline before adding sources.")
     
         if uri.startswith("file:///"):
-            if not re.match(r"^file:///.+", uri):
-                raise RuntimeError(f"Invalid file URI: {uri}")
-            if not uri[7:] or not uri[7:].strip():
-                raise RuntimeError(f"File URI is empty: {uri}")
+
+            if not re.fullmatch(r"file:///[^ ]+", uri):
+                raise RuntimeError(f"Invalid or empty file URI: {uri}")
+
+            file_path = uri[7:]
+            if not os.path.isfile(file_path):
+                raise RuntimeError(f"File does not exist: {file_path}")
     
         elif self.check_rtsp_link(uri) is False or not uri.startswith("rtsp://") or uri is None:
             raise RuntimeError(f"Invalid RTSP link: {uri}")
