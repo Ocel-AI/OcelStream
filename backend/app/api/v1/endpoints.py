@@ -39,11 +39,11 @@ def add_stream(req: StreamRequest):
 
 
 @router.delete("/remove/{uuid}")
-def remove_stream(uuid: int):
-    # if index not in active_streams:
-    #     raise HTTPException(status_code=404, detail="Stream not found")
+def remove_stream(uuid: str):
+    if uuid not in active_streams:
+        raise HTTPException(status_code=404, detail="Stream not found")
     pipeline.remove_source(uuid)
-    # uri = active_streams.pop(index)
+    del active_streams[uuid]
     uri = "for now we do not return the uri"
     return {"message": "Stream removed", "uuid": uuid, "uri": uri}
 
