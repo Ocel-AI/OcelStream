@@ -229,6 +229,8 @@ class DynamicRTSPPipeline:
         # 1. Create and link source bin
         src_bin = self.source_bin_factory.create_source_bin(uuid, uri, "nvurisrcbin")
         self.pipeline.add(src_bin)
+        src_bin.set_state(Gst.State.PAUSED)
+        src_bin.get_state(Gst.CLOCK_TIME_NONE)
         src_pad = src_bin.get_static_pad("src")
         if is_fresh:
             mux_pad = self.streammux.get_request_pad(f"sink_{spot}")
@@ -259,9 +261,6 @@ class DynamicRTSPPipeline:
 
         return uuid
 
-    # ============================================================================================================
-    # check later this function not remove all the resources
-    # ============================================================================================================
     def remove_source(self, uuid: str):
         """Remove an existing stream and clean up all associated resources."""
 
@@ -270,25 +269,28 @@ class DynamicRTSPPipeline:
             print(f"No source with index {index}")
             return
 
-        # --- Stop & remove output branch ---
-        branch_elems = self.branches.get(index, [])
+        branch_elems = self.branches.get(index, {}).values()
         for elem in branch_elems:
             elem.set_state(Gst.State.NULL)
             self.pipeline.remove(elem)
-        self.branches.pop(index, None)
 
-        # Remove RTSP mount
         mount_points = self.rtsp_server.get_mount_points()
         mount_points.remove_factory(f"/ds-test{index}")
-
-        # --- Unlink & remove source bin ---
+        mux_pad = self.streammux.get_static_pad(f"sink_{index}")
         src_bin = self.sources.pop(index)
+        src_pad = src_bin.get_static_pad("src")
+        src_pad.unlink(mux_pad)
+
+        # self.streammux.release_request_pad(mux_pad)
+
         src_bin.set_state(Gst.State.NULL)
         self.pipeline.remove(src_bin)
-        self.demux_src_pads[index].unlink(src_bin.get_static_pad("src"))
-        # self.spot_manager.release(index)
+        conv_elm = self.branches[index]["conv1"]
+        self.demux_src_pads[index].unlink(conv_elm.get_static_pad("sink"))
+        self.spot_manager.release(index)
+        self.perf_data.all_stream_fps.pop(f"stream{index}", None)
+        self.branches.pop(index, None)
         print(f"[✓] Removed source-bin-{index} and released spot {index}")
-
 
     # ------------------------------------------------------------------
     # Internal helpers
@@ -307,68 +309,66 @@ class DynamicRTSPPipeline:
 
         conv1 = Gst.ElementFactory.make("nvvideoconvert", f"conv1_{uuid}")
         capsfilter1 = Gst.ElementFactory.make("capsfilter", f"capsfilter1_{uuid}")
+        conv2 = Gst.ElementFactory.make("nvvideoconvert", f"conv2_{uuid}")
+        capsfilter2 = Gst.ElementFactory.make("capsfilter", f"capsfilter2_{uuid}")
+        osd = Gst.ElementFactory.make("nvdsosd", f"osd{uuid}")
+        enc = Gst.ElementFactory.make("nvv4l2h264enc", f"enc{uuid}")
+        pay = Gst.ElementFactory.make("rtph264pay", f"pay{uuid}")
+        sink = Gst.ElementFactory.make("udpsink", f"sink{uuid}")
+
         capsfilter1.set_property("caps", Gst.Caps.from_string("video/x-raw(memory:NVMM), format=RGBA"))
         self.streammux.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
         conv1.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
-
-        osd = Gst.ElementFactory.make("nvdsosd", f"osd{uuid}")
         osd.set_property("display-bbox", 1)
         osd.set_property("display-mask", 1)
-
-        conv2 = Gst.ElementFactory.make("nvvideoconvert", f"conv2_{uuid}")
         conv2.set_property("nvbuf-memory-type", int(pyds.NVBUF_MEM_CUDA_UNIFIED))
-
-        capsfilter2 = Gst.ElementFactory.make("capsfilter", f"capsfilter2_{uuid}")
         capsfilter2.set_property("caps", Gst.Caps.from_string(f"video/x-raw(memory:NVMM),width={width},height={height}, format=NV12"))
-
-        enc = Gst.ElementFactory.make("nvv4l2h264enc", f"enc{uuid}")
         enc.set_property("bitrate", self.bitrate)
-
-        pay = Gst.ElementFactory.make("rtph264pay", f"pay{uuid}")
-        sink = Gst.ElementFactory.make("udpsink", f"sink{uuid}")
         sink.set_property("sync", 0)
-        port = 5400 + index
         sink.set_property("host", "127.0.0.1")
-        sink.set_property("port", port)
+        sink.set_property("port", 5400 + index)
+
 
         for elem in (conv1, capsfilter1, osd, conv2, capsfilter2, enc, pay, sink):
             self.pipeline.add(elem)
             elem.sync_state_with_parent()
 
         self.demux_src_pads[index].link(conv1.get_static_pad("sink"))
-
         conv1.link(capsfilter1)
-
         capsfilter1.link(osd)
-
         osd.link(conv2)
-
         conv2.link(capsfilter2)
-
         capsfilter2.link(enc)
-
         enc.link(pay)
-
         pay.link(sink)
 
         osd.get_static_pad("sink").add_probe(
             Gst.PadProbeType.BUFFER, self.conv_pad_buffer_probe, 0
         )
 
-        self.branches[index] = [conv1, capsfilter1, osd, conv2, capsfilter2, enc, pay, sink]
+        self.branches[index] = {
+            "conv1": conv1,
+            "capsfilter1": capsfilter1,
+            "osd": osd,
+            "conv2": conv2,
+            "capsfilter2": capsfilter2,
+            "enc": enc,
+            "pay": pay,
+            "sink": sink,
+        }
 
         # RTSP setup
         factory = GstRtspServer.RTSPMediaFactory()
         launch = (
-            f"( udpsrc name=pay0 port={port} buffer-size=524288 "
+            f"( udpsrc name=pay0 port={5400 + index} buffer-size=524288 "
             f"caps=\"application/x-rtp,media=video,clock-rate=90000,encoding-name=H264,payload=96\" )"
         )
         factory.set_launch(launch)
         factory.set_shared(True)
         self.rtsp_server.get_mount_points().add_factory(f"/ds-test{uuid}", factory)
-        print(f"Stream {uuid} at rtsp://localhost:8554/ds-test{uuid}")
         self._rtsp_mount_paths.add(f"/ds-test{uuid}")
 
+        print(f"Stream {uuid} at rtsp://localhost:8554/ds-test{uuid}")
 
 
     def bus_call(self, bus, message, loop):
@@ -477,7 +477,7 @@ class DynamicRTSPPipeline:
                     "height": obj_meta.rect_params.height if obj_meta.rect_params is not None else None,
                     "mask": obj_meta.mask_params.get_mask_array().reshape(
                         (obj_meta.mask_params.height, obj_meta.mask_params.width)
-                    ) if obj_meta.mask_params is not None and obj_meta.mask_params.data else None,
+                    ).copy() if obj_meta.mask_params is not None and obj_meta.mask_params.data else None,
                     "therchold": obj_meta.mask_params.threshold if obj_meta.mask_params is not None else None,
                     "mask_width": obj_meta.mask_params.width if obj_meta.mask_params is not None else None,
                     "mask_height": obj_meta.mask_params.height if obj_meta.mask_params is not None else None,
@@ -538,7 +538,7 @@ class DynamicRTSPPipeline:
                 mask_b64 = None
                 mask_img = None
                 if mask is not None:
-                    mask_img = resize_mask(mask, math.floor(width), math.floor(height), task.get("therchold"))
+                    mask_img = resize_mask(mask.copy(), math.floor(width), math.floor(height), task.get("therchold"))
                     mask_b64 = encode_mask_to_base64(mask_img)
                 if left is not None or mask_b64 is not None:
                     objects.append({
@@ -595,6 +595,7 @@ class DynamicRTSPPipeline:
         time.sleep(1)
         self.pipeline.set_state(Gst.State.PLAYING)
         try:
+            self.perf_data.all_stream_fps.pop(f"stream0", None)
             self.loop.run()
         except KeyboardInterrupt:
             pass
