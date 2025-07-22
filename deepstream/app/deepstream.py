@@ -38,8 +38,6 @@ class DynamicRTSPPipeline:
     """
 
     def __init__(self, max_sources: int = 5, notification_callback=None):
-
-        self.status = threading.Event()
         Gst.init(None)
         # --- Pipeline‑wide parameters ---
         self.max_sources = int(os.getenv("MAX_RESOURCES", 15))
@@ -482,7 +480,7 @@ class DynamicRTSPPipeline:
                     "mask": obj_meta.mask_params.get_mask_array().reshape(
                         (obj_meta.mask_params.height, obj_meta.mask_params.width)
                     ).copy() if obj_meta.mask_params is not None and obj_meta.mask_params.data else None,
-                    "therchold": obj_meta.mask_params.threshold if obj_meta.mask_params is not None else None,
+                    "threshold": obj_meta.mask_params.threshold if obj_meta.mask_params is not None else None,
                     "mask_width": obj_meta.mask_params.width if obj_meta.mask_params is not None else None,
                     "mask_height": obj_meta.mask_params.height if obj_meta.mask_params is not None else None,
                 })
@@ -521,12 +519,12 @@ class DynamicRTSPPipeline:
         while True:
             task = await self.process_queue.get()
             objects = []
-            detected_objects = task if isinstance(task, list) else [task]
+            detected_objects = task
             head = detected_objects[0]
             flat_frame = head.get("flat_frame")
             source_id = head.get("source_id")
             frame_number = head.get("frame_number")
-            
+
             frame_image = cv2.cvtColor(flat_frame, cv2.COLOR_RGBA2BGR)
 
             for task in detected_objects[1:]:
@@ -545,7 +543,7 @@ class DynamicRTSPPipeline:
                 mask_b64 = None
                 mask_img = None
                 if mask is not None:
-                    mask_img = resize_mask(mask.copy(), math.floor(width), math.floor(height), task.get("therchold"))
+                    mask_img = resize_mask(mask.copy(), math.floor(width), math.floor(height), task.get("threshold"))
                     mask_b64 = encode_mask_to_base64(mask_img)
                 if left is not None or mask_b64 is not None:
                     objects.append({
