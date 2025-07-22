@@ -561,7 +561,7 @@ class DynamicRTSPPipeline:
                         "mask": mask_b64,
                     })
 
-            if objects.__len__() > 0:
+            if len(objects) > 0:
                 uuid = self.spot_manager.get_uuid(source_id)
                 metadata = {
                     "source_id": uuid,
@@ -570,14 +570,14 @@ class DynamicRTSPPipeline:
                     "frame_base64": transform_image_to_base64(frame_image),
                 }
 
-            if self.rabbitmq_manager:
-                try:
-                    await self.rabbitmq_manager.publish_message(
-                        queue=str(uuid),
-                        message=metadata
-                    )
-                except Exception as e:
-                    print(f"[worker] Failed to send message to RabbitMQ: {e}")
+                if self.rabbitmq_manager:
+                    try:
+                        await self.rabbitmq_manager.publish_message(
+                            queue=str(uuid),
+                            message=metadata
+                        )
+                    except Exception as e:
+                        print(f"[worker] Failed to send message to RabbitMQ: {e}")
 
 
 
