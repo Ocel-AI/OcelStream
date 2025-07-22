@@ -38,6 +38,8 @@ class DynamicRTSPPipeline:
     """
 
     def __init__(self, max_sources: int = 5, notification_callback=None):
+
+        self.status = threading.Event()
         Gst.init(None)
         # --- Pipeline‑wide parameters ---
         self.max_sources = int(os.getenv("MAX_RESOURCES", 15))
@@ -456,21 +458,23 @@ class DynamicRTSPPipeline:
 
             #? hide the mask data for objects with classes that are not in the range of interest
             l_obj = frame_meta.obj_meta_list
-            index = 0
+            metadata = []
+            metadata.append({
+                "flat_frame": flat_frame,
+                "source_id": frame_meta.source_id if frame_meta.source_id is not None else None,
+                "frame_number": frame_meta.frame_num if frame_meta.frame_num is not None else None,
+            })
             while l_obj:
                 obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
                 next_obj = l_obj.next
                 gie_unique_id = obj_meta.unique_component_id
-                
-                self.process_queue.put_nowait({
-                    "flat_frame": flat_frame,
+
+                metadata.append({
                     "class_id": obj_meta.class_id if obj_meta.class_id is not None else None,
                     "confidence": obj_meta.confidence if obj_meta.confidence is not None else None,
                     "label": obj_meta.obj_label if obj_meta.obj_label is not None else None,
                     "gie_unique_id": gie_unique_id,
                     "object_id": obj_meta.object_id if obj_meta.object_id is not None else None,
-                    "source_id": frame_meta.source_id if frame_meta.source_id is not None else None,
-                    "frame_number": frame_meta.frame_num if frame_meta.frame_num is not None else None,
                     "left": obj_meta.rect_params.left if obj_meta.rect_params is not None else None,
                     "top": obj_meta.rect_params.top if obj_meta.rect_params is not None else None,
                     "width": obj_meta.rect_params.width if obj_meta.rect_params is not None else None,
@@ -481,7 +485,6 @@ class DynamicRTSPPipeline:
                     "therchold": obj_meta.mask_params.threshold if obj_meta.mask_params is not None else None,
                     "mask_width": obj_meta.mask_params.width if obj_meta.mask_params is not None else None,
                     "mask_height": obj_meta.mask_params.height if obj_meta.mask_params is not None else None,
-                    "index": index
                 })
 
                 label = obj_meta.obj_label if obj_meta.obj_label is not None else None
@@ -495,8 +498,9 @@ class DynamicRTSPPipeline:
                         rect.border_width = 0
                         rect.border_color.alpha = 0.0
                 l_obj = next_obj
-                index += 1
-            
+            if metadata:
+                self.process_queue.put_nowait(metadata)
+
             # ----------------------------------------------------------------------
             # CALCULATE FPS
             # ----------------------------------------------------------------------
@@ -514,27 +518,30 @@ class DynamicRTSPPipeline:
         return Gst.PadProbeReturn.OK
 
     async def _processing_worker_loop(self):
-        objects = []
         while True:
             task = await self.process_queue.get()
-            flat_frame = task["flat_frame"]
-            class_id = task.get("class_id")
-            confidence = task.get("confidence")
-            gie_unique_id = task.get("gie_unique_id")
-            object_id = task.get("object_id")
-            source_id = task.get("source_id")
-            frame_number = task.get("frame_number")
-            label = task.get("label")
-            left = task.get("left")
-            top = task.get("top")
-            width = task.get("width")
-            height = task.get("height")
-            mask = task.get("mask")
-            index = task.get("index")
+            objects = []
+            detected_objects = task if isinstance(task, list) else [task]
+            head = detected_objects[0]
+            flat_frame = head.get("flat_frame")
+            source_id = head.get("source_id")
+            frame_number = head.get("frame_number")
+            
+            frame_image = cv2.cvtColor(flat_frame, cv2.COLOR_RGBA2BGR)
 
-            try:
+            for task in detected_objects[1:]:
+                class_id = task.get("class_id")
+                confidence = task.get("confidence")
+                gie_unique_id = task.get("gie_unique_id")
+                object_id = task.get("object_id")
+                label = task.get("label")
+                left = task.get("left")
+                top = task.get("top")
+                width = task.get("width")
+                height = task.get("height")
+                mask = task.get("mask")
 
-                frame_image = cv2.cvtColor(flat_frame, cv2.COLOR_RGBA2BGR)
+
                 mask_b64 = None
                 mask_img = None
                 if mask is not None:
@@ -555,33 +562,25 @@ class DynamicRTSPPipeline:
                         },
                         "mask": mask_b64,
                     })
-                if index == 0 and objects.__len__() > 0:
-                    if objects.__len__() > 0:
-                        uuid = self.spot_manager.get_uuid(source_id)
-                        metadata = {
-                            "source_id": uuid,
-                            "frame_number": frame_number,
-                            "objects": objects,
-                            "frame_base64": transform_image_to_base64(frame_image),
-                        }
-                    else:
-                        metadata = {}
 
-                    if self.rabbitmq_manager:
-                        try:
-                            await self.rabbitmq_manager.publish_message(
-                                queue=str(uuid),
-                                message=metadata
-                            )
-                        except Exception as e:
-                            print(f"[worker] Failed to send message to RabbitMQ: {e}")
-                        
-                        objects = []
-                
+            if objects.__len__() > 0:
+                uuid = self.spot_manager.get_uuid(source_id)
+                metadata = {
+                    "source_id": uuid,
+                    "frame_number": frame_number,
+                    "objects": objects,
+                    "frame_base64": transform_image_to_base64(frame_image),
+                }
 
+            if self.rabbitmq_manager:
+                try:
+                    await self.rabbitmq_manager.publish_message(
+                        queue=str(uuid),
+                        message=metadata
+                    )
+                except Exception as e:
+                    print(f"[worker] Failed to send message to RabbitMQ: {e}")
 
-            except Exception as e:
-                print(f"[worker] Error processing frame: {e}")
 
 
     # ------------------------------------------------------------------
