@@ -593,31 +593,15 @@ class DynamicRTSPPipeline:
 
                 if self.rabbitmq_manager:
                     try:
-                        self.loop_event.create_task(
+                        asyncio.run_coroutine_threadsafe(
                             self.rabbitmq_manager.publish_message(
                                 queue=str(uuid),
                                 message=metadata
-                            )
+                            ),
+                            self.loop_event
                         )
                     except Exception as e:
                         print(f"[worker] Failed to send message to RabbitMQ: {e}")
-                
-                del metadata
-                del objects
-                del frame_image
-                del frame_number
-                del source_id
-                del uuid
-                del task
-                del mask
-                del mask_img
-                del mask_b64
-                del class_id
-                del confidence
-                del gie_unique_id
-                del object_id
-
-
 
     # ------------------------------------------------------------------
     # Pipeline lifecycle
