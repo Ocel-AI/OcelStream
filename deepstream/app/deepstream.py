@@ -23,11 +23,12 @@ import numpy as np
 from utils import resize_mask, transform_image_to_base64, encode_mask_to_base64
 import math
 import ctypes
-import queue
+from queue import Queue
 import re
 import base64
 import os
 import re
+
 
 
 class DynamicRTSPPipeline:
@@ -40,7 +41,7 @@ class DynamicRTSPPipeline:
     def __init__(self, max_sources: int = 5, notification_callback=None):
         Gst.init(None)
         # --- Pipeline‑wide parameters ---
-        self.max_sources = int(os.getenv("MAX_RESOURCES", 15))
+        self.max_sources = int(os.getenv("MAX_RESOURCES", 40))
         self.codec = "H264"
         self.bitrate = 4_000_000  # 4 Mbps for H264, adjust as needed
         # --- Environment variables for configuration ---
@@ -243,6 +244,24 @@ class DynamicRTSPPipeline:
         src_pad.link(mux_pad)
 
         self.sources[spot] = src_bin
+
+        # # Create a queue and processing thread for this source
+        if not hasattr(self, 'source_queues'):
+            self.source_queues = {}
+        if not hasattr(self, 'source_threads'):
+            self.source_threads = {}
+            
+        # Create queue and thread for this source
+        print(f"[DEBUG] Creating queue and thread for source {spot}")
+        source_queue = Queue()
+        self.source_queues[spot] = source_queue
+        processing_thread = threading.Thread(
+            target=self._processing_worker_loop,
+            args=(source_queue, spot),
+            daemon=False
+        )
+        self.source_threads[spot] = processing_thread
+        processing_thread.start()
 
         # 2. Build per‑stream output branch and RTSP mount
         self._setup_output_branch(spot, uuid, rtsp_output_width, rtsp_output_height)
@@ -451,39 +470,40 @@ class DynamicRTSPPipeline:
         while l_frame is not None:
             frame_meta = pyds.NvDsFrameMeta.cast(l_frame.data)
 
-            n_frame = pyds.get_nvds_buf_surface(hash(gst_buffer), frame_meta.batch_id)
-            flat_frame = np.array(n_frame, copy=True)
-
-            #? hide the mask data for objects with classes that are not in the range of interest
             l_obj = frame_meta.obj_meta_list
-            metadata = []
-            metadata.append({
-                "flat_frame": flat_frame,
-                "source_id": frame_meta.source_id if frame_meta.source_id is not None else None,
-                "frame_number": frame_meta.frame_num if frame_meta.frame_num is not None else None,
-            })
+            if frame_meta.frame_num % 5 == 0:
+                n_frame = pyds.get_nvds_buf_surface(hash(gst_buffer), frame_meta.batch_id)
+                flat_frame = np.array(n_frame, copy=True)
+                metadata = []
+                metadata.append({
+                    "flat_frame": flat_frame,
+                    "source_id": frame_meta.source_id if frame_meta.source_id is not None else None,
+                    "frame_number": frame_meta.frame_num if frame_meta.frame_num is not None else None,
+                })
             while l_obj:
+
                 obj_meta = pyds.NvDsObjectMeta.cast(l_obj.data)
                 next_obj = l_obj.next
-                gie_unique_id = obj_meta.unique_component_id
+                if frame_meta.frame_num % 5 == 0:
+                    gie_unique_id = obj_meta.unique_component_id
 
-                metadata.append({
-                    "class_id": obj_meta.class_id if obj_meta.class_id is not None else None,
-                    "confidence": obj_meta.confidence if obj_meta.confidence is not None else None,
-                    "label": obj_meta.obj_label if obj_meta.obj_label is not None else None,
-                    "gie_unique_id": gie_unique_id,
-                    "object_id": obj_meta.object_id if obj_meta.object_id is not None else None,
-                    "left": obj_meta.rect_params.left if obj_meta.rect_params is not None else None,
-                    "top": obj_meta.rect_params.top if obj_meta.rect_params is not None else None,
-                    "width": obj_meta.rect_params.width if obj_meta.rect_params is not None else None,
-                    "height": obj_meta.rect_params.height if obj_meta.rect_params is not None else None,
-                    "mask": obj_meta.mask_params.get_mask_array().reshape(
-                        (obj_meta.mask_params.height, obj_meta.mask_params.width)
-                    ).copy() if obj_meta.mask_params is not None and obj_meta.mask_params.data else None,
-                    "threshold": obj_meta.mask_params.threshold if obj_meta.mask_params is not None else None,
-                    "mask_width": obj_meta.mask_params.width if obj_meta.mask_params is not None else None,
-                    "mask_height": obj_meta.mask_params.height if obj_meta.mask_params is not None else None,
-                })
+                    metadata.append({
+                        "class_id": obj_meta.class_id if obj_meta.class_id is not None else None,
+                        "confidence": obj_meta.confidence if obj_meta.confidence is not None else None,
+                        "label": obj_meta.obj_label if obj_meta.obj_label is not None else None,
+                        "gie_unique_id": gie_unique_id,
+                        "object_id": obj_meta.object_id if obj_meta.object_id is not None else None,
+                        "left": obj_meta.rect_params.left if obj_meta.rect_params is not None else None,
+                        "top": obj_meta.rect_params.top if obj_meta.rect_params is not None else None,
+                        "width": obj_meta.rect_params.width if obj_meta.rect_params is not None else None,
+                        "height": obj_meta.rect_params.height if obj_meta.rect_params is not None else None,
+                        "mask": obj_meta.mask_params.get_mask_array().reshape(
+                            (obj_meta.mask_params.height, obj_meta.mask_params.width)
+                        ).copy() if obj_meta.mask_params is not None and obj_meta.mask_params.data else None,
+                        "threshold": obj_meta.mask_params.threshold if obj_meta.mask_params is not None else None,
+                        "mask_width": obj_meta.mask_params.width if obj_meta.mask_params is not None else None,
+                        "mask_height": obj_meta.mask_params.height if obj_meta.mask_params is not None else None,
+                    })
 
                 label = obj_meta.obj_label if obj_meta.obj_label is not None else None
                 if label and label in self.hide_class_names:
@@ -496,8 +516,9 @@ class DynamicRTSPPipeline:
                         rect.border_width = 0
                         rect.border_color.alpha = 0.0
                 l_obj = next_obj
-            if metadata:
-                self.process_queue.put_nowait(metadata)
+            if frame_meta.frame_num % 5 == 0:
+                if metadata:
+                    self.source_queues[frame_meta.pad_index].put(metadata)
 
             # ----------------------------------------------------------------------
             # CALCULATE FPS
@@ -515,9 +536,9 @@ class DynamicRTSPPipeline:
 
         return Gst.PadProbeReturn.OK
 
-    async def _processing_worker_loop(self):
+    def _processing_worker_loop(self, source_queue, spot):
         while True:
-            task = await self.process_queue.get()
+            task = source_queue.get()
             objects = []
             detected_objects = task
             head = detected_objects[0]
@@ -560,26 +581,27 @@ class DynamicRTSPPipeline:
                         },
                         "mask": mask_b64,
                     })
-
             if len(objects) > 0:
+                base64_image = transform_image_to_base64(frame_image)
                 uuid = self.spot_manager.get_uuid(source_id)
                 metadata = {
                     "source_id": uuid,
                     "frame_number": frame_number,
                     "objects": objects,
-                    "frame_base64": transform_image_to_base64(frame_image),
+                    "frame_base64": base64_image
                 }
 
                 if self.rabbitmq_manager:
                     try:
-                        await self.rabbitmq_manager.publish_message(
-                            queue=str(uuid),
-                            message=metadata
+                        asyncio.run_coroutine_threadsafe(
+                            self.rabbitmq_manager.publish_message(
+                                queue=str(uuid),
+                                message=metadata
+                            ),
+                            self.loop_event
                         )
                     except Exception as e:
                         print(f"[worker] Failed to send message to RabbitMQ: {e}")
-
-
 
     # ------------------------------------------------------------------
     # Pipeline lifecycle
