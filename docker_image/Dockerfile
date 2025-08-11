@@ -15,10 +15,13 @@ RUN /patch_libnvinfer.sh
 COPY docker_image/compile_nvdsinfer_yolo.sh /
 RUN chmod +x /compile_nvdsinfer_yolo.sh
 COPY docker_image/nvdsinfer_yolo/ /nvdsinfer_yolo/
+COPY deepstream/app/jpeg_encoder.cpp /jpeg_encoder.cpp
 RUN /compile_nvdsinfer_yolo.sh
-COPY backend/requirements.txt /requirements.txt
 RUN pip install --upgrade pip
+COPY backend/requirements.txt /requirements.txt
+RUN apt-get update && apt-get install -y libturbojpeg0-dev
 RUN pip install -r /requirements.txt
+RUN g++ -fPIC -shared -o libjpeg_encoder.so jpeg_encoder.cpp -lturbojpeg
 WORKDIR /deepstream_app/backend
 CMD ["uvicorn", "backend.app.app:app", "--host", "0.0.0.0", "--port", "8000"]
 # CMD ["ls"]
