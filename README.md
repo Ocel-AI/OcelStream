@@ -86,6 +86,28 @@ You can add video sources as files (`file:///deepstream_app/static/video.mp4`) o
 
 ---
 
+## Benchmarks (Latency + 20-Stream Test)
+
+Test setup
+GPU: NVIDIA RTX 4000 Ada (laptop)
+SDK: NVIDIA DeepStream + TensorRT (FP32)
+Models: YOLO-Seg family (segmentation head enabled)
+Pipeline: Dynamic RTSP/file sources → real-time inference → per-source RTSP out with overlays
+Backend: FastAPI + Python/C++ parsers, RabbitMQ for metadata
+
+Results
+Throughput: 20 streams @ 30 FPS per stream
+GPU load: ~70% utilization
+VRAM: ~1.3 GB used for the pipeline during the 20-stream run
+Latency method: visual side-by-side of original vs. overlayed output to benchmark end-to-end delay (camera → decode → infer → encode → RTSP).
+Note: Exact milliseconds vary with camera/codec/latency settings; the video makes the delta visible in real time.
+
+
+https://github.com/user-attachments/assets/4146d65b-9104-4c21-8f3b-ca41a4baf3bd
+
+
+
+---
 ##  Project Structure
 
 ```bash
