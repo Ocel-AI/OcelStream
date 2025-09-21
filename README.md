@@ -1,6 +1,6 @@
-# DeepVisionStream
+# OcelStream
 
-**DeepVisionStream** is a modular DeepStream-based computer vision platform for real-time video analytics. It supports custom models like YOLO, SAM, and D-Fine, with C++ parsers and Python bindings. Inference results (bounding boxes, masks, metadata) are streamed to external apps using RabbitMQ.
+**OcelStream** is a modular DeepStream-based computer vision platform for real-time video analytics. It supports custom models like YOLO, SAM, and D-Fine, with C++ parsers and Python bindings. Inference results (bounding boxes, masks, metadata) are streamed to external apps using RabbitMQ.
 
 
 https://github.com/user-attachments/assets/4a86d335-045c-4770-bf3d-142e7b91c691
@@ -23,7 +23,7 @@ https://github.com/user-attachments/assets/4a86d335-045c-4770-bf3d-142e7b91c691
 
 ### Model Support
 
-Currently, **DeepVisionStream** supports **YOLO ** models ** 8, 9, 10, 11, 12 **. You can use both detection and segmentation models.
+Currently, **OcelStream** supports **YOLO ** models ** 8, 9, 10, 11, 12 **. You can use both detection and segmentation models.
 
 #### Converting YOLO Models
 
@@ -62,8 +62,8 @@ Make sure to adapt the paths in these config files to match your model and label
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/DeepVisionStream.git
-   cd DeepVisionStream
+   git clone https://github.com/Ocel-AI/OcelStream.git
+   cd OcelStream
    ```
 2. **Build and start the services:**
    ```bash
@@ -121,7 +121,7 @@ https://github.com/user-attachments/assets/4146d65b-9104-4c21-8f3b-ca41a4baf3bd
 ##  Project Structure
 
 ```bash
-DeepVisionStream/
+OcelStream/
                 ├── backend
                 │   ├── app
                 │   ├── requirements.txt
