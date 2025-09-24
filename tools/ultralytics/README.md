@@ -32,6 +32,8 @@ You can utilize the `tools/ultralytics/export.py` script with the following opti
 python3 export.py -w <name_of_model_seg>
 ```
 
+# official docs of ultralytics
+
 
 
 <div align="center">
