@@ -26,51 +26,11 @@ pip install -e .
 
 ## Usage
 
-### CLI
-```bash
-yolo export model=models/yolo11n.pt format=onnx_trt dynamic=True topk_all=100
-```
 ### Python
-You can utilize the `onnx_trt.py` script with the following options:
+You can utilize the `tools/ultralytics/export.py` script with the following options:
 ```bash
-python3 onnx_trt.py  -w models/yolo11n.pt --topk_all 100
+python3 export.py -w <name_of_model_seg>
 ```
-## Arguments
-
-The `onnx_trt.py` script accepts several command-line arguments to customize its behavior. Below is a list of available options along with their default values and descriptions:
-
- **Note**: For models with NMS-Free functionality, only `topk_all` is used.
-
-- `--topk_all`: *int*  
-  **Default**: `100`  
-  Specifies the number of top K detections to consider for all classes. This parameter helps in filtering the most relevant detections.
-
-- `--iou_thres`: *float*  
-  **Default**: `0.45`  
-  Sets the Intersection over Union (IoU) threshold for Non-Maximum Suppression (NMS). Adjusting this value can help reduce overlapping detections.
-
-- `--conf_thres`: *float*  
-  **Default**: `0.25`  
-  Defines the confidence threshold for NMS. Detections with a confidence score below this threshold will be discarded.
-
-- `--class_agnostic`: *flag*  
-  This is a boolean flag (use `--class_agnostic` to enable).  
-  **Default**: `False`  
-  When set, applies class-agnostic NMS, which treats all classes equally when suppressing overlapping detections.
-
-- `--pooler_scale`: *float*  
-  **Default**: `0.25`  
-  Specifies the scale for the ROI pooler operations. This parameter affects how features are extracted from the model for different regions of interest.
-
-- `--sampling_ratio`: *int*  
-  **Default**: `0`  
-  Determines the sampling ratio for ROI alignment. A value of `0` indicates that the default sampling ratio will be used.
-
-- `--mask_resolution`: *int*  
-  **Default**: `160`  
-  Sets the resolution for masks during export. Higher resolutions can provide finer details in mask outputs.
-
-
 
 
 
